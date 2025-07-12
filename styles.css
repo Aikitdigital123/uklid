@@ -78,7 +78,7 @@ html {
 }
 
 .logo-img {
-    height: 180px;
+    height: 100px;
     width: auto;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     transition: transform 0.3s ease;
@@ -162,7 +162,7 @@ html {
 .hero-section {
     /* Odebrali jsme background image odsud, protože je nyní na body */
     /* Změna: Snížíme průhlednost překrytí, aby bylo pozadí více viditelné */
-    background: linear-gradient(rgba(58, 71, 104, 0.5), rgba(58, 71, 104, 0.5)); /* Snížena průhlednost na 0.5 */
+    background: linear-gradient(rgba(58, 71, 104, 0.4), rgba(58, 71, 104, 0.4)); /* Snížena průhlednost na 0.4 */
     color: var(--color-background-white);
     text-align: center;
     padding: 120px 20px;
@@ -219,13 +219,13 @@ html {
 .content-section {
     padding: 80px 0;
     text-align: center;
-    /* Změna: Snížena průhlednost na 0.6 pro "O nás" a další standardní obsahové sekce */
-    background-color: rgba(245, 248, 252, 0.6); /* var(--color-background-offwhite) s průhledností */
+    /* Změna: Snížena průhlednost na 0.4 */
+    background-color: rgba(245, 248, 252, 0.4); /* var(--color-background-offwhite) s průhledností */
 }
 
 .content-section:nth-of-type(even) {
     /* Změna: Také s průhledností pro střídavé sekce, o něco vyšší než liché */
-    background-color: rgba(245, 248, 252, 0.5); /* Mírně vyšší průhlednost pro sudé sekce */
+    background-color: rgba(245, 248, 252, 0.3); /* Snížena průhlednost na 0.3 */
 }
 
 .section-title {
@@ -270,7 +270,7 @@ html {
     border-radius: 12px;
     box-shadow: var(--shadow-light);
     /* Změna: Více průhledné pozadí pro karty */
-    background: rgba(255, 255, 255, 0.4); /* Snížena průhlednost na 0.4 */
+    background: rgba(255, 255, 255, 0.3); /* Snížena průhlednost na 0.3 */
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -360,7 +360,7 @@ html {
     box-shadow: var(--shadow-light);
     transition: background-color var(--transition-speed);
     /* Změna: Více průhledné pozadí pro karty */
-    background: rgba(255, 255, 255, 0.4); /* Snížena průhlednost na 0.4 */
+    background: rgba(255, 255, 255, 0.3); /* Snížena průhlednost na 0.3 */
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -426,7 +426,7 @@ html {
     box-shadow: var(--shadow-medium);
     text-align: left;
     /* Změna: Více průhledné pozadí pro kontaktní formulář */
-    background: rgba(255, 255, 255, 0.5); /* Snížena průhlednost na 0.5 */
+    background: rgba(255, 255, 255, 0.4); /* Snížena průhlednost na 0.4 */
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
@@ -536,7 +536,7 @@ html {
    protože efekt aplikujeme přímo na elementy jako service-item, feature-item, contact-form, pricing-grid */
 .glass-effect {
     /* Změna: Více průhledné pozadí */
-    background: rgba(255, 255, 255, 0.3); /* Snížena průhlednost na 0.3 */
+    background: rgba(255, 255, 255, 0.2); /* Snížena průhlednost na 0.2 */
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
@@ -581,7 +581,7 @@ html {
 /* Variace glass efektu pro menší prvky */
 .glass-effect-small {
     /* Změna: Více průhledné pozadí */
-    background: rgba(255, 255, 255, 0.4); /* Snížena průhlednost na 0.4 */
+    background: rgba(255, 255, 255, 0.3); /* Snížena průhlednost na 0.3 */
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -643,7 +643,7 @@ html {
     text-align: center;
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
     /* Změna: Více průhledné pozadí pro karty */
-    background: rgba(255, 255, 255, 0.4); /* Snížena průhlednost na 0.4 */
+    background: rgba(255, 255, 255, 0.3); /* Snížena průhlednost na 0.3 */
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -721,7 +721,7 @@ html {
     text-align: left;
     box-shadow: var(--shadow-medium);
     /* Změna: Více průhledné pozadí pro kalkulačku */
-    background: rgba(255, 255, 255, 0.5); /* Snížena průhlednost na 0.5 */
+    background: rgba(255, 255, 255, 0.4); /* Snížena průhlednost na 0.4 */
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
@@ -974,9 +974,17 @@ html {
         padding: 8px 15px; /* Menší padding pro odkazy v mobilním menu */
     }
 
+    /* ** DŮLEŽITÉ ÚPRAVY PRO MOBILY ** */
+    body {
+        /* Změna background-attachment pro lepší kompatibilitu na mobilu */
+        background-attachment: scroll;
+    }
+
     .hero-section {
         padding: 60px 15px;
         min-height: 45vh; /* Mírně nižší hero sekce */
+        /* Ještě snížit průhlednost překrytí pro mobily, aby obrázek prosvítal více */
+        background: linear-gradient(rgba(58, 71, 104, 0.3), rgba(58, 71, 104, 0.3)); /* Snížena průhlednost na 0.3 */
     }
     .hero-content h1 {
         font-size: 1.8em;
@@ -991,6 +999,12 @@ html {
     }
     .content-section {
         padding: 40px 0;
+        /* Ještě snížit průhlednost pro obsahové sekce na mobilu */
+        background-color: rgba(245, 248, 252, 0.25); /* Snížena průhlednost na 0.25 */
+    }
+    .content-section:nth-of-type(even) {
+        /* Ještě snížit průhlednost pro sudé obsahové sekce na mobilu */
+        background-color: rgba(245, 248, 252, 0.2); /* Snížena průhlednost na 0.2 */
     }
     .section-title {
         font-size: 1.8em;
@@ -1003,6 +1017,8 @@ html {
     .service-item, .feature-item, .price-card {
         max-width: 100%; /* Plná šířka na nejmenších obrazovkách */
         padding: 25px; /* Menší padding uvnitř karet */
+        /* Ještě snížit průhlednost karet na mobilu */
+        background: rgba(255, 255, 255, 0.2); /* Snížena průhlednost na 0.2 */
     }
     .service-item i {
         font-size: 3em;
@@ -1022,7 +1038,15 @@ html {
 
     .contact-form {
         padding: 25px;
+        /* Ještě snížit průhlednost kontaktního formuláře na mobilu */
+        background: rgba(255, 255, 255, 0.3); /* Snížena průhlednost na 0.3 */
     }
+    #kalkulacka {
+        padding: 20px;
+        /* Ještě snížit průhlednost kalkulačky na mobilu */
+        background: rgba(255, 255, 255, 0.3); /* Snížena průhlednost na 0.3 */
+    }
+
     .form-group label {
         font-size: 0.9em;
     }
@@ -1044,6 +1068,8 @@ html {
     .glass-effect, .glass-effect-small {
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        /* Ještě snížit průhlednost obecných glass efektů na mobilu */
+        background: rgba(255, 255, 255, 0.15); /* Snížena průhlednost na 0.15 */
     }
     .glass-effect::after {
         top: 10px;
@@ -1064,19 +1090,6 @@ html {
     .section-subtitle {
         font-size: 1.4em;
         margin-top: 40px;
-    }
-    /* Cílení na ID 'kalkulacka' v media query */
-    #kalkulacka {
-        padding: 20px;
-    }
-    #kalkulacka label {
-        font-size: 1em;
-    }
-    #kalkulacka input,
-    #kalkulacka select,
-    #kalkulacka textarea {
-        padding: 10px;
-        font-size: 0.9em;
     }
 }
 
