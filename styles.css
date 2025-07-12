@@ -29,6 +29,9 @@
     --transition-speed: 0.4s; 
     --glass-blur: 12px;
     --glass-saturate: 180%;
+
+    /* Nová proměnná pro výšku headeru, usnadní pozicování mobilního menu */
+    --header-height: 90px; /* Předpokládaná výška headeru na desktopu */
 }
 
 body {
@@ -39,14 +42,44 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Důležité pro zamezení horizontálního scrollu */
 }
 
 .container {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 20px;
-    width: 100%;
+    width: 100%; /* Zajistí, že container vždy zabere 100% dostupné šířky, pokud je menší než max-width */
+}
+
+/* --- Styly pro logo a obrázek loga --- */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    
+    font-size: 2.8em; /* Změna: Dynamičtější font-size */
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-background-white);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+.logo-img {
+    height: 90px; /* Změna: Sníženo, aby se lépe vešlo na mobilu, na desktopu se bude auto-škálovat s font-size textu loga. Pokud byste chtěli pevně 130px na desktopu, budeme to muset dát do media query. */
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2)); 
+    transition: transform 0.3s ease; 
+    vertical-align: middle;
+}
+
+.logo:hover .logo-img {
+    transform: scale(1.05); 
+}
+
+.logo:hover {
+    color: var(--color-accent);
 }
 
 /* --- Hlavní záhlaví (Header) --- */
@@ -64,19 +97,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.logo {
-    font-family: var(--font-heading);
-    font-size: 1.8em;
-    font-weight: 700;
-    color: var(--color-background-white);
-    text-decoration: none;
-    transition: color var(--transition-speed);
-}
-
-.logo:hover {
-    color: var(--color-accent);
+    height: var(--header-height); /* Důležité: Nastavte výšku kontejneru pro header */
 }
 
 /* Navigace */
@@ -123,6 +144,7 @@ body {
     font-size: 1.8em;
     color: var(--color-background-white);
     cursor: pointer;
+    z-index: 1001; /* Ujistěte se, že je nad menu při aktivaci */
 }
 
 /* --- Hero Sekce --- */
@@ -186,7 +208,7 @@ body {
     text-align: center;
 }
 
-.content-section:nth-of-type(even) { /* Pro střídání pozadí sekcí */
+.content-section:nth-of-type(even) {
     background-color: var(--color-background-offwhite);
 }
 
@@ -197,7 +219,7 @@ body {
     margin-bottom: 20px;
     position: relative;
     padding-bottom: 15px;
-    display: inline-block; /* Pro vycentrování ::after */
+    display: inline-block;
 }
 
 .section-title::after {
@@ -223,41 +245,95 @@ body {
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+    gap: 40px;
     margin-top: 50px;
 }
 
 .service-item {
-    padding: 30px;
+    padding: 35px;
     border-radius: 12px;
     box-shadow: var(--shadow-light);
     background-color: var(--color-background-white);
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px) saturate(150%);
+    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
+    box-shadow: var(--shadow-light);
+    position: relative;
+    overflow: hidden;
+}
+
+.service-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0) 50%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0.8;
 }
 
 .service-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
     box-shadow: var(--shadow-medium);
 }
 
 .service-item i {
-    font-size: 3.5em;
+    font-size: 3.8em;
     color: var(--color-primary-light);
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .service-item h3 {
     font-family: var(--font-heading);
-    font-size: 1.4em;
+    font-size: 1.6em;
     color: var(--color-primary-dark);
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
 .service-item p {
-    font-size: 0.95em;
+    font-size: 1.05em;
     color: var(--color-text-light);
-    margin: 0; /* Override default p margin */
+    margin: 0 0 25px 0;
 }
+
+.service-item .btn {
+    margin-top: 20px;
+    display: inline-block;
+    width: auto;
+    max-width: 90%;
+}
+
+/* Nový styl pro sekundární tlačítko */
+.btn-secondary {
+    background-color: var(--color-primary-light);
+    color: var(--color-background-white);
+    box-shadow: var(--shadow-light);
+    padding: 12px 25px;
+    font-size: 0.95em;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-accent);
+    color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Responzivní úpravy pro tuto sekci (už zde jsou, ale ponecháme a doplníme) */
+/* `@media (max-width: 768px)` a `@media (max-width: 480px)` jsou definovány níže */
+
 
 /* --- Features List (Proč my?) --- */
 .features-list {
@@ -295,28 +371,6 @@ body {
     margin: 0;
 }
 
-/* --- Galerie Grid --- */
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    margin-top: 50px;
-}
-
-.gallery-grid img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-}
-
-.gallery-grid img:hover {
-    transform: scale(1.03);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
 /* --- Kontaktní formulář --- */
 .contact-info {
     font-size: 1.1em;
@@ -329,7 +383,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: none; /* Override section p */
+    max-width: none;
+    text-align: center; /* Změna: Aby byl text vycentrován v případě flex-direction: column */
 }
 
 .contact-info i {
@@ -371,7 +426,8 @@ body {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select { /* Přidáno pro konzistenci */
     width: 100%;
     padding: 12px 15px;
     border: 1px solid var(--color-border);
@@ -389,7 +445,8 @@ body {
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus { /* Přidáno pro konzistenci */
     border-color: var(--color-primary-light);
     box-shadow: 0 0 0 3px rgba(var(--color-primary-light-rgb), 0.2);
     outline: none;
@@ -406,19 +463,19 @@ body {
     border-radius: 8px;
     font-weight: bold;
     text-align: center;
-    display: none; /* Skryto, dokud JS nenasaví */
+    display: none;
 }
 
 .form-status.success {
-    background-color: #d4edda; /* Světle zelená */
-    color: var(--color-success); /* Tmavě zelená */
+    background-color: #d4edda;
+    color: var(--color-success);
     border: 1px solid #c3e6cb;
     display: block;
 }
 
 .form-status.error {
-    background-color: #f8d7da; /* Světle červená */
-    color: var(--color-error); /* Tmavě červená */
+    background-color: #f8d7da;
+    color: var(--color-error);
     border: 1px solid #f5c6cb;
     display: block;
 }
@@ -430,12 +487,12 @@ body {
     padding: 40px 0;
     text-align: center;
     font-size: 0.95em;
-    margin-top: auto; /* Přilepí patičku ke spodnímu okraji */
+    margin-top: auto;
 }
 
 .main-footer .container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Změna: Ve výchozím stavu (desktop) budou prvky pod sebou. Pro desktop bychom mohli vrátit `row` v media query. */
     align-items: center;
     gap: 15px;
 }
@@ -458,15 +515,15 @@ body {
 
 /* --- Liquid Glass Effect (vylepšený) --- */
 .glass-effect {
-    background: rgba(255, 255, 255, 0.6); /* Průhlednější bílé pozadí */
+    background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-    border: 1px solid rgba(var(--color-primary-light-rgb), 0.15); /* Jemnější okraj s průhledností */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Výraznější stín pro hloubku */
-    border-radius: 18px; /* Ještě větší zaoblení */
+    border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 18px;
     position: relative;
     overflow: hidden;
-    margin-bottom: 40px; /* Mezera mezi glass sekcemi */
+    margin-bottom: 40px;
 }
 
 .glass-effect::before {
@@ -487,23 +544,22 @@ body {
     opacity: 0.9;
 }
 
-/* Vnitřní okraj pro hloubku, simuluje tloušťku skla */
 .glass-effect::after {
     content: '';
     position: absolute;
-    top: 15px; /* Větší odsazení od okraje */
+    top: 15px;
     left: 15px;
     right: 15px;
     bottom: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.5); /* Výraznější vnitřní "odraz" */
-    border-radius: 15px; /* Mírně menší než rodič */
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
     pointer-events: none;
-    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3); /* Jemný vnitřní stín */
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 /* Variace glass efektu pro menší prvky */
 .glass-effect-small {
-    background: rgba(255, 255, 255, 0.7); /* Více průhledné */
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -538,7 +594,7 @@ body {
     transition: opacity var(--transition-speed) ease-out, transform var(--transition-speed) ease-out;
 }
 
-.reveal-on-scroll.is-visible {
+.reveal-on-scroll.is-visible { /* Změna názvu třídy pro JS, doporučeno */
     opacity: 1;
     transform: translateY(0);
 }
@@ -550,9 +606,177 @@ body {
 .reveal-on-scroll.delay-4 { transition-delay: 0.4s; }
 
 
+/* --- NOVÉ STYLY PRO CENÍK A KALKULAČKU --- */
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+    margin-bottom: 80px;
+}
+
+.price-card {
+    padding: 30px;
+    border-radius: 12px;
+    background-color: var(--color-background-white);
+    text-align: center;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.price-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.price-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.6em;
+    color: var(--color-primary-dark);
+    margin-bottom: 15px;
+}
+
+.price-card .price-from {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--color-accent);
+    margin-bottom: 20px;
+}
+
+.price-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.price-card ul li {
+    font-size: 1em;
+    color: var(--color-text-light);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.price-card ul li i {
+    color: var(--color-primary-light);
+    margin-right: 10px;
+    font-size: 1.1em;
+}
+
+.section-subtitle {
+    font-family: var(--font-heading);
+    font-size: 2em;
+    color: var(--color-primary-dark);
+    margin-top: 60px;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.section-subtitle::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--color-accent);
+    border-radius: 1.5px;
+}
+
+/* Styly pro kalkulační formulář */
+.calculator-form {
+    max-width: 700px;
+    margin: 40px auto 0;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.calculator-form .form-group {
+    margin-bottom: 25px;
+}
+
+.calculator-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    font-size: 1.1em;
+}
+
+.calculator-form input[type="text"],
+.calculator-form input[type="number"],
+.calculator-form input[type="email"],
+.calculator-form input[type="tel"],
+.calculator-form select,
+.calculator-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 1em;
+    color: var(--color-text-dark);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.calculator-form input:focus,
+.calculator-form select:focus,
+.calculator-form textarea:focus {
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-light-rgb), 0.2);
+    outline: none;
+}
+
+.calculator-form small {
+    display: block;
+    margin-top: 5px;
+    color: var(--color-text-light);
+    font-size: 0.9em;
+}
+
+.calculator-form .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.calculator-form .checkbox-group input[type="checkbox"] {
+    margin-right: 8px;
+    width: auto;
+}
+
+.calculator-form .checkbox-group label {
+    display: inline-flex;
+    align-items: center;
+    font-weight: normal;
+    margin-bottom: 0;
+    font-size: 1em;
+}
+
 /* --- Responzivní design (Media Queries) --- */
 
+/* Všeobecné úpravy pro velikost písma a padding kontejneru */
+@media (max-width: 1200px) {
+    .container {
+        padding: 0 30px; /* Mírné zmenšení paddingu pro větší laptopy/menší desktopy */
+    }
+}
+
 @media (max-width: 992px) {
+    /* Logo a Header */
+    :root {
+        --header-height: 80px; /* Mírně snížíme výšku headeru */
+    }
+    .logo {
+        font-size: 2.2em; /* Zmenšit velikost loga pro menší obrazovky */
+    }
+    .logo-img {
+        height: 70px; /* Snížit velikost obrázku loga */
+    }
     .hero-content h1 {
         font-size: 2.8em;
     }
@@ -568,27 +792,38 @@ body {
     .services-grid, .features-list {
         gap: 20px;
     }
-    .gallery-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    .pricing-grid {
+        gap: 25px; /* Mírně menší mezery */
     }
 }
 
 @media (max-width: 768px) {
+    /* Změny pro tablety (na šířku) a menší laptopy */
+    .container {
+        padding: 0 25px; /* Menší padding na tabletech */
+    }
+    :root {
+        --header-height: 70px; /* Dále snížíme výšku headeru pro tablety */
+    }
+    .main-header .container {
+        justify-content: space-between; /* Zajistí, že logo a toggle jsou na koncích */
+    }
     .main-header .nav-list {
         display: none; /* Skryje navigační odkazy */
         flex-direction: column;
         width: 100%;
         position: absolute;
-        top: 100%; /* Pod headerem */
+        top: var(--header-height); /* Pod headerem - využívá proměnnou */
         left: 0;
         background-color: var(--color-primary-dark);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        padding: 20px;
+        padding: 20px 0; /* Vertikální padding */
         border-radius: 0 0 12px 12px;
         opacity: 0;
         visibility: hidden;
         transform: translateY(-10px);
         transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        box-sizing: border-box; /* Zajistí, že padding nezpůsobí přetečení šířky */
     }
 
     .main-header .nav-list.active {
@@ -599,11 +834,11 @@ body {
     }
 
     .main-header .nav-list li {
-        margin: 10px 0;
+        margin: 0; /* Odebereme margin mezi li prvky */
     }
     .main-header .nav-list a {
         display: block;
-        padding: 10px 0;
+        padding: 10px 20px; /* Horizontální padding pro odkazy */
         text-align: center;
         width: 100%;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -614,6 +849,13 @@ body {
 
     .menu-toggle {
         display: block; /* Zobrazí tlačítko pro přepínání menu */
+        font-size: 2em; /* Mírně větší ikona pro snadnější kliknutí */
+    }
+    .logo {
+        font-size: 2em; /* Dále zmenšit logo */
+    }
+    .logo-img {
+        height: 60px; /* Dále zmenšit obrázek loga */
     }
 
     .hero-section {
@@ -635,28 +877,67 @@ body {
     .section-title {
         font-size: 2em;
     }
-    .services-grid, .features-list, .gallery-grid {
-        grid-template-columns: 1fr; /* Jeden sloupec na mobilu */
+    .services-grid, .features-list, .pricing-grid {
+        grid-template-columns: 1fr; /* Jeden sloupec na tabletu/mobilu */
+        gap: 30px; /* Více mezery mezi kartami */
     }
-    .service-item, .feature-item, .gallery-grid img {
+    .service-item, .feature-item, .price-card {
         margin: 0 auto; /* Centrování jednoho prvku */
-        max-width: 400px; /* Omezení šířky */
+        max-width: 450px; /* Omezení šířky pro tablety */
     }
     .contact-form {
         padding: 30px;
     }
+    .section-subtitle {
+        font-size: 1.6em;
+    }
+    .calculator-form {
+        padding: 30px;
+        max-width: 550px; /* Mírně menší max-width pro kalkulačku */
+    }
+
+    /* Kontaktní info - úprava pro svislé zobrazení */
+    .contact-info p {
+        flex-direction: column; /* Ikona nad textem */
+        gap: 5px;
+        margin-bottom: 15px; /* Více mezery mezi kontaktními údaji */
+    }
+    .contact-info i {
+        margin-right: 0;
+        margin-bottom: 5px; /* Mezera pod ikonou */
+    }
+
+    /* Patička */
+    .main-footer .container {
+        flex-direction: column; /* Aby byly prvky pod sebou */
+    }
+    .main-footer p {
+        margin-bottom: 10px; /* Mezera pod copyrightem */
+    }
 }
 
 @media (max-width: 480px) {
-    .main-header {
-        padding: 15px 0;
+    /* Změny pro malé mobilní telefony */
+    .container {
+        padding: 0 15px; /* Nejmenší padding na okrajích */
+    }
+    :root {
+        --header-height: 60px; /* Nejmenší výška headeru */
     }
     .logo {
-        font-size: 1.5em;
+        font-size: 1.5em; /* Ještě menší písmo loga */
+        gap: 5px;
     }
+    .logo-img {
+        height: 45px; /* Ještě menší obrázek loga */
+    }
+    .main-header .nav-list a {
+        padding: 8px 15px; /* Menší padding pro odkazy v mobilním menu */
+    }
+
     .hero-section {
         padding: 60px 15px;
-        min-height: 50vh;
+        min-height: 45vh; /* Mírně nižší hero sekce */
     }
     .hero-content h1 {
         font-size: 1.8em;
@@ -679,22 +960,34 @@ body {
         width: 60px;
         height: 3px;
     }
-    .contact-info p {
-        font-size: 1em;
-        flex-direction: column; /* Info pod sebou */
-        gap: 5px;
+    
+    .service-item, .feature-item, .price-card {
+        max-width: 100%; /* Plná šířka na nejmenších obrazovkách */
+        padding: 25px; /* Menší padding uvnitř karet */
     }
-    .contact-info i {
-        margin-right: 0;
-        margin-bottom: 5px;
+    .service-item i {
+        font-size: 3em;
+        margin-bottom: 20px;
     }
+    .service-item h3 {
+        font-size: 1.4em;
+    }
+    .service-item p {
+        font-size: 0.95em;
+        margin-bottom: 20px;
+    }
+    .service-item .btn {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
     .contact-form {
         padding: 25px;
     }
     .form-group label {
         font-size: 0.9em;
     }
-    .form-group input, .form-group textarea {
+    .form-group input, .form-group textarea, .form-group select {
         padding: 10px;
         font-size: 0.9em;
     }
@@ -707,7 +1000,8 @@ body {
     .social-links a {
         font-size: 1.2em;
     }
-    /* Upravit glass effect na menších zařízeních */
+    
+    /* Úpravit glass effect na menších zařízeních */
     .glass-effect, .glass-effect-small {
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -718,5 +1012,41 @@ body {
         right: 10px;
         bottom: 10px;
         border-radius: 8px;
+    }
+    .pricing-grid {
+        gap: 20px;
+    }
+    .price-card h3 {
+        font-size: 1.4em;
+    }
+    .price-card .price-from {
+        font-size: 1.5em;
+    }
+    .section-subtitle {
+        font-size: 1.4em;
+        margin-top: 40px;
+    }
+    .calculator-form {
+        padding: 20px;
+    }
+    .calculator-form label {
+        font-size: 1em;
+    }
+    .calculator-form input,
+    .calculator-form select,
+    .calculator-form textarea {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+}
+
+/* Desktop-specific adjustments (Optional, if you want something specific only for large screens) */
+@media (min-width: 1101px) { /* Adjust if your .container max-width is different */
+    .main-footer .container {
+        flex-direction: row; /* Zpět na řádek pro desktop, pokud chcete */
+        justify-content: space-between;
+    }
+    .main-footer p {
+        margin-bottom: 0;
     }
 }
