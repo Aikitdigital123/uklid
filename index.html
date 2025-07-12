@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlroj2J/uH1gD9n2r8Q4F5iQ9d4Z6q5t8/Rj8S9s2aF+Kz8n5a5G2E3+C0A3P4J7N5L6F7L8X0Z5A9M2Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -19,7 +19,10 @@
 
     <header class="main-header">
         <div class="container">
-            <a href="#" class="logo">Lesktop</a>
+            <a href="#hero" class="logo">
+                <img src="images/Domecek.png" alt="Lesktop Logo" class="logo-img">
+                Lesktop
+            </a>
             <nav class="main-nav">
                 <button class="menu-toggle" aria-label="Přepnout menu">
                     <i class="fas fa-bars"></i>
@@ -29,7 +32,7 @@
                     <li><a href="#about">O nás</a></li>
                     <li><a href="#services">Služby</a></li>
                     <li><a href="#features">Proč my?</a></li>
-                    <li><a href="#gallery">Galerie</a></li>
+                    <li><a href="#pricing">Ceník</a></li>
                     <li><a href="#contact">Kontakt</a></li>
                 </ul>
             </nav>
@@ -54,30 +57,46 @@
             </div>
         </section>
 
-        <section id="services" class="content-section bg-offwhite reveal-on-scroll">
+        <section class="content-section" id="services">
             <div class="container">
-                <h2 class="section-title">Naše služby</h2>
+                <h2 class="section-title reveal-on-scroll">Naše služby</h2>
+                <p class="reveal-on-scroll delay-1">Nabízíme komplexní úklidové služby pro domácnosti i firmy. Vše přizpůsobíme vašim individuálním potřebám.</p>
+
                 <div class="services-grid">
-                    <div class="service-item glass-effect-small reveal-on-scroll delay-1">
-                        <i class="fas fa-broom"></i>
-                        <h3>Pravidelný a jednorázový úklid</h3>
-                        <p>Zajistíme pravidelný úklid vaší domácnosti či kanceláře, nebo jednorázové čištění po rekonstrukci.</p>
+
+                    <div class="service-item reveal-on-scroll delay-2 glass-effect-small">
+                        <i class="fas fa-sync-alt"></i> <h3>Pravidelný úklid domácností</h3>
+                        <p>Udržujte svůj domov neustále svěží a čistý s našimi pravidelnými úklidovými plány. Frekvenci a rozsah úklidu přizpůsobíme přesně vašim požadavkům.</p>
+                        <a href="#pricing" class="btn btn-secondary">Zjistit více & kalkulace</a> </div>
+
+                    <div class="service-item reveal-on-scroll delay-3 glass-effect-small">
+                        <i class="fas fa-broom"></i> <h3>Jednorázový a generální úklid</h3>
+                        <p>Potřebujete důkladný úklid po stěhování, rekonstrukci, oslavě nebo jen jarní úklid? Jsme připraveni vyčistit každý kout vašeho bytu či domu.</p>
+                        <a href="#pricing" class="btn btn-secondary">Zjistit více & kalkulace</a> </div>
+
+                    <div class="service-item reveal-on-scroll delay-4 glass-effect-small">
+                        <i class="fas fa-building"></i> <h3>Úklid kanceláří a komerčních prostor</h3>
+                        <p>Zajistíme profesionální čistotu pro vaše podnikání. Od pravidelné údržby až po hloubkové čištění kanceláří, obchodů a společných prostor.</p>
+                        <a href="#pricing" class="btn btn-secondary">Zjistit více & kalkulace</a> </div>
+
+                    <div class="service-item reveal-on-scroll delay-2 glass-effect-small">
+                        <i class="fas fa-tint"></i> <h3>Mytí oken a další doplňkové služby</h3>
+                        <p>Nabízíme precizní mytí oken, žehlení prádla, čištění koberců a čalounění. Vše dle individuální domluvy a vašich specifických přání.</p>
+                        <a href="#contact" class="btn btn-secondary">Kontaktujte nás</a>
                     </div>
-                    <div class="service-item glass-effect-small reveal-on-scroll delay-2">
-                        <i class="fas fa-house-cleaning"></i>
-                        <h3>Úklid bytů, domů a kanceláří</h3>
-                        <p>Specializujeme se na důkladný úklid všech typů prostor, od malých bytů po velké kancelářské komplexy.</p>
+
+                    <div class="service-item reveal-on-scroll delay-3 glass-effect-small">
+                        <i class="fas fa-leaf"></i> <h3>Ekologický přístup a šetrné prostředky</h3>
+                        <p>Dbáme na zdraví vašich blízkých i životní prostředí. Používáme certifikované ekologické čisticí prostředky, které jsou účinné a bezpečné.</p>
+                        <a href="#contact" class="btn btn-secondary">Zjistěte více</a>
                     </div>
-                    <div class="service-item glass-effect-small reveal-on-scroll delay-3">
-                        <i class="fas fa-spray-can"></i>
-                        <h3>Mytí oken a další</h3>
-                        <p>Nabízíme profesionální mytí oken, žehlení prádla a další služby podle individuální domluvy.</p>
+
+                    <div class="service-item reveal-on-scroll delay-4 glass-effect-small">
+                        <i class="fas fa-handshake"></i> <h3>Individuální plán a flexibilita</h3>
+                        <p>Ke každému klientovi přistupujeme individuálně. Vytvoříme úklidový plán na míru a přizpůsobíme se vašemu rozvrhu a specifickým požadavkům.</p>
+                        <a href="#contact" class="btn btn-secondary">Domluvit detaily</a>
                     </div>
-                    <div class="service-item glass-effect-small reveal-on-scroll delay-4">
-                        <i class="fas fa-leaf"></i>
-                        <h3>Ekologický přístup</h3>
-                        <p>Používáme šetrné a ekologicky certifikované čisticí prostředky pro zdravé prostředí.</p>
-                    </div>
+                    
                 </div>
             </div>
         </section>
@@ -109,18 +128,118 @@
                 </div>
             </div>
         </section>
-
-        <section id="gallery" class="content-section bg-offwhite reveal-on-scroll">
+    
+        <section id="pricing" class="content-section bg-offwhite reveal-on-scroll">
             <div class="container">
-                <h2 class="section-title">Galerie naší práce</h2>
-                <div class="gallery-grid">
-                    <img src="images/cleaning_girl.png" alt="Úklidová pracovnice" class="reveal-on-scroll delay-1">
-                    <img src="images/cleaning_products.png" alt="Ekologické úklidové prostředky" class="reveal-on-scroll delay-2">
-                    <img src="images/clinching_car.png" alt="Profesionální úklidové vybavení" class="reveal-on-scroll delay-3">
+                <h2 class="section-title">Ceník a nezávazná kalkulace</h2>
+                <p>Naše ceny jsou transparentní a flexibilní, přizpůsobené vašim individuálním potřebám. Získejte rychlý odhad ceny úklidu pomocí naší kalkulačky.</p>
+                
+                <div class="pricing-grid">
+                    <div class="price-card glass-effect-small reveal-on-scroll delay-1">
+                        <h3>Pravidelný úklid domácností</h3>
+                        <p class="price-from">od <strong>350 Kč / hod</strong></p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Individuální plán</li>
+                            <li><i class="fas fa-check-circle"></i> Ekologické prostředky</li>
+                            <li><i class="fas fa-check-circle"></i> Zkušení pracovníci</li>
+                        </ul>
                     </div>
+                    <div class="price-card glass-effect-small reveal-on-scroll delay-2">
+                        <h3>Jednorázový úklid</h3>
+                        <p class="price-from">od <strong>450 Kč / hod</strong></p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Po stěhování/rekonstrukci</li>
+                            <li><i class="fas fa-check-circle"></i> Hloubkové čištění</li>
+                            <li><i class="fas fa-check-circle"></i> Bez závazků</li>
+                        </ul>
+                    </div>
+                    <div class="price-card glass-effect-small reveal-on-scroll delay-3">
+                        <h3>Komerční prostory</h3>
+                        <p class="price-from">Individuální nabídka</p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Kanceláře, obchody</li>
+                            <li><i class="fas fa-check-circle"></i> Flexibilní časy</li>
+                            <li><i class="fas fa-check-circle"></i> Pravidelná péče</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 class="section-subtitle">Nezávazná kalkulace úklidu</h3>
+                <p>Vyplňte prosím následující formulář a my vám obratem zašleme nezávaznou cenovou nabídku.</p>
+
+                <form class="calculator-form glass-effect-small" id="kalkulacka" action="https://api.web3forms.com/submit" method="POST">
+                    <input type="hidden" name="access_key" value="4e724eab-1a15-4f9c-9c19-caa25c2b95fc">
+                    <input type="hidden" name="subject" value="Nová poptávka z kalkulačky úklidu - Lesktop">
+
+                    <div class="form-group">
+                        <label for="cleaningType">Typ úklidu:</label>
+                        <select id="cleaningType" name="cleaningType" required>
+                            <option value="">Vyberte typ úklidu</option>
+                            <option value="regular_home">Pravidelný úklid domácnosti</option>
+                            <option value="one_time_home">Jednorázový úklid domácnosti</option>
+                            <option value="post_construction">Úklid po rekonstrukci/stěhování</option>
+                            <option value="commercial">Úklid komerčních prostor (kanceláře, obchody)</option>
+                            <option value="windows_only">Mytí oken (samostatně)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="areaSize">Přibližná velikost plochy (v m²):</label>
+                        <input type="number" id="areaSize" name="areaSize" min="10" placeholder="Např. 80" required>
+                        <small>Uveďte celkovou plochu pro úklid.</small>
+                    </div>
+
+                    <div class="form-group" id="frequencyGroup" style="display: none;">
+                        <label for="cleaningFrequency">Frekvence úklidu:</label>
+                        <select id="cleaningFrequency" name="cleaningFrequency">
+                            <option value="weekly">Týdně</option>
+                            <option value="bi-weekly">Jednou za 14 dní</option>
+                            <option value="monthly">Měsíčně</option>
+                            <option value="other">Jiné (uvedu v poznámce)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="extraServices">Doplňkové služby (volitelné):</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="windowsCleaning" name="extraServices[]" value="Mytí oken">
+                            <label for="windowsCleaning">Mytí oken</label><br>
+                            <input type="checkbox" id="ironing" name="extraServices[]" value="Žehlení prádla">
+                            <label for="ironing">Žehlení prádla</label><br>
+                            <input type="checkbox" id="ovenCleaning" name="extraServices[]" value="Čištění trouby">
+                            <label for="ovenCleaning">Čištění trouby</label><br>
+                            <input type="checkbox" id="fridgeCleaning" name="extraServices[]" value="Čištění lednice">
+                            <label for="fridgeCleaning">Čištění lednice</label><br>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerName">Vaše jméno:</label>
+                        <input type="text" id="customerName" name="customerName" required placeholder="Jméno a příjmení">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerEmail">Váš e-mail:</label>
+                        <input type="email" id="customerEmail" name="customerEmail" required placeholder="vas@email.cz">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerPhone">Váš telefon (volitelné):</label>
+                        <input type="tel" id="customerPhone" name="customerPhone" placeholder="+420 123 456 789">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Doplňující poznámky (specifikace, preferovaný termín):</label>
+                        <textarea id="notes" name="notes" rows="4" placeholder="Např. úklid bytu 2+kk, preferuji úterky dopoledne..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Získat nezávaznou nabídku</button>
+                    <div id="calculator-status" class="form-status"></div>
+                </form>
+
             </div>
         </section>
-
+        
         <section id="contact" class="content-section glass-effect reveal-on-scroll">
             <div class="container">
                 <h2 class="section-title">Kontaktujte nás</h2>
@@ -128,7 +247,7 @@
                 <div class="contact-info">
                     <p><i class="fas fa-phone-alt"></i> Telefon: <strong>+420 775 344 145</strong></p>
                     <p><i class="fas fa-envelope"></i> E-mail: <a href="mailto:team@lesktop.cz"><strong>team@lesktop.cz</strong></a></p>
-                    <p><i class="fas fa-map-marker-alt"></i> Působíme v <strong>Praze a Středních Čechách</strong></p>
+                    <p><i class="fas fa-map-marker-alt"></i> Působíme v Praze a Středních Čechách</p>
                 </div>
                 <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
                 <input type="hidden" name="access_key" value="4e724eab-1a15-4f9c-9c19-caa25c2b95fc">
@@ -145,7 +264,7 @@
                     <textarea id="message" name="Zprava" rows="6" required placeholder="Popište, s čím potřebujete pomoci..."></textarea> </div>
                 <button type="submit" class="btn btn-primary">Odeslat poptávku</button>
                 <div id="form-status" class="form-status"></div>
-            </form>
+                </form>
             </div>
         </section>
     </main>
