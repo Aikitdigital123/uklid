@@ -69,50 +69,61 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Odeslání kontaktního formuláře (simulace)
+    // --- Zde začíná upravená část pro odesílání kontaktního formuláře pomocí Web3Forms ---
     const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('form-status');
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Zabrání výchozímu odeslání
+    if (contactForm && formStatus) {
+        contactForm.addEventListener('submit', async function(event) {
+            event.preventDefault(); // Zabrání výchozímu odeslání prohlížeče
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
+            // Zobrazíme "Odesílám..." hned po kliknutí
+            formStatus.textContent = 'Odesílám...';
+            formStatus.classList.remove('success', 'error');
+            formStatus.style.display = 'block';
 
-            if (name && email && message) {
-                // Simulace AJAX požadavku (např. odeslání na server)
-                // V reálné aplikaci byste zde použili fetch() API:
-                // fetch('vase_server_endpoint.php', {
-                //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json' },
-                //     body: JSON.stringify({ name, email, message })
-                // })
-                // .then(response => response.json())
-                // .then(data => { /* zpracovat odpověď */ })
-                // .catch(error => { /* zpracovat chybu */ });
+            const formData = new FormData(contactForm); // Získáme data z formuláře
 
-                console.log('Formulář odeslán:', { name, email, message });
+            try {
+                // Používáme Web3Forms API endpoint a metodu POST, jak je definováno v HTML action a method
+                const response = await fetch(contactForm.action, {
+                    method: contactForm.method,
+                    body: formData, // FormData automaticky nastaví správný Content-Type
+                    headers: {
+                        'Accept': 'application/json' // Očekáváme JSON odpověď z Web3Forms
+                    }
+                });
 
-                formStatus.textContent = 'Děkujeme! Vaše zpráva byla úspěšně odeslána.';
-                formStatus.classList.remove('error');
-                formStatus.classList.add('success');
-                contactForm.reset(); // Vymaže formulář
-            } else {
-                formStatus.textContent = 'Prosím, vyplňte všechna pole.';
+                const result = await response.json(); // Převedeme odpověď na JSON
+
+                if (result.success) {
+                    formStatus.textContent = 'Děkujeme! Vaše zpráva byla úspěšně odeslána.';
+                    formStatus.classList.remove('error');
+                    formStatus.classList.add('success');
+                    contactForm.reset(); // Vymaže formulář po úspěšném odeslání
+                } else {
+                    // Web3Forms vrátí zprávu o chybě v 'message' atributu
+                    formStatus.textContent = result.message || 'Při odesílání zprávy došlo k chybě. Zkuste to prosím později.';
+                    formStatus.classList.remove('success');
+                    formStatus.classList.add('error');
+                }
+            } catch (error) {
+                console.error('Chyba při odesílání formuláře:', error);
+                formStatus.textContent = 'Při odesílání zprávy došlo k chybě sítě. Zkuste to prosím později.';
                 formStatus.classList.remove('success');
                 formStatus.classList.add('error');
+            } finally {
+                // Zpráva zmizí po 5 sekundách
+                setTimeout(() => {
+                    formStatus.textContent = '';
+                    formStatus.classList.remove('success', 'error');
+                    formStatus.style.display = 'none';
+                }, 5000); 
             }
-
-            // Zobrazení statusu na krátkou dobu
-            setTimeout(() => {
-                formStatus.textContent = '';
-                formStatus.classList.remove('success', 'error');
-                formStatus.style.display = 'none'; // Skryje prvek
-            }, 5000); // Zpráva zmizí po 5 sekundách
         });
     }
+    // --- Konec upravené části pro odesílání kontaktního formuláře ---
+
 
     // Volitelné: Automatické nastavení aktivní třídy navigace při scrollování
     const sections = document.querySelectorAll('section');
