@@ -19,14 +19,14 @@
     --color-error: #dc3545;
 
     /* RGB hodnoty pro průhlednost (použito pro rgba()) */
-    --color-primary-light-rgb: 76, 98, 146; 
+    --color-primary-light-rgb: 76, 98, 146;
 
     --font-heading: 'Montserrat', sans-serif;
     --font-body: 'Open Sans', sans-serif;
 
     --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08);
     --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.12);
-    --transition-speed: 0.4s; 
+    --transition-speed: 0.4s;
     --glass-blur: 12px;
     --glass-saturate: 180%;
 
@@ -36,7 +36,11 @@
 
 body {
     font-family: var(--font-body);
-    background-color: var(--color-background-white);
+    /* Zde přidáme pozadí celé stránky */
+    background: url('images/hero-background.jpg') no-repeat center center fixed;
+    background-size: cover; /* Důležité pro pokrytí celé plochy a přizpůsobení */
+    background-color: var(--color-background-white); /* Záložní barva, pokud se obrázek nenačte */
+
     color: var(--color-text-dark);
     line-height: 1.6;
     display: flex;
@@ -44,6 +48,13 @@ body {
     min-height: 100vh;
     overflow-x: hidden; /* Důležité pro zamezení horizontálního scrollu */
 }
+
+/* Zajištění, aby fixní/sticky header nepřekrýval obsah při skrolování na ID */
+html {
+    scroll-padding-top: var(--header-height); /* Odsazení od vrchu podle výšky headeru */
+    scroll-behavior: smooth; /* Plynulé skrolování */
+}
+
 
 .container {
     max-width: 1100px;
@@ -56,8 +67,8 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px; 
-    
+    gap: 10px;
+
     font-size: 2.8em; /* Změna: Dynamičtější font-size */
     font-weight: 700;
     line-height: 1;
@@ -67,15 +78,15 @@ body {
 }
 
 .logo-img {
-    height: 90px; /* Změna: Sníženo, aby se lépe vešlo na mobilu, na desktopu se bude auto-škálovat s font-size textu loga. Pokud byste chtěli pevně 130px na desktopu, budeme to muset dát do media query. */
+    height: 100px;
     width: auto;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2)); 
-    transition: transform 0.3s ease; 
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
     vertical-align: middle;
 }
 
 .logo:hover .logo-img {
-    transform: scale(1.05); 
+    transform: scale(1.05);
 }
 
 .logo:hover {
@@ -149,7 +160,9 @@ body {
 
 /* --- Hero Sekce --- */
 .hero-section {
-    background: linear-gradient(rgba(58, 71, 104, 0.8), rgba(58, 71, 104, 0.8)), url('images/hero-background.jpg') no-repeat center center/cover;
+    /* Odebrali jsme background image odsud, protože je nyní na body */
+    /* Změna: Snížíme průhlednost překrytí, aby bylo pozadí více viditelné */
+    background: linear-gradient(rgba(58, 71, 104, 0.5), rgba(58, 71, 104, 0.5)); /* Snížena průhlednost na 0.5 */
     color: var(--color-background-white);
     text-align: center;
     padding: 120px 20px;
@@ -206,10 +219,13 @@ body {
 .content-section {
     padding: 80px 0;
     text-align: center;
+    /* Změna: Snížena průhlednost na 0.6 pro "O nás" a další standardní obsahové sekce */
+    background-color: rgba(245, 248, 252, 0.6); /* var(--color-background-offwhite) s průhledností */
 }
 
 .content-section:nth-of-type(even) {
-    background-color: var(--color-background-offwhite);
+    /* Změna: Také s průhledností pro střídavé sekce, o něco vyšší než liché */
+    background-color: rgba(245, 248, 252, 0.5); /* Mírně vyšší průhlednost pro sudé sekce */
 }
 
 .section-title {
@@ -253,10 +269,8 @@ body {
     padding: 35px;
     border-radius: 12px;
     box-shadow: var(--shadow-light);
-    background-color: var(--color-background-white);
-    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-    
-    background: rgba(255, 255, 255, 0.7);
+    /* Změna: Více průhledné pozadí pro karty */
+    background: rgba(255, 255, 255, 0.4); /* Snížena průhlednost na 0.4 */
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -274,9 +288,9 @@ body {
     bottom: 0;
     background: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.05) 0%, /* Snížena průhlednost */
         rgba(255, 255, 255, 0) 50%,
-        rgba(255, 255, 255, 0.05) 100%
+        rgba(255, 255, 255, 0.02) 100% /* Snížena průhlednost */
     );
     border-radius: inherit;
     pointer-events: none;
@@ -331,10 +345,6 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* Responzivní úpravy pro tuto sekci (už zde jsou, ale ponecháme a doplníme) */
-/* `@media (max-width: 768px)` a `@media (max-width: 480px)` jsou definovány níže */
-
-
 /* --- Features List (Proč my?) --- */
 .features-list {
     display: grid;
@@ -346,10 +356,14 @@ body {
 .feature-item {
     text-align: center;
     padding: 30px;
-    background-color: var(--color-background-white);
     border-radius: 12px;
     box-shadow: var(--shadow-light);
     transition: background-color var(--transition-speed);
+    /* Změna: Více průhledné pozadí pro karty */
+    background: rgba(255, 255, 255, 0.4); /* Snížena průhlednost na 0.4 */
+    backdrop-filter: blur(8px) saturate(150%);
+    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
 }
 
 .feature-item i {
@@ -384,7 +398,7 @@ body {
     align-items: center;
     justify-content: center;
     max-width: none;
-    text-align: center; /* Změna: Aby byl text vycentrován v případě flex-direction: column */
+    text-align: center;
 }
 
 .contact-info i {
@@ -407,11 +421,15 @@ body {
 .contact-form {
     max-width: 600px;
     margin: 0 auto;
-    background-color: var(--color-background-white);
     padding: 40px;
     border-radius: 12px;
     box-shadow: var(--shadow-medium);
     text-align: left;
+    /* Změna: Více průhledné pozadí pro kontaktní formulář */
+    background: rgba(255, 255, 255, 0.5); /* Snížena průhlednost na 0.5 */
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
 }
 
 .form-group {
@@ -483,8 +501,8 @@ body {
 /* --- Patička (Footer) --- */
 .main-footer {
     background-color: var(--color-primary-dark);
-    color: var(--color-background-white);
     padding: 40px 0;
+    color: var(--color-background-white);
     text-align: center;
     font-size: 0.95em;
     margin-top: auto;
@@ -492,7 +510,7 @@ body {
 
 .main-footer .container {
     display: flex;
-    flex-direction: column; /* Změna: Ve výchozím stavu (desktop) budou prvky pod sebou. Pro desktop bychom mohli vrátit `row` v media query. */
+    flex-direction: column; /* Výchozí pro mobily */
     align-items: center;
     gap: 15px;
 }
@@ -514,8 +532,11 @@ body {
 }
 
 /* --- Liquid Glass Effect (vylepšený) --- */
+/* Tyto třídy už se pravděpodobně nebudou používat přímo,
+   protože efekt aplikujeme přímo na elementy jako service-item, feature-item, contact-form, pricing-grid */
 .glass-effect {
-    background: rgba(255, 255, 255, 0.6);
+    /* Změna: Více průhledné pozadí */
+    background: rgba(255, 255, 255, 0.3); /* Snížena průhlednost na 0.3 */
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
@@ -535,13 +556,13 @@ body {
     bottom: 0;
     background: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.2) 0%, 
+        rgba(255, 255, 255, 0.05) 0%, /* Snížena průhlednost */
         rgba(255, 255, 255, 0) 50%,
-        rgba(255, 255, 255, 0.1) 100%
+        rgba(255, 255, 255, 0.02) 100% /* Snížena průhlednost */
     );
     border-radius: inherit;
     pointer-events: none;
-    opacity: 0.9;
+    opacity: 0.8;
 }
 
 .glass-effect::after {
@@ -559,7 +580,8 @@ body {
 
 /* Variace glass efektu pro menší prvky */
 .glass-effect-small {
-    background: rgba(255, 255, 255, 0.7);
+    /* Změna: Více průhledné pozadí */
+    background: rgba(255, 255, 255, 0.4); /* Snížena průhlednost na 0.4 */
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -578,9 +600,9 @@ body {
     bottom: 0;
     background: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.05) 0%, /* Snížena průhlednost */
         rgba(255, 255, 255, 0) 50%,
-        rgba(255, 255, 255, 0.05) 100%
+        rgba(255, 255, 255, 0.02) 100% /* Snížena průhlednost */
     );
     border-radius: inherit;
     pointer-events: none;
@@ -618,9 +640,13 @@ body {
 .price-card {
     padding: 30px;
     border-radius: 12px;
-    background-color: var(--color-background-white);
     text-align: center;
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    /* Změna: Více průhledné pozadí pro karty */
+    background: rgba(255, 255, 255, 0.4); /* Snížena průhlednost na 0.4 */
+    backdrop-filter: blur(8px) saturate(150%);
+    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
 }
 
 .price-card:hover {
@@ -686,20 +712,26 @@ body {
     border-radius: 1.5px;
 }
 
-/* Styly pro kalkulační formulář */
-.calculator-form {
+/* Styly pro kalkulační formulář - Cílíme na ID 'kalkulacka' */
+#kalkulacka {
     max-width: 700px;
     margin: 40px auto 0;
     padding: 40px;
     border-radius: 12px;
     text-align: left;
+    box-shadow: var(--shadow-medium);
+    /* Změna: Více průhledné pozadí pro kalkulačku */
+    background: rgba(255, 255, 255, 0.5); /* Snížena průhlednost na 0.5 */
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
 }
 
-.calculator-form .form-group {
+#kalkulacka .form-group {
     margin-bottom: 25px;
 }
 
-.calculator-form label {
+#kalkulacka label {
     display: block;
     margin-bottom: 10px;
     font-weight: 600;
@@ -707,12 +739,12 @@ body {
     font-size: 1.1em;
 }
 
-.calculator-form input[type="text"],
-.calculator-form input[type="number"],
-.calculator-form input[type="email"],
-.calculator-form input[type="tel"],
-.calculator-form select,
-.calculator-form textarea {
+#kalkulacka input[type="text"],
+#kalkulacka input[type="number"],
+#kalkulacka input[type="email"],
+#kalkulacka input[type="tel"],
+#kalkulacka select,
+#kalkulacka textarea {
     width: 100%;
     padding: 12px 15px;
     border: 1px solid var(--color-border);
@@ -723,39 +755,45 @@ body {
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.calculator-form input:focus,
-.calculator-form select:focus,
-.calculator-form textarea:focus {
+#kalkulacka input:focus,
+#kalkulacka select:focus,
+#kalkulacka textarea:focus {
     border-color: var(--color-primary-light);
     box-shadow: 0 0 0 3px rgba(var(--color-primary-light-rgb), 0.2);
     outline: none;
 }
 
-.calculator-form small {
+#kalkulacka small {
     display: block;
     margin-top: 5px;
     color: var(--color-text-light);
     font-size: 0.9em;
 }
 
-.calculator-form .checkbox-group {
+#kalkulacka .checkbox-group {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
 }
 
-.calculator-form .checkbox-group input[type="checkbox"] {
+#kalkulacka .checkbox-group input[type="checkbox"] {
     margin-right: 8px;
     width: auto;
 }
 
-.calculator-form .checkbox-group label {
+#kalkulacka .checkbox-group label {
     display: inline-flex;
     align-items: center;
     font-weight: normal;
     margin-bottom: 0;
     font-size: 1em;
 }
+
+/* Skrytí pole frekvence, pokud není relevantní (JS to přepíná) */
+#frequencyGroup {
+    display: none; /* Výchozí skrytí */
+}
+
 
 /* --- Responzivní design (Media Queries) --- */
 
@@ -891,7 +929,8 @@ body {
     .section-subtitle {
         font-size: 1.6em;
     }
-    .calculator-form {
+    /* Cílení na ID 'kalkulacka' v media query */
+    #kalkulacka {
         padding: 30px;
         max-width: 550px; /* Mírně menší max-width pro kalkulačku */
     }
@@ -960,7 +999,7 @@ body {
         width: 60px;
         height: 3px;
     }
-    
+
     .service-item, .feature-item, .price-card {
         max-width: 100%; /* Plná šířka na nejmenších obrazovkách */
         padding: 25px; /* Menší padding uvnitř karet */
@@ -1000,7 +1039,7 @@ body {
     .social-links a {
         font-size: 1.2em;
     }
-    
+
     /* Úpravit glass effect na menších zařízeních */
     .glass-effect, .glass-effect-small {
         border-radius: 10px;
@@ -1026,24 +1065,25 @@ body {
         font-size: 1.4em;
         margin-top: 40px;
     }
-    .calculator-form {
+    /* Cílení na ID 'kalkulacka' v media query */
+    #kalkulacka {
         padding: 20px;
     }
-    .calculator-form label {
+    #kalkulacka label {
         font-size: 1em;
     }
-    .calculator-form input,
-    .calculator-form select,
-    .calculator-form textarea {
+    #kalkulacka input,
+    #kalkulacka select,
+    #kalkulacka textarea {
         padding: 10px;
         font-size: 0.9em;
     }
 }
 
-/* Desktop-specific adjustments (Optional, if you want something specific only for large screens) */
-@media (min-width: 1101px) { /* Adjust if your .container max-width is different */
+/* Desktop-specific adjustments */
+@media (min-width: 1101px) {
     .main-footer .container {
-        flex-direction: row; /* Zpět na řádek pro desktop, pokud chcete */
+        flex-direction: row; /* Zpět na řádek pro desktop */
         justify-content: space-between;
     }
     .main-footer p {
