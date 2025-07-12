@@ -1,18 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Smooth Scrolling pro navigační odkazy
     // Vybereme všechny odkazy, které začínají '#' a nejsou prázdné
-    document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => { // Změna: přidáno :not([href="#"]) aby se ignorovaly prázdné # odkazy
+    document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
 
             // Zavře mobilní menu, pokud je otevřené
             const navList = document.querySelector('.nav-list');
             const menuToggle = document.querySelector('.menu-toggle');
-            if (navList && menuToggle && navList.classList.contains('active')) { // Změna: Přidány kontroly, zda elementy existují
+            if (navList && menuToggle && navList.classList.contains('active')) {
                 navList.classList.remove('active');
                 // Změna ikony zpět na hamburgra
-                const icon = menuToggle.querySelector('i'); // Změna: Referenci na ikonu získáváme přímo
-                if (icon) { // Změna: Kontrola, zda ikona existuje
+                const icon = menuToggle.querySelector('i');
+                if (icon) {
                     icon.classList.remove('fa-times');
                     icon.classList.add('fa-bars');
                 }
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
 
-            if (targetElement) { // Změna: Kontrola, zda cílový prvek existuje
+            if (targetElement) {
                 targetElement.scrollIntoView({
                     behavior: 'smooth'
                 });
@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Volitelné: Přidat třídu 'active' k odkazu po kliknutí (pro vizuální zvýraznění)
+            // Tuto část by měl ideálně řešit ScrollSpy, ale pro okamžitou zpětnou vazbu po kliknutí je užitečná.
+            // Pokud ScrollSpy funguje správně, tato část může být redundance, ale nevadí.
             document.querySelectorAll('.main-nav .nav-list a').forEach(link => {
                 link.classList.remove('active');
             });
@@ -46,11 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
         threshold: 0.15 // 15% prvku je viditelných
     };
 
-    const observer = new IntersectionObserver((entries, observer) => {
+    const observer = new IntersectionObserver((entries, observerInstance) => { // Změna: observer přejmenován na observerInstance, aby se předešlo kolizi s vnější proměnnou 'observer'
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible'); // Změna: Třída je nyní 'is-visible' pro konzistenci s CSS
-                observer.unobserve(entry.target); // Zastaví pozorování, jakmile je animace spuštěna
+                entry.target.classList.add('is-visible');
+                observerInstance.unobserve(entry.target); // Zastaví pozorování, jakmile je animace spuštěna
             }
         });
     }, observerOptions);
@@ -68,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
             navList.classList.toggle('active');
             // Změna ikony hamburgra na křížek a zpět
             const icon = menuToggle.querySelector('i');
-            if (icon) { // Změna: Kontrola, zda ikona existuje
+            if (icon) {
                 if (navList.classList.contains('active')) {
                     icon.classList.remove('fa-bars');
                     icon.classList.add('fa-times'); // Křížek
@@ -79,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Změna: Zavření menu při změně velikosti okna (pokud se přepne na desktop)
+        // Zavření menu při změně velikosti okna (pokud se přepne na desktop)
         // Toto zabrání situaci, kdy mobilní menu zůstane otevřené na desktopu
         window.addEventListener('resize', () => {
             if (window.innerWidth > 768 && navList.classList.contains('active')) { // Předpokládáme breakpoint 768px
@@ -124,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     formStatusContact.classList.add('success');
                     contactForm.reset();
                 } else {
-                    console.error('Web3Forms response error for contact form:', result); // Logujeme celou odpověď
+                    console.error('Web3Forms response error for contact form:', result);
                     formStatusContact.textContent = result.message || 'Při odesílání zprávy došlo k chybě. Zkuste to prosím později.';
                     formStatusContact.classList.remove('success');
                     formStatusContact.classList.add('error');
@@ -139,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     formStatusContact.textContent = '';
                     formStatusContact.classList.remove('success', 'error');
                     formStatusContact.style.display = 'none';
-                }, 5000); 
+                }, 5000);
             }
         });
     }
@@ -147,22 +149,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- NOVÁ ČÁST: Logika pro kalkulační formulář (odesílání na Web3Forms) ---
-    const cleaningCalculatorForm = document.getElementById('cleaningCalculator');
+    // ZMĚNA: Zde je provedena klíčová změna ID formuláře
+    const cleaningCalculatorForm = document.getElementById('kalkulacka');
     const formStatusCalculator = document.getElementById('calculator-status');
     const cleaningTypeSelect = document.getElementById('cleaningType');
     const frequencyGroup = document.getElementById('frequencyGroup');
-    const frequencySelect = frequencyGroup ? frequencyGroup.querySelector('select') : null; // Změna: Získání reference na select prvek
+    const frequencySelect = frequencyGroup ? frequencyGroup.querySelector('select') : null;
 
-    if (cleaningCalculatorForm && formStatusCalculator && cleaningTypeSelect && frequencyGroup && frequencySelect) { // Změna: Všechny potřebné elementy musí existovat
+    if (cleaningCalculatorForm && formStatusCalculator && cleaningTypeSelect && frequencyGroup && frequencySelect) {
         // Logika pro zobrazení/skrytí pole "Frekvence úklidu"
         const toggleFrequencyDisplay = () => {
             if (cleaningTypeSelect.value === 'regular_home' || cleaningTypeSelect.value === 'commercial') {
                 frequencyGroup.style.display = 'block';
-                frequencySelect.setAttribute('required', 'required'); // Změna: Použijeme získanou referenci
+                frequencySelect.setAttribute('required', 'required');
             } else {
                 frequencyGroup.style.display = 'none';
-                frequencySelect.removeAttribute('required'); // Změna: Použijeme získanou referenci
-                frequencySelect.value = ''; // Změna: Resetujeme hodnotu, aby se neodesílala nesmyslná hodnota
+                frequencySelect.removeAttribute('required');
+                frequencySelect.value = ''; // Resetujeme hodnotu, aby se neodesílala nesmyslná hodnota
             }
         };
 
@@ -185,8 +188,8 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('subject', 'Nová poptávka z kalkulačky úklidu - Lesktop');
 
             try {
-                // Změna: Ověříme, že action atribut formuláře existuje, jinak použijeme default
-                const formAction = cleaningCalculatorForm.action || 'https://api.web3forms.com/submit'; 
+                // Ověříme, že action atribut formuláře existuje, jinak použijeme default
+                const formAction = cleaningCalculatorForm.action || 'https://api.web3forms.com/submit';
                 const response = await fetch(formAction, {
                     method: 'POST',
                     body: formData,
@@ -203,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     formStatusCalculator.classList.add('success');
                     cleaningCalculatorForm.reset();
                     // Znovu skryjeme frekvenci a odebereme required, pokud se formulář resetuje
-                    toggleFrequencyDisplay(); // Změna: Znovu zavoláme funkci pro správné skrytí/reset
+                    toggleFrequencyDisplay();
                 } else {
                     console.error('Chyba při odesílání poptávky z kalkulačky:', result);
                     formStatusCalculator.textContent = result.message || 'Chyba při odesílání poptávky. Zkuste to prosím znovu.';
@@ -220,11 +223,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     formStatusCalculator.textContent = '';
                     formStatusCalculator.classList.remove('success', 'error');
                     formStatusCalculator.style.display = 'none';
-                }, 5000); 
+                }, 5000);
             }
         });
     } else {
-        // Změna: Přidáme logování, pokud některý z elementů pro kalkulačku chybí
         console.warn('Jeden nebo více elementů pro kalkulační formulář nebyly nalezeny. Inicializace kalkulačky přeskočena.');
         console.log({
             cleaningCalculatorForm: !!cleaningCalculatorForm,
@@ -238,13 +240,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Volitelné: Automatické nastavení aktivní třídy navigace při scrollování
-    const sections = document.querySelectorAll('section[id]'); // Změna: Pouze sekce s ID, které mohou být cílem odkazů
+    const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.main-nav .nav-list a');
 
     const scrollSpyOptions = {
         root: null,
-        rootMargin: '-50% 0px -50% 0px', // Změna: Centrujeme threshold, aby byl aktivní, když je sekce uprostřed viewportu
-        threshold: 0 // Změna: Nulový threshold je efektivnější s rootMargin
+        rootMargin: '-50% 0px -50% 0px', // Centrujeme threshold, aby byl aktivní, když je sekce uprostřed viewportu
+        threshold: 0
     };
 
     const scrollSpyObserver = new IntersectionObserver((entries) => {
