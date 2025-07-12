@@ -37,7 +37,7 @@
 body {
     font-family: var(--font-body);
     /* Zde přidáme pozadí celé stránky */
-    background: url('images/hero-background.jpg') no-repeat center center fixed;
+    background: url('images/hero-background1.jpg') no-repeat center center fixed;
     background-size: cover; /* Důležité pro pokrytí celé plochy a přizpůsobení */
     background-color: var(--color-background-white); /* Záložní barva, pokud se obrázek nenačte */
 
