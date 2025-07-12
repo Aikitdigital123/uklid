@@ -19,7 +19,7 @@
 
     <header class="main-header">
         <div class="container">
-            <a href="#hero" class="logo">
+            <a href="#about" class="logo">
                 <img src="images/Domecek.png" alt="Lesktop Logo" class="logo-img">
                 Lesktop
             </a>
@@ -28,10 +28,8 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <ul class="nav-list">
-                    <li><a href="#hero">Domů</a></li>
                     <li><a href="#about">O nás</a></li>
                     <li><a href="#services">Služby</a></li>
-                    <li><a href="#features">Proč my?</a></li>
                     <li><a href="#pricing">Ceník</a></li>
                     <li><a href="#contact">Kontakt</a></li>
                 </ul>
@@ -40,16 +38,6 @@
     </header>
 
     <main>
-        <section id="hero" class="hero-section">
-            <div class="container">
-                <div class="hero-content reveal-on-scroll">
-                    <h1>Úklid, na který se můžete spolehnout!</h1>
-                    <p class="subtitle">Hledáte pomoc s úklidem domácnosti nebo kanceláře? Jsme tu pro vás!</p>
-                    <a href="#contact" class="btn btn-primary">Nezávazná poptávka</a>
-                </div>
-            </div>
-        </section>
-
         <section id="about" class="content-section glass-effect reveal-on-scroll">
             <div class="container">
                 <h2 class="section-title">O nás</h2>
@@ -67,17 +55,20 @@
                     <div class="service-item reveal-on-scroll delay-2 glass-effect-small">
                         <i class="fas fa-sync-alt"></i> <h3>Pravidelný úklid domácností</h3>
                         <p>Udržujte svůj domov neustále svěží a čistý s našimi pravidelnými úklidovými plány. Frekvenci a rozsah úklidu přizpůsobíme přesně vašim požadavkům.</p>
-                        <a href="#pricing" class="btn btn-secondary">Zjistit více & kalkulace</a> </div>
+                        <a href="#pricing" class="btn btn-secondary">Zjistit více & kalkulace</a>
+                    </div>
 
                     <div class="service-item reveal-on-scroll delay-3 glass-effect-small">
                         <i class="fas fa-broom"></i> <h3>Jednorázový a generální úklid</h3>
                         <p>Potřebujete důkladný úklid po stěhování, rekonstrukci, oslavě nebo jen jarní úklid? Jsme připraveni vyčistit každý kout vašeho bytu či domu.</p>
-                        <a href="#pricing" class="btn btn-secondary">Zjistit více & kalkulace</a> </div>
+                        <a href="#pricing" class="btn btn-secondary">Zjistit více & kalkulace</a>
+                    </div>
 
                     <div class="service-item reveal-on-scroll delay-4 glass-effect-small">
                         <i class="fas fa-building"></i> <h3>Úklid kanceláří a komerčních prostor</h3>
                         <p>Zajistíme profesionální čistotu pro vaše podnikání. Od pravidelné údržby až po hloubkové čištění kanceláří, obchodů a společných prostor.</p>
-                        <a href="#pricing" class="btn btn-secondary">Zjistit více & kalkulace</a> </div>
+                        <a href="#pricing" class="btn btn-secondary">Zjistit více & kalkulace</a>
+                    </div>
 
                     <div class="service-item reveal-on-scroll delay-2 glass-effect-small">
                         <i class="fas fa-tint"></i> <h3>Mytí oken a další doplňkové služby</h3>
@@ -96,39 +87,10 @@
                         <p>Ke každému klientovi přistupujeme individuálně. Vytvoříme úklidový plán na míru a přizpůsobíme se vašemu rozvrhu a specifickým požadavkům.</p>
                         <a href="#contact" class="btn btn-secondary">Domluvit detaily</a>
                     </div>
-                    
                 </div>
             </div>
         </section>
 
-        <section id="features" class="content-section glass-effect reveal-on-scroll">
-            <div class="container">
-                <h2 class="section-title">Proč si vybrat Lesktop?</h2>
-                <div class="features-list">
-                    <div class="feature-item">
-                        <i class="fas fa-check-circle"></i>
-                        <h3>Spolehlivost</h3>
-                        <p>Vždy dodržíme sjednané termíny a kvalitu práce.</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-hand-holding-heart"></i>
-                        <h3>Osobní přístup</h3>
-                        <p>Každému klientovi se věnujeme individuálně a s pochopením jeho potřeb.</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-leaf"></i>
-                        <h3>Ekologické čištění</h3>
-                        <p>Šetrné k přírodě i k vašemu zdraví.</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-award"></i>
-                        <h3>Profesionalita</h3>
-                        <p>Náš tým je vyškolený a pracuje s maximální pečlivostí.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    
         <section id="pricing" class="content-section bg-offwhite reveal-on-scroll">
             <div class="container">
                 <h2 class="section-title">Ceník a nezávazná kalkulace</h2>
@@ -255,13 +217,16 @@
 
                 <div class="form-group">
                     <label for="name">Jméno:</label>
-                    <input type="text" id="name" name="Jmeno" required placeholder="Vaše jméno"> </div>
+                    <input type="text" id="name" name="Jmeno" required placeholder="Vaše jméno">
+                </div>
                 <div class="form-group">
                     <label for="email">E-mail:</label>
-                    <input type="email" id="email" name="Email" required placeholder="vas@email.cz"> </div>
+                    <input type="email" id="email" name="Email" required placeholder="vas@email.cz">
+                </div>
                 <div class="form-group">
                     <label for="message">Zpráva:</label>
-                    <textarea id="message" name="Zprava" rows="6" required placeholder="Popište, s čím potřebujete pomoci..."></textarea> </div>
+                    <textarea id="message" name="Zprava" rows="6" required placeholder="Popište, s čím potřebujete pomoci..."></textarea>
+                </div>
                 <button type="submit" class="btn btn-primary">Odeslat poptávku</button>
                 <div id="form-status" class="form-status"></div>
                 </form>
