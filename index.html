@@ -127,25 +127,25 @@
                 <p>Máte zájem o naše služby? Vyplňte formulář nebo nás kontaktujte přímo!</p>
                 <div class="contact-info">
                     <p><i class="fas fa-phone-alt"></i> Telefon: <strong>+420 775 344 145</strong></p>
-                    <p><i class="fas fa-envelope"></i> E-mail: <a href="mailto:lesktop@seznam.cz"><strong>lesktop@seznam.cz</strong></a></p>
+                    <p><i class="fas fa-envelope"></i> E-mail: <a href="mailto:team@lesktop.cz"><strong>team@lesktop.cz</strong></a></p>
                     <p><i class="fas fa-map-marker-alt"></i> Působíme v <strong>Praze a Středních Čechách</strong></p>
                 </div>
-                <form class="contact-form" id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Jméno:</label>
-                        <input type="text" id="name" name="name" required placeholder="Vaše jméno">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">E-mail:</label>
-                        <input type="email" id="email" name="email" required placeholder="vas@email.cz">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Zpráva:</label>
-                        <textarea id="message" name="message" rows="6" required placeholder="Popište, s čím potřebujete pomoci..."></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Odeslat poptávku</button>
-                    <div id="form-status" class="form-status"></div>
-                </form>
+                <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="4e724eab-1a15-4f9c-9c19-caa25c2b95fc">
+                <input type="hidden" name="subject" value="Nová zpráva z webu Lesktop">
+
+                <div class="form-group">
+                    <label for="name">Jméno:</label>
+                    <input type="text" id="name" name="Jmeno" required placeholder="Vaše jméno"> </div>
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="Email" required placeholder="vas@email.cz"> </div>
+                <div class="form-group">
+                    <label for="message">Zpráva:</label>
+                    <textarea id="message" name="Zprava" rows="6" required placeholder="Popište, s čím potřebujete pomoci..."></textarea> </div>
+                <button type="submit" class="btn btn-primary">Odeslat poptávku</button>
+                <div id="form-status" class="form-status"></div>
+            </form>
             </div>
         </section>
     </main>
