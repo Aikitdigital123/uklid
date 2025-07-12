@@ -3,154 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profesionální úklidové služby | Střední Čechy</title>
-    <meta name="description" content="Spolehlivé a důsledné úklidové služby s ohledem na přírodu. Působíme ve Středních Čechách a nabízíme kvalitní ekologický úklid pro domácnosti i firmy.">
+    <title>Lesktop | Profesionální úklidové služby pro domácnosti a firmy</title>
+    <meta name="description" content="Lesktop nabízí spolehlivé a důsledné úklidové služby s ekologickým přístupem. Specializujeme se na úklid domácností, kanceláří a společných prostor v Praze a Středních Čechách.">
+    <meta name="keywords" content="úklid, úklidové služby, Lesktop, Praha, Střední Čechy, domácnosti, kanceláře, ekologický úklid, čištění, žehlení, mytí oken">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlroj2J/uH1gD9n2r8Q4F5iQ9d4Z6q5t8/Rj8S9s2aF+Kz8n5a5G2E3+C0A3P4J7N5L6F7L8X0Z5A9M2Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet" href="styles.css">
-    <style>
-        @keyframes blink-border {
-            0% { border-color: #2e7d32; }
-            50% { border-color: #a5d6a7; }
-            100% { border-color: #2e7d32; }
-        }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #e8f5e9;
-            color: #2e7d32;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        header, footer, section {
-            width: 90%;
-            max-width: 1200px;
-            border: 3px solid;
-            animation: blink-border 2s infinite alternate;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        header {
-            background-color: #66bb6a;
-            color: white;
-        }
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-        nav ul li {
-            display: inline;
-        }
-        nav a {
-            text-decoration: none;
-            color: #2e7d32;
-            font-weight: bold;
-            padding: 10px 15px;
-            transition: background-color 0.3s, color 0.3s;
-            border-radius: 5px;
-        }
-        nav a:hover {
-            background-color: #a5d6a7;
-            color: white;
-        }
-        section {
-            padding: 20px;
-            background: white;
-            margin: 10px 0;
-        }
-        #gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            background-color: #c8e6c9;
-        }
-        #gallery img {
-            width: 100%;
-            max-width: 250px;
-            border-radius: 10px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        form input, form textarea, form button {
-            width: 100%;
-            max-width: 400px;
-            margin: 5px 0;
-            padding: 10px;
-        }
-        footer {
-            background-color: #66bb6a;
-            color: white;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body>
-    <header>
-        <h1>Lesktop - profesionální úklidová firma působící ve Středních Čechách </h1>
-        <p>Specializujeme se na pečlivý úklid domácností, kanceláří i společných prostor</p>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="#" class="logo">Lesktop</a>
+            <nav class="main-nav">
+                <button class="menu-toggle" aria-label="Přepnout menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-list">
+                    <li><a href="#hero">Domů</a></li>
+                    <li><a href="#about">O nás</a></li>
+                    <li><a href="#services">Služby</a></li>
+                    <li><a href="#features">Proč my?</a></li>
+                    <li><a href="#gallery">Galerie</a></li>
+                    <li><a href="#contact">Kontakt</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    
-    <nav>
-        <ul>
-            <li><a href="#about">O nás</a></li>
-            <li><a href="#services">Služby</a></li>
-            <li><a href="#contact">Kontakt</a></li>
-        </ul>
-    </nav>
-    
-    <section id="about">
-        <h2>O nás</h2>
-        <p>Jsme profesionální úklidová firma, která nabízí komplexní úklidové služby pro domácnosti i firmy. Naší prioritou je důslednost, spolehlivost a ekologický přístup.</p>
-    </section>
-    
-    <section id="services">
-        <h2>Naše služby</h2>
-        <ul>
-            <li>Úklid domácností</li>
-            <li>Úklid kanceláří</li>
-            <li>Úklid společných prostor</li>
-            <li>Čištění koberců a čalounění</li>
-            <li>Dezinfekční úklid</li>
-            <li>Ekologické úklidové prostředky</li>
-        </ul>
-    </section>
-    
-    <section id="gallery">
-        <h2>Galerie</h2>
-        <img src="images/cleaning_girl.png" alt="Úklidová pracovnice">
-        <img src="images/cleaning_products.png" alt="Úklidové prostředky">
-        <img src="images/clinching_car.png" alt="Úklidové vozidlo">
-    </section>
-    
-    <section id="contact">
-        <h2>Kontaktujte nás</h2>
-        <p>Máte zájem o naše služby? Kontaktujte nás!</p>
-        <form>
-            <label for="name">Jméno:</label>
-            <input type="text" id="name" name="name" required>
-            
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required>
-            
-            <label for="message">Zpráva:</label>
-            <textarea id="message" name="message" required></textarea>
-            
-            <button type="submit">Odeslat</button>
-        </form>
-    </section>
-    
-    <footer>
-        <p>&copy; 2025 Úklidová firma Lesktop. Všechna práva vyhrazena.</p>
+
+    <main>
+        <section id="hero" class="hero-section">
+            <div class="container">
+                <div class="hero-content reveal-on-scroll">
+                    <h1>Úklid, na který se můžete spolehnout!</h1>
+                    <p class="subtitle">Hledáte pomoc s úklidem domácnosti nebo kanceláře? Jsme tu pro vás!</p>
+                    <a href="#contact" class="btn btn-primary">Nezávazná poptávka</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="content-section glass-effect reveal-on-scroll">
+            <div class="container">
+                <h2 class="section-title">O nás</h2>
+                <p>Jsme profesionální úklidová firma <strong>Lesktop</strong>, která nabízí komplexní úklidové služby pro domácnosti i firmy v <strong>Praze a Středních Čechách</strong>. Naší prioritou je důslednost, spolehlivost a ekologický přístup. S osobním přístupem a pečlivostí zajistíme čistotu, kterou si zasloužíte.</p>
+            </div>
+        </section>
+
+        <section id="services" class="content-section bg-offwhite reveal-on-scroll">
+            <div class="container">
+                <h2 class="section-title">Naše služby</h2>
+                <div class="services-grid">
+                    <div class="service-item glass-effect-small reveal-on-scroll delay-1">
+                        <i class="fas fa-broom"></i>
+                        <h3>Pravidelný a jednorázový úklid</h3>
+                        <p>Zajistíme pravidelný úklid vaší domácnosti či kanceláře, nebo jednorázové čištění po rekonstrukci.</p>
+                    </div>
+                    <div class="service-item glass-effect-small reveal-on-scroll delay-2">
+                        <i class="fas fa-house-cleaning"></i>
+                        <h3>Úklid bytů, domů a kanceláří</h3>
+                        <p>Specializujeme se na důkladný úklid všech typů prostor, od malých bytů po velké kancelářské komplexy.</p>
+                    </div>
+                    <div class="service-item glass-effect-small reveal-on-scroll delay-3">
+                        <i class="fas fa-spray-can"></i>
+                        <h3>Mytí oken a další</h3>
+                        <p>Nabízíme profesionální mytí oken, žehlení prádla a další služby podle individuální domluvy.</p>
+                    </div>
+                    <div class="service-item glass-effect-small reveal-on-scroll delay-4">
+                        <i class="fas fa-leaf"></i>
+                        <h3>Ekologický přístup</h3>
+                        <p>Používáme šetrné a ekologicky certifikované čisticí prostředky pro zdravé prostředí.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="content-section glass-effect reveal-on-scroll">
+            <div class="container">
+                <h2 class="section-title">Proč si vybrat Lesktop?</h2>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Spolehlivost</h3>
+                        <p>Vždy dodržíme sjednané termíny a kvalitu práce.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <h3>Osobní přístup</h3>
+                        <p>Každému klientovi se věnujeme individuálně a s pochopením jeho potřeb.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-leaf"></i>
+                        <h3>Ekologické čištění</h3>
+                        <p>Šetrné k přírodě i k vašemu zdraví.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-award"></i>
+                        <h3>Profesionalita</h3>
+                        <p>Náš tým je vyškolený a pracuje s maximální pečlivostí.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="content-section bg-offwhite reveal-on-scroll">
+            <div class="container">
+                <h2 class="section-title">Galerie naší práce</h2>
+                <div class="gallery-grid">
+                    <img src="images/cleaning_girl.png" alt="Úklidová pracovnice" class="reveal-on-scroll delay-1">
+                    <img src="images/cleaning_products.png" alt="Ekologické úklidové prostředky" class="reveal-on-scroll delay-2">
+                    <img src="images/clinching_car.png" alt="Profesionální úklidové vybavení" class="reveal-on-scroll delay-3">
+                    </div>
+            </div>
+        </section>
+
+        <section id="contact" class="content-section glass-effect reveal-on-scroll">
+            <div class="container">
+                <h2 class="section-title">Kontaktujte nás</h2>
+                <p>Máte zájem o naše služby? Vyplňte formulář nebo nás kontaktujte přímo!</p>
+                <div class="contact-info">
+                    <p><i class="fas fa-phone-alt"></i> Telefon: <strong>+420 775 344 145</strong></p>
+                    <p><i class="fas fa-envelope"></i> E-mail: <a href="mailto:lesktop@seznam.cz"><strong>lesktop@seznam.cz</strong></a></p>
+                    <p><i class="fas fa-map-marker-alt"></i> Působíme v <strong>Praze a Středních Čechách</strong></p>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Jméno:</label>
+                        <input type="text" id="name" name="name" required placeholder="Vaše jméno">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail:</label>
+                        <input type="email" id="email" name="email" required placeholder="vas@email.cz">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Zpráva:</label>
+                        <textarea id="message" name="message" rows="6" required placeholder="Popište, s čím potřebujete pomoci..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Odeslat poptávku</button>
+                    <div id="form-status" class="form-status"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Lesktop. Všechna práva vyhrazena.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
