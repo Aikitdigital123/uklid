@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.warn(`Cílový prvek pro smooth scroll nebyl nalezen: ${targetId}`);
             }
 
+            // Odebrání active třídy ze všech odkazů a přidání na aktuální
             document.querySelectorAll('.main-nav .nav-list a').forEach(link => {
                 link.classList.remove('active');
             });
@@ -92,13 +93,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Zde začíná upravená část pro odesílání kontaktního formuláře pomocí Web3Forms ---
+    // --- Logika pro odesílání kontaktního formuláře pomocí Web3Forms ---
     const contactForm = document.getElementById('contactForm');
     const formStatusContact = document.getElementById('form-status');
 
     if (contactForm && formStatusContact) {
         contactForm.addEventListener('submit', async function(event) {
-            event.preventDefault();
+            event.preventDefault(); // Zabrání výchozímu odeslání formuláře
 
             formStatusContact.textContent = 'Odesílám...';
             formStatusContact.classList.remove('success', 'error');
@@ -121,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     formStatusContact.textContent = 'Děkujeme! Vaše zpráva byla úspěšně odeslána.';
                     formStatusContact.classList.remove('error');
                     formStatusContact.classList.add('success');
-                    contactForm.reset();
+                    contactForm.reset(); // Vyčistí formulář
                 } else {
                     console.error('Web3Forms response error for contact form:', result);
                     formStatusContact.textContent = result.message || 'Při odesílání zprávy došlo k chybě. Zkuste to prosím později.';
@@ -129,11 +130,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     formStatusContact.classList.add('error');
                 }
             } catch (error) {
-                console.error('Chyba při odesílání formuláře:', error);
+                console.error('Chyba při odesílání kontaktního formuláře:', error);
                 formStatusContact.textContent = 'Při odesílání zprávy došlo k chybě sítě. Zkuste to prosím později.';
                 formStatusContact.classList.remove('success');
                 formStatusContact.classList.add('error');
             } finally {
+                // Skryje stavovou zprávu po 5 sekundách
                 setTimeout(() => {
                     formStatusContact.textContent = '';
                     formStatusContact.classList.remove('success', 'error');
@@ -142,37 +144,36 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    // --- Konec upravené části pro odesílání kontaktního formuláře ---
 
-
-    // --- NOVÁ ČÁST: Logika pro kalkulační formulář (odesílání na Web3Forms) ---
+    // --- Logika pro kalkulační formulář a checkboxy ---
     const cleaningCalculatorForm = document.getElementById('kalkulacka');
     const formStatusCalculator = document.getElementById('calculator-status');
     const cleaningTypeSelect = document.getElementById('cleaningType');
     const frequencyGroup = document.getElementById('frequencyGroup');
-    const frequencySelect = document.getElementById('cleaningFrequency'); // Opraveno: přímo ID
+    const frequencySelect = document.getElementById('cleaningFrequency');
 
     if (cleaningCalculatorForm && formStatusCalculator && cleaningTypeSelect && frequencyGroup && frequencySelect) {
         // Logika pro zobrazení/skrytí pole "Frekvence úklidu"
         const toggleFrequencyDisplay = () => {
             if (cleaningTypeSelect.value === 'regular_home' || cleaningTypeSelect.value === 'commercial') {
                 frequencyGroup.style.display = 'block';
-                frequencySelect.setAttribute('required', 'required');
+                frequencySelect.setAttribute('required', 'required'); // Nastaví required, když je viditelný
             } else {
                 frequencyGroup.style.display = 'none';
-                frequencySelect.removeAttribute('required');
-                frequencySelect.value = ''; // Resetujeme hodnotu, aby se neodesílala nesmyslná hodnota
+                frequencySelect.removeAttribute('required'); // Odebere required, když je skrytý
+                frequencySelect.value = ''; // Resetuje hodnotu, aby se neodesílala nesmyslná hodnota
             }
         };
 
+        // Naslouchání na změnu výběru typu úklidu
         cleaningTypeSelect.addEventListener('change', toggleFrequencyDisplay);
 
         // Zajistit správné zobrazení při načtení stránky
         toggleFrequencyDisplay();
 
-
+        // Odesílání kalkulačního formuláře na Web3Forms
         cleaningCalculatorForm.addEventListener('submit', async function(event) {
-            event.preventDefault();
+            event.preventDefault(); // Zabrání výchozímu odeslání formuláře
 
             formStatusCalculator.textContent = 'Odesílám poptávku...';
             formStatusCalculator.classList.remove('success', 'error');
@@ -180,7 +181,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const formData = new FormData(cleaningCalculatorForm);
             
-            formData.append('subject', 'Nová poptávka z kalkulačky úklidu - Lesktop');
+            // Přidáme předmět pro email, pokud již není nastaven v HTML inputu
+            if (!formData.has('subject')) {
+                formData.append('subject', 'Nová poptávka z kalkulačky úklidu - Lesktop');
+            }
 
             try {
                 const formAction = cleaningCalculatorForm.action || 'https://api.web3forms.com/submit';
@@ -195,23 +199,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = await response.json();
 
                 if (result.success) {
-                    formStatusCalculator.textContent = 'Vaše poptávka byla úspěšně odeslána! Brzy se vám ozveme s nezávaznou nabídkou.';
+                    formStatusCalculator.textContent = 'Děkujeme! Vaše poptávka byla úspěšně odeslána.';
                     formStatusCalculator.classList.remove('error');
                     formStatusCalculator.classList.add('success');
-                    cleaningCalculatorForm.reset();
-                    toggleFrequencyDisplay();
+                    cleaningCalculatorForm.reset(); // Vyčistí formulář
+                    toggleFrequencyDisplay(); // Resetuje zobrazení frekvence po odeslání
                 } else {
-                    console.error('Chyba při odesílání poptávky z kalkulačky:', result);
-                    formStatusCalculator.textContent = result.message || 'Chyba při odesílání poptávky. Zkuste to prosím znovu.';
+                    console.error('Web3Forms response error for calculator form:', result);
+                    formStatusCalculator.textContent = result.message || 'Při odesílání poptávky došlo k chybě. Zkuste to prosím později.';
                     formStatusCalculator.classList.remove('success');
                     formStatusCalculator.classList.add('error');
                 }
             } catch (error) {
-                console.error('Network error for calculator form:', error);
-                formStatusCalculator.textContent = 'Problém s připojením. Zkuste to prosím znovu.';
+                console.error('Chyba při odesílání kalkulačního formuláře:', error);
+                formStatusCalculator.textContent = 'Při odesílání poptávky došlo k chybě sítě. Zkuste to prosím později.';
                 formStatusCalculator.classList.remove('success');
                 formStatusCalculator.classList.add('error');
             } finally {
+                // Skryje stavovou zprávu po 5 sekundách
                 setTimeout(() => {
                     formStatusCalculator.textContent = '';
                     formStatusCalculator.classList.remove('success', 'error');
@@ -219,44 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 5000);
             }
         });
-    } else {
-        console.warn('Jeden nebo více elementů pro kalkulační formulář nebyly nalezeny. Inicializace kalkulačky přeskočena.');
-        console.log({
-            cleaningCalculatorForm: !!cleaningCalculatorForm,
-            formStatusCalculator: !!formStatusCalculator,
-            cleaningTypeSelect: !!cleaningTypeSelect,
-            frequencyGroup: !!frequencyGroup,
-            frequencySelect: !!frequencySelect
-        });
     }
-    // --- KONEC NOVÉ ČÁSTI pro kalkulační formulář ---
 
-
-    // Volitelné: Automatické nastavení aktivní třídy navigace při scrollování
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.main-nav .nav-list a');
-
-    const scrollSpyOptions = {
-        root: null,
-        rootMargin: '-50% 0px -50% 0px',
-        threshold: 0
-    };
-
-    const scrollSpyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const currentSectionId = entry.target.id;
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${currentSectionId}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
-    }, scrollSpyOptions);
-
-    sections.forEach(section => {
-        scrollSpyObserver.observe(section);
-    });
 });
