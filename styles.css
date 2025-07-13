@@ -36,8 +36,8 @@
 
 body {
     font-family: var(--font-body);
-    /* Zde přidáme pozadí celé stránky */
-    background: url('images/hero-background.jpg') no-repeat center center fixed; /* ZMĚNA: 'fixed' */
+    /* Zde přidáme pozadí celé stránky - fixed pro desktop i mobil */
+    background: url('images/hero-background.jpg') no-repeat center center fixed;
     background-size: cover; /* Důležité pro pokrytí celé plochy a přizpůsobení */
     background-color: var(--color-background-white); /* Záložní barva, pokud se obrázek nenačte */
 
@@ -67,8 +67,7 @@ html {
 .logo {
     display: flex;
     align-items: center;
-    /* ZMĚNA: Zmenšujeme mezeru mezi obrázkem a textem */
-    gap: 5px; /* Původně 10px, zmenšeno */
+    gap: 5px; /* Zmenšená mezera mezi obrázkem a textem */
 
     font-size: 2.8em;
     font-weight: 700;
@@ -79,8 +78,7 @@ html {
 }
 
 .logo-img {
-    /* ZMĚNA: Zvětšujeme výšku obrázku loga */
-    height: 120px; /* Původně 100px, zvětšeno */
+    height: 120px; /* Zvětšená výška obrázku loga */
     width: auto;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     transition: transform 0.3s ease;
@@ -162,6 +160,7 @@ html {
 
 /* --- Hero Sekce --- */
 .hero-section {
+    /* Background image je nyní na body, zde jen overlay */
     background: linear-gradient(rgba(58, 71, 104, 0.4), rgba(58, 71, 104, 0.4));
     color: var(--color-background-white);
     text-align: center;
@@ -762,25 +761,24 @@ html {
 #kalkulacka .checkbox-group {
     display: flex;
     flex-wrap: wrap;
-    /* ZMĚNA: Zmenšujeme mezeru mezi řádky checkboxů */
-    gap: 10px 15px; /* Vertikální mezera 10px, horizontální 15px */
+    align-items: flex-start; /* Zarovná položky na začátek řádku (vertikálně) */
+    gap: 8px 15px; /* Vertikální mezera 8px, horizontální 15px */
 }
 
 #kalkulacka .checkbox-group input[type="checkbox"] {
-    /* ZMĚNA: Zmenšujeme margin-right pro přiblížení textu */
-    margin-right: 5px; /* Původně 8px, zmenšeno */
-    width: auto;
-    /* Vylepšení stylingu pro konzistentnější vzhled checkboxu */
-    min-width: 18px; /* Standardní velikost checkboxu */
-    min-height: 18px;
-    appearance: none; /* Skryje nativní vzhled */
+    width: 20px; /* Pevná šířka kostičky */
+    height: 20px; /* Pevná výška kostičky */
+    margin-right: 8px; /* Mezera mezi checkboxem a textem */
+    appearance: none;
     -webkit-appearance: none;
     border: 1px solid var(--color-border);
-    border-radius: 4px;
+    border-radius: 4px; /* Lehce zaoblené rohy */
     cursor: pointer;
     position: relative;
-    top: 3px; /* Může pomoci s vertikálním zarovnáním */
+    top: 0; /* Zajišťuje, že je na základní linii */
+    vertical-align: middle;
     transition: background-color 0.2s, border-color 0.2s;
+    flex-shrink: 0; /* Zabrání zmenšení checkboxu */
 }
 
 #kalkulacka .checkbox-group input[type="checkbox"]:checked {
@@ -792,7 +790,7 @@ html {
     content: '\2713'; /* Unicode pro fajfku */
     display: block;
     color: var(--color-background-white);
-    font-size: 14px;
+    font-size: 14px; /* Velikost fajfky */
     line-height: 1;
     text-align: center;
     position: absolute;
@@ -807,15 +805,15 @@ html {
 }
 
 #kalkulacka .checkbox-group label {
-    display: inline-flex; /* Zajistí, že label bude flex item a text se zarovná */
-    align-items: center; /* Zarovná text s checkboxem */
+    display: flex; /* Použijeme flexbox pro zarovnání checkboxu a textu */
+    align-items: center; /* Vertikálně zarovná checkbox a text na střed */
     font-weight: normal;
     margin-bottom: 0;
     font-size: 1em;
-    cursor: pointer; /* Naznačí, že text je klikatelný */
-    /* ZMĚNA: Zmenšujeme mezeru mezi label a checkboxem */
-    margin-left: 0; /* Pokud by se zde nějaká mezera generovala */
-    margin-right: 15px; /* Přidáme mezery mezi jednotlivými páry checkbox+label */
+    cursor: pointer;
+    margin-left: 0; /* Zajistí, že label nezačíná příliš daleko */
+    flex-grow: 1; /* Povolí labelu roztáhnout se, ale ne nutně checkboxu */
+    line-height: 1.3; /* Zlepšuje čitelnost dlouhých textů */
 }
 
 /* Skrytí pole frekvence, pokud není relevantní (JS to přepíná) */
@@ -841,9 +839,8 @@ html {
     .logo {
         font-size: 2.2em;
     }
-    /* ZMĚNA: Zvětšujeme výšku obrázku loga pro tablety */
     .logo-img {
-        height: 90px; /* Původně 70px, zvětšeno */
+        height: 90px; /* Zvětšená výška obrázku loga pro tablety */
     }
     .hero-content h1 {
         font-size: 2.8em;
@@ -922,9 +919,8 @@ html {
     .logo {
         font-size: 2em;
     }
-    /* ZMĚNA: Zvětšujeme výšku obrázku loga pro menší tablety */
     .logo-img {
-        height: 70px; /* Původně 60px, zvětšeno */
+        height: 70px; /* Zvětšená výška obrázku loga pro menší tablety */
     }
 
     .hero-section {
@@ -993,28 +989,26 @@ html {
     }
     .logo {
         font-size: 1.5em;
-        /* ZMĚNA: Dále zmenšujeme mezeru na mobilu */
-        gap: 3px; /* Původně 5px, zmenšeno */
+        gap: 3px; /* Dále zmenšená mezera na mobilu */
     }
-    /* ZMĚNA: Zvětšujeme výšku obrázku loga pro mobily */
     .logo-img {
-        height: 55px; /* Původně 45px, zvětšeno */
+        height: 55px; /* Zvětšená výška obrázku loga pro mobily */
     }
     .main-header .nav-list a {
         padding: 8px 15px;
     }
 
-    body {
-        background-attachment: scroll; /* Vracíme na scroll pro mobily pro lepší UX/výkon */
-    }
+    /* ZMĚNA: Udržujeme fixed background-attachment na body, není potřeba zde nic měnit */
+    /* background-attachment: scroll; */ /* TENTO ŘÁDEK JE ODEBRÁN */
+
 
     .hero-section {
         padding: 60px 15px;
         min-height: 45vh;
-        /* ZMĚNA: Přizpůsobení overlay pro mobilní pozadí, pokud je obrázek hodně světlý */
-        background: linear-gradient(rgba(58, 71, 104, 0.5), rgba(58, 71, 104, 0.5)); /* Zvýšení opacity pro čitelnost textu */
-        background-size: cover; /* Zajištění pokrytí i zde */
-        background-position: center center; /* Pro jistotu */
+        /* ZMĚNA: Zvýšení opacity overlay pro lepší čitelnost textu na mobilu */
+        background: linear-gradient(rgba(58, 71, 104, 0.6), rgba(58, 71, 104, 0.6));
+        /* background-size: cover; */ /* Již definováno na body */
+        /* background-position: center center; */ /* Již definováno na body */
     }
     .hero-content h1 {
         font-size: 1.8em;
@@ -1115,13 +1109,17 @@ html {
         margin-top: 40px;
     }
 
-    /* NOVINKA: Optimalizace checkboxů pro malé mobily */
+    /* Optimalizace checkboxů pro malé mobily */
     #kalkulacka .checkbox-group {
         flex-direction: column; /* Změna na sloupcový layout na nejmenších obrazovkách */
-        gap: 8px; /* Menší mezera mezi položkami */
+        align-items: flex-start; /* Zarovnání položek doleva */
+        gap: 6px; /* Menší mezera mezi položkami */
     }
     #kalkulacka .checkbox-group label {
         margin-right: 0; /* Na mobilu nepotřebujeme horizontální mezeru */
+    }
+    #kalkulacka .checkbox-group input[type="checkbox"] {
+        margin-right: 6px; /* Mírně zmenšená mezera pro mobil */
     }
 }
 
