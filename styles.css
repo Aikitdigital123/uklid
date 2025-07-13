@@ -36,15 +36,18 @@
 
 body {
     font-family: var(--font-body);
-    /* ODSTRANĚNO: background z body */
-    background-color: var(--color-background-white); /* Primární barva pozadí */
-
     color: var(--color-text-dark);
     line-height: 1.6;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     overflow-x: hidden; /* Důležité pro zamezení horizontálního scrollu */
+
+    /* --- NOVÉ: Pozadí pro celé BODY --- */
+    background: linear-gradient(rgba(58, 71, 104, 0.35), rgba(58, 71, 104, 0.35)),
+                url('images/hero.jpg') no-repeat center center fixed; /* Předpokládám hero.jpg */
+    background-size: cover;
+    /* --- KONEC NOVÉHO KÓDU --- */
 }
 
 /* Zajištění, aby fixní/sticky header nepřekrýval obsah při skrolování na ID */
@@ -52,7 +55,6 @@ html {
     scroll-padding-top: var(--header-height); /* Odsazení od vrchu podle výšky headeru */
     scroll-behavior: smooth; /* Plynulé skrolování */
 }
-
 
 .container {
     max-width: 1100px;
@@ -66,7 +68,6 @@ html {
     display: flex;
     align-items: center;
     gap: 5px; /* Zmenšená mezera mezi obrázkem a textem */
-
     font-size: 2.8em;
     font-weight: 700;
     line-height: 1;
@@ -158,10 +159,12 @@ html {
 
 /* --- Hero Sekce --- */
 .hero-section {
-    background: linear-gradient(rgba(58, 71, 104, 0.4), rgba(58, 71, 104, 0.4)), /* Overlay */
-                url('images/hero-background.jpg') no-repeat center center; /* Obrázek */
-    background-size: cover; /* Zajistí pokrytí */
-    background-attachment: scroll; /* Na mobilu spolehlivější než fixed */
+    /* !!! Důležité: ODSTRANĚNO POZADÍ ZDE A PŘESUNUTO NA BODY !!! */
+    /* Ponecháme jen overlay, pokud má být hero-section průhledná přes pozadí body */
+    /* Nebo nastavíme background-color: transparent; nebo white, podle potřeby */
+    background: linear-gradient(rgba(58, 71, 104, 0.35), rgba(58, 71, 104, 0.35)); /* Jen overlay */
+    background-size: cover; /* Důležité pro překrytí */
+    background-attachment: scroll; /* Necháme scroll, aby nekonfliktovalo s body fixed */
     color: var(--color-background-white);
     text-align: center;
     padding: 120px 20px;
@@ -218,11 +221,12 @@ html {
 .content-section {
     padding: 80px 0;
     text-align: center;
-    background-color: rgba(245, 248, 252, 0.4);
+    /* Ponecháme mírně neprůhledné pozadí, aby se lépe četlo na celostránkovém pozadí */
+    background-color: rgba(245, 248, 252, 0.7); /* Zvýšená neprůhlednost pro lepší čitelnost */
 }
 
 .content-section:nth-of-type(even) {
-    background-color: rgba(245, 248, 252, 0.3);
+    background-color: rgba(245, 248, 252, 0.65); /* Mírně tmavší pro střídající se sekce */
 }
 
 .section-title {
@@ -266,13 +270,13 @@ html {
     padding: 35px;
     border-radius: 12px;
     box-shadow: var(--shadow-light);
-    background: rgba(255, 255, 255, 0.5); /* Zvýšená průhlednost */
+    background: rgba(255, 255, 255, 0.6); /* Zvýšená neprůhlednost pro lepší čitelnost */
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
-    box-shadow: var(--shadow-light);
     position: relative;
     overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Přidán transition pro hover */
 }
 
 .service-item::before {
@@ -355,7 +359,7 @@ html {
     border-radius: 12px;
     box-shadow: var(--shadow-light);
     transition: background-color var(--transition-speed);
-    background: rgba(255, 255, 255, 0.5); /* Zvýšená průhlednost */
+    background: rgba(255, 255, 255, 0.6); /* Zvýšená neprůhlednost pro lepší čitelnost */
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -420,7 +424,7 @@ html {
     border-radius: 12px;
     box-shadow: var(--shadow-medium);
     text-align: left;
-    background: rgba(255, 255, 255, 0.5); /* Zvýšená průhlednost */
+    background: rgba(255, 255, 255, 0.65); /* Zvýšená neprůhlednost pro lepší čitelnost */
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
@@ -527,11 +531,11 @@ html {
 
 /* --- Liquid Glass Effect (vylepšený) --- */
 .glass-effect {
-    background: rgba(255, 255, 255, 0.4); /* Zvýšená opacity */
+    background: rgba(255, 255, 255, 0.5); /* Zvýšená opacity pro hlavní glass efekt */
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-    border: 1px solid rgba(var(--color-primary-light-rgb), 0.1); /* Jemnější border */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Jemnější stín */
+    border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     border-radius: 18px;
     position: relative;
     overflow: hidden;
@@ -571,7 +575,7 @@ html {
 
 /* Variace glass efektu pro menší prvky */
 .glass-effect-small {
-    background: rgba(255, 255, 255, 0.5); /* Zvýšená opacity */
+    background: rgba(255, 255, 255, 0.55); /* Zvýšená opacity pro menší glass efekty */
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -632,7 +636,7 @@ html {
     border-radius: 12px;
     text-align: center;
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-    background: rgba(255, 255, 255, 0.5); /* Zvýšená průhlednost */
+    background: rgba(255, 255, 255, 0.6); /* Zvýšená neprůhlednost pro price card */
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -667,7 +671,7 @@ html {
 .price-card ul {
     list-style: none;
     padding: 0;
-    margin: 0; /* Zde odstraněn margin-bottom, nahrazeno .price-list */
+    margin: 0;
     text-align: left;
 }
 
@@ -739,7 +743,7 @@ html {
     border-radius: 12px;
     text-align: left;
     box-shadow: var(--shadow-medium);
-    background: rgba(255, 255, 255, 0.5); /* Zvýšená průhlednost */
+    background: rgba(255, 255, 255, 0.65); /* Zvýšená neprůhlednost pro kalkulačku */
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
@@ -771,6 +775,12 @@ html {
     font-size: 1em;
     color: var(--color-text-dark);
     transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#kalkulacka input::placeholder,
+#kalkulacka textarea::placeholder {
+    color: var(--color-text-light);
+    opacity: 0.7;
 }
 
 #kalkulacka input:focus,
@@ -972,6 +982,10 @@ html {
     }
     .content-section {
         padding: 60px 0;
+        background-color: rgba(245, 248, 252, 0.75); /* Mírně zvýšená neprůhlednost na tabletu */
+    }
+    .content-section:nth-of-type(even) {
+        background-color: rgba(245, 248, 252, 0.7); /* Střídající se na tabletu */
     }
     .section-title {
         font-size: 2em;
@@ -1015,10 +1029,11 @@ html {
         font-size: 1.5em;
     }
 
+    /* Transparentnost pro glass efekty na tabletu */
     .glass-effect, .glass-effect-small {
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        background: rgba(255, 255, 255, 0.3); /* Mírně průhlednější na tabletech */
+        background: rgba(255, 255, 255, 0.55); /* Mírně vyšší opacity na tabletech */
     }
     .glass-effect::after {
         top: 10px;
@@ -1041,12 +1056,12 @@ html {
         margin-top: 40px;
     }
 
-    /* Checkboxy na mobilu - už je řešeno flexboxem s obalovým divem */
+    /* Checkboxy na tabletu - už je řešeno flexboxem s obalovým divem */
     #kalkulacka .checkbox-group > div {
-        margin-bottom: 8px; /* Menší mezera na mobilu */
+        margin-bottom: 8px; /* Menší mezera na tabletu */
     }
     #kalkulacka .checkbox-group input[type="checkbox"] {
-        margin-right: 6px; /* Mírně zmenšená mezera pro mobil */
+        margin-right: 6px; /* Mírně zmenšená mezera pro tablety */
     }
 }
 
@@ -1069,13 +1084,18 @@ html {
         padding: 8px 15px;
     }
 
+    /* !!! Důležité: Background-attachment na scroll pro mobilní BODY !!! */
+    body {
+        background-attachment: scroll; /* Na mobilu je fixed pozadí problematické */
+    }
+
     .hero-section {
-        background-attachment: scroll; /* Důležité pro mobil */
         padding: 60px 15px;
         min-height: 45vh;
-        background: linear-gradient(rgba(58, 71, 104, 0.6), rgba(58, 71, 104, 0.6)), /* Vyšší overlay pro čitelnost textu na mobilu */
-                    url('images/hero-background.jpg') no-repeat center center;
-        background-size: cover;
+        /* Odebrali jsme úplně background, protože je teď na body */
+        background: linear-gradient(rgba(58, 71, 104, 0.5), rgba(58, 71, 104, 0.5)); /* Jen overlay */
+        background-size: cover; /* Důležité pro překrytí */
+        background-attachment: scroll; /* Necháme scroll */
     }
     .hero-content h1 {
         font-size: 1.8em;
@@ -1090,10 +1110,10 @@ html {
     }
     .content-section {
         padding: 40px 0;
-        background-color: rgba(245, 248, 252, 0.25);
+        background-color: rgba(245, 248, 252, 0.8); /* Ještě vyšší neprůhlednost na mobilu */
     }
     .content-section:nth-of-type(even) {
-        background-color: rgba(245, 248, 252, 0.2);
+        background-color: rgba(245, 248, 252, 0.75); /* Střídající se na mobilu */
     }
     .section-title {
         font-size: 1.8em;
@@ -1103,10 +1123,11 @@ html {
         height: 3px;
     }
 
-    .service-item, .feature-item, .price-card {
+    /* Transparentnost pro glass efekty na mobilu */
+    .service-item, .feature-item, .price-card, .contact-form, #kalkulacka {
         max-width: 100%;
         padding: 25px;
-        background: rgba(255, 255, 255, 0.3); /* Ještě více průhledné na mobilu */
+        background: rgba(255, 255, 255, 0.65); /* Ještě vyšší opacity na mobilu */
     }
     .service-item i {
         font-size: 3em;
@@ -1122,15 +1143,6 @@ html {
     .service-item .btn {
         padding: 10px 20px;
         font-size: 0.9em;
-    }
-
-    .contact-form {
-        padding: 25px;
-        background: rgba(255, 255, 255, 0.3); /* Ještě více průhledné na mobilu */
-    }
-    #kalkulacka {
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.3); /* Ještě více průhledné na mobilu */
     }
 
     .form-group label {
@@ -1152,8 +1164,7 @@ html {
 
     .glass-effect, .glass-effect-small {
         border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        background: rgba(255, 255, 255, 0.2); /* Úplně nejvíce průhledné na mobilu */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6); /* Vyšší opacity na mobilu */
     }
     .glass-effect::after {
         top: 10px;
