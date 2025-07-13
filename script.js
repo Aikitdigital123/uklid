@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     icon.classList.remove('fa-times');
                     icon.classList.add('fa-bars');
                 }
+                // Důležité: pro přístupnost
+                menuToggle.setAttribute('aria-expanded', 'false');
             }
 
             const targetId = this.getAttribute('href');
@@ -70,8 +72,11 @@ document.addEventListener('DOMContentLoaded', () => {
         menuToggle.addEventListener('click', () => {
             navList.classList.toggle('active');
             const icon = menuToggle.querySelector('i');
+            const isExpanded = navList.classList.contains('active');
+            menuToggle.setAttribute('aria-expanded', isExpanded); // Nastavení aria-expanded
+
             if (icon) {
-                if (navList.classList.contains('active')) {
+                if (isExpanded) {
                     icon.classList.remove('fa-bars');
                     icon.classList.add('fa-times');
                 } else {
@@ -84,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', () => {
             if (window.innerWidth > 768 && navList.classList.contains('active')) {
                 navList.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false'); // Aktualizace aria-expanded
                 const icon = menuToggle.querySelector('i');
                 if (icon) {
                     icon.classList.remove('fa-times');
@@ -155,7 +161,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cleaningCalculatorForm && formStatusCalculator && cleaningTypeSelect && frequencyGroup && frequencySelect) {
         // Logika pro zobrazení/skrytí pole "Frekvence úklidu"
         const toggleFrequencyDisplay = () => {
-            if (cleaningTypeSelect.value === 'regular_home' || cleaningTypeSelect.value === 'commercial') {
+            // Kontrolujeme jak anglické, tak české hodnoty, pokud se v HTML používají obě varianty
+            if (cleaningTypeSelect.value === 'regular_home' || cleaningTypeSelect.value === 'commercial' || cleaningTypeSelect.value === 'Pravidelný úklid domácnosti' || cleaningTypeSelect.value === 'Komerční úklid') {
                 frequencyGroup.style.display = 'block';
                 frequencySelect.setAttribute('required', 'required'); // Nastaví required, když je viditelný
             } else {
@@ -177,6 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             formStatusCalculator.textContent = 'Odesílám poptávku...';
             formStatusCalculator.classList.remove('success', 'error');
+            formStatusCalculator.style.color = "#007bff"; // Modrá barva
+            formStatusCalculator.style.fontWeight = "bold";
             formStatusCalculator.style.display = 'block';
 
             const formData = new FormData(cleaningCalculatorForm);
@@ -185,6 +194,36 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!formData.has('subject')) {
                 formData.append('subject', 'Nová poptávka z kalkulačky úklidu - Lesktop');
             }
+
+            // *** ÚPRAVY PRO DOPLŇKOVÉ SLUŽBY ***
+            // Získání všech zaškrtnutých checkboxů pro doplňkové služby
+            const extraServicesCheckboxes = cleaningCalculatorForm.querySelectorAll('input[name="Doplňkové služby[]"]:checked');
+            const selectedServices = [];
+            extraServicesCheckboxes.forEach(checkbox => {
+                selectedServices.push(checkbox.value);
+            });
+
+            // Odstraníme původní pole "Doplňkové služby[]" a přidáme jedno nové s formátovaným textem
+            formData.delete('Doplňkové služby[]'); // Odstraníme původní pole s hranatými závorkami
+            if (selectedServices.length > 0) {
+                // Přidáme nové pole s názvem "Doplňkové služby" (BEZ hranatých závorek)
+                // Hodnoty se spojí do jednoho řetězce odděleného čárkou a mezerou.
+                formData.append('Doplňkové služby', selectedServices.join(', '));
+            } else {
+                // Pokud nebyly vybrány žádné služby, odešleme text "Žádné".
+                formData.append('Doplňkové služby', 'Žádné');
+            }
+            // *** KONEC ÚPRAV PRO DOPLŇKOVÉ SLUŽBY ***
+
+            // *** ÚPRAVA PRO DOMÁCÍ MAZLÍČKY ***
+            const hasPetsCheckbox = cleaningCalculatorForm.querySelector('input[name="Domácí mazlíčci"]:checked');
+            if (hasPetsCheckbox) {
+                formData.set('Domácí mazlíčci', 'Ano'); // Ujistíme se, že se odešle jen 'Ano' pokud je zaškrtnuto
+            } else {
+                formData.set('Domácí mazlíčci', 'Ne'); // Pokud není zaškrtnuto, odešleme 'Ne'
+            }
+            // *** KONEC ÚPRAV PRO DOMÁCÍ MAZLÍČKY ***
+
 
             try {
                 const formAction = cleaningCalculatorForm.action || 'https://api.web3forms.com/submit';
@@ -200,6 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (result.success) {
                     formStatusCalculator.textContent = 'Děkujeme! Vaše poptávka byla úspěšně odeslána.';
+                    formStatusCalculator.style.color = "green";
                     formStatusCalculator.classList.remove('error');
                     formStatusCalculator.classList.add('success');
                     cleaningCalculatorForm.reset(); // Vyčistí formulář
@@ -207,12 +247,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     console.error('Web3Forms response error for calculator form:', result);
                     formStatusCalculator.textContent = result.message || 'Při odesílání poptávky došlo k chybě. Zkuste to prosím později.';
+                    formStatusCalculator.style.color = "red";
                     formStatusCalculator.classList.remove('success');
                     formStatusCalculator.classList.add('error');
                 }
             } catch (error) {
                 console.error('Chyba při odesílání kalkulačního formuláře:', error);
                 formStatusCalculator.textContent = 'Při odesílání poptávky došlo k chybě sítě. Zkuste to prosím později.';
+                formStatusCalculator.style.color = "red";
                 formStatusCalculator.classList.remove('success');
                 formStatusCalculator.classList.add('error');
             } finally {
@@ -225,5 +267,4 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
 });
