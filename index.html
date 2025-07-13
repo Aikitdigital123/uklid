@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="styles.css">
+
+    <link rel="icon" type="image/png" href="images/Domecek.png">
+    <link rel="shortcut icon" type="image/png" href="images/Domecek.png">
+
 </head>
 <body>
 
@@ -164,17 +168,93 @@
                     <div class="form-group">
                         <label for="extraServices">Doplňkové služby (volitelné):</label>
                         <div class="checkbox-group">
-                            <input type="checkbox" id="windowsCleaning" name="extraServices[]" value="Mytí oken">
-                            <label for="windowsCleaning">Mytí oken</label><br>
-                            <input type="checkbox" id="ironing" name="extraServices[]" value="Žehlení prádla">
-                            <label for="ironing">Žehlení prádla</label><br>
+                            <input type="checkbox" id="windowsCleaningGeneral" name="extraServices[]" value="Mytí a čištění oken - obecně">
+                            <label for="windowsCleaningGeneral">Mytí a čištění oken (obecně)</label>
+                            
+                            <input type="checkbox" id="windowsCleaningStandard" name="extraServices[]" value="Mytí oken">
+                            <label for="windowsCleaningStandard">Mytí oken</label>
+                            
+                            <input type="checkbox" id="balconyWindows" name="extraServices[]" value="Mytí balkonových a terasových oken">
+                            <label for="balconyWindows">Mytí balkonových a terasových oken</label>
+                            
+                            <input type="checkbox" id="blindsCleaning" name="extraServices[]" value="Mytí žaluzií">
+                            <label for="blindsCleaning">Mytí žaluzií</label>
+
+                            <input type="checkbox" id="carpetCleaning" name="extraServices[]" value="Tepování koberců">
+                            <label for="carpetCleaning">Tepování koberců</label>
+                            
+                            <input type="checkbox" id="sofaCleaning" name="extraServices[]" value="Tepování sedaček">
+                            <label for="sofaCleaning">Tepování sedaček</label>
+                            
+                            <input type="checkbox" id="mattressCleaning" name="extraServices[]" value="Tepování matrací">
+                            <label for="mattressCleaning">Tepování matrací</label>
+
                             <input type="checkbox" id="ovenCleaning" name="extraServices[]" value="Čištění trouby">
-                            <label for="ovenCleaning">Čištění trouby</label><br>
+                            <label for="ovenCleaning">Čištění trouby</label>
+                            
                             <input type="checkbox" id="fridgeCleaning" name="extraServices[]" value="Čištění lednice">
-                            <label for="fridgeCleaning">Čištění lednice</label><br>
+                            <label for="fridgeCleaning">Čištění lednice</label>
+                            
+                            <input type="checkbox" id="freezerCleaning" name="extraServices[]" value="Čištění mrazáku">
+                            <label for="freezerCleaning">Čištění mrazáku</label>
+                            
+                            <input type="checkbox" id="microwaveCleaning" name="extraServices[]" value="Čištění mikrovlnné trouby">
+                            <label for="microwaveCleaning">Čištění mikrovlnné trouby</label>
+                            
+                            <input type="checkbox" id="hoodCleaning" name="extraServices[]" value="Čištění digestoře">
+                            <label for="hoodCleaning">Čištění digestoře</label>
+                            
+                            <input type="checkbox" id="applianceInteriorCleaning" name="extraServices[]" value="Mytí vnitřku kuchyňských spotřebičů (myčka, pračka)">
+                            <label for="applianceInteriorCleaning">Mytí vnitřku spotřebičů (myčka, pračka)</label>
+                            
+                            <input type="checkbox" id="kitchenCabinetCleaning" name="extraServices[]" value="Úklid v kuchyňské skříňce">
+                            <label for="kitchenCabinetCleaning">Úklid v kuchyňské skříňce</label>
+                            
+                            <input type="checkbox" id="closetCleaning" name="extraServices[]" value="Úklid ve skříni">
+                            <label for="closetCleaning">Úklid ve skříni</label>
+                            
+                            <input type="checkbox" id="balconyTerraceCleaning" name="extraServices[]" value="Úklid balkónu nebo terasy">
+                            <label for="balconyTerraceCleaning">Úklid balkónu nebo terasy</label>
+                            
+                            <input type="checkbox" id="radiatorCleaning" name="extraServices[]" value="Mytí radiátorů">
+                            <label for="radiatorCleaning">Mytí radiátorů</label>
+                            
+                            <input type="checkbox" id="doorFrameCleaning" name="extraServices[]" value="Mytí dveří a zárubní">
+                            <label for="doorFrameCleaning">Mytí dveří a zárubní</label>
+                            
+                            <input type="checkbox" id="lightFixtureCleaning" name="extraServices[]" value="Mytí světel a lustru">
+                            <label for="lightFixtureCleaning">Mytí světel a lustru</label>
+
+                            <input type="checkbox" id="extraBathroomToilet" name="extraServices[]" value="Další koupelna/toaleta">
+                            <label for="extraBathroomToilet">Další koupelna/toaleta</label>
+                            
+                            <input type="checkbox" id="ironingService" name="extraServices[]" value="Žehlení prádla">
+                            <label for="ironingService">Žehlení prádla</label>
+                            
+                            <input type="checkbox" id="disinfection" name="extraServices[]" value="Dezinfekce (koupelny, WC, kuchyně)">
+                            <label for="disinfection">Dezinfekce (koupelny, WC, kuchyně)</label>
+                            
+                            <input type="checkbox" id="keyHandling" name="extraServices[]" value="Předání nebo převzetí klíčů">
+                            <label for="keyHandling">Předání nebo převzetí klíčů</label>
+                            
+                            <input type="checkbox" id="cellarAtticCleaning" name="extraServices[]" value="Úklid sklepních a půdních prostor">
+                            <label for="cellarAtticCleaning">Úklid sklepních a půdních prostor</label>
+                            
+                            <input type="checkbox" id="moveInMoveOutCleaning" name="extraServices[]" value="Generální úklid před/po stěhování">
+                            <label for="moveInMoveOutCleaning">Generální úklid před/po stěhování</label>
+
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label>Máte domácí mazlíčky?</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="hasPets" name="hasPets" value="Ano">
+                            <label for="hasPets">Ano</label>
+                        </div>
+                        <small>Informace o mazlíčcích je důležitá pro správnou kalkulaci a výběr vhodných prostředků.</small>
+                    </div>
+                    
                     <div class="form-group">
                         <label for="customerName">Vaše jméno:</label>
                         <input type="text" id="customerName" name="customerName" required placeholder="Jméno a příjmení">
