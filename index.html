@@ -150,29 +150,29 @@
 
                     <div class="form-group">
                         <label for="cleaningType">Typ úklidu:</label>
-                        <select id="cleaningType" name="cleaningType" required>
+                        <select id="cleaningType" name="Typ úklidu" required>
                             <option value="">Vyberte typ úklidu</option>
-                            <option value="regular_home">Pravidelný úklid domácnosti</option>
-                            <option value="one_time_home">Jednorázový úklid domácnosti</option>
-                            <option value="post_construction">Úklid po rekonstrukci/stěhování</option>
-                            <option value="commercial">Úklid komerčních prostor (kanceláře, obchody)</option>
-                            <option value="windows_only">Mytí oken (samostatně)</option>
+                            <option value="Pravidelný úklid domácnosti">Pravidelný úklid domácnosti</option>
+                            <option value="Jednorázový úklid domácnosti">Jednorázový úklid domácnosti</option>
+                            <option value="Úklid po rekonstrukci/stěhování">Úklid po rekonstrukci/stěhování</option>
+                            <option value="Úklid komerčních prostor (kanceláře, obchody)">Úklid komerčních prostor (kanceláře, obchody)</option>
+                            <option value="Mytí oken (samostatně)">Mytí oken (samostatně)</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="areaSize">Přibližná velikost plochy (v m²):</label>
-                        <input type="number" id="areaSize" name="areaSize" min="10" placeholder="Např. 80" required>
+                        <input type="number" id="areaSize" name="Velikost plochy (m²)" min="10" placeholder="Např. 80" required>
                         <small>Uveďte celkovou plochu pro úklid.</small>
                     </div>
 
                     <div class="form-group" id="frequencyGroup" style="display: none;">
                         <label for="cleaningFrequency">Frekvence úklidu:</label>
-                        <select id="cleaningFrequency" name="cleaningFrequency">
-                            <option value="weekly">Týdně</option>
-                            <option value="bi-weekly">Jednou za 14 dní</option>
-                            <option value="monthly">Měsíčně</option>
-                            <option value="other">Jiné (uvedu v poznámce)</option>
+                        <select id="cleaningFrequency" name="Frekvence úklidu">
+                            <option value="Týdně">Týdně</option>
+                            <option value="Jednou za 14 dní">Jednou za 14 dní</option>
+                            <option value="Měsíčně">Měsíčně</option>
+                            <option value="Jiné (uvedu v poznámce)">Jiné (uvedu v poznámce)</option>
                         </select>
                     </div>
 
@@ -180,106 +180,106 @@
                         <label for="extraServices">Doplňkové služby (volitelné):</label>
                         <div class="checkbox-group">
                             <div>
-                                <input type="checkbox" id="windowsCleaningGeneral" name="extraServices[]" value="Mytí a čištění oken - obecně">
+                                <input type="checkbox" id="windowsCleaningGeneral" name="Doplňkové služby[]" value="Mytí a čištění oken - obecně">
                                 <label for="windowsCleaningGeneral">Mytí a čištění oken (obecně)</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="windowsCleaningStandard" name="extraServices[]" value="Mytí oken">
+                                <input type="checkbox" id="windowsCleaningStandard" name="Doplňkové služby[]" value="Mytí oken">
                                 <label for="windowsCleaningStandard">Mytí oken</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="balconyWindows" name="extraServices[]" value="Mytí balkonových a terasových oken">
+                                <input type="checkbox" id="balconyWindows" name="Doplňkové služby[]" value="Mytí balkonových a terasových oken">
                                 <label for="balconyWindows">Mytí balkonových a terasových oken</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="blindsCleaning" name="extraServices[]" value="Mytí žaluzií">
+                                <input type="checkbox" id="blindsCleaning" name="Doplňkové služby[]" value="Mytí žaluzií">
                                 <label for="blindsCleaning">Mytí žaluzií</label>
                             </div>
 
                             <div>
-                                <input type="checkbox" id="carpetCleaning" name="extraServices[]" value="Tepování koberců">
+                                <input type="checkbox" id="carpetCleaning" name="Doplňkové služby[]" value="Tepování koberců">
                                 <label for="carpetCleaning">Tepování koberců</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="sofaCleaning" name="extraServices[]" value="Tepování sedaček">
+                                <input type="checkbox" id="sofaCleaning" name="Doplňkové služby[]" value="Tepování sedaček">
                                 <label for="sofaCleaning">Tepování sedaček</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="mattressCleaning" name="extraServices[]" value="Tepování matrací">
+                                <input type="checkbox" id="mattressCleaning" name="Doplňkové služby[]" value="Tepování matrací">
                                 <label for="mattressCleaning">Tepování matrací</label>
                             </div>
 
                             <div>
-                                <input type="checkbox" id="ovenCleaning" name="extraServices[]" value="Čištění trouby">
+                                <input type="checkbox" id="ovenCleaning" name="Doplňkové služby[]" value="Čištění trouby">
                                 <label for="ovenCleaning">Čištění trouby</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="fridgeCleaning" name="extraServices[]" value="Čištění lednice">
+                                <input type="checkbox" id="fridgeCleaning" name="Doplňkové služby[]" value="Čištění lednice">
                                 <label for="fridgeCleaning">Čištění lednice</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="freezerCleaning" name="extraServices[]" value="Čištění mrazáku">
+                                <input type="checkbox" id="freezerCleaning" name="Doplňkové služby[]" value="Čištění mrazáku">
                                 <label for="freezerCleaning">Čištění mrazáku</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="microwaveCleaning" name="extraServices[]" value="Čištění mikrovlnné trouby">
+                                <input type="checkbox" id="microwaveCleaning" name="Doplňkové služby[]" value="Čištění mikrovlnné trouby">
                                 <label for="microwaveCleaning">Čištění mikrovlnné trouby</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="hoodCleaning" name="extraServices[]" value="Čištění digestoře">
+                                <input type="checkbox" id="hoodCleaning" name="Doplňkové služby[]" value="Čištění digestoře">
                                 <label for="hoodCleaning">Čištění digestoře</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="applianceInteriorCleaning" name="extraServices[]" value="Mytí vnitřku kuchyňských spotřebičů (myčka, pračka)">
-                                <label for="applianceInteriorCleaning">Mytí vnitřku spotřebičů (myčka, pračka)</label>
+                                <input type="checkbox" id="applianceInteriorCleaning" name="Doplňkové služby[]" value="Mytí vnitřku kuchyňských spotřebičů (myčka, pračka)">
+                                <label for="applianceInteriorCleaning">Mytí vnitřku kuchyňských spotřebičů (myčka, pračka)</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="kitchenCabinetCleaning" name="extraServices[]" value="Úklid v kuchyňské skříňce">
+                                <input type="checkbox" id="kitchenCabinetCleaning" name="Doplňkové služby[]" value="Úklid v kuchyňské skříňce">
                                 <label for="kitchenCabinetCleaning">Úklid v kuchyňské skříňce</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="closetCleaning" name="extraServices[]" value="Úklid ve skříni">
+                                <input type="checkbox" id="closetCleaning" name="Doplňkové služby[]" value="Úklid ve skříni">
                                 <label for="closetCleaning">Úklid ve skříni</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="balconyTerraceCleaning" name="extraServices[]" value="Úklid balkónu nebo terasy">
+                                <input type="checkbox" id="balconyTerraceCleaning" name="Doplňkové služby[]" value="Úklid balkónu nebo terasy">
                                 <label for="balconyTerraceCleaning">Úklid balkónu nebo terasy</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="radiatorCleaning" name="extraServices[]" value="Mytí radiátorů">
+                                <input type="checkbox" id="radiatorCleaning" name="Doplňkové služby[]" value="Mytí radiátorů">
                                 <label for="radiatorCleaning">Mytí radiátorů</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="doorFrameCleaning" name="extraServices[]" value="Mytí dveří a zárubní">
+                                <input type="checkbox" id="doorFrameCleaning" name="Doplňkové služby[]" value="Mytí dveří a zárubní">
                                 <label for="doorFrameCleaning">Mytí dveří a zárubní</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="lightFixtureCleaning" name="extraServices[]" value="Mytí světel a lustru">
+                                <input type="checkbox" id="lightFixtureCleaning" name="Doplňkové služby[]" value="Mytí světel a lustru">
                                 <label for="lightFixtureCleaning">Mytí světel a lustru</label>
                             </div>
 
                             <div>
-                                <input type="checkbox" id="extraBathroomToilet" name="extraServices[]" value="Další koupelna/toaleta">
+                                <input type="checkbox" id="extraBathroomToilet" name="Doplňkové služby[]" value="Další koupelna/toaleta">
                                 <label for="extraBathroomToilet">Další koupelna/toaleta</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="ironingService" name="extraServices[]" value="Žehlení prádla">
+                                <input type="checkbox" id="ironingService" name="Doplňkové služby[]" value="Žehlení prádla">
                                 <label for="ironingService">Žehlení prádla</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="disinfection" name="extraServices[]" value="Dezinfekce (koupelny, WC, kuchyně)">
+                                <input type="checkbox" id="disinfection" name="Doplňkové služby[]" value="Dezinfekce (koupelny, WC, kuchyně)">
                                 <label for="disinfection">Dezinfekce (koupelny, WC, kuchyně)</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="keyHandling" name="extraServices[]" value="Předání nebo převzetí klíčů">
+                                <input type="checkbox" id="keyHandling" name="Doplňkové služby[]" value="Předání nebo převzetí klíčů">
                                 <label for="keyHandling">Předání nebo převzetí klíčů</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="cellarAtticCleaning" name="extraServices[]" value="Úklid sklepních a půdních prostor">
+                                <input type="checkbox" id="cellarAtticCleaning" name="Doplňkové služby[]" value="Úklid sklepních a půdních prostor">
                                 <label for="cellarAtticCleaning">Úklid sklepních a půdních prostor</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="moveInMoveOutCleaning" name="extraServices[]" value="Generální úklid před/po stěhování">
+                                <input type="checkbox" id="moveInMoveOutCleaning" name="Doplňkové služby[]" value="Generální úklid před/po stěhování">
                                 <label for="moveInMoveOutCleaning">Generální úklid před/po stěhování</label>
                             </div>
 
@@ -290,7 +290,7 @@
                         <label>Máte domácí mazlíčky?</label>
                         <div class="checkbox-group">
                             <div>
-                                <input type="checkbox" id="hasPets" name="hasPets" value="Ano">
+                                <input type="checkbox" id="hasPets" name="Domácí mazlíčci" value="Ano">
                                 <label for="hasPets">Ano</label>
                             </div>
                         </div>
@@ -299,22 +299,22 @@
                     
                     <div class="form-group">
                         <label for="customerName">Vaše jméno:</label>
-                        <input type="text" id="customerName" name="customerName" required placeholder="Jméno a příjmení">
+                        <input type="text" id="customerName" name="Jméno zákazníka" required placeholder="Jméno a příjmení">
                     </div>
 
                     <div class="form-group">
                         <label for="customerEmail">Váš e-mail:</label>
-                        <input type="email" id="customerEmail" name="customerEmail" required placeholder="vas@email.cz">
+                        <input type="email" id="customerEmail" name="Email zákazníka" required placeholder="vas@email.cz">
                     </div>
 
                     <div class="form-group">
                         <label for="customerPhone">Váš telefon (volitelné):</label>
-                        <input type="tel" id="customerPhone" name="customerPhone" placeholder="+420 123 456 789">
+                        <input type="tel" id="customerPhone" name="Telefon zákazníka" placeholder="+420 123 456 789">
                     </div>
 
                     <div class="form-group">
                         <label for="notes">Doplňující poznámky (specifikace, preferovaný termín):</label>
-                        <textarea id="notes" name="notes" rows="4" placeholder="Např. úklid bytu 2+kk, preferuji úterky dopoledne..."></textarea>
+                        <textarea id="notes" name="Poznámky" rows="4" placeholder="Např. úklid bytu 2+kk, preferuji úterky dopoledne..."></textarea>
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Získat nezávaznou nabídku</button>
