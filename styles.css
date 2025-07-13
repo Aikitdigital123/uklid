@@ -37,7 +37,7 @@
 body {
     font-family: var(--font-body);
     /* Zde přidáme pozadí celé stránky */
-    background: url('images/hero-background2.jpg') no-repeat center center fixed;
+    background: url('images/hero-background.jpg') no-repeat center center fixed;
     background-size: cover; /* Důležité pro pokrytí celé plochy a přizpůsobení */
     background-color: var(--color-background-white); /* Záložní barva, pokud se obrázek nenačte */
 
@@ -67,9 +67,10 @@ html {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    /* ZMĚNA: Zmenšujeme mezeru mezi obrázkem a textem */
+    gap: 5px; /* Původně 10px, zmenšeno */
 
-    font-size: 2.8em; /* Změna: Dynamičtější font-size */
+    font-size: 2.8em;
     font-weight: 700;
     line-height: 1;
     color: var(--color-background-white);
@@ -78,7 +79,8 @@ html {
 }
 
 .logo-img {
-    height: 140px;
+    /* ZMĚNA: Zvětšujeme výšku obrázku loga */
+    height: 120px; /* Původně 100px, zvětšeno */
     width: auto;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     transition: transform 0.3s ease;
@@ -160,9 +162,7 @@ html {
 
 /* --- Hero Sekce --- */
 .hero-section {
-    /* Odebrali jsme background image odsud, protože je nyní na body */
-    /* Změna: Snížíme průhlednost překrytí, aby bylo pozadí více viditelné */
-    background: linear-gradient(rgba(58, 71, 104, 0.4), rgba(58, 71, 104, 0.4)); /* Snížena průhlednost na 0.4 */
+    background: linear-gradient(rgba(58, 71, 104, 0.4), rgba(58, 71, 104, 0.4));
     color: var(--color-background-white);
     text-align: center;
     padding: 120px 20px;
@@ -219,13 +219,11 @@ html {
 .content-section {
     padding: 80px 0;
     text-align: center;
-    /* Změna: Snížena průhlednost na 0.4 */
-    background-color: rgba(245, 248, 252, 0.4); /* var(--color-background-offwhite) s průhledností */
+    background-color: rgba(245, 248, 252, 0.4);
 }
 
 .content-section:nth-of-type(even) {
-    /* Změna: Také s průhledností pro střídavé sekce, o něco vyšší než liché */
-    background-color: rgba(245, 248, 252, 0.3); /* Snížena průhlednost na 0.3 */
+    background-color: rgba(245, 248, 252, 0.3);
 }
 
 .section-title {
@@ -269,8 +267,7 @@ html {
     padding: 35px;
     border-radius: 12px;
     box-shadow: var(--shadow-light);
-    /* Změna: Více průhledné pozadí pro karty */
-    background: rgba(255, 255, 255, 0.3); /* Snížena průhlednost na 0.3 */
+    background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -288,9 +285,9 @@ html {
     bottom: 0;
     background: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.05) 0%, /* Snížena průhlednost */
+        rgba(255, 255, 255, 0.05) 0%,
         rgba(255, 255, 255, 0) 50%,
-        rgba(255, 255, 255, 0.02) 100% /* Snížena průhlednost */
+        rgba(255, 255, 255, 0.02) 100%
     );
     border-radius: inherit;
     pointer-events: none;
@@ -359,8 +356,7 @@ html {
     border-radius: 12px;
     box-shadow: var(--shadow-light);
     transition: background-color var(--transition-speed);
-    /* Změna: Více průhledné pozadí pro karty */
-    background: rgba(255, 255, 255, 0.3); /* Snížena průhlednost na 0.3 */
+    background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -425,8 +421,7 @@ html {
     border-radius: 12px;
     box-shadow: var(--shadow-medium);
     text-align: left;
-    /* Změna: Více průhledné pozadí pro kontaktní formulář */
-    background: rgba(255, 255, 255, 0.4); /* Snížena průhlednost na 0.4 */
+    background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
@@ -445,7 +440,7 @@ html {
 
 .form-group input,
 .form-group textarea,
-.form-group select { /* Přidáno pro konzistenci */
+.form-group select {
     width: 100%;
     padding: 12px 15px;
     border: 1px solid var(--color-border);
@@ -464,7 +459,7 @@ html {
 
 .form-group input:focus,
 .form-group textarea:focus,
-.form-group select:focus { /* Přidáno pro konzistenci */
+.form-group select:focus {
     border-color: var(--color-primary-light);
     box-shadow: 0 0 0 3px rgba(var(--color-primary-light-rgb), 0.2);
     outline: none;
@@ -510,7 +505,7 @@ html {
 
 .main-footer .container {
     display: flex;
-    flex-direction: column; /* Výchozí pro mobily */
+    flex-direction: column;
     align-items: center;
     gap: 15px;
 }
@@ -532,11 +527,8 @@ html {
 }
 
 /* --- Liquid Glass Effect (vylepšený) --- */
-/* Tyto třídy už se pravděpodobně nebudou používat přímo,
-   protože efekt aplikujeme přímo na elementy jako service-item, feature-item, contact-form, pricing-grid */
 .glass-effect {
-    /* Změna: Více průhledné pozadí */
-    background: rgba(255, 255, 255, 0.2); /* Snížena průhlednost na 0.2 */
+    background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
@@ -556,9 +548,9 @@ html {
     bottom: 0;
     background: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.05) 0%, /* Snížena průhlednost */
+        rgba(255, 255, 255, 0.05) 0%,
         rgba(255, 255, 255, 0) 50%,
-        rgba(255, 255, 255, 0.02) 100% /* Snížena průhlednost */
+        rgba(255, 255, 255, 0.02) 100%
     );
     border-radius: inherit;
     pointer-events: none;
@@ -580,8 +572,7 @@ html {
 
 /* Variace glass efektu pro menší prvky */
 .glass-effect-small {
-    /* Změna: Více průhledné pozadí */
-    background: rgba(255, 255, 255, 0.3); /* Snížena průhlednost na 0.3 */
+    background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -600,9 +591,9 @@ html {
     bottom: 0;
     background: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.05) 0%, /* Snížena průhlednost */
+        rgba(255, 255, 255, 0.05) 0%,
         rgba(255, 255, 255, 0) 50%,
-        rgba(255, 255, 255, 0.02) 100% /* Snížena průhlednost */
+        rgba(255, 255, 255, 0.02) 100%
     );
     border-radius: inherit;
     pointer-events: none;
@@ -616,7 +607,7 @@ html {
     transition: opacity var(--transition-speed) ease-out, transform var(--transition-speed) ease-out;
 }
 
-.reveal-on-scroll.is-visible { /* Změna názvu třídy pro JS, doporučeno */
+.reveal-on-scroll.is-visible {
     opacity: 1;
     transform: translateY(0);
 }
@@ -642,8 +633,7 @@ html {
     border-radius: 12px;
     text-align: center;
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-    /* Změna: Více průhledné pozadí pro karty */
-    background: rgba(255, 255, 255, 0.3); /* Snížena průhlednost na 0.3 */
+    background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -720,8 +710,7 @@ html {
     border-radius: 12px;
     text-align: left;
     box-shadow: var(--shadow-medium);
-    /* Změna: Více průhledné pozadí pro kalkulačku */
-    background: rgba(255, 255, 255, 0.4); /* Snížena průhlednost na 0.4 */
+    background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
@@ -791,7 +780,7 @@ html {
 
 /* Skrytí pole frekvence, pokud není relevantní (JS to přepíná) */
 #frequencyGroup {
-    display: none; /* Výchozí skrytí */
+    display: none;
 }
 
 
@@ -800,20 +789,21 @@ html {
 /* Všeobecné úpravy pro velikost písma a padding kontejneru */
 @media (max-width: 1200px) {
     .container {
-        padding: 0 30px; /* Mírné zmenšení paddingu pro větší laptopy/menší desktopy */
+        padding: 0 30px;
     }
 }
 
 @media (max-width: 992px) {
     /* Logo a Header */
     :root {
-        --header-height: 80px; /* Mírně snížíme výšku headeru */
+        --header-height: 80px;
     }
     .logo {
-        font-size: 2.2em; /* Zmenšit velikost loga pro menší obrazovky */
+        font-size: 2.2em;
     }
+    /* ZMĚNA: Zvětšujeme výšku obrázku loga pro tablety */
     .logo-img {
-        height: 70px; /* Snížit velikost obrázku loga */
+        height: 90px; /* Původně 70px, zvětšeno */
     }
     .hero-content h1 {
         font-size: 2.8em;
@@ -831,52 +821,52 @@ html {
         gap: 20px;
     }
     .pricing-grid {
-        gap: 25px; /* Mírně menší mezery */
+        gap: 25px;
     }
 }
 
 @media (max-width: 768px) {
     /* Změny pro tablety (na šířku) a menší laptopy */
     .container {
-        padding: 0 25px; /* Menší padding na tabletech */
+        padding: 0 25px;
     }
     :root {
-        --header-height: 70px; /* Dále snížíme výšku headeru pro tablety */
+        --header-height: 70px;
     }
     .main-header .container {
-        justify-content: space-between; /* Zajistí, že logo a toggle jsou na koncích */
+        justify-content: space-between;
     }
     .main-header .nav-list {
-        display: none; /* Skryje navigační odkazy */
+        display: none;
         flex-direction: column;
         width: 100%;
         position: absolute;
-        top: var(--header-height); /* Pod headerem - využívá proměnnou */
+        top: var(--header-height);
         left: 0;
         background-color: var(--color-primary-dark);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        padding: 20px 0; /* Vertikální padding */
+        padding: 20px 0;
         border-radius: 0 0 12px 12px;
         opacity: 0;
         visibility: hidden;
         transform: translateY(-10px);
         transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-        box-sizing: border-box; /* Zajistí, že padding nezpůsobí přetečení šířky */
+        box-sizing: border-box;
     }
 
     .main-header .nav-list.active {
-        display: flex; /* Zobrazí menu při aktivaci */
+        display: flex;
         opacity: 1;
         visibility: visible;
         transform: translateY(0);
     }
 
     .main-header .nav-list li {
-        margin: 0; /* Odebereme margin mezi li prvky */
+        margin: 0;
     }
     .main-header .nav-list a {
         display: block;
-        padding: 10px 20px; /* Horizontální padding pro odkazy */
+        padding: 10px 20px;
         text-align: center;
         width: 100%;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -886,14 +876,15 @@ html {
     }
 
     .menu-toggle {
-        display: block; /* Zobrazí tlačítko pro přepínání menu */
-        font-size: 2em; /* Mírně větší ikona pro snadnější kliknutí */
+        display: block;
+        font-size: 2em;
     }
     .logo {
-        font-size: 2em; /* Dále zmenšit logo */
+        font-size: 2em;
     }
+    /* ZMĚNA: Zvětšujeme výšku obrázku loga pro menší tablety */
     .logo-img {
-        height: 60px; /* Dále zmenšit obrázek loga */
+        height: 70px; /* Původně 60px, zvětšeno */
     }
 
     .hero-section {
@@ -916,12 +907,12 @@ html {
         font-size: 2em;
     }
     .services-grid, .features-list, .pricing-grid {
-        grid-template-columns: 1fr; /* Jeden sloupec na tabletu/mobilu */
-        gap: 30px; /* Více mezery mezi kartami */
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
     .service-item, .feature-item, .price-card {
-        margin: 0 auto; /* Centrování jednoho prvku */
-        max-width: 450px; /* Omezení šířky pro tablety */
+        margin: 0 auto;
+        max-width: 450px;
     }
     .contact-form {
         padding: 30px;
@@ -929,62 +920,58 @@ html {
     .section-subtitle {
         font-size: 1.6em;
     }
-    /* Cílení na ID 'kalkulacka' v media query */
     #kalkulacka {
         padding: 30px;
-        max-width: 550px; /* Mírně menší max-width pro kalkulačku */
+        max-width: 550px;
     }
 
-    /* Kontaktní info - úprava pro svislé zobrazení */
     .contact-info p {
-        flex-direction: column; /* Ikona nad textem */
+        flex-direction: column;
         gap: 5px;
-        margin-bottom: 15px; /* Více mezery mezi kontaktními údaji */
+        margin-bottom: 15px;
     }
     .contact-info i {
         margin-right: 0;
-        margin-bottom: 5px; /* Mezera pod ikonou */
+        margin-bottom: 5px;
     }
 
-    /* Patička */
     .main-footer .container {
-        flex-direction: column; /* Aby byly prvky pod sebou */
+        flex-direction: column;
     }
     .main-footer p {
-        margin-bottom: 10px; /* Mezera pod copyrightem */
+        margin-bottom: 10px;
     }
 }
 
 @media (max-width: 480px) {
     /* Změny pro malé mobilní telefony */
     .container {
-        padding: 0 15px; /* Nejmenší padding na okrajích */
+        padding: 0 15px;
     }
     :root {
-        --header-height: 60px; /* Nejmenší výška headeru */
+        --header-height: 60px;
     }
     .logo {
-        font-size: 1.5em; /* Ještě menší písmo loga */
-        gap: 5px;
+        font-size: 1.5em;
+        /* ZMĚNA: Dále zmenšujeme mezeru na mobilu */
+        gap: 3px; /* Původně 5px, zmenšeno */
     }
+    /* ZMĚNA: Zvětšujeme výšku obrázku loga pro mobily */
     .logo-img {
-        height: 45px; /* Ještě menší obrázek loga */
+        height: 55px; /* Původně 45px, zvětšeno */
     }
     .main-header .nav-list a {
-        padding: 8px 15px; /* Menší padding pro odkazy v mobilním menu */
+        padding: 8px 15px;
     }
 
-    /* ** DŮLEŽITÉ ÚPRAVY PRO MOBILY ** */
     body {
-        /* Změna background-attachment pro lepší kompatibilitu na mobilu */
         background-attachment: scroll;
     }
 
     .hero-section {
         padding: 60px 15px;
-        min-height: 45vh; /* Mírně nižší hero sekce */
-        /* Ještě snížit průhlednost překrytí pro mobily, aby obrázek prosvítal více */
-        background: linear-gradient(rgba(58, 71, 104, 0.3), rgba(58, 71, 104, 0.3)); /* Snížena průhlednost na 0.3 */
+        min-height: 45vh;
+        background: linear-gradient(rgba(58, 71, 104, 0.3), rgba(58, 71, 104, 0.3));
     }
     .hero-content h1 {
         font-size: 1.8em;
@@ -999,12 +986,10 @@ html {
     }
     .content-section {
         padding: 40px 0;
-        /* Ještě snížit průhlednost pro obsahové sekce na mobilu */
-        background-color: rgba(245, 248, 252, 0.25); /* Snížena průhlednost na 0.25 */
+        background-color: rgba(245, 248, 252, 0.25);
     }
     .content-section:nth-of-type(even) {
-        /* Ještě snížit průhlednost pro sudé obsahové sekce na mobilu */
-        background-color: rgba(245, 248, 252, 0.2); /* Snížena průhlednost na 0.2 */
+        background-color: rgba(245, 248, 252, 0.2);
     }
     .section-title {
         font-size: 1.8em;
@@ -1015,10 +1000,9 @@ html {
     }
 
     .service-item, .feature-item, .price-card {
-        max-width: 100%; /* Plná šířka na nejmenších obrazovkách */
-        padding: 25px; /* Menší padding uvnitř karet */
-        /* Ještě snížit průhlednost karet na mobilu */
-        background: rgba(255, 255, 255, 0.2); /* Snížena průhlednost na 0.2 */
+        max-width: 100%;
+        padding: 25px;
+        background: rgba(255, 255, 255, 0.2);
     }
     .service-item i {
         font-size: 3em;
@@ -1038,13 +1022,11 @@ html {
 
     .contact-form {
         padding: 25px;
-        /* Ještě snížit průhlednost kontaktního formuláře na mobilu */
-        background: rgba(255, 255, 255, 0.3); /* Snížena průhlednost na 0.3 */
+        background: rgba(255, 255, 255, 0.3);
     }
     #kalkulacka {
         padding: 20px;
-        /* Ještě snížit průhlednost kalkulačky na mobilu */
-        background: rgba(255, 255, 255, 0.3); /* Snížena průhlednost na 0.3 */
+        background: rgba(255, 255, 255, 0.3);
     }
 
     .form-group label {
@@ -1064,12 +1046,10 @@ html {
         font-size: 1.2em;
     }
 
-    /* Úpravit glass effect na menších zařízeních */
     .glass-effect, .glass-effect-small {
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        /* Ještě snížit průhlednost obecných glass efektů na mobilu */
-        background: rgba(255, 255, 255, 0.15); /* Snížena průhlednost na 0.15 */
+        background: rgba(255, 255, 255, 0.15);
     }
     .glass-effect::after {
         top: 10px;
@@ -1096,7 +1076,7 @@ html {
 /* Desktop-specific adjustments */
 @media (min-width: 1101px) {
     .main-footer .container {
-        flex-direction: row; /* Zpět na řádek pro desktop */
+        flex-direction: row;
         justify-content: space-between;
     }
     .main-footer p {
