@@ -1793,10 +1793,10 @@ select#cleaningFrequency:focus {
 }
 .select-modern .select-menu {
   position: absolute; left: 0; right: 0; top: calc(100% + 8px);
-  /* méně průhledné sklo, lepší čitelnost */
+  /* téměř neprůhledné sklo kvůli textům za menu */
   background:
-    linear-gradient(150deg, rgba(255,255,255,0.80) 0%, rgba(255,255,255,0.62) 100%);
-  border: 1.5px solid rgba(255,255,255,0.95);
+    linear-gradient(150deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.88) 100%);
+  border: 1px solid rgba(255,255,255,0.95);
   border-radius: 16px; box-shadow: 0 22px 60px rgba(20,30,60,0.34);
   backdrop-filter: blur(18px) saturate(220%);
   -webkit-backdrop-filter: blur(18px) saturate(220%);
@@ -1815,6 +1815,10 @@ select#cleaningFrequency:focus {
   background: rgba(255,255,255,0.42);
   box-shadow: inset 0 0 0 2px rgba(124,168,224,0.95), 0 0 0 6px rgba(124,168,224,0.3);
 }
+
+/* Zrychlit/redukovať zpoždění animací v sekci Ceník/Kalkulace */
+#pricing .reveal-on-scroll { transition-delay: 0ms !important; }
+#pricing .delay-1, #pricing .delay-2, #pricing .delay-3, #pricing .delay-4 { transition-delay: 0ms !important; }
 .select-modern .select-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* Skryj vizuálně původní select, ale ponecháme v DOM kvůli submitu */
