@@ -1,26 +1,26 @@
-/* Základní reset a box-sizing */
+/* ZĂˇkladnĂ­ reset a box-sizing */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* CSS proměnné pro snadnou správu barev a fontů */
+/* CSS promÄ›nnĂ© pro snadnou sprĂˇvu barev a fontĹŻ */
 :root {
-    --color-primary-dark: #3a4768; /* Tmavě modrá */
-    --color-primary-light: #4c6292; /* Středně modrá */
-    --color-accent: #7ca8e0; /* Světlejší modrá */
-    --color-text-dark: #2c354a; /* Velmi tmavá šedá */
-    --color-text-light: #5f6b8c; /* Světlejší modrošedá */
-    --color-background-white: #ffffff; /* Čistě bílé pozadí */
-    --color-background-offwhite: #f5f8fc; /* Velmi světlé modro-šedé pozadí */
-    --color-border: #e0e7ee; /* Jemný okraj */
+    --color-primary-dark: #3a4768; /* TmavÄ› modrĂˇ */
+    --color-primary-light: #4c6292; /* StĹ™ednÄ› modrĂˇ */
+    --color-accent: #7ca8e0; /* SvÄ›tlejĹˇĂ­ modrĂˇ */
+    --color-text-dark: #2c354a; /* Velmi tmavĂˇ ĹˇedĂˇ */
+    --color-text-light: #5f6b8c; /* SvÄ›tlejĹˇĂ­ modroĹˇedĂˇ */
+    --color-background-white: #ffffff; /* ÄŚistÄ› bĂ­lĂ© pozadĂ­ */
+    --color-background-offwhite: #f5f8fc; /* Velmi svÄ›tlĂ© modro-ĹˇedĂ© pozadĂ­ */
+    --color-border: #e0e7ee; /* JemnĂ˝ okraj */
     --color-success: #28a745;
     --color-error: #dc3545;
 
-    /* RGB hodnoty pro průhlednost (použito pro rgba()) */
+    /* RGB hodnoty pro prĹŻhlednost (pouĹľito pro rgba()) */
     --color-primary-light-rgb: 76, 98, 146;
-    --color-primary-dark-rgb: 58, 71, 104; /* Přidáno pro použití v rgba() */
+    --color-primary-dark-rgb: 58, 71, 104; /* PĹ™idĂˇno pro pouĹľitĂ­ v rgba() */
 
     --font-heading: 'Montserrat', sans-serif;
     --font-body: 'Open Sans', sans-serif;
@@ -31,8 +31,8 @@
     --glass-blur: 12px;
     --glass-saturate: 180%;
 
-    /* Nová proměnná pro výšku headeru, usnadní pozicování mobilního menu */
-    --header-height: 90px; /* Předpokládaná výška headeru na desktopu */
+    /* NovĂˇ promÄ›nnĂˇ pro vĂ˝Ĺˇku headeru, usnadnĂ­ pozicovĂˇnĂ­ mobilnĂ­ho menu */
+    --header-height: 90px; /* PĹ™edpoklĂˇdanĂˇ vĂ˝Ĺˇka headeru na desktopu */
 }
 
 body {
@@ -42,49 +42,50 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    overflow-x: hidden; /* Důležité pro zamezení horizontálního scrollu */
-    position: relative; /* Důležité pro z-index obsahu nad pseudo-elementem */
-    z-index: 1; /* Zajistí, že obsah bude nad pozadím */
+    overflow-x: hidden; /* DĹŻleĹľitĂ© pro zamezenĂ­ horizontĂˇlnĂ­ho scrollu */
+    position: relative; /* DĹŻleĹľitĂ© pro z-index obsahu nad pseudo-elementem */
+    z-index: 1; /* ZajistĂ­, Ĺľe obsah bude nad pozadĂ­m */
 }
 
-/* Pseudo-element pro fixní pozadí na celé stránce (výchozí pro desktop) */
+/* Pseudo-element pro fixnĂ­ pozadĂ­ na celĂ© strĂˇnce (vĂ˝chozĂ­ pro desktop) */
 body::before {
-    content: ''; /* Povinná vlastnost pro pseudo-element */
-    position: fixed; /* KLÍČOVÉ: Udrží pozadí pevné vůči obrazovce */
+    content: ''; /* PovinnĂˇ vlastnost pro pseudo-element */
+    position: fixed; /* KLĂŤÄŚOVĂ‰: UdrĹľĂ­ pozadĂ­ pevnĂ© vĹŻÄŤi obrazovce */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Desktop obrázek s gradientem */
+    /* Desktop obrĂˇzek s gradientem */
     background: linear-gradient(
                                   rgba(var(--color-primary-dark-rgb), 0.15),
                                   rgba(var(--color-primary-dark-rgb), 0.15)
                                 ),
                                 url('images/hero.jpg') no-repeat center center;
     background-size: cover;
-    z-index: -1; /* Umístí tento element pod veškerý obsah */
-    transition: background 0.5s ease-in-out; /* Plynulý přechod při změně obrázku/gradientu */
+    z-index: -1; /* UmĂ­stĂ­ tento element pod veĹˇkerĂ˝ obsah */
+    transition: background 0.5s ease-in-out; /* PlynulĂ˝ pĹ™echod pĹ™i zmÄ›nÄ› obrĂˇzku/gradientu */
 }
 
 
-/* Zajištění, aby fixní/sticky header nepřekrýval obsah při skrolování na ID */
+/* ZajiĹˇtÄ›nĂ­, aby fixnĂ­/sticky header nepĹ™ekrĂ˝val obsah pĹ™i skrolovĂˇnĂ­ na ID */
 html {
     scroll-padding-top: var(--header-height); /* Odsazení od vrchu podle výšky headeru */
     scroll-behavior: smooth; /* Plynulé skrolování */
 }
+    overflow-x: hidden; /* Zamezí horizontálnímu posunu na mobilu */
 
 .container {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 20px;
-    width: 100%; /* Zajistí, že container vždy zabere 100% dostupné šířky, pokud je menší než max-width */
+    width: 100%; /* ZajistĂ­, Ĺľe container vĹľdy zabere 100% dostupnĂ© ĹˇĂ­Ĺ™ky, pokud je menĹˇĂ­ neĹľ max-width */
 }
 
-/* --- Styly pro logo a obrázek loga --- */
+/* --- Styly pro logo a obrĂˇzek loga --- */
 .logo {
     display: flex;
     align-items: center;
-    gap: 5px; /* Zmenšená mezera mezi obrázkem a textem */
+    gap: 5px; /* ZmenĹˇenĂˇ mezera mezi obrĂˇzkem a textem */
     font-size: 2.8em;
     font-weight: 700;
     line-height: 1;
@@ -95,7 +96,7 @@ html {
 }
 
 .logo-img {
-    height: 120px; /* Zvětšená výška obrázku loga */
+    height: 120px; /* ZvÄ›tĹˇenĂˇ vĂ˝Ĺˇka obrĂˇzku loga */
     width: auto;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     transition: transform 0.3s ease;
@@ -111,7 +112,7 @@ html {
     text-shadow: 0 0 10px rgba(124,168,224,0.75), 0 0 22px rgba(124,168,224,0.55);
 }
 
-/* --- Hlavní záhlaví (Header) --- */
+/* --- HlavnĂ­ zĂˇhlavĂ­ (Header) --- */
 .main-header {
     background-color: var(--color-primary-dark);
     padding: 20px 0;
@@ -126,7 +127,7 @@ html {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: var(--header-height); /* Důležité: Nastavte výšku kontejneru pro header */
+    height: var(--header-height); /* DĹŻleĹľitĂ©: Nastavte vĂ˝Ĺˇku kontejneru pro header */
 }
 
 /* Navigace */
@@ -173,10 +174,37 @@ html {
     font-size: 1.8em;
     color: var(--color-background-white);
     cursor: pointer;
-    z-index: 1001; /* Ujistěte se, že je nad menu při aktivaci */
+    z-index: 1001; /* UjistÄ›te se, Ĺľe je nad menu pĹ™i aktivaci */
 }
 
-/* === Glass chrome pro header a footer s animací === */
+/* === Mobilní menu: neprůhledný panel, čitelné na iPhone === */
+@media (max-width: 768px) {
+  .menu-toggle { display: inline-block; }
+  .main-nav .nav-list {
+    position: fixed;
+    top: var(--header-height);
+    left: 0; right: 0; bottom: 0;
+    display: flex; flex-direction: column; align-items: flex-start;
+    gap: 16px; padding: 18px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(245,248,252,0.98));
+    border-top: 1px solid rgba(0,0,0,0.06);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+    backdrop-filter: blur(10px) saturate(160%);
+    transform: translateY(-8px);
+    opacity: 0; pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease;
+    z-index: 1100;
+  }
+  .main-nav .nav-list.active {
+    transform: translateY(0);
+    opacity: 1; pointer-events: auto;
+  }
+  .main-nav .nav-list a { font-size: 1.1rem; color: var(--color-text-dark); }
+}
+
+/* Globální pojistka proti horizontálnímu posunu */
+html, body { overflow-x: hidden; max-width: 100%; }
+/* === Glass chrome pro header a footer s animacĂ­ === */
 .main-header,
 .main-footer {
     background: rgba(255, 255, 255, 0.12);
@@ -211,12 +239,12 @@ html {
     pointer-events: none;
 }
 
-/* Footer bez popojíždění skla (shimmer vypnut jen v zápatí) */
+/* Footer bez popojĂ­ĹľdÄ›nĂ­ skla (shimmer vypnut jen v zĂˇpatĂ­) */
 .main-footer::after {
     display: none;
 }
 
-/* Zabraň přetažení highlightu přes celou stránku u footeru */
+/* ZabraĹ pĹ™etaĹľenĂ­ highlightu pĹ™es celou strĂˇnku u footeru */
 .main-footer::before { display: none; }
 
 @keyframes glass-shimmer {
@@ -226,7 +254,7 @@ html {
     100% { transform: translateX(180vw) skewX(-20deg); opacity: 0; }
 }
 
-/* jemný “glow” hran na skle při hoveru navigace */
+/* jemnĂ˝ â€śglowâ€ť hran na skle pĹ™i hoveru navigace */
 .main-nav .nav-list a:hover::after { box-shadow: 0 0 12px rgba(255,255,255,0.45); }
 
 /* === WhatsApp button: green glass tint === */
@@ -246,7 +274,7 @@ html {
 }
 .btn.btn-whatsapp i { color: #ffffff; }
 
-/* === Footer: stejný modrý vzhled jako header + není sticky === */
+/* === Footer: stejnĂ˝ modrĂ˝ vzhled jako header + nenĂ­ sticky === */
 .main-footer {
   position: relative;
   color: #ffffff;
@@ -257,11 +285,11 @@ html {
 }
 .main-footer a { color: #ffffff; }
 
-/* === Jednotná, čitelná typografie s adaptivní velikostí === */
+/* === JednotnĂˇ, ÄŤitelnĂˇ typografie s adaptivnĂ­ velikostĂ­ === */
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { font-size: clamp(16px, 1.05vw, 18px); line-height: 1.65; }
 
-/* Nadpisy používají clamp pro konzistenci na mobilech/tabletech/desktops */
+/* Nadpisy pouĹľĂ­vajĂ­ clamp pro konzistenci na mobilech/tabletech/desktops */
 h1, .hero-content h1 { font-family: var(--font-heading); font-weight: 700; font-size: clamp(28px, 4.2vw, 44px); line-height: 1.15; }
 h2, .section-title { font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 3vw, 32px); line-height: 1.2; }
 h3 { font-family: var(--font-heading); font-weight: 600; font-size: clamp(18px, 2.2vw, 24px); line-height: 1.25; }
@@ -276,13 +304,13 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 
 /* --- Hero Sekce --- */
 .hero-section {
-    /* ODSTRANĚNO POZADÍ OBRÁZKU ZDE, JE NA BODY::BEFORE */
+    /* ODSTRANÄšNO POZADĂŤ OBRĂZKU ZDE, JE NA BODY::BEFORE */
     background: linear-gradient(
-                                  rgba(var(--color-primary-dark-rgb), 0.5), /* Průhlednost 50% */
+                                  rgba(var(--color-primary-dark-rgb), 0.5), /* PrĹŻhlednost 50% */
                                   rgba(var(--color-primary-dark-rgb), 0.5)
-                                ); /* Jen overlay, aby se prolnul s pozadím body */
+                                ); /* Jen overlay, aby se prolnul s pozadĂ­m body */
     background-size: cover;
-    /* background-attachment: scroll; Ponecháme scroll, aby nekonfliktovalo s body fixed */
+    /* background-attachment: scroll; PonechĂˇme scroll, aby nekonfliktovalo s body fixed */
     color: var(--color-background-white);
     text-align: center;
     padding: 120px 20px;
@@ -310,7 +338,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     opacity: 0.9;
 }
 
-/* Tlačítka (General style) */
+/* TlaÄŤĂ­tka (General style) */
 .btn {
     display: inline-block;
     padding: 14px 30px;
@@ -322,7 +350,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     font-size: 1.1em;
 }
 
-/* Modrý glass styl pro běžná tlačítka (WhatsApp zůstává zelený) */
+/* ModrĂ˝ glass styl pro bÄ›ĹľnĂˇ tlaÄŤĂ­tka (WhatsApp zĹŻstĂˇvĂˇ zelenĂ˝) */
 .btn:not(.btn-whatsapp) {
   color: #ffffff;
   background: linear-gradient(150deg, rgba(124,168,224,0.28) 0%, rgba(124,168,224,0.14) 100%);
@@ -342,12 +370,12 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 .content-section {
     padding: 80px 0;
     text-align: center;
-    /* Ponecháme mírně neprůhledné pozadí, aby se lépe četlo na celostránkovém pozadí */
-    background-color: rgba(245, 248, 252, 0.5); /* Průhlednost 50% */
+    /* PonechĂˇme mĂ­rnÄ› neprĹŻhlednĂ© pozadĂ­, aby se lĂ©pe ÄŤetlo na celostrĂˇnkovĂ©m pozadĂ­ */
+    background-color: rgba(245, 248, 252, 0.5); /* PrĹŻhlednost 50% */
 }
 
 .content-section:nth-of-type(even) {
-    background-color: rgba(245, 248, 252, 0.5); /* Průhlednost 50% pro střídající se sekce */
+    background-color: rgba(245, 248, 252, 0.5); /* PrĹŻhlednost 50% pro stĹ™Ă­dajĂ­cĂ­ se sekce */
 }
 
 .section-title {
@@ -379,7 +407,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     color: var(--color-text-light);
 }
 
-/* --- Služby Grid --- */
+/* --- SluĹľby Grid --- */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -391,13 +419,13 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     padding: 35px;
     border-radius: 12px;
     box-shadow: var(--shadow-light);
-    background: rgba(255, 255, 255, 0.5); /* Průhlednost 50% */
+    background: rgba(255, 255, 255, 0.5); /* PrĹŻhlednost 50% */
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Přidán transition pro hover */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* PĹ™idĂˇn transition pro hover */
 }
 
 .service-item::before {
@@ -449,10 +477,10 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     max-width: 90%;
 }
 
-/* Nový styl pro sekundární tlačítko */
-/* Sekundární tlačítka získají stejný glass styl automaticky přes .btn:not(.btn-whatsapp) */
+/* NovĂ˝ styl pro sekundĂˇrnĂ­ tlaÄŤĂ­tko */
+/* SekundĂˇrnĂ­ tlaÄŤĂ­tka zĂ­skajĂ­ stejnĂ˝ glass styl automaticky pĹ™es .btn:not(.btn-whatsapp) */
 
-/* --- Features List (Proč my?) --- */
+/* --- Features List (ProÄŤ my?) --- */
 .features-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -466,7 +494,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     border-radius: 12px;
     box-shadow: var(--shadow-light);
     transition: background-color var(--transition-speed);
-    background: rgba(255, 255, 255, 0.5); /* Průhlednost 50% */
+    background: rgba(255, 255, 255, 0.5); /* PrĹŻhlednost 50% */
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -491,7 +519,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     margin: 0;
 }
 
-/* --- Kontaktní formulář --- */
+/* --- KontaktnĂ­ formulĂˇĹ™ --- */
 .contact-info {
     font-size: 1.1em;
     margin-bottom: 40px;
@@ -531,7 +559,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     border-radius: 12px;
     box-shadow: var(--shadow-medium);
     text-align: left;
-    background: rgba(255, 255, 255, 0.3); /* Průhlednost 30% */
+    background: rgba(255, 255, 255, 0.3); /* PrĹŻhlednost 30% */
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
@@ -603,7 +631,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     display: block;
 }
 
-/* --- Patička (Footer) --- */
+/* --- PatiÄŤka (Footer) --- */
 .main-footer {
     background-color: var(--color-primary-dark);
     padding: 40px 0;
@@ -636,9 +664,9 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     color: var(--color-accent);
 }
 
-/* --- Liquid Glass Effect (vylepšený) --- */
+/* --- Liquid Glass Effect (vylepĹˇenĂ˝) --- */
 .glass-effect {
-    background: rgba(255, 255, 255, 0.5); /* Průhlednost 50% */
+    background: rgba(255, 255, 255, 0.5); /* PrĹŻhlednost 50% */
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -680,9 +708,9 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
-/* Variace glass efektu pro menší prvky */
+/* Variace glass efektu pro menĹˇĂ­ prvky */
 .glass-effect-small {
-    background: rgba(255, 255, 255, 0.5); /* Průhlednost 50% */
+    background: rgba(255, 255, 255, 0.5); /* PrĹŻhlednost 50% */
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -710,7 +738,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     opacity: 0.8;
 }
 
-/* --- Animace (pro JavaScript třídy) --- */
+/* --- Animace (pro JavaScript tĹ™Ă­dy) --- */
 .reveal-on-scroll {
     opacity: 0;
     transform: translateY(30px);
@@ -722,14 +750,14 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     transform: translateY(0);
 }
 
-/* Delay pro postupné zobrazení */
+/* Delay pro postupnĂ© zobrazenĂ­ */
 .reveal-on-scroll.delay-1 { transition-delay: 0.1s; }
 .reveal-on-scroll.delay-2 { transition-delay: 0.2s; }
 .reveal-on-scroll.delay-3 { transition-delay: 0.3s; }
 .reveal-on-scroll.delay-4 { transition-delay: 0.4s; }
 
 
-/* --- CENÍK A KALKULAČKA STYLY --- */
+/* --- CENĂŤK A KALKULAÄŚKA STYLY --- */
 .pricing-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -743,7 +771,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     border-radius: 12px;
     text-align: center;
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-    background: rgba(255, 255, 255, 0.5); /* Průhlednost 50% */
+    background: rgba(255, 255, 255, 0.5); /* PrĹŻhlednost 50% */
     backdrop-filter: blur(8px) saturate(150%);
     -webkit-backdrop-filter: blur(8px) saturate(150%);
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
@@ -761,14 +789,14 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     margin-bottom: 15px;
 }
 
-.price-card .price-from { /* Starý styl pro komerční, ponečáno pro kompatibilitu */
+.price-card .price-from { /* StarĂ˝ styl pro komerÄŤnĂ­, poneÄŤĂˇno pro kompatibilitu */
     font-size: 1.8em;
     font-weight: 700;
     color: var(--color-accent);
     margin-bottom: 20px;
 }
 
-.price-card .price-info { /* Nový styl pro info nad seznamem cen */
+.price-card .price-info { /* NovĂ˝ styl pro info nad seznamem cen */
     font-size: 1.1em;
     font-weight: 500;
     color: var(--color-text-dark);
@@ -782,18 +810,18 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     text-align: left;
 }
 
-/* Nový styl pro seznam cen v kartě */
+/* NovĂ˝ styl pro seznam cen v kartÄ› */
 .price-card .price-list {
     list-style: none;
     padding: 0;
-    margin: 0 0 20px 0; /* Více mezery pod seznamem */
-    text-align: left; /* Zarovnání seznamu vlevo */
+    margin: 0 0 20px 0; /* VĂ­ce mezery pod seznamem */
+    text-align: left; /* ZarovnĂˇnĂ­ seznamu vlevo */
 }
 
 .price-card .price-list li {
     font-size: 1em;
     color: var(--color-text-light);
-    margin-bottom: 8px; /* Menší mezera mezi položkami */
+    margin-bottom: 8px; /* MenĹˇĂ­ mezera mezi poloĹľkami */
     display: flex;
     align-items: center;
 }
@@ -802,11 +830,11 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     color: var(--color-primary-light);
     margin-right: 10px;
     font-size: 1.1em;
-    flex-shrink: 0; /* Zabraňuje zmenšení ikony */
+    flex-shrink: 0; /* ZabraĹuje zmenĹˇenĂ­ ikony */
 }
 
 .price-card .price-list li strong {
-    color: var(--color-primary-dark); /* Silnější barva pro cenu */
+    color: var(--color-primary-dark); /* SilnÄ›jĹˇĂ­ barva pro cenu */
     font-weight: 700;
 }
 
@@ -815,7 +843,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     color: var(--color-text-light);
     margin-top: 20px;
     line-height: 1.4;
-    text-align: center; /* Poznámka zarovnaná na střed */
+    text-align: center; /* PoznĂˇmka zarovnanĂˇ na stĹ™ed */
 }
 
 
@@ -842,7 +870,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     border-radius: 1.5px;
 }
 
-/* Styly pro kalkulační formulář - Cílíme na ID 'kalkulacka' */
+/* Styly pro kalkulaÄŤnĂ­ formulĂˇĹ™ - CĂ­lĂ­me na ID 'kalkulacka' */
 #kalkulacka {
     max-width: 700px;
     margin: 40px auto 0;
@@ -850,7 +878,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     border-radius: 12px;
     text-align: left;
     box-shadow: var(--shadow-medium);
-    background: rgba(255, 255, 255, 0.3); /* Průhlednost 30% */
+    background: rgba(255, 255, 255, 0.3); /* PrĹŻhlednost 30% */
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
@@ -906,32 +934,32 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 }
 
 #kalkulacka .checkbox-group {
-    display: block; /* Změna na block, aby se prvky řadily pod sebe */
+    display: block; /* ZmÄ›na na block, aby se prvky Ĺ™adily pod sebe */
 }
 
-/* Obalový div pro každou checkbox+label dvojici */
+/* ObalovĂ˝ div pro kaĹľdou checkbox+label dvojici */
 #kalkulacka .checkbox-group > div {
-    display: flex; /* Použijeme flexbox pro zarovnání checkboxu a textu */
-    align-items: center; /* Vertikálně zarovná checkbox a text na střed */
-    margin-bottom: 10px; /* Mezera mezi jednotlivými položkami */
-    text-align: left; /* Zajistí zarovnání vlevo */
-    width: 100%; /* Zajistí, že zabere celou šířku a zalomí se */
+    display: flex; /* PouĹľijeme flexbox pro zarovnĂˇnĂ­ checkboxu a textu */
+    align-items: center; /* VertikĂˇlnÄ› zarovnĂˇ checkbox a text na stĹ™ed */
+    margin-bottom: 10px; /* Mezera mezi jednotlivĂ˝mi poloĹľkami */
+    text-align: left; /* ZajistĂ­ zarovnĂˇnĂ­ vlevo */
+    width: 100%; /* ZajistĂ­, Ĺľe zabere celou ĹˇĂ­Ĺ™ku a zalomĂ­ se */
 }
 
 #kalkulacka .checkbox-group input[type="checkbox"] {
-    width: 20px; /* Pevná šířka kostičky */
-    height: 20px; /* Pevná výška kostičky */
+    width: 20px; /* PevnĂˇ ĹˇĂ­Ĺ™ka kostiÄŤky */
+    height: 20px; /* PevnĂˇ vĂ˝Ĺˇka kostiÄŤky */
     margin-right: 8px; /* Mezera mezi checkboxem a textem */
     appearance: none;
     -webkit-appearance: none;
     border: 1px solid var(--color-border);
-    border-radius: 4px; /* Lehce zaoblené rohy */
+    border-radius: 4px; /* Lehce zaoblenĂ© rohy */
     cursor: pointer;
     position: relative;
-    top: 0; /* Zajišťuje, že je na základní linii */
+    top: 0; /* ZajiĹˇĹĄuje, Ĺľe je na zĂˇkladnĂ­ linii */
     vertical-align: middle;
     transition: background-color 0.2s, border-color 0.2s;
-    flex-shrink: 0; /* Zabrání zmenšení checkboxu */
+    flex-shrink: 0; /* ZabrĂˇnĂ­ zmenĹˇenĂ­ checkboxu */
 }
 
 #kalkulacka .checkbox-group input[type="checkbox"]:checked {
@@ -959,23 +987,23 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 
 #kalkulacka .checkbox-group label {
     font-weight: normal;
-    margin-bottom: 0; /* Odstranit margin-bottom, je na obalovém divu */
+    margin-bottom: 0; /* Odstranit margin-bottom, je na obalovĂ©m divu */
     font-size: 1em;
     cursor: pointer;
-    margin-left: 0; /* Zajistí, že label nezačíná příliš daleko */
-    flex-grow: 1; /* Povolí labelu roztáhnout se */
-    line-height: 1.3; /* Zlepšuje čitelnost dlouhých textů */
+    margin-left: 0; /* ZajistĂ­, Ĺľe label nezaÄŤĂ­nĂˇ pĹ™Ă­liĹˇ daleko */
+    flex-grow: 1; /* PovolĂ­ labelu roztĂˇhnout se */
+    line-height: 1.3; /* ZlepĹˇuje ÄŤitelnost dlouhĂ˝ch textĹŻ */
 }
 
-/* Skrytí pole frekvence, pokud není relevantní (JS to přepíná) */
+/* SkrytĂ­ pole frekvence, pokud nenĂ­ relevantnĂ­ (JS to pĹ™epĂ­nĂˇ) */
 #frequencyGroup {
     display: none;
 }
 
 
-/* --- Responzivní design (Media Queries) --- */
+/* --- ResponzivnĂ­ design (Media Queries) --- */
 
-/* Všeobecné úpravy pro velikost písma a padding kontejneru */
+/* VĹˇeobecnĂ© Ăşpravy pro velikost pĂ­sma a padding kontejneru */
 @media (max-width: 1200px) {
     .container {
         padding: 0 30px;
@@ -991,7 +1019,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
         font-size: 2.2em;
     }
     .logo-img {
-        height: 90px; /* Zvětšená výška obrázku loga pro tablety */
+        height: 90px; /* ZvÄ›tĹˇenĂˇ vĂ˝Ĺˇka obrĂˇzku loga pro tablety */
     }
     .hero-content h1 {
         font-size: 2.8em;
@@ -1014,7 +1042,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 }
 
 @media (max-width: 768px) {
-    /* Změny pro tablety (na šířku) a menší laptopy */
+    /* ZmÄ›ny pro tablety (na ĹˇĂ­Ĺ™ku) a menĹˇĂ­ laptopy */
     .container {
         padding: 0 25px;
     }
@@ -1031,7 +1059,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
         position: absolute;
         top: var(--header-height);
         left: 0;
-        /* Průhlednost 30% pro mobilní menu */
+        /* PrĹŻhlednost 30% pro mobilnĂ­ menu */
         background-color: rgba(var(--color-primary-dark-rgb), 0.3);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         padding: 20px 0;
@@ -1041,7 +1069,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
         transform: translateY(-10px);
         transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
         box-sizing: border-box;
-        /* Přidáno pro backdrop-filter na mobilním menu, pokud chcete glass efekt i zde */
+        /* PĹ™idĂˇno pro backdrop-filter na mobilnĂ­m menu, pokud chcete glass efekt i zde */
         backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
         -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     }
@@ -1075,13 +1103,13 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
         font-size: 2em;
     }
     .logo-img {
-        height: 70px; /* Zvětšená výška obrázku loga pro menší tablety */
+        height: 70px; /* ZvÄ›tĹˇenĂˇ vĂ˝Ĺˇka obrĂˇzku loga pro menĹˇĂ­ tablety */
     }
 
     .hero-section {
         padding: 80px 20px;
         min-height: 45vh;
-        /* Průhlednost 50% */
+        /* PrĹŻhlednost 50% */
         background: linear-gradient(rgba(var(--color-primary-dark-rgb), 0.5), rgba(var(--color-primary-dark-rgb), 0.5));
         background-size: cover;
     }
@@ -1097,10 +1125,10 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     }
     .content-section {
         padding: 60px 0;
-        background-color: rgba(245, 248, 252, 0.5); /* Průhlednost 50% na tabletu */
+        background-color: rgba(245, 248, 252, 0.5); /* PrĹŻhlednost 50% na tabletu */
     }
     .content-section:nth-of-type(even) {
-        background-color: rgba(245, 248, 252, 0.5); /* Průhlednost 50% střídající se na tabletu */
+        background-color: rgba(245, 248, 252, 0.5); /* PrĹŻhlednost 50% stĹ™Ă­dajĂ­cĂ­ se na tabletu */
     }
     .section-title {
         font-size: 2em;
@@ -1115,7 +1143,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     }
     .contact-form {
         padding: 30px;
-        background: rgba(255, 255, 255, 0.3); /* Průhlednost 30% */
+        background: rgba(255, 255, 255, 0.3); /* PrĹŻhlednost 30% */
     }
     .section-subtitle {
         font-size: 1.6em;
@@ -1123,7 +1151,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     #kalkulacka {
         padding: 30px;
         max-width: 550px;
-        background: rgba(255, 255, 255, 0.3); /* Průhlednost 30% */
+        background: rgba(255, 255, 255, 0.3); /* PrĹŻhlednost 30% */
     }
 
     .contact-info p {
@@ -1150,7 +1178,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     .glass-effect, .glass-effect-small {
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        background: rgba(255, 255, 255, 0.5); /* Průhlednost 50% na tabletech */
+        background: rgba(255, 255, 255, 0.5); /* PrĹŻhlednost 50% na tabletech */
     }
     .glass-effect::after {
         top: 10px;
@@ -1173,17 +1201,17 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
         margin-top: 40px;
     }
 
-    /* Checkboxy na tabletu - už je řešeno flexboxem s obalovým divem */
+    /* Checkboxy na tabletu - uĹľ je Ĺ™eĹˇeno flexboxem s obalovĂ˝m divem */
     #kalkulacka .checkbox-group > div {
-        margin-bottom: 8px; /* Menší mezera na tabletu */
+        margin-bottom: 8px; /* MenĹˇĂ­ mezera na tabletu */
     }
     #kalkulacka .checkbox-group input[type="checkbox"] {
-        margin-right: 6px; /* Mírně zmenšená mezera pro tablety */
+        margin-right: 6px; /* MĂ­rnÄ› zmenĹˇenĂˇ mezera pro tablety */
     }
 }
 
 @media (max-width: 480px) {
-    /* Změny pro malé mobilní telefony */
+    /* ZmÄ›ny pro malĂ© mobilnĂ­ telefony */
     .container {
         padding: 0 15px;
     }
@@ -1192,35 +1220,35 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     }
     .logo {
         font-size: 1.5em;
-        gap: 3px; /* Dále zmenšená mezera na mobilu */
+        gap: 3px; /* DĂˇle zmenĹˇenĂˇ mezera na mobilu */
     }
     .logo-img {
-        height: 55px; /* Zvětšená výška obrázku loga pro mobily */
+        height: 55px; /* ZvÄ›tĹˇenĂˇ vĂ˝Ĺˇka obrĂˇzku loga pro mobily */
     }
     .main-header .nav-list a {
         padding: 8px 15px;
     }
 
-    /* --- DŮLEŽITÉ: Přepnutí pozadí na mobilní obrázek a `background-attachment: scroll` --- */
+    /* --- DĹ®LEĹ˝ITĂ‰: PĹ™epnutĂ­ pozadĂ­ na mobilnĂ­ obrĂˇzek a `background-attachment: scroll` --- */
     body::before {
         background: linear-gradient(
-                                      rgba(var(--color-primary-dark-rgb), 0.5), /* Silnější gradient pro lepší čitelnost na mobilu */
+                                      rgba(var(--color-primary-dark-rgb), 0.5), /* SilnÄ›jĹˇĂ­ gradient pro lepĹˇĂ­ ÄŤitelnost na mobilu */
                                       rgba(var(--color-primary-dark-rgb), 0.5)
                                     ),
-                                    url('images/hero-mobile.jpg') no-repeat center center; /* Mobilní obrázek */
+                                    url('images/hero-mobile.jpg') no-repeat center center; /* MobilnĂ­ obrĂˇzek */
         background-size: cover;
-        background-attachment: scroll; /* KLÍČOVÉ: Aby se pozadí na mobilu scrolluje s obsahem */
+        background-attachment: scroll; /* KLĂŤÄŚOVĂ‰: Aby se pozadĂ­ na mobilu scrolluje s obsahem */
     }
-    /* --- Konec důležitých změn pro mobilní BODY --- */
+    /* --- Konec dĹŻleĹľitĂ˝ch zmÄ›n pro mobilnĂ­ BODY --- */
 
 
     .hero-section {
         padding: 60px 15px;
         min-height: 45vh;
-        /* Průhlednost 50% */
+        /* PrĹŻhlednost 50% */
         background: linear-gradient(rgba(var(--color-primary-dark-rgb), 0.5), rgba(var(--color-primary-dark-rgb), 0.5));
         background-size: cover;
-        /* background-attachment: scroll; už není potřeba duplikovat */
+        /* background-attachment: scroll; uĹľ nenĂ­ potĹ™eba duplikovat */
     }
     .hero-content h1 {
         font-size: 1.8em;
@@ -1235,10 +1263,10 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     }
     .content-section {
         padding: 40px 0;
-        background-color: rgba(245, 248, 252, 0.5); /* Průhlednost 50% na mobilu */
+        background-color: rgba(245, 248, 252, 0.5); /* PrĹŻhlednost 50% na mobilu */
     }
     .content-section:nth-of-type(even) {
-        background-color: rgba(245, 248, 252, 0.5); /* Průhlednost 50% střídající se na mobilu */
+        background-color: rgba(245, 248, 252, 0.5); /* PrĹŻhlednost 50% stĹ™Ă­dajĂ­cĂ­ se na mobilu */
     }
     .section-title {
         font-size: 1.8em;
@@ -1252,12 +1280,12 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     .service-item, .feature-item, .price-card {
         max-width: 100%;
         padding: 25px;
-        background: rgba(255, 255, 255, 0.5); /* Průhlednost 50% na mobilu */
+        background: rgba(255, 255, 255, 0.5); /* PrĹŻhlednost 50% na mobilu */
     }
     .contact-form, #kalkulacka {
         max-width: 100%;
         padding: 25px;
-        background: rgba(255, 255, 255, 0.3); /* Průhlednost 30% na mobilu */
+        background: rgba(255, 255, 255, 0.3); /* PrĹŻhlednost 30% na mobilu */
     }
 
     .service-item i {
@@ -1296,7 +1324,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     .glass-effect, .glass-effect-small {
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
-        background: rgba(255, 255, 255, 0.5); /* Průhlednost 50% na mobilu */
+        background: rgba(255, 255, 255, 0.5); /* PrĹŻhlednost 50% na mobilu */
     }
     .glass-effect::after {
         top: 10px;
@@ -1319,12 +1347,12 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
         margin-top: 40px;
     }
 
-    /* Checkboxy na mobilu - mezera mezi položkami */
+    /* Checkboxy na mobilu - mezera mezi poloĹľkami */
     #kalkulacka .checkbox-group > div {
-        margin-bottom: 6px; /* Ještě menší mezera na mobilu */
+        margin-bottom: 6px; /* JeĹˇtÄ› menĹˇĂ­ mezera na mobilu */
     }
     #kalkulacka .checkbox-group input[type="checkbox"] {
-        margin-right: 6px; /* Mírně zmenšená mezera pro mobil */
+        margin-right: 6px; /* MĂ­rnÄ› zmenĹˇenĂˇ mezera pro mobil */
     }
 }
 
@@ -1473,7 +1501,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
   gap: 12px;
 }
 
-/* === Glass select (Typ úklidu, Frekvence) === */
+/* === Glass select (Typ Ăşklidu, Frekvence) === */
 select#cleaningType,
 select#cleaningFrequency {
   appearance: none;
@@ -1482,7 +1510,7 @@ select#cleaningFrequency {
   color: var(--color-text-dark);
   border: 1.5px solid rgba(255,255,255,0.45);
   border-radius: 14px;
-  padding: 12px 44px 12px 14px; /* místo pro caret vpravo */
+  padding: 12px 44px 12px 14px; /* mĂ­sto pro caret vpravo */
   min-height: 48px;
   box-shadow: 0 10px 28px rgba(20,30,60,0.18);
   backdrop-filter: blur(14px) saturate(180%);
@@ -1491,7 +1519,7 @@ select#cleaningFrequency {
   position: relative;
 }
 
-/* vlastní caret */
+/* vlastnĂ­ caret */
 select#cleaningType{
   background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%235f6b8c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -1517,7 +1545,7 @@ select#cleaningFrequency:focus {
   box-shadow: 0 0 0 4px rgba(124,168,224,0.35), 0 16px 44px rgba(20,30,60,0.26);
 }
 
-/* jemná animace při otevření (není plně detekovatelná u nativního selectu, ale přechody pomůžou) */
+/* jemnĂˇ animace pĹ™i otevĹ™enĂ­ (nenĂ­ plnÄ› detekovatelnĂˇ u nativnĂ­ho selectu, ale pĹ™echody pomĹŻĹľou) */
 @media (prefers-reduced-motion: no-preference) {
   select#cleaningType,
   select#cleaningFrequency {
@@ -1525,7 +1553,7 @@ select#cleaningFrequency:focus {
   }
 }
 
-/* (reverted) odstraněno zvýraznění select.is-open a custom option barvy */
+/* (reverted) odstranÄ›no zvĂ˝raznÄ›nĂ­ select.is-open a custom option barvy */
 
 /* === Services grid modern look === */
 .services-grid {
@@ -1560,7 +1588,7 @@ select#cleaningFrequency:focus {
   justify-content: center;
   width: 44px;
   height: 44px;
-  font-size: 1.1rem; /* menší, decentní ikony */
+  font-size: 1.1rem; /* menĹˇĂ­, decentnĂ­ ikony */
   color: var(--color-accent);
   background: rgba(255, 255, 255, 0.22);
   border: 1px solid rgba(255, 255, 255, 0.5);
@@ -1582,7 +1610,7 @@ select#cleaningFrequency:focus {
   margin-top: 6px;
 }
 
-/* sheen odlesk na kartách služeb */
+/* sheen odlesk na kartĂˇch sluĹľeb */
 .service-item::after {
   content: "";
   position: absolute;
@@ -1598,7 +1626,7 @@ select#cleaningFrequency:focus {
   animation: sheen-sweep 1000ms ease;
 }
 
-/* Zmenšení loga (méně dominantní) */
+/* ZmenĹˇenĂ­ loga (mĂ©nÄ› dominantnĂ­) */
 .logo-img { height: 72px; }
 @media (max-width: 768px) { .logo-img { height: 56px; } }
 
@@ -1610,7 +1638,7 @@ select#cleaningFrequency:focus {
 .delay-3 { transition-delay: 240ms; }
 .delay-4 { transition-delay: 320ms; }
 
-/* Sheen na tlačítkách */
+/* Sheen na tlaÄŤĂ­tkĂˇch */
 .btn { position: relative; overflow: hidden; }
 .btn::after {
   content: "";
@@ -1625,7 +1653,7 @@ select#cleaningFrequency:focus {
 }
 .btn:hover::after { left: 120%; }
 
-/* Silnější podsvícení při výběru doplňkových služeb */
+/* SilnÄ›jĹˇĂ­ podsvĂ­cenĂ­ pĹ™i vĂ˝bÄ›ru doplĹkovĂ˝ch sluĹľeb */
 .checkbox-group input[type="checkbox"]:checked + label {
   background: rgba(255, 255, 255, 0.30);
   border-width: 2px;
@@ -1658,10 +1686,10 @@ select#cleaningFrequency:focus {
   padding: 12px 14px 12px 52px;
   min-height: 48px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.12); /* více průhledné */
+  background: rgba(255, 255, 255, 0.12); /* vĂ­ce prĹŻhlednĂ© */
   backdrop-filter: blur(14px) saturate(180%);
   -webkit-backdrop-filter: blur(14px) saturate(180%);
-  border: 1.5px solid rgba(255, 255, 255, 0.38); /* kontrastnější hrana */
+  border: 1.5px solid rgba(255, 255, 255, 0.38); /* kontrastnÄ›jĹˇĂ­ hrana */
   color: var(--color-text-dark);
   box-shadow: 0 8px 24px rgba(20, 30, 60, 0.18);
   cursor: pointer;
@@ -1676,7 +1704,7 @@ select#cleaningFrequency:focus {
   transform: translateY(-1px);
 }
 
-/* Vizuální checkbox (box) vedle textu) */
+/* VizuĂˇlnĂ­ checkbox (box) vedle textu) */
 .checkbox-group label::before {
   content: "";
   position: absolute;
@@ -1691,7 +1719,7 @@ select#cleaningFrequency:focus {
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 4px 10px rgba(20,30,60,0.18);
 }
 
-/* Při výběru: vyplní box akcentem a vloží fajfku (SVG) */
+/* PĹ™i vĂ˝bÄ›ru: vyplnĂ­ box akcentem a vloĹľĂ­ fajfku (SVG) */
 .checkbox-group input[type="checkbox"]:checked + label::before {
   background:
     linear-gradient(180deg, rgba(124,168,224,0.95), rgba(124,168,224,0.75)) center/cover no-repeat,
@@ -1724,16 +1752,16 @@ select#cleaningFrequency:focus {
   animation: sheen-sweep 900ms ease;
 }
 
-/* Výběr: vysoce kontrastní rámeček a lehké zvýraznění pozadí */
+/* VĂ˝bÄ›r: vysoce kontrastnĂ­ rĂˇmeÄŤek a lehkĂ© zvĂ˝raznÄ›nĂ­ pozadĂ­ */
 .checkbox-group input[type="checkbox"]:checked + label {
   background: rgba(255, 255, 255, 0.22);
   border-color: rgba(255, 255, 255, 0.9);
   box-shadow:
-    0 0 0 3px rgba(124, 168, 224, 0.35), /* glow v barvě akcentu */
+    0 0 0 3px rgba(124, 168, 224, 0.35), /* glow v barvÄ› akcentu */
     0 12px 34px rgba(20, 30, 60, 0.26);
 }
 
-/* Klávesnice: zřetelný focus ring */
+/* KlĂˇvesnice: zĹ™etelnĂ˝ focus ring */
 .checkbox-group input[type="checkbox"]:focus + label {
   outline: none;
   box-shadow: 0 0 0 3px rgba(124, 168, 224, 0.55), 0 8px 24px rgba(20, 30, 60, 0.2);
@@ -1750,15 +1778,15 @@ select#cleaningFrequency:focus {
 
 /* --- Adaptive text contrast gradient for glass blocks --- */
 .glass-effect.glass-readable::before {
-  /* přestaví highlight a přidá jemný světlý gradient pro čitelnost textu */
+  /* pĹ™estavĂ­ highlight a pĹ™idĂˇ jemnĂ˝ svÄ›tlĂ˝ gradient pro ÄŤitelnost textu */
   background:
     linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.55) 22%, rgba(255,255,255,0.18) 55%, rgba(255,255,255,0.10) 100%),
     radial-gradient(1200px 400px at -10% -20%, rgba(255,255,255,0.55), rgba(255,255,255,0) 60%),
     linear-gradient(145deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 35%);
-  opacity: 0.45; /* o něco silnější než default */
+  opacity: 0.45; /* o nÄ›co silnÄ›jĹˇĂ­ neĹľ default */
 }
 
-/* Volitelný utility pro konkrétní nadpisy/texty */
+/* VolitelnĂ˝ utility pro konkrĂ©tnĂ­ nadpisy/texty */
 .glass-text-contrast {
   position: relative;
 }
@@ -1771,7 +1799,35 @@ select#cleaningFrequency:focus {
   z-index: -1;
 }
 
-/* === Moderní custom select (glass dropdown) === */
+/* === Mobilní menu: neprůhledný panel, čitelné na iPhone === */
+@media (max-width: 768px) {
+  .menu-toggle { display: inline-block !important; }
+  .main-nav .nav-list {
+    position: fixed;
+    top: var(--header-height);
+    left: 0; right: 0; bottom: 0;
+    display: flex; flex-direction: column; align-items: flex-start;
+    gap: 16px; padding: 18px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(245,248,252,0.98));
+    border-top: 1px solid rgba(0,0,0,0.06);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+    backdrop-filter: blur(10px) saturate(160%);
+    transform: translateY(-8px);
+    opacity: 0; pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease;
+    z-index: 1100;
+  }
+  .main-nav .nav-list.active {
+    transform: translateY(0);
+    opacity: 1; pointer-events: auto;
+  }
+  .main-nav .nav-list a { font-size: 1.1rem; color: var(--color-text-dark); }
+}
+
+/* Globální pojistka proti horizontálnímu posunu */
+html, body { overflow-x: hidden; max-width: 100%; }
+
+/* === ModernĂ­ custom select (glass dropdown) === */
 .select-modern { position: relative; display: block; max-width: 100%; }
 .select-modern .select-trigger {
   display: flex; align-items: center; justify-content: space-between;
@@ -1793,7 +1849,7 @@ select#cleaningFrequency:focus {
 }
 .select-modern .select-menu {
   position: absolute; left: 0; right: 0; top: calc(100% + 8px);
-  /* téměř neprůhledné sklo kvůli textům za menu */
+  /* tĂ©mÄ›Ĺ™ neprĹŻhlednĂ© sklo kvĹŻli textĹŻm za menu */
   background:
     linear-gradient(150deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.88) 100%);
   border: 1px solid rgba(255,255,255,0.95);
@@ -1816,15 +1872,15 @@ select#cleaningFrequency:focus {
   box-shadow: inset 0 0 0 2px rgba(124,168,224,0.95), 0 0 0 6px rgba(124,168,224,0.3);
 }
 
-/* Zrychlit/redukovať zpoždění animací v sekci Ceník/Kalkulace */
+/* Zrychlit/redukovaĹĄ zpoĹľdÄ›nĂ­ animacĂ­ v sekci CenĂ­k/Kalkulace */
 #pricing .reveal-on-scroll { transition-delay: 0ms !important; }
 #pricing .delay-1, #pricing .delay-2, #pricing .delay-3, #pricing .delay-4 { transition-delay: 0ms !important; }
 .select-modern .select-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* Skryj vizuálně původní select, ale ponecháme v DOM kvůli submitu */
+/* Skryj vizuĂˇlnÄ› pĹŻvodnĂ­ select, ale ponechĂˇme v DOM kvĹŻli submitu */
 .select-hidden { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; overflow: hidden; }
 
-/* === Odebrat ikony v sekci Naše služby (čistší vzhled) === */
+/* === Odebrat ikony v sekci NaĹˇe sluĹľby (ÄŤistĹˇĂ­ vzhled) === */
 .services-grid .service-item i {
   display: none !important;
 }
@@ -1832,7 +1888,7 @@ select#cleaningFrequency:focus {
   margin: 0 0 10px 0;
 }
 
-/* === Header: čitelnější a modře tónovaný (ladí s tlačítky a patičkou) === */
+/* === Header: ÄŤitelnÄ›jĹˇĂ­ a modĹ™e tĂłnovanĂ˝ (ladĂ­ s tlaÄŤĂ­tky a patiÄŤkou) === */
 .main-header {
   color: #ffffff;
   background: linear-gradient(90deg, rgba(124,168,224,0.75), rgba(76,98,146,0.75));
@@ -1848,10 +1904,10 @@ select#cleaningFrequency:focus {
   padding: 10px 0;
 }
 .main-nav .nav-list a::after {
-  height: 3px; /* výraznější podtržení */
+  height: 3px; /* vĂ˝raznÄ›jĹˇĂ­ podtrĹľenĂ­ */
 }
 
-/* === Responzivní ladění pro iPhone / iPad / Android === */
+/* === ResponzivnĂ­ ladÄ›nĂ­ pro iPhone / iPad / Android === */
 @media (max-width: 1024px) {
   .container { padding: 0 18px; }
   .services-grid { gap: 20px; }
@@ -1872,8 +1928,9 @@ select#cleaningFrequency:focus {
   .hero-content h1 { font-size: 2em; }
 }
 
-/* Safe-area pro moderní iPhony (notch) */
+/* Safe-area pro modernĂ­ iPhony (notch) */
 @supports (padding: max(0px)) {
   .main-header { padding-top: max(10px, env(safe-area-inset-top)); }
   body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
 }
+
