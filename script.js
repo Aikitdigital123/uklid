@@ -67,8 +67,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const observerOptions = {
         root: null, // viewport
-        rootMargin: '0px',
-        threshold: 0.15 // 15% prvku je viditelných
+        // Triggruje o něco dřív, aby se obsah jevil svižněji
+        rootMargin: '0px 0px -10%',
+        threshold: 0.05
+    };
+
+    const revealNowInView = () => {
+        revealSections.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const inView = rect.top < (window.innerHeight * 0.95) && rect.bottom > 0;
+            if (inView) el.classList.add('is-visible');
+        });
     };
 
     if ('IntersectionObserver' in window) {
@@ -84,6 +93,8 @@ document.addEventListener('DOMContentLoaded', () => {
         revealSections.forEach(section => {
             observer.observe(section);
         });
+        // ihned po startu zobraz prvky, které už jsou ve viewportu
+        revealNowInView();
     } else {
         // Fallback: pokud není IntersectionObserver, zobraz hned
         revealSections.forEach(section => section.classList.add('is-visible'));
