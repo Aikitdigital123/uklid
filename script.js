@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     // OznaÄŤ, Ĺľe je JS aktivnĂ­ (CSS fallback pro reveal-on-scroll)
     document.documentElement.classList.add('js');
     // Smooth Scrolling pouze pro odkazy v hlavnĂ­ navigaci
@@ -401,7 +401,7 @@
 
                 if (result.success) {
                     formStatusCalculator.textContent = 'DÄ›kujeme! VaĹˇe poptĂˇvka byla ĂşspÄ›ĹˇnÄ› odeslĂˇna.';
-                    formStatusCalculator.style.color = "green";
+                    formStatusCalculator.style.color = "";
                     formStatusCalculator.classList.remove('error');
                     formStatusCalculator.classList.add('success');
                     cleaningCalculatorForm.reset(); // VyÄŤistĂ­ formulĂˇĹ™
@@ -409,7 +409,7 @@
                 } else {
                     console.error('Web3Forms response error for calculator form:', result);
                     formStatusCalculator.textContent = result.message || 'PĹ™i odesĂ­lĂˇnĂ­ poptĂˇvky doĹˇlo k chybÄ›. Zkuste to prosĂ­m pozdÄ›ji.';
-                    formStatusCalculator.style.color = "red";
+                    formStatusCalculator.style.color = "";
                     formStatusCalculator.classList.remove('success');
                     formStatusCalculator.classList.add('error');
                 }
@@ -466,13 +466,13 @@
                 statusEl.textContent = 'DÄ›kujeme! ZprĂˇva byla ĂşspÄ›ĹˇnÄ› odeslĂˇna.';
                 statusEl.classList.remove('error');
                 statusEl.classList.add('success');
-                statusEl.style.color = 'green';
+                statusEl.style.color = '';
                 form.reset();
             } else {
                 statusEl.textContent = result.message || 'PĹ™i odesĂ­lĂˇnĂ­ doĹˇlo k chybÄ›. Zkuste to prosĂ­m pozdÄ›ji.';
                 statusEl.classList.remove('success');
                 statusEl.classList.add('error');
-                statusEl.style.color = 'red';
+                statusEl.style.color = '';
             }
         } catch (e) {
             console.error('Chyba pĹ™i odesĂ­lĂˇnĂ­ formulĂˇĹ™e:', e);
@@ -561,19 +561,19 @@
             statusEl.style.display = 'block';
 
             const buildFormData = (fd) => {
-                if (!fd.has('subject')) {
-                    fd.append('subject', 'NovĂˇ poptĂˇvka z kalkulaÄŤky Ăşklidu - Lesktop');
-                }
-                // SlouÄŤit doplĹkovĂ© sluĹľby do jednĂ© poloĹľky
-                const checked = form.querySelectorAll('input[name="DoplĹkovĂ© sluĹľby[]"]:checked');
-                const selected = Array.from(checked).map(c => c.value);
-                fd.delete('DoplĹkovĂ© sluĹľby[]');
-                fd.append('DoplĹkovĂ© sluĹľby', selected.length ? selected.join(', ') : 'Ĺ˝ĂˇdnĂ©');
-                // DomĂˇcĂ­ mazlĂ­ÄŤci Ano/Ne
-                const pets = form.querySelector('input[name="DomĂˇcĂ­ mazlĂ­ÄŤci"]:checked');
-                fd.set('DomĂˇcĂ­ mazlĂ­ÄŤci', pets ? 'Ano' : 'Ne');
-                return fd;
-            };
+    if (!fd.has('subject')) {
+        fd.append('subject', 'Nova poptavka z kalkulacky uklidu - Lesktop');
+    }
+    // Sloucit doplnkove sluzby do jedne polozky
+    const checked = form.querySelectorAll('input[name="Doplňkové služby[]"]:checked');
+    const selected = Array.from(checked).map(c => c.value);
+    fd.delete('Doplňkové služby[]');
+    fd.append('Doplňkové služby', selected.length ? selected.join(', ') : 'Zadne');
+    // Domaci mazlicci Ano/Ne
+    const pets = form.querySelector('input[name="Domácí mazlíčci"]:checked');
+    fd.set('Domácí mazlíčci', pets ? 'Ano' : 'Ne');
+    return fd;
+};
 
             await withFetchSubmit(form, statusEl, buildFormData);
         }, true);
@@ -859,5 +859,6 @@ document.addEventListener('DOMContentLoaded', () => { return; // i18n disabled
     setLang('cs');
   }
 });
+
 
 
