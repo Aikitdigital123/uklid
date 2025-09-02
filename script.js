@@ -454,40 +454,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- ZachycenĂ­ submitu (capture) pro vlastnĂ­ validaci a odeslĂˇnĂ­ ---
     const withFetchSubmit = async (form, statusEl, buildFormData) => {
-        const formData = buildFormData ? buildFormData(new FormData(form)) : new FormData(form);
-        try {
-            const response = await fetch(form.action || 'https://api.web3forms.com/submit', {
-                method: form.method || 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            });
-            const result = await response.json();
-            if (result.success) {
-                statusEl.textContent = 'DÄ›kujeme! ZprĂˇva byla ĂşspÄ›ĹˇnÄ› odeslĂˇna.';
-                statusEl.classList.remove('error');
-                statusEl.classList.add('success');
-                statusEl.style.color = '';
-                form.reset();
-            } else {
-                statusEl.textContent = result.message || 'PĹ™i odesĂ­lĂˇnĂ­ doĹˇlo k chybÄ›. Zkuste to prosĂ­m pozdÄ›ji.';
-                statusEl.classList.remove('success');
-                statusEl.classList.add('error');
-                statusEl.style.color = '';
-            }
-        } catch (e) {
-            console.error('Chyba pĹ™i odesĂ­lĂˇnĂ­ formulĂˇĹ™e:', e);
-            statusEl.textContent = 'PĹ™i odesĂ­lĂˇnĂ­ doĹˇlo k chybÄ› sĂ­tÄ›. Zkuste to prosĂ­m pozdÄ›ji.';
+    const formData = buildFormData ? buildFormData(new FormData(form)) : new FormData(form);
+    try {
+        const response = await fetch(form.action || 'https://api.web3forms.com/submit', {
+            method: form.method || 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        });
+        const result = await response.json();
+        if (result.success) {
+            statusEl.textContent = 'Dekujeme! Vase zprava byla uspesne odeslana.';
+            statusEl.classList.remove('error');
+            statusEl.classList.add('success');
+            statusEl.style.color = '';
+            form.reset();
+        } else {
+            statusEl.textContent = result.message || 'Pri odesilani doslo k chybe. Zkuste to prosim pozdeji.';
             statusEl.classList.remove('success');
             statusEl.classList.add('error');
-            statusEl.style.color = 'red';
-        } finally {
-            setTimeout(() => {
-                statusEl.textContent = '';
-                statusEl.classList.remove('success', 'error');
-                statusEl.style.display = 'none';
-            }, 5000);
+            statusEl.style.color = '';
         }
-    };
+    } catch (e) {
+        console.error('Chyba pri odesilani formulare:', e);
+        statusEl.textContent = 'Pri odesilani doslo k chybe site. Zkuste to prosim pozdeji.';
+        statusEl.classList.remove('success');
+        statusEl.classList.add('error');
+        statusEl.style.color = '';
+    } finally {
+        setTimeout(() => {
+            statusEl.textContent = '';
+            statusEl.classList.remove('success', 'error');
+            statusEl.style.display = 'none';
+        }, 5000);
+    }
+};
 
     // Kontakt: validace a odeslĂˇnĂ­ (capture zastavĂ­ pĹŻvodnĂ­ listener)
     (function enhanceContactForm(){
@@ -517,6 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             statusEl.textContent = 'OdesĂ­lĂˇm...';
             statusEl.classList.remove('success', 'error');
+            statusEl.textContent = 'Odesilam...';
             statusEl.style.display = 'block';
 
             await withFetchSubmit(form, statusEl);
@@ -859,6 +860,7 @@ document.addEventListener('DOMContentLoaded', () => { return; // i18n disabled
     setLang('cs');
   }
 });
+
 
 
 
