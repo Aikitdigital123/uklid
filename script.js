@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         contactForm.addEventListener('submit', async function(event) {
             event.preventDefault(); // ZabrĂˇnĂ­ vĂ˝chozĂ­mu odeslĂˇnĂ­ formulĂˇĹ™e
 
-            formStatusContact.textContent = 'OdesĂ­lĂˇm...';
+            formStatusContact.textContent = 'Odesilam...';
             formStatusContact.classList.remove('success', 'error');
             formStatusContact.style.display = 'block';
 
@@ -176,19 +176,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = await response.json();
 
                 if (result.success) {
-                    formStatusContact.textContent = 'DÄ›kujeme! VaĹˇe zprĂˇva byla ĂşspÄ›ĹˇnÄ› odeslĂˇna.';
+                    formStatusContact.textContent = 'Dekujeme! Vase zprava byla uspesne odeslana.';
                     formStatusContact.classList.remove('error');
                     formStatusContact.classList.add('success');
                     contactForm.reset(); // VyÄŤistĂ­ formulĂˇĹ™
                 } else {
                     console.error('Web3Forms response error for contact form:', result);
-                    formStatusContact.textContent = result.message || 'PĹ™i odesĂ­lĂˇnĂ­ zprĂˇvy doĹˇlo k chybÄ›. Zkuste to prosĂ­m pozdÄ›ji.';
+                    formStatusContact.textContent = result.message || 'Pri odesilani zpravy doslo k chybe. Zkuste to prosim pozdeji.';
                     formStatusContact.classList.remove('success');
                     formStatusContact.classList.add('error');
                 }
             } catch (error) {
-                console.error('Chyba pĹ™i odesĂ­lĂˇnĂ­ kontaktnĂ­ho formulĂˇĹ™e:', error);
-                formStatusContact.textContent = 'PĹ™i odesĂ­lĂˇnĂ­ zprĂˇvy doĹˇlo k chybÄ› sĂ­tÄ›. Zkuste to prosĂ­m pozdÄ›ji.';
+                console.error('Chyba pri odesilani kontaktniho formulare:', error);
+                formStatusContact.textContent = 'Pri odesilani zpravy doslo k chybe site. Zkuste to prosim pozdeji.';
                 formStatusContact.classList.remove('success');
                 formStatusContact.classList.add('error');
             } finally {
