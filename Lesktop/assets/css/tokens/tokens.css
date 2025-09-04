@@ -1,0 +1,30 @@
+/* Design tokens vytažené ze starého styles.css */
+:root {
+  --color-primary-dark: #3a4768;
+  --color-primary-light: #4c6292;
+  --color-accent: #7ca8e0;
+  --color-text-dark: #2c354a;
+  --color-text-light: #5f6b8c;
+  --color-background-white: #ffffff;
+  --color-background-offwhite: #f5f8fc;
+  --color-border: #e0e7ee;
+  --color-success: #28a745;
+  --color-error: #dc3545;
+
+  /* RGB složky pro rgba() */
+  --color-primary-light-rgb: 76, 98, 146;
+  --color-primary-dark-rgb: 58, 71, 104;
+
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Open Sans', sans-serif;
+
+  --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.12);
+  --transition-speed: 0.4s;
+  --glass-blur: 12px;
+  --glass-saturate: 180%;
+
+  /* Odhad výšky headeru pro scroll-padding */
+  --header-height: 90px;
+}
+
