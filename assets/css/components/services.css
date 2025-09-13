@@ -6,8 +6,10 @@
   margin-top: 50px;
 }
 
+/* Show only the two consolidated service blocks */
+.services-grid .service-item:nth-child(n+3) { display: none; }
+
 /* Responsivní alternativa (v pages je i druhá verze; ponecháme) */
 @media (max-width: 768px) {
   .services-grid { gap: 24px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 }
-
