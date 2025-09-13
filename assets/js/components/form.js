@@ -7,6 +7,8 @@ export function initForms() {
 
   const contactForm = document.getElementById('contactForm');
   const formStatusContact = document.getElementById('form-status');
+  const calcForm = document.getElementById('kalkulacka');
+  const formStatusCalc = document.getElementById('calc-form-status');
 
   if (contactForm && formStatusContact) {
     contactForm.addEventListener('submit', async function (event) {
@@ -48,6 +50,52 @@ export function initForms() {
           formStatusContact.textContent = '';
           formStatusContact.classList.remove('success', 'error');
           formStatusContact.style.display = 'none';
+        }, 5000);
+      }
+    });
+  }
+
+  // Kalkulační formulář (bez přesměrování; inline potvrzení)
+  if (calcForm && formStatusCalc) {
+    calcForm.addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      formStatusCalc.textContent = 'Odesílám...';
+      formStatusCalc.classList.remove('success', 'error');
+      formStatusCalc.style.display = 'block';
+
+      const formData = new FormData(calcForm);
+
+      try {
+        const response = await fetch(calcForm.action, {
+          method: calcForm.method,
+          body: formData,
+          headers: { Accept: 'application/json' },
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          formStatusCalc.textContent = 'Děkujeme! Vaše poptávka byla úspěšně odeslána.';
+          formStatusCalc.classList.remove('error');
+          formStatusCalc.classList.add('success');
+          calcForm.reset();
+        } else {
+          console.error('Chyba Web3Forms při odesílání kalkulačního formuláře:', result);
+          formStatusCalc.textContent = result.message || 'Při odesílání poptávky došlo k chybě. Zkuste to prosím později.';
+          formStatusCalc.classList.remove('success');
+          formStatusCalc.classList.add('error');
+        }
+      } catch (error) {
+        console.error('Chyba při odesílání kalkulačního formuláře:', error);
+        formStatusCalc.textContent = 'Při odesílání poptávky došlo k chybě sítě. Zkuste to prosím později.';
+        formStatusCalc.classList.remove('success');
+        formStatusCalc.classList.add('error');
+      } finally {
+        setTimeout(() => {
+          formStatusCalc.textContent = '';
+          formStatusCalc.classList.remove('success', 'error');
+          formStatusCalc.style.display = 'none';
         }, 5000);
       }
     });
