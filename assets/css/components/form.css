@@ -1,0 +1,93 @@
+/* Formuláře: kalkulačka a kontakt (duplicitně ponecháno i v pages/index.css) */
+
+/* Základní škálování písma Input/Select/Textarea */
+input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
+
+/* Obecné skupiny formuláře */
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 8px; }
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--color-border);
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed), background var(--transition-speed);
+}
+.form-group input::placeholder, .form-group textarea::placeholder { color: #8a93a8; }
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+  outline: none; border-color: rgba(var(--color-primary-light-rgb), 0.45);
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-light-rgb), 0.15);
+  background: rgba(255,255,255,0.95);
+}
+.form-group textarea { min-height: 120px; resize: vertical; }
+
+/* Kalkulačka (ID #kalkulacka) */
+#kalkulacka { margin-top: 24px; text-align: left; }
+#kalkulacka .form-group { margin-bottom: 18px; }
+#kalkulacka label { font-weight: 700; }
+#kalkulacka input[type="text"],
+#kalkulacka input[type="number"],
+#kalkulacka input[type="email"],
+#kalkulacka input[type="tel"],
+#kalkulacka select,
+#kalkulacka textarea {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
+}
+#kalkulacka input::placeholder, #kalkulacka textarea::placeholder { color: #9aa3b8; }
+#kalkulacka input:focus, #kalkulacka select:focus, #kalkulacka textarea:focus {
+  border-color: rgba(var(--color-primary-light-rgb), 0.45);
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-light-rgb), 0.12);
+}
+#kalkulacka small { color: var(--color-text-light); display: block; margin-top: 6px; }
+
+/* Checkbox skupiny v kalkulačce */
+#kalkulacka .checkbox-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 6px 0 8px; }
+#kalkulacka .checkbox-group > div { position: relative; display: flex; align-items: center; gap: 10px; }
+#kalkulacka .checkbox-group input[type="checkbox"] {
+  -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 6px; margin-right: 10px; border: 1.5px solid rgba(124,168,224,0.7);
+  background: #ffffff; position: relative; cursor: pointer; vertical-align: middle;
+  /* Přepiš případné "visually hidden" z pages CSS */
+  opacity: 1; clip: auto; clip-path: none; overflow: visible;
+  /* Vypnout případné obrazové pozadí (eliminace tečky/artefaktů) */
+  background-repeat: no-repeat; background-position: center; background-size: 14px 14px; background-image: none !important;
+}
+#kalkulacka .checkbox-group input[type="checkbox"]:checked { background: #ffffff; border-color: rgba(124,168,224,0.95); background-image: none !important; }
+/* Klasická, centrálně zarovnaná fajfka kreslená přes ::after (žádné posuny) */
+#kalkulacka .checkbox-group input[type="checkbox"]::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 6px;
+  border: 3px solid #1f2a44;
+  border-top: 0;
+  border-right: 0;
+  transform: translate(-50%, -60%) rotate(-45deg);
+  opacity: 0;
+}
+#kalkulacka .checkbox-group input[type="checkbox"]:checked::after { opacity: 1; }
+#kalkulacka .checkbox-group input[type="checkbox"]:focus { outline: none; box-shadow: 0 0 0 3px rgba(124,168,224,0.25); }
+#kalkulacka .checkbox-group label { display: inline-flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(124,168,224,0.25); cursor: pointer; }
+
+/* Překrytí starých label-pseudo stylů z pages/index.css, aby se text nehýbal */
+#kalkulacka .checkbox-group label::before,
+#kalkulacka .checkbox-group label::after { content: none !important; display: none !important; }
+#kalkulacka .checkbox-group input[type="checkbox"]:checked + label {
+  /* Zachovej jemné zvýraznění bez změny rozměrů */
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(124,168,224,0.55);
+  box-shadow: none;
+  transform: none;
+}
+
+/* Jasná, klasická fajfka: override pro konzistentní vzhled */
+#kalkulacka .checkbox-group input[type="checkbox"] {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px 14px;
+}
+#kalkulacka .checkbox-group input[type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%231f2a44' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M4 10 L8 14 L16 6'/></svg>");
+}
+#kalkulacka .checkbox-group input[type="checkbox"]:checked::before { content: none !important; }

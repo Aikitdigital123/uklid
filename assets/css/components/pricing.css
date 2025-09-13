@@ -1,0 +1,12 @@
+/* Pricing grid – doplnění chybějící mřížky */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  margin-top: 50px;
+}
+
+@media (max-width: 768px) {
+  .pricing-grid { gap: 24px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+}
+

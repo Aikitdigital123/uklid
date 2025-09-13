@@ -1,0 +1,49 @@
+/* Karty: služby a ceník (duplicitně ponecháno i v pages/index.css) */
+.service-item {
+  padding: 35px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-light);
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px) saturate(150%);
+  -webkit-backdrop-filter: blur(8px) saturate(150%);
+  border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.service-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.02) 100%);
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.8;
+}
+.service-item:hover { transform: translateY(-8px); box-shadow: var(--shadow-medium); }
+.service-item i { font-size: 3.8em; color: var(--color-primary-light); margin-bottom: 25px; }
+.service-item h3 { font-family: var(--font-heading); font-size: 1.6em; color: var(--color-primary-dark); margin-bottom: 18px; }
+.service-item p { font-size: 1.05em; color: var(--color-text-light); margin: 0 0 25px 0; }
+.service-item .btn { margin-top: 20px; }
+
+.price-card {
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px) saturate(150%);
+  -webkit-backdrop-filter: blur(8px) saturate(150%);
+  border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
+}
+.price-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-medium); }
+.price-card h3 { font-family: var(--font-heading); font-size: 1.6em; color: var(--color-primary-dark); margin-bottom: 15px; }
+.price-card .price-from { font-size: 1.8em; font-weight: 700; color: var(--color-accent); margin-bottom: 20px; }
+.price-card .price-info { font-size: 1.1em; font-weight: 500; color: var(--color-text-dark); margin-bottom: 20px; }
+.price-card ul { list-style: none; padding: 0; margin: 0; text-align: left; }
+.price-card .price-list { list-style: none; padding: 0; margin: 0 0 20px 0; text-align: left; }
+.price-card .price-list li { font-size: 1em; color: var(--color-text-light); margin-bottom: 8px; display: flex; align-items: center; }
+.price-card .price-list li i { color: var(--color-primary-light); margin-right: 10px; font-size: 1.1em; flex-shrink: 0; }
+.price-card .price-list li strong { color: var(--color-primary-dark); font-weight: 700; }
+.price-card .price-note { font-size: 0.9em; }
+

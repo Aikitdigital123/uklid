@@ -1,0 +1,4 @@
+Contact: mailto:team@lesktop.cz
+Policy: https://lesktop.cz/
+Preferred-Languages: cs, en
+
