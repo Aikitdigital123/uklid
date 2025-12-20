@@ -1,0 +1,143 @@
+.ba-section {
+  position: relative;
+}
+
+.ba-intro {
+  max-width: 760px;
+  margin: 16px auto 36px;
+  color: rgba(44, 53, 74, 0.78);
+}
+
+.ba-interaction {
+  max-width: 760px;
+  margin: -18px auto 32px;
+  font-size: 0.98rem;
+  color: rgba(44, 53, 74, 0.75);
+}
+
+.ba-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.ba-card {
+  border-radius: 22px;
+  padding: 18px;
+  text-align: left;
+}
+
+.ba-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ba-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+.ba-date {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+}
+
+.ba-media {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+.ba-figure {
+  margin: 0;
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.ba-figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+@supports not (object-fit: cover) {
+  .ba-figure img {
+    width: auto;
+    height: 100%;
+    max-width: none;
+  }
+}
+
+@supports not (aspect-ratio: 1 / 1) {
+  .ba-figure {
+    height: 0;
+    padding-top: 133.3333%;
+  }
+  .ba-figure img {
+    position: absolute;
+    inset: 0;
+  }
+}
+
+.ba-label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(58, 71, 104, 0.85);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ba-note {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: var(--color-text-light);
+}
+
+.ba-toggle-hint {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: rgba(44, 53, 74, 0.72);
+}
+
+.ba-more {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+}
+
+.ba-empty {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: var(--color-text-light);
+}
+
+@media (max-width: 720px) {
+  .ba-media {
+    grid-template-columns: 1fr;
+  }
+
+  .ba-card {
+    padding: 16px;
+  }
+}
