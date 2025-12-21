@@ -1,22 +1,35 @@
-/* Sekce a nadpisy sekcí (duplicitně ponecháno i v pages/index.css) */
-.content-section { padding: 80px 0; text-align: center; }
-.content-section:nth-of-type(even) { background-color: rgba(245, 248, 252, 0.5); }
-.content-section p { max-width: 800px; margin: 20px auto 40px; font-size: 1.1em; color: var(--color-text-light); }
+/* Sekce a nadpisy sekcí */
+/* .content-section používá .glass-panel styly - duplicitní styly odstraněny */
+.content-section {
+    padding: 88px 0;
+    text-align: center;
+    margin: 28px auto;
+    width: min(1200px, calc(100% - 32px));
+    /* Glass efekt je definován v .glass-panel třídě */
+}
+
+.content-section:nth-of-type(even) {
+    /* Odstraněno - používá se jednotný .glass-panel styl */
+}
+
+.content-section p {
+    max-width: 800px;
+    margin: 20px auto 40px;
+    font-size: 1.1em;
+    color: rgba(44, 53, 74, 0.85);
+}
 
 .section-title {
-  font-family: var(--font-heading);
-  font-size: 2.8em;
-  color: var(--color-primary-dark);
-  margin-bottom: 20px;
-  position: relative;
-  padding-bottom: 15px;
-  display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 2.8em;
+    color: var(--color-primary-dark);
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 15px;
+    display: inline-block;
 }
+
 .section-title::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 80px; height: 4px; background-color: var(--color-primary-light);
-  border-radius: 2px;
+    content: none;
 }
 

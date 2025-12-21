@@ -1,9 +1,92 @@
-/* Pricing grid – doplnění chybějící mřížky */
+/* Pricing grid */
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
   margin-top: 50px;
+  margin-bottom: 80px;
+}
+
+.price-card {
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 28px auto;
+  width: min(1200px, calc(100% - 32px));
+  border-radius: 22px;
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px) saturate(150%);
+  -webkit-backdrop-filter: blur(8px) saturate(150%);
+  border: 1px solid rgba(var(--color-primary-light-rgb), 0.1);
+}
+
+.price-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+}
+
+.price-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.6em;
+  color: var(--color-primary-dark);
+  margin-bottom: 15px;
+}
+
+.price-card .price-from {
+  font-size: 1.8em;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 20px;
+}
+
+.price-card .price-info {
+  font-size: 1.1em;
+  font-weight: 500;
+  color: var(--color-text-dark);
+  margin-bottom: 20px;
+}
+
+.price-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.price-card .price-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  text-align: left;
+}
+
+.price-card .price-list li {
+  font-size: 1em;
+  color: var(--color-text-light);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.price-card .price-list li i {
+  color: var(--color-primary-light);
+  margin-right: 10px;
+  font-size: 1.1em;
+  flex-shrink: 0;
+}
+
+.price-card .price-list li strong {
+  color: var(--color-primary-dark);
+  font-weight: 700;
+}
+
+.price-card .price-note {
+  font-size: 0.9em;
+  color: var(--color-text-light);
+  margin-top: 20px;
+  line-height: 1.4;
+  text-align: center;
 }
 
 @media (max-width: 768px) {

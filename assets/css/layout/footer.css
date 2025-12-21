@@ -1,1 +1,132 @@
-/* Footer styles are defined in assets/css/pages/index.css to avoid duplication. */
+/* === Glass chrome pro footer s animací === */
+.main-footer {
+  background: linear-gradient(90deg, rgba(124,168,224,0.78), rgba(76,98,146,0.78));
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 18px;
+  width: min(1200px, calc(100% - 32px));
+  box-shadow: 0 12px 32px rgba(20,30,60,0.22);
+  position: relative; /* Důležité: pro správné fungování pseudo-elementů */
+  overflow: visible; /* Důležité: nesmí být hidden, aby pseudo-elementy nebyly ořezány */
+  margin: 28px auto 18px;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .main-footer {
+    background: rgba(124,168,224,0.92);
+  }
+}
+
+.main-footer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit; /* Důležité: přizpůsobí se zaoblení footeru */
+    background: radial-gradient(600px 200px at -10% -20%, rgba(255,255,255,0.55), rgba(255,255,255,0) 60%),
+                linear-gradient(145deg, rgba(255,255,255,0.38) 0%, rgba(255,255,255,0) 35%);
+    opacity: 0.35;
+}
+
+.main-footer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -60px;
+    width: 60px;
+    /* Shimmer efekt nemá zaoblené rohy - je rovný */
+    background: linear-gradient(110deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-20deg);
+    will-change: left, opacity;
+    animation: glass-shimmer 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* Footer base layout */
+.main-footer .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  min-height: var(--header-height); /* Místo pevné výšky použijeme min-height pro flexibilitu */
+  padding: 20px; /* Vnitřní padding pro lepší čitelnost */
+}
+
+.main-footer p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: clamp(0.85em, 0.9vw, 0.95em);
+}
+
+.social-links a {
+  color: var(--color-background-white);
+  font-size: clamp(1.2em, 1.3vw, 1.5em);
+  margin: 0 10px;
+  transition: color var(--transition-speed);
+}
+
+.social-links a:hover {
+  color: var(--color-accent);
+}
+
+/* Footer legal links: subtle but clearly clickable */
+.main-footer .legal-links {
+  display: flex;
+  flex-wrap: wrap; /* Umožní zalomení textu na menších obrazovkách */
+  justify-content: center;
+  align-items: center;
+  gap: 8px; /* Mezera mezi odkazy */
+}
+
+.main-footer .legal-links a {
+  color: rgba(255, 255, 255, 0.92);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 2px;
+  cursor: pointer;
+  transition: color 180ms ease, border-color 180ms ease, text-shadow 180ms ease;
+  white-space: nowrap; /* Zabraňuje zalomení uvnitř odkazu */
+}
+
+.main-footer .legal-links a:hover,
+.main-footer .legal-links a:focus-visible,
+.main-footer .legal-links a:active {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+}
+
+/* Responzivní styly */
+@media (min-width: 1101px) {
+  .main-footer .container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-footer {
+    width: calc(100% - 20px);
+    border-radius: 16px;
+    margin: 20px auto 16px;
+    overflow: visible !important; /* Důležité: nesmí být hidden, aby pseudo-elementy nebyly ořezány */
+    position: relative; /* Důležité: pro správné fungování pseudo-elementů */
+  }
+  
+  .main-footer .container {
+    min-height: auto; /* Odstraníme min-height na mobilech, aby se footer přizpůsobil obsahu */
+    padding: 16px; /* Menší padding na mobilech */
+    gap: 12px; /* Menší mezera mezi prvky */
+  }
+  
+  .main-footer .legal-links {
+    flex-direction: column; /* Odkazy pod sebou na velmi malých obrazovkách */
+    gap: 6px;
+  }
+  
+  .main-footer .legal-links span[aria-hidden="true"] {
+    display: none; /* Skryjeme oddělovač "·" na mobilech, protože odkazy jsou pod sebou */
+  }
+}

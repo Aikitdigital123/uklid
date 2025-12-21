@@ -1,1 +1,264 @@
-/* Header styles are defined in assets/css/pages/index.css to avoid duplication. */
+/* --- Hlavní záhlaví (Header) --- */
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--header-height); /* Důležité: Nastavte výšku kontejneru pro header */
+}
+
+/* --- Styly pro logo a obrázek loga --- */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 2.8em;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-background-white);
+    text-decoration: none;
+    transition: color var(--transition-speed), text-shadow 300ms ease;
+    text-shadow: 0 0 6px rgba(124,168,224,0.55), 0 0 14px rgba(124,168,224,0.35);
+}
+
+.logo-img {
+    height: 120px;
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
+    vertical-align: middle;
+}
+
+.logo:hover .logo-img {
+    transform: scale(1.05);
+}
+
+.logo:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(124,168,224,0.75), 0 0 22px rgba(124,168,224,0.55);
+}
+
+/* Navigace */
+.main-nav .nav-list {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.main-nav .nav-list a {
+    color: var(--color-background-white);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.05em;
+    padding: 8px 0;
+    position: relative;
+    transition: color var(--transition-speed);
+}
+
+.main-nav .nav-list a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-accent);
+    transition: width var(--transition-speed);
+}
+
+.main-nav .nav-list a:hover::after,
+.main-nav .nav-list a.active::after {
+    width: 100%;
+}
+
+.main-nav .nav-list a:hover {
+    color: var(--color-accent);
+}
+
+.menu-toggle {
+    display: none; /* Skryto na desktopu */
+    background: none;
+    border: none;
+    font-size: 1.8em;
+    color: var(--color-background-white);
+    cursor: pointer;
+    z-index: 1001; /* Ujistěte se, že je nad menu při aktivaci */
+}
+
+/* Responzivní styly pro mobilní menu */
+@media (max-width: 768px) {
+    /* Zajistíme stabilní výšku headeru na mobilech */
+    .main-header {
+        overflow: visible; /* Důležité: nesmí být hidden */
+        /* min-height a padding jsou nastaveny v pages/index.css */
+        display: flex; /* Zajistíme flexbox pro zarovnání */
+        align-items: center; /* Vertikální zarovnání obsahu */
+    }
+    
+    .main-header .container {
+        min-height: var(--header-height);
+        height: var(--header-height); /* Fixní výška pro správné flexbox zarovnání */
+        display: flex;
+        align-items: center; /* Explicitní zarovnání pro mobil */
+        justify-content: space-between;
+        padding: 0 16px; /* Vnitřní odsazení od levého a pravého okraje */
+    }
+    
+    /* Zarovnání loga na mobilech */
+    .logo {
+        display: flex;
+        align-items: center; /* Vertikální zarovnání loga a textu */
+        line-height: 1.2; /* Mírně větší line-height pro lepší zarovnání s obrázkem */
+    }
+    
+    .logo-img {
+        vertical-align: middle; /* Pro jistotu, i když flexbox to řeší */
+    }
+    
+    .menu-toggle {
+        display: flex; /* Flexbox pro zarovnání ikony */
+        align-items: center; /* Vertikální zarovnání ikony */
+        justify-content: center; /* Horizontální zarovnání ikony */
+        font-size: 2em;
+        position: relative;
+        z-index: 1001; /* Nad header, ale pod menu */
+        line-height: 1; /* Bez line-height pro ikonu */
+    }
+    
+    .main-nav .nav-list {
+        position: fixed;
+        top: calc(var(--header-height) + var(--mobile-menu-gap, 8px));
+        left: 50%;
+        right: auto;
+        bottom: auto;
+        width: min(
+            calc(100vw - (16px + env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px))),
+            1100px
+        );
+        display: none; /* Skryté výchozí, zobrazí se jen při .active */
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-evenly;
+        gap: 8px;
+        padding: 10px 12px;
+        margin: 0;
+        background: linear-gradient(90deg, rgba(124,168,224,0.92), rgba(76,98,146,0.92));
+        border-top: 1px solid rgba(255,255,255,0.35);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        height: auto;
+        max-height: none;
+        overflow: visible;
+        border-radius: 14px 14px 10px 10px;
+        background-clip: padding-box;
+        transform: translateX(-50%);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .22s ease, transform .22s ease;
+        z-index: 1100; /* Vyšší než header (1000), aby bylo menu nad vším */
+    }
+    
+    .main-header .main-nav .nav-list {
+        border-top-left-radius: 14px !important;
+        border-top-right-radius: 14px !important;
+        border-bottom-right-radius: 10px !important;
+        border-bottom-left-radius: 10px !important;
+        overflow: hidden !important;
+        background-clip: padding-box !important;
+        clip-path: inset(0 round 14px 14px 10px 10px);
+    }
+    
+    .main-nav .nav-list.active {
+        display: flex; /* Zobrazí menu při aktivaci */
+        transform: translateX(-50%);
+        opacity: 1;
+        pointer-events: auto;
+    }
+    
+    .main-nav .nav-list a {
+        font-size: 0.98rem;
+        color: #ffffff;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+        padding: 8px 8px;
+        border-radius: 8px;
+        transition: background 180ms ease, transform 120ms ease;
+        white-space: nowrap;
+    }
+    
+    .main-nav .nav-list a:hover {
+        background: rgba(255,255,255,0.14);
+    }
+    
+    .main-nav .nav-list a:active {
+        background: rgba(255,255,255,0.2);
+        transform: scale(0.98);
+    }
+}
+
+/* Desktop: enforce horizontal nav layout */
+@media (min-width: 769px) {
+    .main-nav .nav-list {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 30px;
+    }
+    
+    .main-nav .nav-list a {
+        transition: color var(--transition-speed), transform 150ms ease, text-shadow 180ms ease;
+    }
+    
+    .main-nav .nav-list a:hover {
+        transform: translateY(-1px);
+        text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    }
+}
+
+/* === Glass chrome pro header s animací === */
+.main-header {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border-bottom: 1px solid rgba(255,255,255,0.35);
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Nižší než mobilní menu (1100), ale nad ostatním obsahem */
+  overflow: visible; /* Důležité: nesmí být hidden, aby menu nebylo schované */
+}
+
+.main-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit; /* Důležité: přizpůsobí se zaoblení headeru */
+    background: radial-gradient(600px 200px at -10% -20%, rgba(255,255,255,0.55), rgba(255,255,255,0) 60%),
+                linear-gradient(145deg, rgba(255,255,255,0.38) 0%, rgba(255,255,255,0) 35%);
+    opacity: 0.35;
+}
+
+.main-header::after {
+    content: "";
+    position: absolute;
+    top: 0;           /* clip exactly to header height */
+    bottom: 0;        /* clip exactly to header height */
+    left: -60px;      /* start slightly outside to sweep in */
+    width: 60px;      /* sheen width */
+    /* Shimmer efekt nemá zaoblené rohy - je rovný */
+    background: linear-gradient(110deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-20deg);
+    will-change: left, opacity;
+    animation: glass-shimmer 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes glass-shimmer {
+    0% { left: -60px; opacity: 0; }
+    10% { opacity: .5; }
+    60% { left: calc(100% - 60px); opacity: 0; }
+    100% { left: calc(100% - 60px); opacity: 0; }
+}
+
+/* shimmer is constrained via pseudo-element sizing, no overflow clipping on header to avoid clipping nav */
+
+/* jemný "glow" hran na skle při hoveru navigace */
+.main-nav .nav-list a:hover::after { box-shadow: 0 0 12px rgba(255,255,255,0.45); }

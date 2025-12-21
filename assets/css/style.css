@@ -17,26 +17,5 @@
 @import url('./components/glass.css');
 @import url('./components/back-to-top.css');
 
-/* @import url('./base/reset.css'); */
-/* @import url('./base/typography.css'); */
-/* @import url('./base/utilities.css'); */
-
-/* @import url('./layout/grid.css'); */
-/* @import url('./layout/container.css'); */
-/* @import url('./layout/header.css'); */
-/* @import url('./layout/footer.css'); */
-
-/* @import url('./components/button.css'); */
-/* @import url('./components/card.css'); */
-/* @import url('./components/form.css'); */
-/* @import url('./components/modal.css'); */
-/* @import url('./components/navbar.css'); */
-
 @import url('./pages/index.css');
-/* @import url('./pages/privacy.css'); */
-
-/* @import url('./breakpoints/mobile.css'); */
-/* @import url('./breakpoints/desktop.css'); */
-
-/* DoÄŤasnĂ© fallbacky zruĹˇeny (kolidovaly s base/layout) */
 

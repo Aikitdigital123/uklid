@@ -62,16 +62,31 @@
 /* Unified glass panel used across content blocks */
 .glass-panel {
   border-radius: 22px;
-  background: linear-gradient(150deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.12) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  box-shadow: 0 12px 30px rgba(20, 30, 60, 0.18);
+  /* Maximálně průhledné pozadí - velmi viditelné pozadí za panelem */
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 12px 30px rgba(20, 30, 60, 0.06);
   backdrop-filter: blur(14px) saturate(180%);
   -webkit-backdrop-filter: blur(14px) saturate(180%);
-  color: rgba(44, 53, 74, 0.92);
+  color: rgba(44, 53, 74, 0.95);
+  position: relative;
+  overflow: hidden;
+}
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: 
+    radial-gradient(1200px 400px at -10% -20%, rgba(255,255,255,0.12), rgba(255,255,255,0) 60%),
+    linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 35%);
+  opacity: 0.2;
 }
 .glass-panel p,
 .glass-panel li {
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.22);
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.7);
+  position: relative;
+  z-index: 1;
 }
 
 /* Fallback when backdrop-filter is not supported */
@@ -79,7 +94,7 @@
   .glass-effect,
   .glass-effect-small,
   .glass-panel {
-    background: rgba(255, 255, 255, 0.6);
-    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.15); /* Maximálně průhledný fallback pro velmi viditelné pozadí */
+    border-color: rgba(255, 255, 255, 0.25);
   }
 }
