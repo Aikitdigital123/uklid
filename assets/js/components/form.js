@@ -14,9 +14,14 @@ export function initForms() {
     contactForm.addEventListener('submit', async function (event) {
       event.preventDefault();
 
+      const submitButton = contactForm.querySelector('button[type="submit"]');
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Odesílám...';
+      }
+
       formStatusContact.textContent = 'Odesílám...';
-      formStatusContact.classList.remove('success', 'error');
-      formStatusContact.style.display = 'block';
+      formStatusContact.classList.remove('success', 'error', 'form-status-hidden');
 
       const formData = new FormData(contactForm);
 
@@ -26,6 +31,10 @@ export function initForms() {
           body: formData,
           headers: { Accept: 'application/json' },
         });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
         const result = await response.json();
 
@@ -46,10 +55,14 @@ export function initForms() {
         formStatusContact.classList.remove('success');
         formStatusContact.classList.add('error');
       } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Odeslat poptávku';
+        }
         setTimeout(() => {
           formStatusContact.textContent = '';
           formStatusContact.classList.remove('success', 'error');
-          formStatusContact.style.display = 'none';
+          formStatusContact.classList.add('form-status-hidden');
         }, 5000);
       }
     });
@@ -60,9 +73,14 @@ export function initForms() {
     calcForm.addEventListener('submit', async function (event) {
       event.preventDefault();
 
+      const submitButton = calcForm.querySelector('button[type="submit"]');
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Odesílám...';
+      }
+
       formStatusCalc.textContent = 'Odesílám...';
-      formStatusCalc.classList.remove('success', 'error');
-      formStatusCalc.style.display = 'block';
+      formStatusCalc.classList.remove('success', 'error', 'form-status-hidden');
 
       const formData = new FormData(calcForm);
 
@@ -72,6 +90,10 @@ export function initForms() {
           body: formData,
           headers: { Accept: 'application/json' },
         });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
         const result = await response.json();
 
@@ -92,10 +114,14 @@ export function initForms() {
         formStatusCalc.classList.remove('success');
         formStatusCalc.classList.add('error');
       } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Získat nezávaznou nabídku';
+        }
         setTimeout(() => {
           formStatusCalc.textContent = '';
           formStatusCalc.classList.remove('success', 'error');
-          formStatusCalc.style.display = 'none';
+          formStatusCalc.classList.add('form-status-hidden');
         }, 5000);
       }
     });

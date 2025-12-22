@@ -77,6 +77,8 @@
     img.dataset.afterAlt = 'Po uklidu - ' + (item.title || 'zakazka');
     img.loading = 'lazy';
     img.decoding = 'async';
+    img.width = 4032;
+    img.height = 3024;
 
     var label = document.createElement('div');
     label.className = 'ba-label';

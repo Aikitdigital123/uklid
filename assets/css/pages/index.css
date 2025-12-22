@@ -69,13 +69,11 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 
 /* --- Hero Sekce --- */
 .hero-section {
-    /* ODSTRANÄšNO POZADĂŤ OBRĂZKU ZDE, JE NA BODY::BEFORE */
     background: linear-gradient(
-                                  rgba(var(--color-primary-dark-rgb), 0.5), /* PrĹŻhlednost 50% */
-                                  rgba(var(--color-primary-dark-rgb), 0.5)
-                                ); /* Jen overlay, aby se prolnul s pozadĂ­m body */
+        rgba(var(--color-primary-dark-rgb), 0.5),
+        rgba(var(--color-primary-dark-rgb), 0.5)
+    );
     background-size: cover;
-    /* background-attachment: scroll; PonechĂˇme scroll, aby nekonfliktovalo s body fixed */
     color: var(--color-background-white);
     text-align: center;
     margin: 28px auto;
@@ -411,7 +409,6 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
         padding: 72px 0;
         margin: 22px auto;
         width: calc(100% - 28px);
-        /* Glass efekt je definován v .glass-panel třídě - duplicitní styly odstraněny */
     }
     .section-title {
         font-size: 2em;
@@ -426,7 +423,6 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     }
     .contact-form {
         padding: 30px;
-        /* Glass efekt je definován v .glass-panel třídě - duplicitní styly odstraněny */
     }
     .section-subtitle {
         font-size: 1.6em;
@@ -434,7 +430,6 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     #kalkulacka {
         padding: 30px;
         max-width: 550px;
-        /* Glass efekt je definován v .glass-panel třídě - duplicitní styly odstraněny */
     }
 
     .contact-info p {
@@ -503,8 +498,8 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     /* --- DŮLEŽITÉ: Přepnutí pozadí na mobilní obrázek a `background-attachment: scroll` --- */
     body::before {
         background: linear-gradient(
-                                      rgba(var(--color-primary-dark-rgb), 0.5), /* Silnější gradient pro lepší čitelnost na mobilu */
-                                      rgba(var(--color-primary-dark-rgb), 0.5)
+                                      rgba(var(--color-primary-dark-rgb), 0.15), /* Stejná průhlednost jako na desktopu */
+                                      rgba(var(--color-primary-dark-rgb), 0.15)
                                     ),
                                     url('/images/hero-mobile.jpg') no-repeat center center; /* Mobilní obrázek */
         background-size: cover;
@@ -516,8 +511,8 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     .hero-section {
         padding: 60px 15px;
         min-height: 45vh;
-        /* Průhlednost 50% */
-        background: linear-gradient(rgba(var(--color-primary-dark-rgb), 0.5), rgba(var(--color-primary-dark-rgb), 0.5));
+        /* Průhlednost 15% - stejná jako na desktopu */
+        background: linear-gradient(rgba(var(--color-primary-dark-rgb), 0.15), rgba(var(--color-primary-dark-rgb), 0.15));
         background-size: cover;
         /* background-attachment: scroll; už není potřeba duplikovat */
     }
@@ -536,7 +531,6 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
         padding: 58px 0;
         margin: 18px auto;
         width: calc(100% - 22px);
-        /* Glass efekt je definován v .glass-panel třídě - duplicitní styly odstraněny */
     }
     .section-title {
         font-size: 1.8em;
@@ -545,16 +539,13 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
         content: none;
     }
 
-    /* Glass efekty používají jednotný .glass-panel styl - duplicitní styly odstraněny */
     .service-item, .feature-item, .price-card {
         max-width: 100%;
         padding: 25px;
-        /* Glass efekt je definován v .glass-panel třídě */
     }
     .contact-form, #kalkulacka {
         max-width: 100%;
         padding: 25px;
-        /* Glass efekt je definován v .glass-panel třídě */
     }
 
     .service-item i {

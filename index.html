@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Lesktop | Profesionální úklidové služby pro domácnosti a firmy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap"></noscript>
     <meta name="description" content="Lesktop nabízí spolehlivé a důsledné úklidové služby s ověřenými prostředky. Specializujeme se na úklid domácností, kanceláří a společných prostor v Praze a Středních Čechách.">
     <meta name="keywords" content="úklid, úklidové služby, Lesktop, Praha, Střední Čechy, domácnosti, kanceláře, čištění, žehlení, mytí oken, ověřené prostředky">
     <meta name="robots" content="index, follow">
@@ -11,17 +15,23 @@
     <link rel="canonical" href="https://lesktop.cz/">
     <meta property="og:url" content="https://lesktop.cz/">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Lesktop | Profesionální úklidové služby">
+    <meta name="twitter:description" content="Spolehlivé úklidové služby pro domácnosti a firmy v Praze a Středních Čechách.">
+    <meta name="twitter:image" content="https://lesktop.cz/images/hero.jpg">
 
-        <meta property="og:type" content="website">
+    <meta property="og:type" content="website">
     <meta property="og:locale" content="cs_CZ">
     <meta property="og:title" content="Lesktop | Profesionální úklidové služby">
     <meta property="og:description" content="Spolehlivé úklidové služby pro domácnosti a firmy v Praze a Středních Čechách.">
-    <meta property="og:image" content="images/Domecek.png">
-    <meta property="og:image:alt" content="Lesktop logo">
+    <meta property="og:image" content="https://lesktop.cz/images/hero.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Lesktop - Profesionální úklidové služby">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Preload kritických obrázků pro rychlejší načtení -->
+    <link rel="preload" href="/images/Domecek.png" as="image" type="image/png">
+    <link rel="preload" href="/images/hero.jpg" as="image" type="image/jpeg" media="(min-width: 481px)">
+    <link rel="preload" href="/images/hero-mobile.jpg" as="image" type="image/jpeg" media="(max-width: 480px)">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -45,10 +55,67 @@
       "@type": "LocalBusiness",
       "name": "Lesktop",
       "description": "Profesionální úklidové služby pro domácnosti a firmy v Praze a Středních Čechách.",
-      "areaServed": ["Praha", "Střední Čechy"],
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Praha"
+        },
+        {
+          "@type": "State",
+          "name": "Střední Čechy"
+        }
+      ],
       "telephone": "+420775344145",
       "email": "team@lesktop.cz",
-      "image": "images/Domecek.png"
+      "image": "images/Domecek.png",
+      "priceRange": "800 Kč - 4500 Kč",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "Střední Čechy",
+        "addressCountry": "CZ"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Úklidové služby",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Pravidelný úklid domácností",
+              "description": "Pravidelný úklid domácností dle plochy",
+              "provider": {
+                "@type": "LocalBusiness",
+                "name": "Lesktop"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Jednorázový úklid",
+              "description": "Jednorázový úklid po stěhování, rekonstrukci nebo pro hloubkové čištění",
+              "provider": {
+                "@type": "LocalBusiness",
+                "name": "Lesktop"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Úklid kanceláří a komerčních prostor",
+              "description": "Profesionální úklid kanceláří, obchodů a společných prostor",
+              "provider": {
+                "@type": "LocalBusiness",
+                "name": "Lesktop"
+              }
+            }
+          }
+        ]
+      }
     }
     </script>
     <style>
@@ -66,7 +133,7 @@
         <div class="container">
             <h1 class="site-title">
                 <a href="#about" class="logo">
-                    <img src="images/Domecek.png" alt="Lesktop – úklidové služby" class="logo-img" height="120">
+                    <img src="images/Domecek.png" alt="Lesktop – úklidové služby" class="logo-img" width="120" height="120" loading="eager" decoding="async">
                     Lesktop
                 </a>
             </h1>
@@ -216,11 +283,10 @@
                 <form class="calculator-form glass-panel" id="kalkulacka" action="https://api.web3forms.com/submit" method="POST" accept-charset="UTF-8">
                     <input type="hidden" name="access_key" value="4e724eab-1a15-4f9c-9c19-caa25c2b95fc">
                     <input type="hidden" name="subject" value="Nová poptávka z kalkulačky úklidu - Lesktop">
-                    <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none">
 
                     <div class="form-group">
                         <label for="cleaningType">Typ úklidu:</label>
-                        <select id="cleaningType" name="Typ úklidu" required aria-required="true">
+                        <select id="cleaningType" name="Typ úklidu" required>
                             <option value="">Vyberte typ úklidu</option>
                             <option value="Pravidelný úklid domácnosti">Pravidelný úklid domácnosti</option>
                             <option value="Jednorázový úklid domácnosti">Jednorázový úklid domácnosti</option>
@@ -236,7 +302,7 @@
                         <small>Uveďte celkovou plochu pro úklid.</small>
                     </div>
 
-                    <div class="form-group" id="frequencyGroup" style="display: none;">
+                    <div class="form-group form-group-hidden" id="frequencyGroup">
                         <label for="cleaningFrequency">Frekvence úklidu:</label>
                         <select id="cleaningFrequency" name="Frekvence úklidu">
                             <option value="Týdně">Týdně</option>
@@ -380,8 +446,7 @@
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Získat nezávaznou nabídku</button>
-                    <div id="calculator-status" class="form-status" role="status" aria-live="polite"></div>
-                    <div id="calc-form-status" class="form-status" role="status" aria-live="polite" style="display:none"></div>
+                    <div id="calc-form-status" class="form-status form-status-hidden" role="status" aria-live="polite"></div>
                 </form>
 
             </div>
@@ -398,24 +463,23 @@
                     <p><i class="fas fa-map-marker-alt"></i> Působíme v Praze a Středních Čechách</p>
                 </div>
                 <form class="contact-form glass-panel" id="contactForm" action="https://api.web3forms.com/submit" method="POST" accept-charset="UTF-8">
-                <input type="hidden" name="access_key" value="4e724eab-1a15-4f9c-9c19-caa25c2b95fc">
-                <input type="hidden" name="subject" value="Nová zpráva z webu Lesktop">
-                <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none">
+                    <input type="hidden" name="access_key" value="4e724eab-1a15-4f9c-9c19-caa25c2b95fc">
+                    <input type="hidden" name="subject" value="Nová zpráva z webu Lesktop">
 
-                <div class="form-group">
-                    <label for="name">Jméno:</label>
-                    <input type="text" id="name" name="Jmeno" required placeholder="Vaše jméno" minlength="2" autocomplete="name">
-                </div>
-                <div class="form-group">
-                    <label for="email">E-mail:</label>
-                    <input type="email" id="email" name="Email" required placeholder="vas@email.cz" autocomplete="email">
-                </div>
-                <div class="form-group">
-                    <label for="message">Zpráva:</label>
-                    <textarea id="message" name="Zprava" rows="6" required minlength="10" placeholder="Popište, s čím potřebujete pomoci..."></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Odeslat poptávku</button>
-                <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+                    <div class="form-group">
+                        <label for="name">Jméno:</label>
+                        <input type="text" id="name" name="Jmeno" required placeholder="Vaše jméno" minlength="2" autocomplete="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail:</label>
+                        <input type="email" id="email" name="Email" required placeholder="vas@email.cz" autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Zpráva:</label>
+                        <textarea id="message" name="Zprava" rows="6" required minlength="10" placeholder="Popište, s čím potřebujete pomoci..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Odeslat poptávku</button>
+                    <div id="form-status" class="form-status form-status-hidden" role="status" aria-live="polite"></div>
                 </form>
             </div>
         </section>
@@ -432,7 +496,7 @@
                     <i class="fab fa-instagram"></i>
                 </a>
             </div>
-            <div class="legal-links" style="margin-top:10px">
+            <div class="legal-links">
                 <a href="/privacy.html">Zásady ochrany osobních údajů</a>
                 <span aria-hidden="true"> &middot; </span>
                 <a href="/terms.html">Obchodní podmínky</a>

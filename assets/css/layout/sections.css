@@ -1,15 +1,9 @@
 /* Sekce a nadpisy sekcí */
-/* .content-section používá .glass-panel styly - duplicitní styly odstraněny */
 .content-section {
     padding: 88px 0;
     text-align: center;
     margin: 28px auto;
     width: min(1200px, calc(100% - 32px));
-    /* Glass efekt je definován v .glass-panel třídě */
-}
-
-.content-section:nth-of-type(even) {
-    /* Odstraněno - používá se jednotný .glass-panel styl */
 }
 
 .content-section p {

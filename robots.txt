@@ -1,6 +1,5 @@
-# robots.txt — doplníme později podle potřeby
 User-agent: *
-Disallow:
+Allow: /
 
-# Sitemap: https://example.com/sitemap.xml
+Sitemap: https://lesktop.cz/sitemap.xml
 
