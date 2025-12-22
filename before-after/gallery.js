@@ -30,13 +30,13 @@
       img.src = img.dataset.after;
       img.alt = img.dataset.afterAlt;
       label.textContent = 'Po';
-      hint.textContent = 'Kliknete pro Pred';
+      hint.textContent = 'Klikněte pro Před';
       figure.setAttribute('aria-pressed', 'true');
     } else {
       img.src = img.dataset.before;
       img.alt = img.dataset.beforeAlt;
-      label.textContent = 'Pred';
-      hint.textContent = 'Kliknete pro Po';
+      label.textContent = 'Před';
+      hint.textContent = 'Klikněte pro Po';
       figure.setAttribute('aria-pressed', 'false');
     }
     figure.dataset.state = state;
@@ -51,7 +51,7 @@
 
     var title = document.createElement('div');
     title.className = 'ba-title';
-    title.textContent = item.title || 'Zakazka';
+    title.textContent = item.title || 'Zakázka';
 
     var date = document.createElement('div');
     date.className = 'ba-date';
@@ -73,8 +73,8 @@
     var img = document.createElement('img');
     img.dataset.before = item.before;
     img.dataset.after = item.after;
-    img.dataset.beforeAlt = 'Pred uklidem - ' + (item.title || 'zakazka');
-    img.dataset.afterAlt = 'Po uklidu - ' + (item.title || 'zakazka');
+    img.dataset.beforeAlt = 'Před úklidem - ' + (item.title || 'zakázka');
+    img.dataset.afterAlt = 'Po úklidu - ' + (item.title || 'zakázka');
     img.loading = 'lazy';
     img.decoding = 'async';
     img.width = 4032;
