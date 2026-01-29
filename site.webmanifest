@@ -1,0 +1,14 @@
+{
+  "name": "Lesktop",
+  "short_name": "Lesktop",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f5f8fc",
+  "theme_color": "#3a4768",
+  "icons": [
+    { "src": "images/Domecek.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "images/Domecek.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
+

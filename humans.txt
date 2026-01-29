@@ -1,0 +1,13 @@
+/* TEAM */
+Developer: Lesktop
+Site: https://example.com
+Twitter: @lesktop
+
+/* THANKS */
+Thanks to: family, friends, open-source community
+
+/* SITE */
+Standards: HTML5, CSS, JS
+Components: vanilla JS
+Software: VS Code
+
