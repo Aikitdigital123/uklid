@@ -3,25 +3,25 @@ a, button, .btn, .menu-toggle {
     touch-action: manipulation;
 }
 
-/* Pozadí přes wrapper (stabilní v Chromu) */
-.page {
-    position: relative;
-    min-height: 100vh;
-}
-
-.page::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
+/* Pozadí přímo na html (bez pseudo-elementu, stabilnější v Chromu) */
+html {
     background: linear-gradient(
         rgba(var(--color-primary-dark-rgb), 0.15),
         rgba(var(--color-primary-dark-rgb), 0.15)
     ),
     url('/images/hero.jpg') no-repeat center center;
     background-size: cover;
-    transition: background 0.5s ease-in-out;
+    background-attachment: fixed;
+}
+
+body {
+    background: transparent;
+}
+
+@media (max-width: 768px) {
+    html {
+        background-attachment: scroll;
+    }
 }
 
 /* === WhatsApp button: green glass tint === */
