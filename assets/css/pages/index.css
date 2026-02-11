@@ -3,15 +3,24 @@ a, button, .btn, .menu-toggle {
     touch-action: manipulation;
 }
 
-/* Pozadí přímo na body (bez pseudo-elementu kvůli Chrome artefaktům) */
-body {
+/* Pozadí přes wrapper (stabilní v Chromu) */
+.page {
+    position: relative;
+    min-height: 100vh;
+}
+
+.page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
     background: linear-gradient(
         rgba(var(--color-primary-dark-rgb), 0.15),
         rgba(var(--color-primary-dark-rgb), 0.15)
     ),
     url('/images/hero.jpg') no-repeat center center;
     background-size: cover;
-    background-attachment: scroll;
     transition: background 0.5s ease-in-out;
 }
 
