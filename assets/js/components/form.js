@@ -5,24 +5,6 @@ export function initForms() {
   if (document.documentElement.dataset.formInit === '1') return;
   document.documentElement.dataset.formInit = '1';
 
-  const isGaDisabled =
-    window['ga-disable-G-FLL5D5LE75'] || window['ga-disable-AW-17893281939'];
-
-  const sendAnalyticsEvent = (eventName, params = {}) => {
-    if (isGaDisabled) return;
-    if (typeof window.lesktopTrackEvent === 'function') {
-      // If gtag isn't ready yet, fall back to dataLayer to avoid losing events.
-      const sent = window.lesktopTrackEvent('event', eventName, params);
-      if (sent) return;
-    }
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', eventName, params);
-      return;
-    }
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ event: eventName, ...params });
-  };
-
   const contactForm = document.getElementById('contactForm');
   const formStatusContact = document.getElementById('form-status');
   const calcForm = document.getElementById('kalkulacka');
@@ -44,16 +26,12 @@ export function initForms() {
       const formData = new FormData(contactForm);
       // Explicitně nastavit UTF-8 charset pro Web3Forms
       formData.append('_charset', 'UTF-8');
-      const body = new URLSearchParams(formData);
 
       try {
         const response = await fetch(contactForm.action, {
           method: contactForm.method,
-          body,
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          },
+          body: formData,
+          headers: { Accept: 'application/json' },
         });
 
         if (!response.ok) {
@@ -67,9 +45,6 @@ export function initForms() {
           formStatusContact.classList.remove('error');
           formStatusContact.classList.add('success');
           contactForm.reset();
-          sendAnalyticsEvent('contact_form_submit', {
-            form_id: 'contactForm',
-          });
         } else {
           console.error('Chyba Web3Forms při odesílání kontaktního formuláře:', result);
           formStatusContact.textContent = result.message || 'Při odesílání zprávy došlo k chybě. Zkuste to prosím později.';
@@ -112,16 +87,12 @@ export function initForms() {
       const formData = new FormData(calcForm);
       // Explicitně nastavit UTF-8 charset pro Web3Forms
       formData.append('_charset', 'UTF-8');
-      const body = new URLSearchParams(formData);
 
       try {
         const response = await fetch(calcForm.action, {
           method: calcForm.method,
-          body,
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          },
+          body: formData,
+          headers: { Accept: 'application/json' },
         });
 
         if (!response.ok) {
@@ -134,17 +105,6 @@ export function initForms() {
           formStatusCalc.textContent = 'Děkujeme! Vaše poptávka byla úspěšně odeslána.';
           formStatusCalc.classList.remove('error');
           formStatusCalc.classList.add('success');
-          const cleaningType = calcForm.querySelector('#cleaningType')?.value || '';
-          const areaSizeValue = calcForm.querySelector('#areaSize')?.value || '';
-          const areaSize = areaSizeValue ? Number(areaSizeValue) : null;
-          const params = {
-            form_id: 'kalkulacka',
-            cleaningType,
-          };
-          if (Number.isFinite(areaSize)) {
-            params.areaSize = areaSize;
-          }
-          sendAnalyticsEvent('generate_lead', params);
           calcForm.reset();
         } else {
           console.error('Chyba Web3Forms při odesílání kalkulačního formuláře:', result);
