@@ -12,15 +12,19 @@ export function initCookieBanner() {
   };
 
   window.lesktopTrackEvent = (...args) => {
-    if (window[`ga-disable-${measurementId}`]) return;
+    if (window[`ga-disable-${measurementId}`]) return false;
     if (typeof window.gtag === 'function') {
       window.gtag(...args);
+      return true;
     }
+    return false;
   };
 
+  const gtagSrc = 'https://www.googletagmanager.com/gtag/js?id=AW-17893281939';
+
   const loadGa4 = () => {
-    if (window.__gaLoaded) return;
-    window.__gaLoaded = true;
+    if (window.__lesktopGtagLoaded) return;
+    window.__lesktopGtagLoaded = true;
 
     window.dataLayer = window.dataLayer || [];
     function gtag() {
@@ -31,10 +35,13 @@ export function initCookieBanner() {
     window.gtag('config', measurementId);
     window.gtag('config', 'AW-17893281939');
 
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17893281939';
-    document.head.appendChild(script);
+    const existingScript = document.querySelector(`script[src="${gtagSrc}"]`);
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = gtagSrc;
+      document.head.appendChild(script);
+    }
 
     if (document.body?.dataset.page === '404') {
       window.gtag('event', 'error_404');
@@ -53,6 +60,11 @@ export function initCookieBanner() {
   };
 
   const storedConsent = localStorage.getItem(storageKey);
+  if (storedConsent === 'all') {
+    loadGa4();
+    banner.classList.add('is-hidden');
+    return;
+  }
   if (storedConsent === 'necessary') {
     disableGa();
     deleteGaCookies();
@@ -60,15 +72,10 @@ export function initCookieBanner() {
     return;
   }
 
-  loadGa4();
-  if (storedConsent === 'all') {
-    banner.classList.add('is-hidden');
-    return;
-  }
-
   if (acceptButton) {
     acceptButton.addEventListener('click', () => {
       localStorage.setItem(storageKey, 'all');
+      loadGa4();
       banner.classList.add('is-hidden');
     });
   }

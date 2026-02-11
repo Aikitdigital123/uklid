@@ -36,9 +36,17 @@ window.gtag_report_conversion = function (url) {
 };
 
 document.addEventListener('click', (e) => {
-  const link = e.target.closest('a[href^="tel:"]');
+  const link = e.target.closest('a[data-track="phone"][href^="tel:"]');
   if (link) {
     e.preventDefault();
+    const location = link.dataset.location || 'unknown';
+    const phone = link.getAttribute('href') || '';
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'phone_click', { location, phone });
+    } else {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'phone_click', location, phone });
+    }
     window.gtag_report_conversion(link.href);
   }
 });
