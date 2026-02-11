@@ -3,24 +3,38 @@ a, button, .btn, .menu-toggle {
     touch-action: manipulation;
 }
 
-/* Pozadí přímo na html (bez pseudo-elementu, stabilnější v Chromu) */
+/* Pozadí na body (kompatibilní s iOS Safari) */
 html {
+    background: #f5f8fc;
+}
+
+body {
     background: linear-gradient(
         rgba(var(--color-primary-dark-rgb), 0.15),
         rgba(var(--color-primary-dark-rgb), 0.15)
     ),
     url('/images/hero.jpg') no-repeat center center;
     background-size: cover;
-    background-attachment: fixed;
-}
-
-body {
-    background: transparent;
+    background-attachment: scroll;
+    background-color: #f5f8fc;
+    min-height: 100vh;
 }
 
 @media (max-width: 768px) {
-    html {
+    body {
+        background-image: linear-gradient(
+            rgba(var(--color-primary-dark-rgb), 0.2),
+            rgba(var(--color-primary-dark-rgb), 0.2)
+        ),
+        url('/images/hero-mobile.jpg');
+        background-position: center top;
+    }
+}
+
+@supports (-webkit-touch-callout: none) {
+    body {
         background-attachment: scroll;
+        background-position: center top;
     }
 }
 
