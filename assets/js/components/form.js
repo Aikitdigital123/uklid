@@ -28,6 +28,7 @@ export function initForms() {
       formStatusContact.classList.remove('success', 'error', 'form-status-hidden');
 
       const formData = new FormData(contactForm);
+      
       // Explicitně nastavit UTF-8 charset pro Web3Forms
       formData.append('_charset', 'UTF-8');
 
@@ -35,7 +36,9 @@ export function initForms() {
         const response = await fetch(contactForm.action, {
           method: contactForm.method,
           body: formData,
-          headers: { Accept: 'application/json' },
+          headers: { 
+            Accept: 'application/json'
+          },
         });
 
         if (!response.ok) {
@@ -102,6 +105,7 @@ export function initForms() {
       formStatusCalc.classList.remove('success', 'error', 'form-status-hidden');
 
       const formData = new FormData(calcForm);
+      
       // Explicitně nastavit UTF-8 charset pro Web3Forms
       formData.append('_charset', 'UTF-8');
 
@@ -109,7 +113,9 @@ export function initForms() {
         const response = await fetch(calcForm.action, {
           method: calcForm.method,
           body: formData,
-          headers: { Accept: 'application/json' },
+          headers: { 
+            Accept: 'application/json'
+          },
         });
 
         if (!response.ok) {

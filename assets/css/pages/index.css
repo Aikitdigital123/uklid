@@ -949,7 +949,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
   
   .site-header .site-nav {
     width: calc(100% - 20px) !important;
-    max-width: calc(100vw - 20px) !important;
+    max-width: calc(100% - 20px) !important;
   }
 }
 

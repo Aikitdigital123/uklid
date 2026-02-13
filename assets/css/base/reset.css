@@ -8,6 +8,8 @@
 html {
   scroll-padding-top: var(--header-height);
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -25,11 +27,38 @@ body {
   overflow-x: hidden;
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: 100%;
 }
 
-main { flex: 1 0 auto; }
+main { 
+  flex: 1 0 auto; 
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
 
-html, body { max-width: 100%; }
+html, body { 
+  max-width: 100%; 
+  overflow-x: hidden;
+}
+
+* {
+  max-width: 100%;
+}
+
+/* Zabránit horizontálnímu scrollování na všech úrovních */
+section, article, div, header, footer, nav, aside {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Zajistit, že tabulky a pre nezpůsobují overflow */
+table, pre, code {
+  max-width: 100%;
+  overflow-x: auto;
+  word-wrap: break-word;
+}
 
 img, svg {
   max-width: 100%;

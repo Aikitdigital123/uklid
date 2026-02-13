@@ -323,7 +323,7 @@
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 20px) !important;
-    max-width: calc(100vw - 20px) !important;
+    max-width: calc(100% - 20px) !important;
     display: none;
     z-index: 1000;
     background: transparent;
