@@ -1,6 +1,10 @@
 // Form components: contact form submission via Web3Forms
 // Idempotent: guarded so listeners are not duplicated
 
+// Helper pro podmíněné logování (jen v dev módu)
+const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const logError = isDev ? console.error : () => {};
+
 export function initForms() {
   if (document.documentElement.dataset.formInit === '1') return;
   document.documentElement.dataset.formInit = '1';
@@ -44,15 +48,28 @@ export function initForms() {
           formStatusContact.textContent = 'Děkujeme! Vaše zpráva byla úspěšně odeslána.';
           formStatusContact.classList.remove('error');
           formStatusContact.classList.add('success');
+          
+          // Track conversion pro Google Ads a Analytics
+          if (window.lesktopTrackEvent) {
+            window.lesktopTrackEvent('event', 'form_submission', {
+              form_type: 'contact',
+              form_name: 'Kontaktní formulář'
+            });
+            // Google Ads conversion
+            window.lesktopTrackEvent('event', 'conversion', {
+              'send_to': 'AW-17893281939/contact_form_submission'
+            });
+          }
+          
           contactForm.reset();
         } else {
-          console.error('Chyba Web3Forms při odesílání kontaktního formuláře:', result);
+          logError('Chyba Web3Forms při odesílání kontaktního formuláře:', result);
           formStatusContact.textContent = result.message || 'Při odesílání zprávy došlo k chybě. Zkuste to prosím později.';
           formStatusContact.classList.remove('success');
           formStatusContact.classList.add('error');
         }
       } catch (error) {
-        console.error('Chyba při odesílání kontaktního formuláře:', error);
+        logError('Chyba při odesílání kontaktního formuláře:', error);
         formStatusContact.textContent = 'Při odesílání zprávy došlo k chybě sítě. Zkuste to prosím později.';
         formStatusContact.classList.remove('success');
         formStatusContact.classList.add('error');
@@ -105,15 +122,34 @@ export function initForms() {
           formStatusCalc.textContent = 'Děkujeme! Vaše poptávka byla úspěšně odeslána.';
           formStatusCalc.classList.remove('error');
           formStatusCalc.classList.add('success');
+          
+          // Track conversion pro Google Ads a Analytics
+          if (window.lesktopTrackEvent) {
+            // Získat hodnotu z formuláře pro lepší tracking
+            const cleaningType = calcForm.querySelector('#cleaningType')?.value || 'unknown';
+            const frequency = calcForm.querySelector('#cleaningFrequency')?.value || 'unknown';
+            
+            window.lesktopTrackEvent('event', 'form_submission', {
+              form_type: 'calculation',
+              form_name: 'Kalkulační formulář',
+              cleaning_type: cleaningType,
+              frequency: frequency
+            });
+            // Google Ads conversion
+            window.lesktopTrackEvent('event', 'conversion', {
+              'send_to': 'AW-17893281939/calculation_form_submission'
+            });
+          }
+          
           calcForm.reset();
         } else {
-          console.error('Chyba Web3Forms při odesílání kalkulačního formuláře:', result);
+          logError('Chyba Web3Forms při odesílání kalkulačního formuláře:', result);
           formStatusCalc.textContent = result.message || 'Při odesílání poptávky došlo k chybě. Zkuste to prosím později.';
           formStatusCalc.classList.remove('success');
           formStatusCalc.classList.add('error');
         }
       } catch (error) {
-        console.error('Chyba při odesílání kalkulačního formuláře:', error);
+        logError('Chyba při odesílání kalkulačního formuláře:', error);
         formStatusCalc.textContent = 'Při odesílání poptávky došlo k chybě sítě. Zkuste to prosím později.';
         formStatusCalc.classList.remove('success');
         formStatusCalc.classList.add('error');

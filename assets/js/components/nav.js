@@ -1,40 +1,33 @@
 // Navigation component: mobile menu toggle + smooth scroll + a11y
 // Idempotent: safe to call multiple times
+// Upraveno pro strukturu z návrhu (site-header, brand, nav-toggle, site-nav, nav-link)
 
 export function initNav() {
   if (document.documentElement.dataset.navInit === '1') return;
   document.documentElement.dataset.navInit = '1';
 
-  const headerEl = document.querySelector('.main-header');
-  const menuToggle = document.querySelector('.menu-toggle');
-  const navList = document.querySelector('.nav-list');
-
-  // Note: we avoid mutating CSS variables from JS to keep layout stable.
+  const headerEl = document.querySelector('.site-header');
+  const menuToggle = document.querySelector('.nav-toggle');
+  const siteNav = document.querySelector('.site-nav');
 
   // A11y attributes
   if (menuToggle) {
     if (!menuToggle.hasAttribute('aria-expanded')) menuToggle.setAttribute('aria-expanded', 'false');
-    if (navList) {
-      if (!navList.id) navList.id = 'main-menu';
-      if (!menuToggle.hasAttribute('aria-controls')) menuToggle.setAttribute('aria-controls', navList.id);
+    if (siteNav) {
+      if (!siteNav.id) siteNav.id = 'main-menu';
+      if (!menuToggle.hasAttribute('aria-controls')) menuToggle.setAttribute('aria-controls', siteNav.id);
     }
   }
 
   // Smooth scroll for main nav anchors
-  const navAnchors = document.querySelectorAll('.main-nav .nav-list a[href^="#"]');
+  const navAnchors = document.querySelectorAll('.site-nav .nav-link[href^="#"]');
   navAnchors.forEach((anchor) => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
 
       // Close mobile menu if open
-      if (navList && menuToggle && navList.classList.contains('active')) {
-        navList.classList.remove('active');
-        const icon = menuToggle.querySelector('i');
-        if (icon) {
-          icon.classList.remove('fa-times');
-          icon.classList.remove('fa-xmark');
-          icon.classList.add('fa-bars');
-        }
+      if (siteNav && menuToggle && siteNav.classList.contains('is-open')) {
+        siteNav.classList.remove('is-open');
         menuToggle.setAttribute('aria-expanded', 'false');
       }
 
@@ -48,13 +41,13 @@ export function initNav() {
       }
 
       // Active state within nav only
-      document.querySelectorAll('.main-nav .nav-list a').forEach((link) => link.classList.remove('active'));
+      document.querySelectorAll('.site-nav .nav-link').forEach((link) => link.classList.remove('active'));
       this.classList.add('active');
     });
   });
 
   // Smooth scroll for logo link (doesn't touch nav active state)
-  const logoLink = document.querySelector('a.logo[href^="#"]');
+  const logoLink = document.querySelector('a.brand[href^="#"]');
   if (logoLink) {
     logoLink.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
@@ -69,31 +62,47 @@ export function initNav() {
   }
 
   // Mobile menu toggle
-  if (menuToggle && navList) {
+  if (menuToggle && siteNav) {
     menuToggle.addEventListener('click', () => {
-      navList.classList.toggle('active');
-      const icon = menuToggle.querySelector('i');
-      const isExpanded = navList.classList.contains('active');
+      siteNav.classList.toggle('is-open');
+      const isExpanded = siteNav.classList.contains('is-open');
       menuToggle.setAttribute('aria-expanded', String(isExpanded));
-      // Keep hamburger icon even when menu is open (no X icon)
-      if (icon) {
-        icon.classList.add('fa-bars');
-        icon.classList.remove('fa-times');
-        icon.classList.remove('fa-xmark');
-      }
+    });
+
+    // Close menu when clicking on a nav link (mobile only)
+    const navLinks = siteNav.querySelectorAll('.nav-link');
+    navLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        // Only close on mobile (check window width)
+        if (window.innerWidth <= 768) {
+          siteNav.classList.remove('is-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
     });
 
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 768 && navList.classList.contains('active')) {
-        navList.classList.remove('active');
+      if (window.innerWidth > 768 && siteNav.classList.contains('is-open')) {
+        siteNav.classList.remove('is-open');
         menuToggle.setAttribute('aria-expanded', 'false');
-        const icon = menuToggle.querySelector('i');
-        if (icon) {
-          icon.classList.remove('fa-times');
-          icon.classList.remove('fa-xmark');
-          icon.classList.add('fa-bars');
-        }
       }
     });
   }
+
+  // Header scroll effect - vypnuto (header nemá měnit barvu)
+  // if (headerEl) {
+  //   function handleScroll() {
+  //     if (window.scrollY > 20) {
+  //       headerEl.classList.add('is-scrolled');
+  //     } else {
+  //       headerEl.classList.remove('is-scrolled');
+  //     }
+  //   }
+  //   
+  //   // Check on load
+  //   handleScroll();
+  //   
+  //   // Listen to scroll events
+  //   window.addEventListener('scroll', handleScroll, { passive: true });
+  // }
 }

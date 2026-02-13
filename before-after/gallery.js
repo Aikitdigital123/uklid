@@ -130,7 +130,6 @@
     }
 
     var emptyState = document.getElementById('before-after-empty');
-    var moreButton = document.getElementById('before-after-more');
     var data = Array.isArray(window.beforeAfterGallery)
       ? window.beforeAfterGallery.slice()
       : [];
@@ -143,39 +142,16 @@
       if (emptyState) {
         emptyState.hidden = false;
       }
-      if (moreButton) {
-        moreButton.hidden = true;
-      }
       return;
     }
 
     data.sort(sortByDateAsc);
-    var rendered = 0;
 
-    function renderNextBatch() {
-      var nextItems = data.slice(rendered, rendered + ITEMS_PER_PAGE);
-      if (!nextItems.length) {
-        return;
-      }
-
-      var fragment = document.createDocumentFragment();
-      nextItems.forEach(function (item) {
-        fragment.appendChild(createCard(item));
-      });
-      target.appendChild(fragment);
-      rendered += nextItems.length;
-
-      if (moreButton) {
-        moreButton.hidden = rendered >= data.length;
-      }
-    }
-
-    renderNextBatch();
-
-    if (moreButton) {
-      moreButton.addEventListener('click', renderNextBatch);
-      moreButton.hidden = rendered >= data.length;
-    }
+    var fragment = document.createDocumentFragment();
+    data.forEach(function (item) {
+      fragment.appendChild(createCard(item));
+    });
+    target.appendChild(fragment);
 
     if (emptyState) {
       emptyState.hidden = true;

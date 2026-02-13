@@ -32,8 +32,19 @@ export function initCookieBanner() {
     }
     window.gtag = gtag;
     window.gtag('js', new Date());
-    window.gtag('config', measurementId);
-    window.gtag('config', 'AW-17893281939');
+    
+    // Google Analytics 4 konfigurace
+    window.gtag('config', measurementId, {
+      anonymize_ip: true,
+      allow_google_signals: true,
+      allow_ad_personalization_signals: true
+    });
+    
+    // Google Ads konfigurace
+    window.gtag('config', 'AW-17893281939', {
+      allow_google_signals: true,
+      allow_ad_personalization_signals: true
+    });
 
     const existingScript = document.querySelector(`script[src="${gtagSrc}"]`);
     if (!existingScript) {

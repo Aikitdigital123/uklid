@@ -1,5 +1,5 @@
 ﻿/* Touch action pro interaktivní prvky */
-a, button, .btn, .menu-toggle {
+a, button, .btn, .nav-toggle {
     touch-action: manipulation;
 }
 
@@ -56,7 +56,7 @@ h3 { font-family: var(--font-heading); font-weight: 600; font-size: clamp(18px, 
 }
 
 p, li { font-size: 1rem; }
-.main-nav .nav-list a { font-size: clamp(14px, 1vw, 17px); }
+.site-nav .nav-link { font-size: clamp(14px, 1vw, 17px); }
 .btn { font-size: clamp(14px, 1.05vw, 18px); }
 label { font-size: clamp(14px, 1vw, 16px); }
 input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
@@ -64,7 +64,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
   input, select, textarea { font-size: 16px; }
 }
 
-.logo { font-size: clamp(22px, 2.6vw, 34px); }
+.brand { font-size: clamp(22px, 2.6vw, 34px); }
 
 
 /* --- Hero Sekce --- */
@@ -338,11 +338,11 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     :root {
         --header-height: 80px;
     }
-    .logo {
+    .brand {
         font-size: 2.2em;
     }
-    .logo-img {
-        height: 90px; /* ZvÄ›tĹˇenĂˇ vĂ˝Ĺˇka obrĂˇzku loga pro tablety */
+    .brand-logo {
+        height: 90px; /* Zvětšená výška obrázku loga pro tablety */
     }
     .hero-content h1 {
         font-size: 2.8em;
@@ -372,17 +372,17 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     :root {
         --header-height: 70px;
     }
-    .main-header .container {
+    .site-header .header-inner {
         justify-content: space-between;
     }
-    .logo {
+    .brand {
         font-size: 2em;
     }
-    .logo-img {
+    .brand-logo {
         height: 70px; /* Zvětšená výška obrázku loga pro menší tablety */
     }
     .btn,
-    .main-nav .nav-list a {
+    .site-nav .nav-link {
         min-height: 44px;
         display: inline-flex;
         align-items: center;
@@ -487,11 +487,11 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     :root {
         --header-height: 60px;
     }
-    .logo {
+    .brand {
         font-size: 1.5em;
-        gap: 3px; /* DĂˇle zmenĹˇenĂˇ mezera na mobilu */
+        gap: 3px; /* Dále zmenšená mezera na mobilu */
     }
-    .logo-img {
+    .brand-logo {
         height: 55px; /* Zvětšená výška obrázku loga pro mobily */
     }
 
@@ -609,9 +609,9 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 
 /* Desktop-specific adjustments */
 
-/* ZmenĹˇenĂ­ loga (mĂ©nÄ› dominantnĂ­) */
-.logo-img { height: 72px; }
-@media (max-width: 768px) { .logo-img { height: 56px; } }
+/* Zmenšení loga (méně dominantní) */
+.brand-logo { height: 72px; }
+@media (max-width: 768px) { .brand-logo { height: 56px; } }
 
 /* Scroll-in animace pro reveal-on-scroll */
 .js .reveal-on-scroll { opacity: 0; transform: translateY(14px) scale(0.98); }
@@ -847,23 +847,24 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 }
 
 /* === Header: čitelnější a modře tónovaný (ladí s tlačítky a patičkou) === */
-.main-header {
+.site-header {
   color: #ffffff;
+}
+.site-header .header-inner {
   background: linear-gradient(90deg, rgba(124,168,224,0.75), rgba(76,98,146,0.75));
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-bottom: 1px solid rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.35);
   overflow: visible !important; /* Důležité: nesmí být hidden, aby menu nebylo schované */
-  z-index: 1000 !important; /* Nižší než mobilní menu (1100) */
 }
-.main-nav .nav-list a {
+.site-nav .nav-link {
   color: #ffffff;
   font-weight: 600;
   letter-spacing: 0.2px;
   text-shadow: 0 1px 2px rgba(0,0,0,0.25);
   padding: 10px 0;
 }
-.main-nav .nav-list a::after {
+.site-nav .nav-link::after {
   height: 3px; /* výraznější podtržení */
 }
 
@@ -876,7 +877,7 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 @media (max-width: 768px) {
   :root { --header-height: 64px; }
   /* Padding a min-height jsou nastaveny v "Header unified glass panel" sekci níže */
-  .logo-img { height: 56px; }
+  .brand-logo { height: 56px; }
   select#cleaningType, select#cleaningFrequency, .btn { min-height: 52px; }
   .hero-content h1 { font-size: 2.4em; }
 }
@@ -896,55 +897,59 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 /* Responzivní úpravy pro mobilní menu jsou v layout/header.css */
 
 /* --- Header unified glass panel --- */
-.main-header {
+.site-header {
   margin: 12px auto 0;
   top: 10px;
   overflow: visible !important; /* Důležité: nesmí být hidden */
-  z-index: 1000 !important; /* Nižší než mobilní menu (1100) */
-  border-radius: 20px 20px 18px 18px; /* Symetrické zaoblení - stejné horní rohy */
-  width: min(1200px, calc(100% - 32px));
+  z-index: 100 !important; /* Nižší než mobilní menu (1100) */
+}
+
+.site-header .header-inner {
+  border-radius: 32px; /* Zaoblení podle návrhu */
+  width: min(1200px, calc(100% - 32px)) !important;
+  max-width: 1200px !important;
   box-shadow: 0 12px 32px rgba(20,30,60,0.22);
-  border: 1px solid rgba(255,255,255,0.35);
+}
+
+@media (max-width: 768px) {
+  .site-header .header-inner {
+    width: calc(100% - 20px) !important;
+    max-width: calc(100% - 20px) !important;
+  }
 }
 
 @supports not (position: sticky) {
-  .main-header {
+  .site-header {
     position: relative;
     top: auto;
   }
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .main-header {
+  .site-header .header-inner {
     background: rgba(124,168,224,0.92);
   }
 }
 
-.main-header::before { opacity: 0.25; }
-
 @media (max-width: 768px) {
-  .main-header {
+  .site-header {
     margin-top: 8px;
     top: 8px;
-    width: calc(100% - 20px);
-    border-radius: 18px 18px 16px 16px; /* Symetrické zaoblení - stejné horní rohy */
-    /* Zajistíme dostatečnou výšku - padding se přidá k min-height */
-    padding-top: calc(10px + env(safe-area-inset-top, 0px));
-    padding-bottom: 10px;
-    min-height: calc(var(--header-height) + env(safe-area-inset-top, 0px) + 10px);
+    width: 100%;
+    padding: 12px 10px;
   }
   
-  /* Safe-area pro moderní iPhony (notch) - preferujeme max() pokud je podporováno */
-  @supports (padding: max(0px)) {
-    .main-header { 
-      padding-top: max(10px, env(safe-area-inset-top));
-      min-height: calc(var(--header-height) + max(10px, env(safe-area-inset-top)) + 10px);
-    }
+  .site-header .header-inner {
+    border-radius: 24px;
+    width: calc(100% - 32px) !important;
+    max-width: calc(100% - 32px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
   
-  .main-header .container {
-    min-height: var(--header-height);
-    /* padding je nastaven v layout/header.css pro mobilní breakpoint */
+  .site-header .site-nav {
+    width: calc(100% - 20px) !important;
+    max-width: calc(100vw - 20px) !important;
   }
 }
 

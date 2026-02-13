@@ -12,6 +12,8 @@
     <meta name="keywords" content="úklid, úklidové služby, Lesktop, Praha, Střední Čechy, domácnosti, kanceláře, čištění, žehlení, mytí oken, ověřené prostředky">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#3a4768">
+    <!-- Google Search Console verification - přidej svůj verification tag zde -->
+    <!-- <meta name="google-site-verification" content="TVŮJ_VERIFICATION_CODE" /> -->
     <link rel="canonical" href="https://lesktop.cz/">
     <meta property="og:url" content="https://lesktop.cz/">
     <meta name="twitter:card" content="summary_large_image">
@@ -120,8 +122,6 @@
     }
     </script>
     <style>
-      .site-title{margin:0;font-size:inherit;font-weight:inherit}
-      .site-title a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:5px}
       .form-status{margin-top:8px;font-size:.95rem}
       input[aria-invalid="true"],textarea[aria-invalid="true"],select[aria-invalid="true"]{outline:2px solid #dc3545;outline-offset:2px}
       /* Removed old mobile nav overrides to allow new horizontal bar styles */
@@ -129,30 +129,28 @@
 
 </head>
 <body>
+    <!-- Skip link pro lepší přístupnost -->
+    <a href="#main-content" class="skip-link">Přeskočit na hlavní obsah</a>
 
-    <header class="main-header">
-        <div class="container">
-            <h1 class="site-title">
-                <a href="#about" class="logo">
-                    <img src="images/Domecek.png" alt="Lesktop – úklidové služby" class="logo-img" width="120" height="120" loading="eager" decoding="async">
-                    Lesktop
-                </a>
-            </h1>
-            <nav class="main-nav">
-                <button class="menu-toggle" aria-label="Přepnout menu" aria-controls="main-menu">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <ul class="nav-list" id="main-menu">
-                    <li><a href="#about" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'o_nas'})">O nás</a></li>
-                    <li><a href="#services" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'sluzby'})">Služby</a></li>
-                    <li><a href="#pricing" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'cenik'})">Ceník</a></li>
-                    <li><a href="#contact" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'kontakt'})">Kontakt</a></li>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="#about" class="brand">
+                <img src="images/Domecek.png" alt="Lesktop – úklidové služby" class="brand-logo" width="120" height="120" loading="eager" decoding="async" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span class="brand-text">Lesktop</span>
+            </a>
+            <button class="nav-toggle" aria-label="Menu" aria-expanded="false" type="button">Menu</button>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="#about" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'o_nas'})">O nás</a></li>
+                    <li><a href="#services" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'sluzby'})">Služby</a></li>
+                    <li><a href="#pricing" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'cenik'})">Ceník</a></li>
+                    <li><a href="#contact" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'kontakt'})">Kontakt</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <section id="about" class="content-section glass-panel reveal-on-scroll">
             <div class="container">
                 <h2 class="section-title">O nás</h2>
@@ -226,9 +224,6 @@
                 <p class="ba-interaction">Kliknutim nebo klepnutim na fotografii prepnete pohled PRED / PO.</p>
                 <div id="before-after-gallery" class="ba-gallery"></div>
                 <div id="before-after-empty" class="ba-empty" hidden>Galerie zatim nema zadne fotky.</div>
-                <div class="ba-more">
-                    <button id="before-after-more" class="btn" type="button">Zobrazit dalsi</button>
-                </div>
             </div>
         </section>
 
@@ -458,8 +453,8 @@
                 <h2 class="section-title">Kontaktujte nás</h2>
                 <p>Máte zájem o naše služby? Vyplňte formulář nebo nás kontaktujte přímo!</p>
                 <div class="contact-info">
-                    <p><i class="fas fa-phone-alt"></i> Telefon: <strong><a href="tel:+420775344145" data-track="phone" data-location="contact_section">+420 775 344 145</a></strong></p>
-                    <p><a href="https://wa.me/420775344145" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','click_whatsapp')"><i class="fab fa-whatsapp"></i> WhatsApp</a></p>
+                    <p><i class="fas fa-phone-alt"></i> Telefon: <strong><a href="tel:+420775344145" data-track="phone" data-location="contact_section" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','phone_click',{location:'contact_section'})">+420 775 344 145</a></strong></p>
+                    <p><a href="https://wa.me/420775344145" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','click_whatsapp',{location:'contact_section'}); window.lesktopTrackEvent('event','conversion',{'send_to':'AW-17893281939/whatsapp_click'})"><i class="fab fa-whatsapp"></i> WhatsApp</a></p>
                     <p><i class="fas fa-envelope"></i> E-mail: <a href="mailto:team@lesktop.cz"><strong>team@lesktop.cz</strong></a></p>
                     <p><i class="fas fa-map-marker-alt"></i> Působíme v Praze a Středních Čechách</p>
                 </div>
@@ -490,7 +485,7 @@
         <div class="container">
             <p>&copy; 2025 Lesktop. Všechna práva vyhrazena.</p>
             <div class="social-links">
-                <a href="https://www.facebook.com/tvoje_jmeno" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.facebook.com/lesktop.cz" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-facebook-f"></i>
                 </a>
                 <a href="https://www.instagram.com/lesktop.cz" aria-label="Instagram" target="_blank" rel="noopener noreferrer">

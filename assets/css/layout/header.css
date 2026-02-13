@@ -1,264 +1,408 @@
 /* --- Hlavní záhlaví (Header) --- */
-.main-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: var(--header-height); /* Důležité: Nastavte výšku kontejneru pro header */
+/* Struktura podle návrhu, barevnost z původního projektu */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0;
+  transition: all 0.3s ease;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(1200px, calc(100% - 32px));
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 14px 20px !important;
+  min-height: 64px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 32px;
+  box-shadow: 0 12px 32px rgba(20,30,60,0.22);
+  position: relative;
+  overflow: visible;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .header-inner {
+    width: calc(100% - 32px) !important;
+    max-width: calc(100% - 32px) !important;
+  }
+}
+
+/* Glass shimmer efekt - stejný jako v původním projektu */
+.header-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(600px 200px at -10% -20%, rgba(255,255,255,0.55), rgba(255,255,255,0) 60%),
+              linear-gradient(145deg, rgba(255,255,255,0.38) 0%, rgba(255,255,255,0) 35%);
+  opacity: 0.35;
+}
+
+.header-inner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 20px;
+  width: 60px;
+  background: linear-gradient(110deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-20deg);
+  will-change: left, opacity;
+  animation: glass-shimmer 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glass-shimmer {
+  0% { left: 20px; opacity: 0; }
+  10% { opacity: .5; }
+  60% { left: calc(100% - 80px); opacity: 0; }
+  100% { left: calc(100% - 80px); opacity: 0; }
+}
+
+.site-header.is-scrolled .header-inner {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 12px 32px rgba(20,30,60,0.28);
 }
 
 /* --- Styly pro logo a obrázek loga --- */
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 2.8em;
-    font-weight: 700;
-    line-height: 1;
-    color: var(--color-background-white);
-    text-decoration: none;
-    transition: color var(--transition-speed), text-shadow 300ms ease;
-    text-shadow: 0 0 6px rgba(124,168,224,0.55), 0 0 14px rgba(124,168,224,0.35);
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 2.8em;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-background-white, #ffffff);
+  text-decoration: none;
+  transition: color var(--transition-speed, 0.3s), text-shadow 300ms ease;
+  text-shadow: 0 0 6px rgba(124,168,224,0.55), 0 0 14px rgba(124,168,224,0.35);
+  min-height: 56px;
 }
 
-.logo-img {
-    height: 120px;
-    width: auto;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-    transition: transform 0.3s ease;
-    vertical-align: middle;
+.brand:hover {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(124,168,224,0.75), 0 0 22px rgba(124,168,224,0.55);
 }
 
-.logo:hover .logo-img {
-    transform: scale(1.05);
+.brand-logo {
+  height: 120px;
+  width: auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
+  vertical-align: middle;
+  display: block;
 }
 
-.logo:hover {
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(124,168,224,0.75), 0 0 22px rgba(124,168,224,0.55);
+.brand:hover .brand-logo {
+  transform: scale(1.05);
 }
 
-/* Navigace */
-.main-nav .nav-list {
-    list-style: none;
-    display: flex;
-    gap: 30px;
+.brand-logo[style*="display: none"] {
+  display: none !important;
 }
 
-.main-nav .nav-list a {
-    color: var(--color-background-white);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1.05em;
-    padding: 8px 0;
-    position: relative;
-    transition: color var(--transition-speed);
+.brand-text {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  text-transform: none;
+  color: var(--color-background-white, #ffffff);
+  text-shadow: 0 0 6px rgba(124,168,224,0.55), 0 0 14px rgba(124,168,224,0.35);
+  display: inline;
+  vertical-align: middle;
 }
 
-.main-nav .nav-list a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--color-accent);
-    transition: width var(--transition-speed);
+.site-header.is-scrolled .brand-text {
+  color: var(--color-background-white, #ffffff);
+  text-shadow: 0 0 6px rgba(124,168,224,0.55), 0 0 14px rgba(124,168,224,0.35);
 }
 
-.main-nav .nav-list a:hover::after,
-.main-nav .nav-list a.active::after {
-    width: 100%;
+.brand-text[style*="display: inline"] {
+  display: inline !important;
 }
 
-.main-nav .nav-list a:hover {
-    color: var(--color-accent);
+.brand:hover .brand-text {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(124,168,224,0.75), 0 0 22px rgba(124,168,224,0.55);
 }
 
-.menu-toggle {
-    display: none; /* Skryto na desktopu */
-    background: none;
-    border: none;
-    font-size: 1.8em;
-    color: var(--color-background-white);
-    cursor: pointer;
-    z-index: 1001; /* Ujistěte se, že je nad menu při aktivaci */
+/* Navigation Toggle Button */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.nav-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.nav-toggle:focus {
+  outline: 2px solid rgba(124,168,224,0.5);
+  outline-offset: 2px;
+}
+
+/* Navigation */
+.site-nav {
+  display: flex;
+  align-items: center;
+}
+
+/* Desktop: navigation always visible */
+@media (min-width: 769px) {
+  .site-nav {
+    display: flex !important;
+  }
+  
+  .nav-toggle {
+    display: none !important;
+  }
+}
+
+.site-nav ul {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav li {
+  margin: 0;
+}
+
+.site-nav .nav-link {
+  text-decoration: none;
+  color: var(--color-background-white, #ffffff);
+  padding: 6px 12px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  display: block;
+  border-radius: 8px;
+  border-bottom: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  z-index: 1;
+}
+
+.site-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-accent, rgba(124,168,224,0.85));
+  transition: width 0.3s ease;
+}
+
+.site-nav .nav-link:hover::after,
+.site-nav .nav-link.active::after {
+  width: 100%;
+}
+
+.site-nav .nav-link:hover {
+  color: var(--color-accent, rgba(124,168,224,0.95));
+  background: rgba(255, 255, 255, 0.14);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.site-header.is-scrolled .site-nav .nav-link {
+  color: var(--color-background-white, #ffffff);
+}
+
+.site-header.is-scrolled .site-nav .nav-link:hover {
+  color: var(--color-accent, rgba(124,168,224,0.95));
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.site-nav .nav-link:focus,
+.site-nav .nav-link:focus-visible {
+  outline: none;
+}
+
+.site-nav .nav-link:focus-visible {
+  box-shadow: 0 0 0 4px rgba(124,168,224,0.35);
+  border-radius: 8px;
+}
+
+.site-nav .nav-link.active {
+  font-weight: 600;
+  color: var(--color-background-white, #ffffff);
+  background: none;
+  border-radius: 0;
+  border-bottom: 2px solid var(--color-accent, rgba(124,168,224,0.85));
+  box-shadow: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.site-nav .nav-link.active::before {
+  display: none;
+}
+
+.site-header.is-scrolled .site-nav .nav-link.active {
+  color: var(--color-background-white, #ffffff);
+  background: none;
+  border-bottom: 2px solid var(--color-accent, rgba(124,168,224,0.85));
+  box-shadow: none;
 }
 
 /* Responzivní styly pro mobilní menu */
 @media (max-width: 768px) {
-    /* Zajistíme stabilní výšku headeru na mobilech */
-    .main-header {
-        overflow: visible; /* Důležité: nesmí být hidden */
-        /* min-height a padding jsou nastaveny v pages/index.css */
-        display: flex; /* Zajistíme flexbox pro zarovnání */
-        align-items: center; /* Vertikální zarovnání obsahu */
-    }
-    
-    .main-header .container {
-        min-height: var(--header-height);
-        height: var(--header-height); /* Fixní výška pro správné flexbox zarovnání */
-        display: flex;
-        align-items: center; /* Explicitní zarovnání pro mobil */
-        justify-content: space-between;
-        padding: 0 16px; /* Vnitřní odsazení od levého a pravého okraje */
-    }
-    
-    /* Zarovnání loga na mobilech */
-    .logo {
-        display: flex;
-        align-items: center; /* Vertikální zarovnání loga a textu */
-        line-height: 1.2; /* Mírně větší line-height pro lepší zarovnání s obrázkem */
-    }
-    
-    .logo-img {
-        vertical-align: middle; /* Pro jistotu, i když flexbox to řeší */
-    }
-    
-    .menu-toggle {
-        display: flex; /* Flexbox pro zarovnání ikony */
-        align-items: center; /* Vertikální zarovnání ikony */
-        justify-content: center; /* Horizontální zarovnání ikony */
-        font-size: 2em;
-        position: relative;
-        z-index: 1001; /* Nad header, ale pod menu */
-        line-height: 1; /* Bez line-height pro ikonu */
-    }
-    
-    .main-nav .nav-list {
-        position: fixed;
-        top: calc(var(--header-height) + var(--mobile-menu-gap, 8px));
-        left: 50%;
-        right: auto;
-        bottom: auto;
-        width: min(
-            calc(100vw - (16px + env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px))),
-            1100px
-        );
-        display: none; /* Skryté výchozí, zobrazí se jen při .active */
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: center;
-        justify-content: space-evenly;
-        gap: 8px;
-        padding: 10px 12px;
-        margin: 0;
-        background: linear-gradient(90deg, rgba(124,168,224,0.92), rgba(76,98,146,0.92));
-        border-top: 1px solid rgba(255,255,255,0.35);
-        box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-        height: auto;
-        max-height: none;
-        overflow: visible;
-        border-radius: 14px 14px 10px 10px;
-        background-clip: padding-box;
-        transform: translateX(-50%);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity .22s ease, transform .22s ease;
-        z-index: 1100; /* Vyšší než header (1000), aby bylo menu nad vším */
-    }
-    
-    .main-header .main-nav .nav-list {
-        border-top-left-radius: 14px !important;
-        border-top-right-radius: 14px !important;
-        border-bottom-right-radius: 10px !important;
-        border-bottom-left-radius: 10px !important;
-        overflow: hidden !important;
-        background-clip: padding-box !important;
-        clip-path: inset(0 round 14px 14px 10px 10px);
-    }
-    
-    .main-nav .nav-list.active {
-        display: flex; /* Zobrazí menu při aktivaci */
-        transform: translateX(-50%);
-        opacity: 1;
-        pointer-events: auto;
-    }
-    
-    .main-nav .nav-list a {
-        font-size: 0.98rem;
-        color: #ffffff;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.25);
-        padding: 8px 8px;
-        border-radius: 8px;
-        transition: background 180ms ease, transform 120ms ease;
-        white-space: nowrap;
-    }
-    
-    .main-nav .nav-list a:hover {
-        background: rgba(255,255,255,0.14);
-    }
-    
-    .main-nav .nav-list a:active {
-        background: rgba(255,255,255,0.2);
-        transform: scale(0.98);
-    }
+  .site-header {
+    padding: 12px 10px;
+  }
+  
+  .header-inner {
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 12px 16px !important;
+    min-height: 56px;
+    width: calc(100% - 32px) !important;
+    max-width: calc(100% - 32px) !important;
+  }
+  
+  .brand {
+    min-height: 48px;
+    font-size: 2.2em;
+  }
+  
+  .brand-logo {
+    height: 90px;
+  }
+  
+  .brand-text {
+    font-size: inherit;
+  }
+  
+  .nav-toggle {
+    display: block;
+    margin-left: auto;
+  }
+  
+  .site-nav {
+    position: fixed;
+    top: 68px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 20px) !important;
+    max-width: calc(100vw - 20px) !important;
+    display: none;
+    z-index: 1000;
+    background: transparent;
+  }
+  
+  .site-nav.is-open {
+    display: block;
+  }
+  
+  .site-nav ul {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    background: linear-gradient(90deg, rgba(124,168,224,0.92), rgba(76,98,146,0.92));
+    border: 1px solid rgba(255,255,255,0.35);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    border-radius: 14px;
+    padding: 10px 12px;
+    margin: 0;
+  }
+  
+  .site-nav .nav-link {
+    width: 100%;
+    padding: 12px 16px;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    border-radius: 8px;
+  }
+  
+  .site-nav .nav-link:hover {
+    background: rgba(255,255,255,0.14);
+    color: #ffffff;
+  }
+  
+  .site-nav .nav-link:active {
+    background: rgba(255,255,255,0.2);
+    transform: scale(0.98);
+  }
+}
+
+@media (max-width: 480px) {
+  .site-nav .nav-link {
+    padding: 10px 12px;
+    font-size: 0.875rem;
+  }
+  
+  .brand {
+    font-size: 1.5em;
+    gap: 3px;
+  }
+  
+  .brand-logo {
+    height: 56px;
+  }
 }
 
 /* Desktop: enforce horizontal nav layout */
 @media (min-width: 769px) {
-    .main-nav .nav-list {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 30px;
-    }
-    
-    .main-nav .nav-list a {
-        transition: color var(--transition-speed), transform 150ms ease, text-shadow 180ms ease;
-    }
-    
-    .main-nav .nav-list a:hover {
-        transform: translateY(-1px);
-        text-shadow: 0 1px 2px rgba(0,0,0,0.25);
-    }
+  .site-nav ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .site-nav .nav-link {
+    transition: color 0.3s ease, transform 150ms ease, text-shadow 180ms ease;
+  }
+  
+  .site-nav .nav-link:hover {
+    transform: translateY(-1px);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+  }
 }
 
-/* === Glass chrome pro header s animací === */
-.main-header {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(14px) saturate(180%);
-  -webkit-backdrop-filter: blur(14px) saturate(180%);
-  border-bottom: 1px solid rgba(255,255,255,0.35);
-  position: sticky;
-  top: 0;
-  z-index: 1000; /* Nižší než mobilní menu (1100), ale nad ostatním obsahem */
-  overflow: visible; /* Důležité: nesmí být hidden, aby menu nebylo schované */
+/* Mobilní padding pro site-header */
+@media (max-width: 768px) {
+  .site-header {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
 }
-
-.main-header::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: inherit; /* Důležité: přizpůsobí se zaoblení headeru */
-    background: radial-gradient(600px 200px at -10% -20%, rgba(255,255,255,0.55), rgba(255,255,255,0) 60%),
-                linear-gradient(145deg, rgba(255,255,255,0.38) 0%, rgba(255,255,255,0) 35%);
-    opacity: 0.35;
-}
-
-.main-header::after {
-    content: "";
-    position: absolute;
-    top: 0;           /* clip exactly to header height */
-    bottom: 0;        /* clip exactly to header height */
-    left: -60px;      /* start slightly outside to sweep in */
-    width: 60px;      /* sheen width */
-    /* Shimmer efekt nemá zaoblené rohy - je rovný */
-    background: linear-gradient(110deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%);
-    transform: skewX(-20deg);
-    will-change: left, opacity;
-    animation: glass-shimmer 6s ease-in-out infinite;
-    pointer-events: none;
-}
-
-@keyframes glass-shimmer {
-    0% { left: -60px; opacity: 0; }
-    10% { opacity: .5; }
-    60% { left: calc(100% - 60px); opacity: 0; }
-    100% { left: calc(100% - 60px); opacity: 0; }
-}
-
-/* shimmer is constrained via pseudo-element sizing, no overflow clipping on header to avoid clipping nav */
-
-/* jemný "glow" hran na skle při hoveru navigace */
-.main-nav .nav-list a:hover::after { box-shadow: 0 0 12px rgba(255,255,255,0.45); }

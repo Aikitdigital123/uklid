@@ -1,16 +1,17 @@
-/* Reveal on scroll + delay utility */
-.js .reveal-on-scroll { opacity: 0; transform: translateY(14px) scale(0.98); }
-.reveal-on-scroll.is-visible { opacity: 1; transform: none; transition: opacity 600ms cubic-bezier(.2,.6,.2,1), transform 600ms cubic-bezier(.2,.6,.2,1); }
-.delay-1 { transition-delay: 80ms; }
-.delay-2 { transition-delay: 160ms; }
-.delay-3 { transition-delay: 240ms; }
-.delay-4 { transition-delay: 320ms; }
+/* Skip link pro lepší přístupnost */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-primary-dark, #3a4768);
+  color: #ffffff;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 10000;
+  border-radius: 0 0 4px 0;
+  font-weight: 600;
+}
 
-/* Pomocné pozadí pro světlou sekci (pricing apod.) */
-.bg-offwhite { background: var(--color-background-offwhite, #f5f8fc); }
-
-/* Utility třídy pro skrytí prvků */
-.form-group-hidden,
-.form-status-hidden {
-  display: none !important;
+.skip-link:focus {
+  top: 0;
 }

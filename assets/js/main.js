@@ -8,6 +8,8 @@ import('./components/nav.js').then(m => m.initNav()).catch(() => {});
 import('./components/form.js').then(m => m.initForms()).catch(() => {});
 import('./components/select.js').then(m => m.initSelects()).catch(() => {});
 import('./components/backToTop.js').then(m => m.initBackToTop()).catch(() => {});
+import('./components/cookieBanner.js').then(m => m.initCookieBanner()).catch(() => {});
+import('./components/enhancedTracking.js').then(m => m.initEnhancedTracking()).catch(() => {});
 
 // Připojíme stránkový JS (zatím monolit z backupu)
 import('./pages/index.js').catch(() => {});
