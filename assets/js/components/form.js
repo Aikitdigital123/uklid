@@ -17,8 +17,9 @@ const attributionKeys = [
   'fbclid'
 ];
 
-const minFormFillMs = 2500;
+const minFormFillMs = 800;
 const fastSubmitMessage = 'Prosim vyplnte formular a odeslete ho znovu za par sekund.';
+const invalidSubmitMessage = 'Prosim zkontrolujte povinna pole formulare.';
 const conversionCurrency = 'CZK';
 const conversionValueByForm = {
   contact: 900,
@@ -170,6 +171,63 @@ function showFastSubmitError(statusNode) {
   }, 3500);
 }
 
+function showInvalidSubmitError(statusNode, message) {
+  if (!statusNode) return;
+  statusNode.textContent = message || invalidSubmitMessage;
+  statusNode.classList.remove('success', 'form-status-hidden');
+  statusNode.classList.add('error');
+}
+
+function hideStatusNode(statusNode) {
+  if (!statusNode) return;
+  statusNode.textContent = '';
+  statusNode.classList.remove('success', 'error');
+  statusNode.classList.add('form-status-hidden');
+}
+
+function bindValidationFeedback(form, statusNode) {
+  if (!form || !statusNode) return;
+
+  form.addEventListener('invalid', (event) => {
+    const target = event && event.target;
+    const message = target && typeof target.validationMessage === 'string'
+      ? target.validationMessage
+      : invalidSubmitMessage;
+    showInvalidSubmitError(statusNode, message);
+  }, true);
+
+  form.addEventListener('input', () => {
+    if (!statusNode.classList.contains('error')) return;
+    if (typeof form.checkValidity === 'function' && form.checkValidity()) {
+      hideStatusNode(statusNode);
+    }
+  }, false);
+}
+
+function bindSubmitAssist(form, statusNode) {
+  if (!form) return;
+  const submitButton = form.querySelector('button[type="submit"]');
+  if (!submitButton) return;
+
+  const checkBeforeSubmit = (event) => {
+    if (submitButton.disabled) return;
+    if (typeof form.checkValidity !== 'function') return;
+    if (form.checkValidity()) return;
+
+    if (typeof form.reportValidity === 'function') {
+      form.reportValidity();
+    }
+    showInvalidSubmitError(statusNode, invalidSubmitMessage);
+
+    if (event && typeof event.preventDefault === 'function') {
+      event.preventDefault();
+    }
+  };
+
+  submitButton.addEventListener('click', checkBeforeSubmit, false);
+  submitButton.addEventListener('touchend', checkBeforeSubmit, false);
+}
+
 function createConversionId(formType) {
   return `${formType}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
@@ -220,6 +278,10 @@ export function initForms() {
 
   markFormStart(contactForm);
   markFormStart(calcForm);
+  bindValidationFeedback(contactForm, formStatusContact);
+  bindValidationFeedback(calcForm, formStatusCalc);
+  bindSubmitAssist(contactForm, formStatusContact);
+  bindSubmitAssist(calcForm, formStatusCalc);
 
   // Legacy fallback: without fetch/FormData we allow classic HTML form submit.
   if (typeof window.fetch !== 'function' || typeof window.FormData !== 'function') return;
