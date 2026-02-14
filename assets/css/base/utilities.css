@@ -1,8 +1,11 @@
 /* Skip link pro lepší přístupnost */
 .skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
+  position: fixed;
+  top: 0;
+  left: 12px;
+  transform: translateY(-140%);
+  opacity: 0;
+  pointer-events: none;
   background: var(--color-primary-dark, #3a4768);
   color: var(--color-background-white);
   padding: 8px 16px;
@@ -10,10 +13,14 @@
   z-index: 10000;
   border-radius: 0 0 4px 0;
   font-weight: 600;
+  transition: transform 180ms ease, opacity 180ms ease;
 }
 
-.skip-link:focus {
-  top: 0;
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .visually-hidden {
