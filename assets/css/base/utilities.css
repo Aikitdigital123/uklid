@@ -23,6 +23,12 @@
   pointer-events: auto;
 }
 
+@media (max-width: 768px) {
+  .skip-link {
+    display: none !important;
+  }
+}
+
 .visually-hidden {
   position: absolute !important;
   width: 1px !important;
