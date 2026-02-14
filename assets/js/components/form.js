@@ -209,6 +209,11 @@ function bindSubmitAssist(form, statusNode) {
   const submitButton = form.querySelector('button[type="submit"]');
   if (!submitButton) return;
 
+  const findFirstInvalidField = () => {
+    if (typeof form.querySelector !== 'function') return null;
+    return form.querySelector(':invalid');
+  };
+
   const checkBeforeSubmit = (event) => {
     if (submitButton.disabled) return;
     if (typeof form.checkValidity !== 'function') return;
@@ -217,7 +222,16 @@ function bindSubmitAssist(form, statusNode) {
     if (typeof form.reportValidity === 'function') {
       form.reportValidity();
     }
-    showInvalidSubmitError(statusNode, invalidSubmitMessage);
+
+    const firstInvalidField = findFirstInvalidField();
+    const invalidMessage = firstInvalidField && typeof firstInvalidField.validationMessage === 'string'
+      ? firstInvalidField.validationMessage
+      : invalidSubmitMessage;
+    showInvalidSubmitError(statusNode, invalidMessage || invalidSubmitMessage);
+
+    if (firstInvalidField && typeof firstInvalidField.focus === 'function') {
+      firstInvalidField.focus();
+    }
 
     if (event && typeof event.preventDefault === 'function') {
       event.preventDefault();

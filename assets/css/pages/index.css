@@ -318,9 +318,9 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     content: none;
 }
 
-/* Skrytí pole frekvence, pokud není relevantní (JS to přepne) */
-#frequencyGroup {
-    display: none;
+/* Skryti pole frekvence, pokud neni relevantni (prepina JS pres tridu). */
+.form-group-hidden {
+    display: none !important;
 }
 
 
