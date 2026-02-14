@@ -4,7 +4,7 @@
   top: -40px;
   left: 0;
   background: var(--color-primary-dark, #3a4768);
-  color: #ffffff;
+  color: var(--color-background-white);
   padding: 8px 16px;
   text-decoration: none;
   z-index: 10000;

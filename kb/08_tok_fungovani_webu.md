@@ -14,8 +14,7 @@
    - Fonty: Montserrat (400, 500, 600, 700) a Open Sans (400, 600)
 
 2. **Font Awesome** (řádek 39)
-   - Načtení z CDN: `cdnjs.cloudflare.com`
-   - Integrity hash pro bezpečnost
+   - Non-blocking načtení z CDN s preconnect a integrity hash (viz `kb/12_architektura_systemu.md`)
 
 3. **Hlavní CSS** (řádek 41)
    - `/assets/css/style.css` importuje 18 dalších CSS souborů v pořadí:
@@ -71,8 +70,8 @@ Moduly se načítají paralelně pomocí dynamických importů (`import()`) v `m
 1. Na zařízeních ≤768px se zobrazí tlačítko `.nav-toggle`
 2. Kliknutí na tlačítko: `siteNav.classList.toggle('is-open')`
 3. Aktualizace ARIA atributu `aria-expanded`
-4. Kliknutí na odkaz v mobilním menu: automaticky zavře menu (pouze na mobilu)
-5. Resize event: při přechodu na desktop (>768px) automaticky zavře menu
+4. Kliknutí na odkaz v mobilním menu: automaticky zavře menu (pouze na mobilu, součást smooth scroll handleru)
+5. Resize event (throttled 150ms): při přechodu na desktop (>768px) automaticky zavře menu
 
 ## 3. Jak funguje kalkulačka (od výběru po odeslání)
 

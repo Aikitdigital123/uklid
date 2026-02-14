@@ -1,87 +1,248 @@
-// Form components: contact form submission via Web3Forms
-// Idempotent: guarded so listeners are not duplicated
+// Form components: contact and calculator submission via Web3Forms.
+// Idempotent: safe to initialize multiple times.
 
-// Helper pro podmíněné logování (jen v dev módu)
 const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 const logError = isDev ? console.error : () => {};
+
+const attributionStorageKey = 'lesktop_attribution_v1';
+const attributionKeys = [
+  'gclid',
+  'gbraid',
+  'wbraid',
+  'utm_source',
+  'utm_medium',
+  'utm_campaign',
+  'utm_term',
+  'utm_content',
+  'fbclid'
+];
+
+const minFormFillMs = 2500;
+const fastSubmitMessage = 'Prosim vyplnte formular a odeslete ho znovu za par sekund.';
+const conversionCurrency = 'CZK';
+const conversionValueByForm = {
+  contact: 900,
+  calculation: 1200
+};
+const conversionSendToByForm = {
+  contact: 'AW-17893281939/contact_form_submission',
+  calculation: 'AW-17893281939/calculation_form_submission'
+};
+
+function readStoredAttribution() {
+  try {
+    const raw = localStorage.getItem(attributionStorageKey);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function writeStoredAttribution(data) {
+  try {
+    localStorage.setItem(attributionStorageKey, JSON.stringify(data));
+  } catch (e) {
+    // localStorage can be unavailable
+  }
+}
+
+function captureAttributionFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const stored = readStoredAttribution();
+  const next = { ...stored };
+  let changed = false;
+
+  attributionKeys.forEach((key) => {
+    const value = params.get(key);
+    if (value) {
+      next[key] = value;
+      changed = true;
+    }
+  });
+
+  if (changed) {
+    if (!next.landing_page) {
+      next.landing_page = window.location.href;
+    }
+    next.last_touch_page = window.location.href;
+    next.updated_at = new Date().toISOString();
+    writeStoredAttribution(next);
+  }
+}
+
+function buildAttributionPayload() {
+  const params = new URLSearchParams(window.location.search);
+  const stored = readStoredAttribution();
+  const payload = {};
+
+  attributionKeys.forEach((key) => {
+    payload[key] = params.get(key) || stored[key] || '';
+  });
+
+  payload.landing_page = stored.landing_page || window.location.href;
+  payload.current_page = window.location.href;
+  payload.referrer = document.referrer || '';
+
+  return payload;
+}
+
+function appendAttribution(formData) {
+  const payload = buildAttributionPayload();
+  Object.entries(payload).forEach(([key, value]) => {
+    if (value) {
+      formData.append(`tracking_${key}`, String(value));
+    }
+  });
+}
+
+function markFormStart(form) {
+  if (!form) return;
+  form.dataset.startedAt = String(Date.now());
+}
+
+function isSubmitTooFast(form) {
+  const startedAt = Number(form?.dataset.startedAt || '0');
+  if (!Number.isFinite(startedAt) || startedAt <= 0) return false;
+  return Date.now() - startedAt < minFormFillMs;
+}
+
+function showFastSubmitError(statusNode) {
+  if (!statusNode) return;
+  statusNode.textContent = fastSubmitMessage;
+  statusNode.classList.remove('success', 'form-status-hidden');
+  statusNode.classList.add('error');
+  window.setTimeout(() => {
+    if (!statusNode.classList.contains('error')) return;
+    statusNode.textContent = '';
+    statusNode.classList.remove('success', 'error');
+    statusNode.classList.add('form-status-hidden');
+  }, 3500);
+}
+
+function createConversionId(formType) {
+  return `${formType}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function getConversionValue(formType) {
+  return conversionValueByForm[formType] || 1;
+}
+
+function trackFormConversion(formType, formName, extraData = {}) {
+  if (typeof window.lesktopTrackEvent !== 'function') return;
+
+  const conversionId = createConversionId(formType);
+  const value = getConversionValue(formType);
+  const sendTo = conversionSendToByForm[formType];
+
+  window.lesktopTrackEvent('event', 'form_submission', {
+    form_type: formType,
+    form_name: formName,
+    value: value,
+    currency: conversionCurrency,
+    event_id: conversionId,
+    ...extraData
+  });
+
+  if (sendTo) {
+    window.lesktopTrackEvent('event', 'conversion', {
+      send_to: sendTo,
+      value: value,
+      currency: conversionCurrency,
+      transaction_id: conversionId
+    });
+  }
+}
 
 export function initForms() {
   if (document.documentElement.dataset.formInit === '1') return;
   document.documentElement.dataset.formInit = '1';
+  captureAttributionFromUrl();
 
   const contactForm = document.getElementById('contactForm');
   const formStatusContact = document.getElementById('form-status');
   const calcForm = document.getElementById('kalkulacka');
   const formStatusCalc = document.getElementById('calc-form-status');
 
+  markFormStart(contactForm);
+  markFormStart(calcForm);
+
   if (contactForm && formStatusContact) {
-    contactForm.addEventListener('submit', async function (event) {
+    contactForm.addEventListener('submit', async (event) => {
       event.preventDefault();
 
-      const submitButton = contactForm.querySelector('button[type="submit"]');
-      if (submitButton) {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Odesílám...';
+      if (isSubmitTooFast(contactForm)) {
+        showFastSubmitError(formStatusContact);
+        return;
       }
 
-      formStatusContact.textContent = 'Odesílám...';
+      if (contactForm.dataset.submitting === '1') return;
+      contactForm.dataset.submitting = '1';
+
+      const submitButton = contactForm.querySelector('button[type="submit"]');
+      if (submitButton && submitButton.disabled) {
+        delete contactForm.dataset.submitting;
+        return;
+      }
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Odesilam...';
+      }
+
+      formStatusContact.textContent = 'Odesilam...';
       formStatusContact.classList.remove('success', 'error', 'form-status-hidden');
 
       const formData = new FormData(contactForm);
-      
-      // Explicitně nastavit UTF-8 charset pro Web3Forms
       formData.append('_charset', 'UTF-8');
+      appendAttribution(formData);
 
       try {
         const response = await fetch(contactForm.action, {
           method: contactForm.method,
           body: formData,
-          headers: { 
-            Accept: 'application/json'
-          },
+          headers: { Accept: 'application/json' }
         });
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const result = await response.json();
+        let result;
+        try {
+          result = await response.json();
+        } catch (jsonError) {
+          logError('JSON parse error (contact form):', jsonError);
+          throw new Error('Invalid server response');
+        }
 
         if (result.success) {
-          formStatusContact.textContent = 'Děkujeme! Vaše zpráva byla úspěšně odeslána.';
+          formStatusContact.textContent = 'Dekujeme! Vase zprava byla uspesne odeslana.';
           formStatusContact.classList.remove('error');
           formStatusContact.classList.add('success');
-          
-          // Track conversion pro Google Ads a Analytics
-          if (window.lesktopTrackEvent) {
-            window.lesktopTrackEvent('event', 'form_submission', {
-              form_type: 'contact',
-              form_name: 'Kontaktní formulář'
-            });
-            // Google Ads conversion
-            window.lesktopTrackEvent('event', 'conversion', {
-              'send_to': 'AW-17893281939/contact_form_submission'
-            });
-          }
-          
+
+          trackFormConversion('contact', 'Kontaktni formular');
           contactForm.reset();
+          markFormStart(contactForm);
         } else {
-          logError('Chyba Web3Forms při odesílání kontaktního formuláře:', result);
-          formStatusContact.textContent = result.message || 'Při odesílání zprávy došlo k chybě. Zkuste to prosím později.';
+          logError('Web3Forms contact submit error:', result);
+          formStatusContact.textContent = result.message || 'Pri odesilani zpravy doslo k chybe. Zkuste to prosim pozdeji.';
           formStatusContact.classList.remove('success');
           formStatusContact.classList.add('error');
         }
       } catch (error) {
-        logError('Chyba při odesílání kontaktního formuláře:', error);
-        formStatusContact.textContent = 'Při odesílání zprávy došlo k chybě sítě. Zkuste to prosím později.';
+        logError('Network submit error (contact form):', error);
+        formStatusContact.textContent = 'Pri odesilani zpravy doslo k chybe site. Zkuste to prosim pozdeji.';
         formStatusContact.classList.remove('success');
         formStatusContact.classList.add('error');
       } finally {
+        delete contactForm.dataset.submitting;
         if (submitButton) {
           submitButton.disabled = false;
-          submitButton.textContent = 'Odeslat poptávku';
+          submitButton.textContent = 'Odeslat poptavku';
         }
-        setTimeout(() => {
+        window.setTimeout(() => {
           formStatusContact.textContent = '';
           formStatusContact.classList.remove('success', 'error');
           formStatusContact.classList.add('form-status-hidden');
@@ -90,81 +251,88 @@ export function initForms() {
     });
   }
 
-  // Kalkulační formulář (bez přesměrování; inline potvrzení)
   if (calcForm && formStatusCalc) {
-    calcForm.addEventListener('submit', async function (event) {
+    calcForm.addEventListener('submit', async (event) => {
       event.preventDefault();
 
-      const submitButton = calcForm.querySelector('button[type="submit"]');
-      if (submitButton) {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Odesílám...';
+      if (isSubmitTooFast(calcForm)) {
+        showFastSubmitError(formStatusCalc);
+        return;
       }
 
-      formStatusCalc.textContent = 'Odesílám...';
+      if (calcForm.dataset.submitting === '1') return;
+      calcForm.dataset.submitting = '1';
+
+      const submitButton = calcForm.querySelector('button[type="submit"]');
+      if (submitButton && submitButton.disabled) {
+        delete calcForm.dataset.submitting;
+        return;
+      }
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Odesilam...';
+      }
+
+      formStatusCalc.textContent = 'Odesilam...';
       formStatusCalc.classList.remove('success', 'error', 'form-status-hidden');
 
       const formData = new FormData(calcForm);
-      
-      // Explicitně nastavit UTF-8 charset pro Web3Forms
       formData.append('_charset', 'UTF-8');
+      appendAttribution(formData);
 
       try {
         const response = await fetch(calcForm.action, {
           method: calcForm.method,
           body: formData,
-          headers: { 
-            Accept: 'application/json'
-          },
+          headers: { Accept: 'application/json' }
         });
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const result = await response.json();
+        let result;
+        try {
+          result = await response.json();
+        } catch (jsonError) {
+          logError('JSON parse error (calculator form):', jsonError);
+          throw new Error('Invalid server response');
+        }
 
         if (result.success) {
-          formStatusCalc.textContent = 'Děkujeme! Vaše poptávka byla úspěšně odeslána.';
+          formStatusCalc.textContent = 'Dekujeme! Vase poptavka byla uspesne odeslana.';
           formStatusCalc.classList.remove('error');
           formStatusCalc.classList.add('success');
-          
-          // Track conversion pro Google Ads a Analytics
-          if (window.lesktopTrackEvent) {
-            // Získat hodnotu z formuláře pro lepší tracking
-            const cleaningType = calcForm.querySelector('#cleaningType')?.value || 'unknown';
-            const frequency = calcForm.querySelector('#cleaningFrequency')?.value || 'unknown';
-            
-            window.lesktopTrackEvent('event', 'form_submission', {
-              form_type: 'calculation',
-              form_name: 'Kalkulační formulář',
-              cleaning_type: cleaningType,
-              frequency: frequency
-            });
-            // Google Ads conversion
-            window.lesktopTrackEvent('event', 'conversion', {
-              'send_to': 'AW-17893281939/calculation_form_submission'
-            });
-          }
-          
+
+          const cleaningType = calcForm.querySelector('#cleaningType')?.value || 'unknown';
+          const frequency = calcForm.querySelector('#cleaningFrequency')?.value || 'unknown';
+
+          trackFormConversion('calculation', 'Kalkulacni formular', {
+            cleaning_type: cleaningType,
+            frequency: frequency
+          });
+
           calcForm.reset();
+          markFormStart(calcForm);
         } else {
-          logError('Chyba Web3Forms při odesílání kalkulačního formuláře:', result);
-          formStatusCalc.textContent = result.message || 'Při odesílání poptávky došlo k chybě. Zkuste to prosím později.';
+          logError('Web3Forms calculator submit error:', result);
+          formStatusCalc.textContent = result.message || 'Pri odesilani poptavky doslo k chybe. Zkuste to prosim pozdeji.';
           formStatusCalc.classList.remove('success');
           formStatusCalc.classList.add('error');
         }
       } catch (error) {
-        logError('Chyba při odesílání kalkulačního formuláře:', error);
-        formStatusCalc.textContent = 'Při odesílání poptávky došlo k chybě sítě. Zkuste to prosím později.';
+        logError('Network submit error (calculator form):', error);
+        formStatusCalc.textContent = 'Pri odesilani poptavky doslo k chybe site. Zkuste to prosim pozdeji.';
         formStatusCalc.classList.remove('success');
         formStatusCalc.classList.add('error');
       } finally {
+        delete calcForm.dataset.submitting;
         if (submitButton) {
           submitButton.disabled = false;
-          submitButton.textContent = 'Získat nezávaznou nabídku';
+          submitButton.textContent = 'Ziskat nezavaznou nabidku';
         }
-        setTimeout(() => {
+        window.setTimeout(() => {
           formStatusCalc.textContent = '';
           formStatusCalc.classList.remove('success', 'error');
           formStatusCalc.classList.add('form-status-hidden');

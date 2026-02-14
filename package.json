@@ -2,6 +2,9 @@
   "name": "lesktop-site",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "build:css": "node tools/build-css.mjs",
     "build:js": "node tools/build-js.mjs",

@@ -23,7 +23,18 @@ export function initBackToTop() {
     else btn.classList.remove('visible');
   };
 
-  window.addEventListener('scroll', toggle, { passive: true });
+  // Throttled scroll handler for better performance
+  let scrollTimeout;
+  const handleScroll = () => {
+    if (!scrollTimeout) {
+      scrollTimeout = requestAnimationFrame(() => {
+        toggle();
+        scrollTimeout = null;
+      });
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('load', toggle);
 }
 

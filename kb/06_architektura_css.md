@@ -68,7 +68,7 @@ Soubor `/assets/css/style.css` importuje následující soubory pomocí `@import
 - `container.css` - container s max-width 1100px a padding
 - `header.css` - fixed header (.site-header), glass efekt header-inner, logo (.brand), navigace (.site-nav), mobilní menu, shimmer animace
 - `footer.css` - footer (.main-footer) s glass efektem, social links, legal links, shimmer animace
-- `sections.css` - content-section styly, section-title, padding a margin pro sekce
+- `sections.css` - content-section styly, section-title, padding a margin pro sekce, overflow-x: hidden na #services pro prevenci horizontálního scrollbaru
 
 **Účel:** Layout komponenty (header, footer, container, sekce).
 

@@ -26,7 +26,7 @@
 
 /* Modrá glass varianta pro běžná tlačítka (kromě WhatsApp) */
 .btn:not(.btn-whatsapp) {
-  color: #ffffff;
+  color: var(--color-background-white);
   background: linear-gradient(150deg, rgba(124,168,224,0.28) 0%, rgba(124,168,224,0.14) 100%);
   border: 1.5px solid rgba(124,168,224,0.6);
   box-shadow: 0 10px 28px rgba(20,30,60,0.18);
@@ -42,7 +42,7 @@
 
 /* Zelená WhatsApp varianta */
 .btn.btn-whatsapp {
-  color: #ffffff;
+  color: var(--color-background-white);
   background: linear-gradient(150deg, rgba(37,211,102,0.24) 0%, rgba(37,211,102,0.12) 100%);
   border: 1.5px solid rgba(37,211,102,0.55);
   box-shadow: 0 10px 28px rgba(37,211,102,0.28);
@@ -55,5 +55,11 @@
   box-shadow: 0 14px 40px rgba(37,211,102,0.36);
   transform: translateY(-2px);
 }
-.btn.btn-whatsapp i { color: #ffffff; }
+.btn.btn-whatsapp i { color: var(--color-background-white); }
 
+/* Focus states pro tlačítka */
+.btn:focus-visible {
+  outline: 2px solid rgba(var(--color-accent-rgb), 0.8);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(var(--color-accent-rgb), 0.2), 0 14px 40px rgba(20, 30, 60, 0.28);
+}

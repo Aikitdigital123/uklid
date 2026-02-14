@@ -49,6 +49,10 @@
 - `/assets/css/components/form.css` - CSS styly pro custom select (.select-modern, .select-trigger, .select-menu)
 - `/assets/css/pages/index.css` - CSS styly pro custom select (část)
 
+**Funkcionalita:**
+- Podporuje plné keyboard ovládání (Enter/Space/Arrow keys/Escape) a A11y atributy (ARIA)
+- Automaticky zavírá menu při kliknutí mimo nebo stisknutí Escape
+
 **Relevantní dokumenty:**
 - `02_hlavni_soubory.md` - přehled souborů
 - `04_architektura_js.md` - popis select.js modulu

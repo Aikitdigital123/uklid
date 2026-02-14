@@ -25,8 +25,8 @@ export function initNav() {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
 
-      // Close mobile menu if open
-      if (siteNav && menuToggle && siteNav.classList.contains('is-open')) {
+      // Close mobile menu if open (mobile only)
+      if (siteNav && menuToggle && siteNav.classList.contains('is-open') && window.innerWidth <= 768) {
         siteNav.classList.remove('is-open');
         menuToggle.setAttribute('aria-expanded', 'false');
       }
@@ -69,24 +69,18 @@ export function initNav() {
       menuToggle.setAttribute('aria-expanded', String(isExpanded));
     });
 
-    // Close menu when clicking on a nav link (mobile only)
-    const navLinks = siteNav.querySelectorAll('.nav-link');
-    navLinks.forEach((link) => {
-      link.addEventListener('click', () => {
-        // Only close on mobile (check window width)
-        if (window.innerWidth <= 768) {
+    // Resize handler with throttling to prevent excessive calls
+    let resizeTimeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        if (window.innerWidth > 768 && siteNav.classList.contains('is-open')) {
           siteNav.classList.remove('is-open');
           menuToggle.setAttribute('aria-expanded', 'false');
         }
-      });
-    });
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 768 && siteNav.classList.contains('is-open')) {
-        siteNav.classList.remove('is-open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
+      }, 150);
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
   }
 
   // Header scroll effect - vypnuto (header nemá měnit barvu)

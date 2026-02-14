@@ -40,6 +40,9 @@ Používá se v rgba() pro průhledné rámečky karet, formulářů, features a
 #### --color-primary-dark-rgb: 58, 71, 104
 Používá se v rgba() pro průhledné pozadí stránky (body::before) a hero sekce s různými úrovněmi opacity.
 
+#### --color-accent-rgb: 124, 168, 224
+Používá se v rgba() pro focus ringy (outline a box-shadow) na tlačítkách, back-to-top tlačítku a custom select options, a pro transparentní akcenty s různými úrovněmi opacity.
+
 ### Fonty
 
 #### --font-heading: 'Montserrat', sans-serif

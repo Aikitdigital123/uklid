@@ -57,12 +57,12 @@ async function main() {
   }
 
   // Statické složky
-  for (const folder of ['images', '.well-known']) {
+  for (const folder of ['images', '.well-known', 'before-after']) {
     await copyDirRecursive(path.join(root, folder), path.join(dist, folder));
   }
 
   // Přepnutí odkazů na minifikované assety v HTML
-  const htmlFiles = ['index.html', 'privacy.html', '404.html'].map(f => path.join(dist, f));
+  const htmlFiles = ['index.html', 'privacy.html', 'terms.html', '404.html'].map(f => path.join(dist, f));
   for (const file of htmlFiles) {
     await replaceInFile(file, [
       ['/assets/css/style.css', '/assets/css/style.min.css'],

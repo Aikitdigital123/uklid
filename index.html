@@ -36,7 +36,9 @@
     <link rel="preload" href="/images/hero.jpg" as="image" type="image/jpeg" media="(min-width: 481px)">
     <link rel="preload" href="/images/hero-mobile.jpg" as="image" type="image/jpeg" media="(max-width: 480px)">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
 
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="before-after/before-after.css">
@@ -279,10 +281,11 @@
                 <form class="calculator-form glass-panel" id="kalkulacka" action="https://api.web3forms.com/submit" method="POST" accept-charset="UTF-8">
                     <input type="hidden" name="access_key" value="4e724eab-1a15-4f9c-9c19-caa25c2b95fc">
                     <input type="hidden" name="subject" value="Nová poptávka z kalkulačky úklidu - Lesktop">
+                    <input type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none !important">
 
                     <div class="form-group">
                         <label for="cleaningType">Typ úklidu:</label>
-                        <select id="cleaningType" name="cleaning_type" required>
+                        <select id="cleaningType" name="cleaning_type" required aria-describedby="calc-form-status">
                             <option value="">Vyberte typ úklidu</option>
                             <option value="Pravidelný úklid domácnosti">Pravidelný úklid domácnosti</option>
                             <option value="Jednorázový úklid domácnosti">Jednorázový úklid domácnosti</option>
@@ -294,13 +297,13 @@
 
                     <div class="form-group">
                         <label for="areaSize">Přibližná velikost plochy (v m²):</label>
-                        <input type="number" id="areaSize" name="area_size" min="10" max="1000" step="1" placeholder="Např. 80" required inputmode="numeric">
+                        <input type="number" id="areaSize" name="area_size" min="10" max="1000" step="1" placeholder="Např. 80" required inputmode="numeric" aria-describedby="calc-form-status">
                         <small>Uveďte celkovou plochu pro úklid.</small>
                     </div>
 
                     <div class="form-group form-group-hidden" id="frequencyGroup">
                         <label for="cleaningFrequency">Frekvence úklidu:</label>
-                        <select id="cleaningFrequency" name="cleaning_frequency">
+                        <select id="cleaningFrequency" name="cleaning_frequency" aria-describedby="calc-form-status">
                             <option value="Týdně">Týdně</option>
                             <option value="Jednou za 14 dní">Jednou za 14 dní</option>
                             <option value="Měsíčně">Měsíčně</option>
@@ -423,22 +426,22 @@
                     
                     <div class="form-group">
                         <label for="customerName">Vaše jméno:</label>
-                        <input type="text" id="customerName" name="customer_name" required placeholder="Jméno a příjmení" minlength="3" autocomplete="name">
+                        <input type="text" id="customerName" name="customer_name" required placeholder="Jméno a příjmení" minlength="3" autocomplete="name" aria-describedby="calc-form-status">
                     </div>
 
                     <div class="form-group">
                         <label for="customerEmail">Váš e-mail:</label>
-                        <input type="email" id="customerEmail" name="customer_email" required placeholder="vas@email.cz" autocomplete="email">
+                        <input type="email" id="customerEmail" name="customer_email" required placeholder="vas@email.cz" autocomplete="email" aria-describedby="calc-form-status">
                     </div>
 
                     <div class="form-group">
                         <label for="customerPhone">Váš telefon (volitelné):</label>
-                        <input type="tel" id="customerPhone" name="customer_phone" placeholder="+420 123 456 789" inputmode="tel" autocomplete="tel" pattern="^\+?[0-9\s-]{7,18}$">
+                        <input type="tel" id="customerPhone" name="customer_phone" placeholder="+420 123 456 789" inputmode="tel" autocomplete="tel" pattern="^\+?[0-9\s-]{7,18}$" aria-describedby="calc-form-status">
                     </div>
 
                     <div class="form-group">
                         <label for="notes">Doplňující poznámky (specifikace, preferovaný termín):</label>
-                        <textarea id="notes" name="notes" rows="4" placeholder="Např. úklid bytu 2+kk, preferuji úterky dopoledne..."></textarea>
+                        <textarea id="notes" name="notes" rows="4" placeholder="Např. úklid bytu 2+kk, preferuji úterky dopoledne..." aria-describedby="calc-form-status"></textarea>
                     </div>
                     
                     <button type="submit" class="btn btn-primary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'ziskat_nezavaznou_nabidku'})">Získat nezávaznou nabídku</button>
@@ -453,26 +456,27 @@
                 <h2 class="section-title">Kontaktujte nás</h2>
                 <p>Máte zájem o naše služby? Vyplňte formulář nebo nás kontaktujte přímo!</p>
                 <div class="contact-info">
-                    <p><i class="fas fa-phone-alt"></i> Telefon: <strong><a href="tel:+420775344145" data-track="phone" data-location="contact_section" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','phone_click',{location:'contact_section'})">+420 775 344 145</a></strong></p>
-                    <p><a href="https://wa.me/420775344145" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','click_whatsapp',{location:'contact_section'}); window.lesktopTrackEvent('event','conversion',{'send_to':'AW-17893281939/whatsapp_click'})"><i class="fab fa-whatsapp"></i> WhatsApp</a></p>
+                    <p><i class="fas fa-phone-alt"></i> Telefon: <strong><a href="tel:+420775344145" data-track="phone" data-location="contact_section">+420 775 344 145</a></strong></p>
+                    <p><a href="https://wa.me/420775344145" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Kontaktovat nás na WhatsApp" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','click_whatsapp',{location:'contact_section'}); window.lesktopTrackEvent('event','conversion',{'send_to':'AW-17893281939/whatsapp_click'})"><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp</a></p>
                     <p><i class="fas fa-envelope"></i> E-mail: <a href="mailto:team@lesktop.cz"><strong>team@lesktop.cz</strong></a></p>
                     <p><i class="fas fa-map-marker-alt"></i> Působíme v Praze a Středních Čechách</p>
                 </div>
                 <form class="contact-form glass-panel" id="contactForm" action="https://api.web3forms.com/submit" method="POST" accept-charset="UTF-8">
                     <input type="hidden" name="access_key" value="4e724eab-1a15-4f9c-9c19-caa25c2b95fc">
                     <input type="hidden" name="subject" value="Nová zpráva z webu Lesktop">
+                    <input type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none !important">
 
                     <div class="form-group">
                         <label for="name">Jméno:</label>
-                        <input type="text" id="name" name="Jmeno" required placeholder="Vaše jméno" minlength="2" autocomplete="name">
+                        <input type="text" id="name" name="Jmeno" required placeholder="Vaše jméno" minlength="2" autocomplete="name" aria-describedby="form-status">
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail:</label>
-                        <input type="email" id="email" name="Email" required placeholder="vas@email.cz" autocomplete="email">
+                        <input type="email" id="email" name="Email" required placeholder="vas@email.cz" autocomplete="email" aria-describedby="form-status">
                     </div>
                     <div class="form-group">
                         <label for="message">Zpráva:</label>
-                        <textarea id="message" name="Zprava" rows="6" required minlength="10" placeholder="Popište, s čím potřebujete pomoci..."></textarea>
+                        <textarea id="message" name="Zprava" rows="6" required minlength="10" placeholder="Popište, s čím potřebujete pomoci..." aria-describedby="form-status"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'odeslat_poptavku'})">Odeslat poptávku</button>
                     <div id="form-status" class="form-status form-status-hidden" role="status" aria-live="polite"></div>
@@ -483,7 +487,7 @@
 
     <footer class="main-footer">
         <div class="container">
-            <p>&copy; 2025 Lesktop. Všechna práva vyhrazena.</p>
+            <p>&copy; <span data-current-year>2026</span> Lesktop. Všechna práva vyhrazena.</p>
             <div class="social-links">
                 <a href="https://www.facebook.com/lesktop.cz" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-facebook-f"></i>
@@ -502,7 +506,7 @@
 
     <div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie informace">
         <div class="cookie-banner__text">
-            <p>Používáme anonymní analytiku Google, abychom mohli web Lesktop neustále zlepšovat. Respektujeme vaše soukromí, proto nám můžete dát vědět, zda s tím souhlasíte.</p>
+            <p>Používáme Google Analytics a Google Ads měření (se souhlasem), abychom mohli web Lesktop i kampaně neustále zlepšovat. Respektujeme vaše soukromí, proto si můžete zvolit, zda s tím souhlasíte.</p>
             <a href="/privacy.html" class="cookie-banner__link">Více informací</a>
         </div>
         <div class="cookie-banner__actions">
@@ -517,5 +521,3 @@
         <script src="/assets/js/main.js" defer></script>
     </body>
 </html>
-
-

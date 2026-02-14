@@ -14,6 +14,7 @@
   /* RGB složky pro rgba() */
   --color-primary-light-rgb: 76, 98, 146;
   --color-primary-dark-rgb: 58, 71, 104;
+  --color-accent-rgb: 124, 168, 224;
 
   --font-heading: 'Montserrat', sans-serif;
   --font-body: 'Open Sans', sans-serif;

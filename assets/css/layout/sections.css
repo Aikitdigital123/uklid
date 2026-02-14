@@ -11,6 +11,11 @@
     margin-top: 180px;
 }
 
+/* Sekce "Naše služby" - prevence horizontálního overflow z box-shadow a animací */
+#services.content-section {
+    overflow-x: hidden;
+}
+
 @media (max-width: 768px) {
   .content-section {
     width: calc(100% - 32px);

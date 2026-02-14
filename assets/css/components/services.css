@@ -1,8 +1,8 @@
 /* Služby Grid */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
   margin-top: 50px;
 }
 
@@ -11,16 +11,15 @@
 
 .service-item {
   text-align: left;
-  padding: 22px 20px;
-  transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
+  padding: 30px;
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
   position: relative;
   overflow: hidden;
 }
 
 .service-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 44px rgba(20, 30, 60, 0.26);
-  border-color: rgba(255, 255, 255, 0.55);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
 }
 
 .service-item i {
@@ -57,5 +56,5 @@
 
 /* Responsivní styly */
 @media (max-width: 768px) {
-  .services-grid { gap: 24px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .services-grid { grid-template-columns: 1fr; gap: 30px; }
 }

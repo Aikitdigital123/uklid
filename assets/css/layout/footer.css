@@ -94,7 +94,7 @@
 .main-footer .legal-links a:hover,
 .main-footer .legal-links a:focus-visible,
 .main-footer .legal-links a:active {
-  color: #ffffff;
+  color: var(--color-background-white);
   border-color: rgba(255, 255, 255, 0.85);
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
 }

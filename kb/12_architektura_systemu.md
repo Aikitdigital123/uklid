@@ -31,7 +31,7 @@
 
 **Externí CSS:**
 - Google Fonts: non-blocking načtení (`media="print" onload="this.media='all'"`)
-- Font Awesome CDN: `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css`
+- Font Awesome CDN: `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css` (non-blocking načtení s `media="print" onload="this.media='all'"` pattern)
 - Before-after galerie: `/before-after/before-after.css`
 
 **Komunikace s HTML:**
