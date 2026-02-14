@@ -86,6 +86,14 @@
   box-shadow: 0 12px 32px rgba(20,30,60,0.28);
 }
 
+@supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+  .header-inner,
+  .site-header.is-scrolled .header-inner {
+    background: rgba(76, 98, 146, 0.94);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+}
+
 /* --- Styly pro logo a obrázek loga --- */
 .brand {
   display: flex;

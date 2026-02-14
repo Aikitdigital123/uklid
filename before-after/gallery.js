@@ -3,7 +3,7 @@
 
   function parseDate(value) {
     var parsed = Date.parse(value);
-    return Number.isNaN(parsed) ? null : new Date(parsed);
+    return isNaN(parsed) ? null : new Date(parsed);
   }
 
   function sortByDateAsc(a, b) {

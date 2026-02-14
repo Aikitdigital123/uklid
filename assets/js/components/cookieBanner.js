@@ -34,10 +34,13 @@ export function initCookieBanner() {
     window[`ga-disable-${measurementId}`] = false;
   };
 
-  window.lesktopTrackEvent = (...args) => {
+  // Safe default: until explicit consent, tracking stays disabled.
+  disableTracking();
+
+  window.lesktopTrackEvent = function lesktopTrackEvent() {
     if (window[`ga-disable-${measurementId}`]) return false;
     if (typeof window.gtag === 'function') {
-      window.gtag(...args);
+      window.gtag.apply(window, arguments);
       return true;
     }
     return false;
@@ -69,11 +72,16 @@ export function initCookieBanner() {
 
     if (!window.__lesktopGtagConfigured) {
       window.__lesktopGtagConfigured = true;
-      window.gtag('js', new Date());
-      window.gtag('consent', 'default', {
-        ...consentDenied,
+      const defaultConsent = {
+        analytics_storage: consentDenied.analytics_storage,
+        ad_storage: consentDenied.ad_storage,
+        ad_user_data: consentDenied.ad_user_data,
+        ad_personalization: consentDenied.ad_personalization,
         wait_for_update: 500
-      });
+      };
+
+      window.gtag('js', new Date());
+      window.gtag('consent', 'default', defaultConsent);
 
       window.gtag('config', measurementId, {
         anonymize_ip: true,
@@ -86,7 +94,7 @@ export function initCookieBanner() {
         allow_ad_personalization_signals: true
       });
 
-      if (document.body?.dataset.page === '404') {
+      if (document.body && document.body.dataset && document.body.dataset.page === '404') {
         window.gtag('event', 'error_404');
       }
     }
@@ -94,13 +102,31 @@ export function initCookieBanner() {
     applyConsent(consentValue);
   };
 
+  const clearCookieByName = (name) => {
+    if (!name) return;
+
+    const hostParts = (window.location.hostname || '').split('.');
+    const candidateDomains = [''];
+
+    if (hostParts.length >= 2) {
+      const rootDomain = `.${hostParts.slice(-2).join('.')}`;
+      candidateDomains.push(rootDomain);
+    }
+
+    candidateDomains.forEach((domain) => {
+      const domainPart = domain ? `; domain=${domain}` : '';
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${domainPart}`;
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; SameSite=Lax${domainPart}`;
+    });
+  };
+
   const deleteGaCookies = () => {
     const cookies = document.cookie.split(';');
     cookies.forEach((cookie) => {
       const [name] = cookie.split('=');
-      const trimmed = name?.trim();
-      if (trimmed && (trimmed.startsWith('_ga') || trimmed === '_gid')) {
-        document.cookie = `${trimmed}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+      const trimmed = name ? name.trim() : '';
+      if (trimmed && (trimmed.indexOf('_ga') === 0 || trimmed === '_gid')) {
+        clearCookieByName(trimmed);
       }
     });
   };
@@ -111,6 +137,16 @@ export function initCookieBanner() {
     } catch (e) {
       // localStorage can be unavailable in private mode
     }
+  };
+
+  const hideBanner = () => {
+    banner.classList.add('is-hidden');
+    banner.setAttribute('aria-hidden', 'true');
+  };
+
+  const showBanner = () => {
+    banner.classList.remove('is-hidden');
+    banner.setAttribute('aria-hidden', 'false');
   };
 
   const applyConsentChoice = (value) => {
@@ -124,7 +160,7 @@ export function initCookieBanner() {
       }
       deleteGaCookies();
     }
-    banner.classList.add('is-hidden');
+    hideBanner();
   };
 
   let storedConsent = null;
@@ -144,17 +180,33 @@ export function initCookieBanner() {
     return;
   }
 
-  if (acceptButton) {
-    acceptButton.addEventListener('click', () => {
-      setStoredConsent('all');
-      applyConsentChoice('all');
-    });
-  }
+  showBanner();
 
-  if (necessaryButton) {
-    necessaryButton.addEventListener('click', () => {
-      setStoredConsent('necessary');
-      applyConsentChoice('necessary');
-    });
-  }
+  const bindConsentAction = (button, value) => {
+    if (!button) return;
+
+    let recentlyHandled = false;
+    const onActivate = (event) => {
+      if (event && event.type === 'touchend') event.preventDefault();
+      if (recentlyHandled) return;
+
+      recentlyHandled = true;
+      setStoredConsent(value);
+      applyConsentChoice(value);
+
+      window.setTimeout(() => {
+        recentlyHandled = false;
+      }, 500);
+    };
+
+    button.addEventListener('click', onActivate, false);
+    button.addEventListener('touchend', onActivate, false);
+    button.addEventListener('keyup', (event) => {
+      if (!event) return;
+      if (event.key === 'Enter' || event.key === ' ') onActivate(event);
+    }, false);
+  };
+
+  bindConsentAction(acceptButton, 'all');
+  bindConsentAction(necessaryButton, 'necessary');
 }

@@ -48,14 +48,62 @@ function writeStoredAttribution(data) {
   }
 }
 
+function cloneObject(source) {
+  const target = {};
+  if (!source || typeof source !== 'object') return target;
+
+  Object.keys(source).forEach((key) => {
+    target[key] = source[key];
+  });
+
+  return target;
+}
+
+function safeDecodeQueryValue(value) {
+  try {
+    return decodeURIComponent(String(value || '').replace(/\+/g, ' '));
+  } catch (e) {
+    return String(value || '');
+  }
+}
+
+function getQueryParamReader() {
+  if (typeof URLSearchParams === 'function') {
+    const params = new URLSearchParams(window.location.search);
+    return (key) => params.get(key) || '';
+  }
+
+  const legacyParams = {};
+  const rawQuery = window.location.search ? window.location.search.replace(/^\?/, '') : '';
+
+  if (rawQuery) {
+    rawQuery.split('&').forEach((pair) => {
+      if (!pair) return;
+      const separatorIndex = pair.indexOf('=');
+      const rawKey = separatorIndex >= 0 ? pair.slice(0, separatorIndex) : pair;
+      const rawValue = separatorIndex >= 0 ? pair.slice(separatorIndex + 1) : '';
+      const key = safeDecodeQueryValue(rawKey);
+      if (!key) return;
+      legacyParams[key] = safeDecodeQueryValue(rawValue);
+    });
+  }
+
+  return (key) => legacyParams[key] || '';
+}
+
+function isFiniteNumber(value) {
+  if (typeof Number.isFinite === 'function') return Number.isFinite(value);
+  return isFinite(value);
+}
+
 function captureAttributionFromUrl() {
-  const params = new URLSearchParams(window.location.search);
+  const getParam = getQueryParamReader();
   const stored = readStoredAttribution();
-  const next = { ...stored };
+  const next = cloneObject(stored);
   let changed = false;
 
   attributionKeys.forEach((key) => {
-    const value = params.get(key);
+    const value = getParam(key);
     if (value) {
       next[key] = value;
       changed = true;
@@ -73,12 +121,12 @@ function captureAttributionFromUrl() {
 }
 
 function buildAttributionPayload() {
-  const params = new URLSearchParams(window.location.search);
+  const getParam = getQueryParamReader();
   const stored = readStoredAttribution();
   const payload = {};
 
   attributionKeys.forEach((key) => {
-    payload[key] = params.get(key) || stored[key] || '';
+    payload[key] = getParam(key) || stored[key] || '';
   });
 
   payload.landing_page = stored.landing_page || window.location.href;
@@ -90,7 +138,8 @@ function buildAttributionPayload() {
 
 function appendAttribution(formData) {
   const payload = buildAttributionPayload();
-  Object.entries(payload).forEach(([key, value]) => {
+  Object.keys(payload).forEach((key) => {
+    const value = payload[key];
     if (value) {
       formData.append(`tracking_${key}`, String(value));
     }
@@ -103,8 +152,8 @@ function markFormStart(form) {
 }
 
 function isSubmitTooFast(form) {
-  const startedAt = Number(form?.dataset.startedAt || '0');
-  if (!Number.isFinite(startedAt) || startedAt <= 0) return false;
+  const startedAt = Number(form && form.dataset ? form.dataset.startedAt : '0');
+  if (!isFiniteNumber(startedAt) || startedAt <= 0) return false;
   return Date.now() - startedAt < minFormFillMs;
 }
 
@@ -135,15 +184,19 @@ function trackFormConversion(formType, formName, extraData = {}) {
   const conversionId = createConversionId(formType);
   const value = getConversionValue(formType);
   const sendTo = conversionSendToByForm[formType];
-
-  window.lesktopTrackEvent('event', 'form_submission', {
+  const eventPayload = {
     form_type: formType,
     form_name: formName,
     value: value,
     currency: conversionCurrency,
-    event_id: conversionId,
-    ...extraData
+    event_id: conversionId
+  };
+
+  Object.keys(extraData || {}).forEach((key) => {
+    eventPayload[key] = extraData[key];
   });
+
+  window.lesktopTrackEvent('event', 'form_submission', eventPayload);
 
   if (sendTo) {
     window.lesktopTrackEvent('event', 'conversion', {
@@ -167,6 +220,9 @@ export function initForms() {
 
   markFormStart(contactForm);
   markFormStart(calcForm);
+
+  // Legacy fallback: without fetch/FormData we allow classic HTML form submit.
+  if (typeof window.fetch !== 'function' || typeof window.FormData !== 'function') return;
 
   if (contactForm && formStatusContact) {
     contactForm.addEventListener('submit', async (event) => {
@@ -305,8 +361,10 @@ export function initForms() {
           formStatusCalc.classList.remove('error');
           formStatusCalc.classList.add('success');
 
-          const cleaningType = calcForm.querySelector('#cleaningType')?.value || 'unknown';
-          const frequency = calcForm.querySelector('#cleaningFrequency')?.value || 'unknown';
+          const cleaningTypeField = calcForm.querySelector('#cleaningType');
+          const frequencyField = calcForm.querySelector('#cleaningFrequency');
+          const cleaningType = cleaningTypeField ? cleaningTypeField.value : 'unknown';
+          const frequency = frequencyField ? frequencyField.value : 'unknown';
 
           trackFormConversion('calculation', 'Kalkulacni formular', {
             cleaning_type: cleaningType,

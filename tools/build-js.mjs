@@ -4,7 +4,7 @@ import path from 'node:path';
 const root = process.cwd();
 
 async function main() {
-  const entry = path.join(root, 'assets', 'js', 'main.js');
+  const entry = path.join(root, 'assets', 'js', 'main.bundle.js');
   const outdir = path.join(root, 'dist', 'assets', 'js');
 
   await esbuild.build({
@@ -13,7 +13,7 @@ async function main() {
     minify: true,
     sourcemap: false,
     outfile: path.join(outdir, 'main.min.js'),
-    target: ['es2018'],
+    target: ['es2015'],
     format: 'iife'
   });
 
@@ -24,4 +24,3 @@ main().catch((err) => {
   console.error(err);
   process.exit(1);
 });
-

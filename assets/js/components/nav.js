@@ -9,6 +9,13 @@ export function initNav() {
   const headerEl = document.querySelector('.site-header');
   const menuToggle = document.querySelector('.nav-toggle');
   const siteNav = document.querySelector('.site-nav');
+  const scrollToY = (top) => {
+    try {
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    } catch (e) {
+      window.scrollTo(0, top);
+    }
+  };
 
   // A11y attributes
   if (menuToggle) {
@@ -37,7 +44,7 @@ export function initNav() {
         const headerOffset = headerEl ? headerEl.offsetHeight : 0;
         const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
         const offsetPosition = Math.max(0, elementPosition - headerOffset - 20);
-        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        scrollToY(offsetPosition);
       }
 
       // Active state within nav only
@@ -57,7 +64,7 @@ export function initNav() {
       const headerOffset = headerEl ? headerEl.offsetHeight : 0;
       const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = Math.max(0, elementPosition - headerOffset - 20);
-      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      scrollToY(offsetPosition);
     });
   }
 
@@ -80,7 +87,7 @@ export function initNav() {
         }
       }, 150);
     };
-    window.addEventListener('resize', handleResize, { passive: true });
+    window.addEventListener('resize', handleResize, false);
   }
 
   // Header scroll effect - vypnuto (header nemá měnit barvu)

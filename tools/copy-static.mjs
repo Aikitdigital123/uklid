@@ -6,6 +6,9 @@ const root = process.cwd();
 const dist = path.join(root, 'dist');
 
 async function ensureDir(dir) { await fs.mkdir(dir, { recursive: true }); }
+async function removePathSafe(target) {
+  try { await fs.rm(target, { recursive: true, force: true }); } catch {}
+}
 
 async function copyFileSafe(src, dest) {
   await ensureDir(path.dirname(dest));
@@ -38,11 +41,16 @@ async function replaceInFile(filePath, replacements) {
 async function main() {
   await ensureDir(dist);
 
+  for (const folder of ['images', '.well-known', 'before-after']) {
+    await removePathSafe(path.join(dist, folder));
+  }
+
   // Kořenové soubory
   const rootFiles = [
     'index.html',
     'privacy.html',
     'terms.html',
+    'faq.html',
     '404.html',
     'humans.txt',
     'robots.txt',
@@ -62,7 +70,7 @@ async function main() {
   }
 
   // Přepnutí odkazů na minifikované assety v HTML
-  const htmlFiles = ['index.html', 'privacy.html', 'terms.html', '404.html'].map(f => path.join(dist, f));
+  const htmlFiles = ['index.html', 'privacy.html', 'terms.html', 'faq.html', '404.html'].map(f => path.join(dist, f));
   for (const file of htmlFiles) {
     await replaceInFile(file, [
       ['/assets/css/style.css', '/assets/css/style.min.css'],

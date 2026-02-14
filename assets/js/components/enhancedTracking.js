@@ -64,15 +64,19 @@ export function initEnhancedTracking() {
     threshold: 0.5
   };
 
+  if (!('IntersectionObserver' in window)) return;
+
   const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting && canTrack()) {
         const sectionId = entry.target.id;
         if (!entry.target.dataset.tracked) {
           entry.target.dataset.tracked = 'true';
+          const sectionTitleEl = entry.target.querySelector('.section-title');
+          const sectionName = sectionTitleEl && sectionTitleEl.textContent ? sectionTitleEl.textContent : sectionId;
           window.lesktopTrackEvent('event', 'section_view', {
             section_id: sectionId,
-            section_name: entry.target.querySelector('.section-title')?.textContent || sectionId
+            section_name: sectionName
           });
         }
       }
