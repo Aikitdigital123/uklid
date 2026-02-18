@@ -482,6 +482,20 @@
 **Účel:** Flag pro zakázání Google Analytics  
 **Použití:** `/assets/js/components/cookieBanner.js` - kontrola v lesktopTrackEvent (řádek 15), nastavení při "Jen nezbytné" (řádek 11)
 
+## Data atributy
+
+### data-track
+**Použití:** `index.html`, `privacy.html`, `terms.html`
+**Účel:** Identifikuje typ elementu pro tracking (např. "phone")
+
+### data-location
+**Použití:** `index.html`, `privacy.html`, `terms.html`
+**Účel:** Určuje kontext/lokaci, kde ke kliknutí došlo (např. "contact_section", "footer")
+
+### data-page
+**Použití:** `404.html`
+**Účel:** Identifikuje typ stránky pro specifické skripty nebo styly (např. "404")
+
 ## Poznámky k údržbě
 
 - Čísla řádků platí pro aktuální verzi projektu.

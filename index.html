@@ -202,8 +202,8 @@
                 <img src="images/Domecek.png" alt="Lesktop – úklidové služby" class="brand-logo" width="120" height="120" loading="eager" decoding="async" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
                 <span class="brand-text">Lesktop</span>
             </a>
-            <button class="nav-toggle" aria-label="Menu" aria-expanded="false" type="button">Menu</button>
-            <nav class="site-nav" aria-label="Hlavní navigace">
+            <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-navigation" type="button">Menu</button>
+            <nav id="site-navigation" class="site-nav" aria-label="Hlavní navigace">
                 <ul>
                     <li><a href="#about" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'o_nas'})">O nás</a></li>
                     <li><a href="#services" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'sluzby'})">Služby</a></li>
@@ -284,11 +284,11 @@
         
         <section id="before-after" class="content-section glass-panel ba-section">
             <div class="container">
-                <h2 class="section-title">Pred / Po uklidu</h2>
-                <p class="ba-intro">Ukazky skutecnych zakazek. Kazda karta obsahuje fotky pred a po uklidu.</p>
-                <p class="ba-interaction">Kliknutim nebo klepnutim na fotografii prepnete pohled PRED / PO.</p>
+                <h2 class="section-title">Před / Po úklidu</h2>
+                <p class="ba-intro">Ukázky skutečných zakázek. Každá karta obsahuje fotky před a po úklidu.</p>
+                <p class="ba-interaction">Kliknutím nebo klepnutím na fotografii přepnete pohled PŘED / PO.</p>
                 <div id="before-after-gallery" class="ba-gallery"></div>
-                <div id="before-after-empty" class="ba-empty" hidden>Galerie zatim nema zadne fotky.</div>
+                <div id="before-after-empty" class="ba-empty" hidden>Galerie zatím nemá žádné fotky.</div>
             </div>
         </section>
 

@@ -75,7 +75,7 @@ export function initEnhancedTracking() {
 
   if (!('IntersectionObserver' in window)) return;
 
-  const sectionObserver = new IntersectionObserver((entries) => {
+  const sectionObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting && canTrack()) {
         const sectionId = entry.target.id;
@@ -89,7 +89,7 @@ export function initEnhancedTracking() {
           });
           
           // Stop observing this section once tracked to save resources
-          sectionObserver.unobserve(entry.target);
+          observer.unobserve(entry.target);
         }
       }
     });

@@ -17,7 +17,7 @@ const attributionKeys = [
   'fbclid'
 ];
 
-const minFormFillMs = 800;
+const minFormFillMs = 500;
 const fastSubmitMessage = 'Prosim vyplnte formular a odeslete ho znovu za par sekund.';
 const invalidSubmitMessage = 'Prosim zkontrolujte povinna pole formulare.';
 const conversionCurrency = 'CZK';
@@ -158,21 +158,29 @@ function isSubmitTooFast(form) {
   return Date.now() - startedAt < minFormFillMs;
 }
 
-function showFastSubmitError(statusNode) {
-  if (!statusNode) return;
-  statusNode.textContent = fastSubmitMessage;
-  statusNode.classList.remove('success', 'form-status-hidden');
-  statusNode.classList.add('error');
-  window.setTimeout(() => {
-    if (!statusNode.classList.contains('error')) return;
+// Helper pro správu časovačů zpráv - zabraňuje blikání a mizení zpráv
+function scheduleStatusHide(statusNode, delay) {
+  if (statusNode._hideTimeout) clearTimeout(statusNode._hideTimeout);
+  statusNode._hideTimeout = setTimeout(() => {
     statusNode.textContent = '';
     statusNode.classList.remove('success', 'error');
     statusNode.classList.add('form-status-hidden');
-  }, 3500);
+    statusNode._hideTimeout = null;
+  }, delay);
+}
+
+function showFastSubmitError(statusNode) {
+  if (!statusNode) return;
+  if (statusNode._hideTimeout) clearTimeout(statusNode._hideTimeout); // Reset předchozího časovače
+  statusNode.textContent = fastSubmitMessage;
+  statusNode.classList.remove('success', 'form-status-hidden');
+  statusNode.classList.add('error');
+  scheduleStatusHide(statusNode, 3500);
 }
 
 function showInvalidSubmitError(statusNode, message) {
   if (!statusNode) return;
+  if (statusNode._hideTimeout) clearTimeout(statusNode._hideTimeout); // Chyba validace má zůstat viset
   statusNode.textContent = message || invalidSubmitMessage;
   statusNode.classList.remove('success', 'form-status-hidden');
   statusNode.classList.add('error');
@@ -180,6 +188,7 @@ function showInvalidSubmitError(statusNode, message) {
 
 function hideStatusNode(statusNode) {
   if (!statusNode) return;
+  if (statusNode._hideTimeout) clearTimeout(statusNode._hideTimeout);
   statusNode.textContent = '';
   statusNode.classList.remove('success', 'error');
   statusNode.classList.add('form-status-hidden');
@@ -188,10 +197,13 @@ function hideStatusNode(statusNode) {
 function bindValidationFeedback(form, statusNode) {
   if (!form || !statusNode) return;
 
-  const updateFieldState = (field) => {
+  const updateFieldState = (field, isBlur = false) => {
     if (!field.willValidate) return;
 
-    if (field.checkValidity()) {
+    const isValid = field.checkValidity();
+    const wasInvalid = field.classList.contains('is-invalid');
+
+    if (isValid) {
       field.classList.remove('is-invalid');
       field.setAttribute('aria-invalid', 'false');
       // Zelená fajfka jen pokud je pole vyplněné
@@ -200,7 +212,8 @@ function bindValidationFeedback(form, statusNode) {
       } else {
         field.classList.remove('is-valid');
       }
-    } else {
+    } else if (isBlur || wasInvalid) {
+      // Chybu zobrazit jen při opuštění pole (blur) nebo pokud už svítila (uživatel opravuje)
       field.classList.remove('is-valid');
       field.classList.add('is-invalid');
       field.setAttribute('aria-invalid', 'true');
@@ -223,7 +236,7 @@ function bindValidationFeedback(form, statusNode) {
   form.addEventListener('input', (event) => {
     const target = event.target;
     if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT')) {
-      updateFieldState(target);
+      updateFieldState(target, false);
     }
 
     if (!statusNode.classList.contains('error')) return;
@@ -234,7 +247,7 @@ function bindValidationFeedback(form, statusNode) {
 
   const inputs = form.querySelectorAll('input, textarea, select');
   inputs.forEach((input) => {
-    input.addEventListener('blur', () => updateFieldState(input));
+    input.addEventListener('blur', () => updateFieldState(input, true));
   });
 
   // Clean up validation classes on form reset
@@ -408,6 +421,7 @@ export function initForms() {
           trackFormConversion('contact', 'Kontaktni formular');
           contactForm.reset();
           markFormStart(contactForm);
+          scheduleStatusHide(formStatusContact, 5000);
         } else {
           logError('Web3Forms contact submit error:', result);
           formStatusContact.textContent = result.message || 'Pri odesilani zpravy doslo k chybe. Zkuste to prosim pozdeji.';
@@ -425,11 +439,6 @@ export function initForms() {
           submitButton.disabled = false;
           submitButton.textContent = 'Odeslat poptavku';
         }
-        window.setTimeout(() => {
-          formStatusContact.textContent = '';
-          formStatusContact.classList.remove('success', 'error');
-          formStatusContact.classList.add('form-status-hidden');
-        }, 5000);
       }
     });
   }
@@ -500,6 +509,7 @@ export function initForms() {
 
           calcForm.reset();
           markFormStart(calcForm);
+          scheduleStatusHide(formStatusCalc, 5000);
         } else {
           logError('Web3Forms calculator submit error:', result);
           formStatusCalc.textContent = result.message || 'Pri odesilani poptavky doslo k chybe. Zkuste to prosim pozdeji.';
@@ -517,11 +527,6 @@ export function initForms() {
           submitButton.disabled = false;
           submitButton.textContent = 'Ziskat nezavaznou nabidku';
         }
-        window.setTimeout(() => {
-          formStatusCalc.textContent = '';
-          formStatusCalc.classList.remove('success', 'error');
-          formStatusCalc.classList.add('form-status-hidden');
-        }, 5000);
       }
     });
   }

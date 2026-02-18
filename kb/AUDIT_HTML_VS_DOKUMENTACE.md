@@ -39,107 +39,7 @@
 
 ### ❌ ID v HTML, která NEOBSAHUJE dokumentace
 
-**Chybějící ID v `kb/11_slovnik_pojmu.md`:**
-
-1. **`#windowsCleaningGeneral`** (index.html:315)
-   - Checkbox pro "Mytí a čištění oken - obecně"
-   - **Doporučení:** Přidat do slovníku
-
-2. **`#windowsCleaningStandard`** (index.html:319)
-   - Checkbox pro "Mytí oken"
-   - **Doporučení:** Přidat do slovníku
-
-3. **`#balconyWindows`** (index.html:323)
-   - Checkbox pro "Mytí balkonových a terasových oken"
-   - **Doporučení:** Přidat do slovníku
-
-4. **`#blindsCleaning`** (index.html:327)
-   - Checkbox pro "Mytí žaluzií"
-   - **Doporučení:** Přidat do slovníku
-
-5. **`#carpetCleaning`** (index.html:332)
-   - Checkbox pro "Tepování koberců"
-   - **Doporučení:** Přidat do slovníku
-
-6. **`#sofaCleaning`** (index.html:336)
-   - Checkbox pro "Tepování sedaček"
-   - **Doporučení:** Přidat do slovníku
-
-7. **`#mattressCleaning`** (index.html:340)
-   - Checkbox pro "Tepování matrací"
-   - **Doporučení:** Přidat do slovníku
-
-8. **`#ovenCleaning`** (index.html:345)
-   - Checkbox pro "Čištění trouby"
-   - **Doporučení:** Přidat do slovníku
-
-9. **`#fridgeCleaning`** (index.html:349)
-   - Checkbox pro "Čištění lednice"
-   - **Doporučení:** Přidat do slovníku
-
-10. **`#freezerCleaning`** (index.html:353)
-    - Checkbox pro "Čištění mrazáku"
-    - **Doporučení:** Přidat do slovníku
-
-11. **`#hoodCleaning`** (index.html:357)
-    - Checkbox pro "Čištění digestoře"
-    - **Doporučení:** Přidat do slovníku
-
-12. **`#applianceInteriorCleaning`** (index.html:361)
-    - Checkbox pro "Mytí vnitřku kuchyňských spotřebičů"
-    - **Doporučení:** Přidat do slovníku
-
-13. **`#kitchenCabinetCleaning`** (index.html:365)
-    - Checkbox pro "Úklid v kuchyňské skříňce"
-    - **Doporučení:** Přidat do slovníku
-
-14. **`#closetCleaning`** (index.html:369)
-    - Checkbox pro "Úklid ve skříni"
-    - **Doporučení:** Přidat do slovníku
-
-15. **`#balconyTerraceCleaning`** (index.html:373)
-    - Checkbox pro "Úklid balkónu nebo terasy"
-    - **Doporučení:** Přidat do slovníku
-
-16. **`#radiatorCleaning`** (index.html:377)
-    - Checkbox pro "Mytí radiátorů"
-    - **Doporučení:** Přidat do slovníku
-
-17. **`#doorFrameCleaning`** (index.html:381)
-    - Checkbox pro "Mytí dveří a zárubní"
-    - **Doporučení:** Přidat do slovníku
-
-18. **`#lightFixtureCleaning`** (index.html:385)
-    - Checkbox pro "Mytí světel a lustru"
-    - **Doporučení:** Přidat do slovníku
-
-19. **`#extraBathroomToilet`** (index.html:390)
-    - Checkbox pro "Další koupelna/toaleta"
-    - **Doporučení:** Přidat do slovníku
-
-20. **`#ironingService`** (index.html:394)
-    - Checkbox pro "Žehlení prádla"
-    - **Doporučení:** Přidat do slovníku
-
-21. **`#keyHandling`** (index.html:398)
-    - Checkbox pro "Předání nebo převzetí klíčů"
-    - **Doporučení:** Přidat do slovníku
-
-22. **`#cellarAtticCleaning`** (index.html:402)
-    - Checkbox pro "Úklid sklepních a půdních prostor"
-    - **Doporučení:** Přidat do slovníku
-
-23. **`#moveInMoveOutCleaning`** (index.html:406)
-    - Checkbox pro "Generální úklid před/po stěhování"
-    - **Doporučení:** Přidat do slovníku
-
-24. **`#hasPets`** (index.html:417)
-    - Checkbox pro "Máte domácí mazlíčky?"
-    - **Doporučení:** Přidat do slovníku
-
-25. **`#main-menu`** (privacy.html:25, terms.html:25)
-    - ID navigačního menu v privacy.html a terms.html
-    - **Doporučení:** Přidat do slovníku (pokud je relevantní)
+**Všechna ID v HTML jsou nyní pokryta v dokumentaci.** ✓
 
 ### ⚠️ ID v dokumentaci, která NEOBSAHUJE HTML
 
@@ -301,12 +201,7 @@ Všechny sekce z dokumentace existují v HTML. ✓
 
 ### ❌ Problémy nalezené
 
-1. **Chybí 24 ID checkboxů** v `kb/11_slovnik_pojmu.md`:
-   - Všechny checkboxy pro doplňkové služby v kalkulačním formuláři
-   - Checkbox `#hasPets`
-   - ID `#main-menu` z privacy.html a terms.html
-
-2. **Chybí data-* atributy** v `kb/11_slovnik_pojmu.md`:
+1. **Chybí data-* atributy** v `kb/11_slovnik_pojmu.md`:
    - `data-track`
    - `data-location`
    - `data-page`
@@ -328,8 +223,7 @@ Všechny sekce z dokumentace existují v HTML. ✓
 **Celkové hodnocení:** Dokumentace je v dobrém stavu, ale chybí detailní dokumentace všech checkboxů a data-* atributů.
 
 **Priorita oprav:**
-1. **Vysoká:** Přidat chybějící ID checkboxů do slovníku (24 ID)
-2. **Střední:** Přidat data-* atributy do slovníku
-3. **Nízká:** Aktualizovat `kb/03_napojeni_indexu.md` o cookie banner v ostatních HTML souborech
+1. **Střední:** Přidat data-* atributy do slovníku
+2. **Nízká:** Aktualizovat `kb/03_napojeni_indexu.md` o cookie banner v ostatních HTML souborech
 
 **Odhadovaný čas na opravy:** 30-45 minut

@@ -51,6 +51,6 @@ export function initBackToTop() {
     }
   };
 
-  window.addEventListener('scroll', handleScroll, false);
+  window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('load', toggle);
 }

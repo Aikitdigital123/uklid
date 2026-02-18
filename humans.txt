@@ -1,6 +1,6 @@
 /* TEAM */
 Developer: Lesktop
-Site: https://example.com
+Site: https://lesktop.cz
 Twitter: @lesktop
 
 /* THANKS */
@@ -10,4 +10,3 @@ Thanks to: family, friends, open-source community
 Standards: HTML5, CSS, JS
 Components: vanilla JS
 Software: VS Code
-

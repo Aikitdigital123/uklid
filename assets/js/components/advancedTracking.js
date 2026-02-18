@@ -37,7 +37,7 @@ export function initAdvancedTracking() {
     });
   };
 
-  window.addEventListener('scroll', handleScroll, false);
+  window.addEventListener('scroll', handleScroll, { passive: true });
   handleScroll();
 
   window.setTimeout(() => {
