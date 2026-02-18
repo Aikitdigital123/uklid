@@ -27,10 +27,16 @@ export function initEnhancedTracking() {
   emailLinks.forEach((link) => {
     link.addEventListener('click', function() {
       if (canTrack()) {
-        const email = this.getAttribute('href').replace('mailto:', '');
-        window.lesktopTrackEvent('event', 'email_click', {
-          email: email
-        });
+        const rawHref = this.getAttribute('href').replace('mailto:', '');
+        const [email, queryString] = rawHref.split('?');
+        const params = {};
+        if (queryString) {
+          const urlParams = new URLSearchParams(queryString);
+          if (urlParams.has('subject')) params.subject = urlParams.get('subject');
+        }
+        params.email = email;
+        
+        window.lesktopTrackEvent('event', 'email_click', params);
       }
     });
   });
@@ -64,7 +70,7 @@ export function initEnhancedTracking() {
   const observerOptions = {
     root: null,
     rootMargin: '0px',
-    threshold: 0.5
+    threshold: 0.2
   };
 
   if (!('IntersectionObserver' in window)) return;
@@ -81,6 +87,9 @@ export function initEnhancedTracking() {
             section_id: sectionId,
             section_name: sectionName
           });
+          
+          // Stop observing this section once tracked to save resources
+          sectionObserver.unobserve(entry.target);
         }
       }
     });

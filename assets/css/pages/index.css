@@ -1,4 +1,4 @@
-﻿/* Touch action pro interaktivní prvky */
+﻿﻿/* Touch action pro interaktivní prvky */
 a, button, .btn, .nav-toggle {
     touch-action: manipulation;
 }
@@ -1003,5 +1003,33 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
   .site-header .site-nav {
     width: calc(100% - 20px) !important;
     max-width: calc(100% - 20px) !important;
+  }
+}
+
+/* --- Before/After Gallery Mobile Optimization --- */
+/* Zmenšení galerie "Před a Po" na mobilu: 2 sloupce, menší obrázky */
+@media (max-width: 768px) {
+  #before-after-gallery {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+  
+  .ba-card {
+    padding: 10px !important;
+    margin: 0 !important;
+  }
+  
+  .ba-figure {
+    height: 120px !important;
+  }
+  
+  .ba-card h3 {
+    font-size: 0.9rem !important;
+    margin-bottom: 4px !important;
+  }
+  
+  .ba-hint {
+    display: none !important;
   }
 }

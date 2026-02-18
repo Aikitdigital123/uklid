@@ -188,20 +188,65 @@ function hideStatusNode(statusNode) {
 function bindValidationFeedback(form, statusNode) {
   if (!form || !statusNode) return;
 
+  const updateFieldState = (field) => {
+    if (!field.willValidate) return;
+
+    if (field.checkValidity()) {
+      field.classList.remove('is-invalid');
+      field.setAttribute('aria-invalid', 'false');
+      // Zelená fajfka jen pokud je pole vyplněné
+      if (field.value) {
+        field.classList.add('is-valid');
+      } else {
+        field.classList.remove('is-valid');
+      }
+    } else {
+      field.classList.remove('is-valid');
+      field.classList.add('is-invalid');
+      field.setAttribute('aria-invalid', 'true');
+    }
+  };
+
   form.addEventListener('invalid', (event) => {
     const target = event && event.target;
+    if (target) {
+      target.classList.add('is-invalid');
+      target.classList.remove('is-valid');
+      target.setAttribute('aria-invalid', 'true');
+    }
     const message = target && typeof target.validationMessage === 'string'
       ? target.validationMessage
       : invalidSubmitMessage;
     showInvalidSubmitError(statusNode, message);
   }, true);
 
-  form.addEventListener('input', () => {
+  form.addEventListener('input', (event) => {
+    const target = event.target;
+    if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT')) {
+      updateFieldState(target);
+    }
+
     if (!statusNode.classList.contains('error')) return;
     if (typeof form.checkValidity === 'function' && form.checkValidity()) {
       hideStatusNode(statusNode);
     }
   }, false);
+
+  const inputs = form.querySelectorAll('input, textarea, select');
+  inputs.forEach((input) => {
+    input.addEventListener('blur', () => updateFieldState(input));
+  });
+
+  // Clean up validation classes on form reset
+  form.addEventListener('reset', () => {
+    // Timeout ensures this runs after the native reset clears values
+    setTimeout(() => {
+      form.querySelectorAll('.is-valid, .is-invalid').forEach((field) => {
+        field.classList.remove('is-valid', 'is-invalid');
+        field.removeAttribute('aria-invalid');
+      });
+    }, 0);
+  });
 }
 
 function bindSubmitAssist(form, statusNode) {

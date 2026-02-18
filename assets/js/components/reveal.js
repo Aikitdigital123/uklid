@@ -17,10 +17,13 @@ export function initReveal() {
   };
 
   const revealNowInView = () => {
+    const windowHeight = window.innerHeight;
     revealSections.forEach((el) => {
       const rect = el.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight * 0.95 && rect.bottom > 0;
-      if (inView) el.classList.add('is-visible');
+      const inView = rect.top < windowHeight * 0.95 && rect.bottom > 0;
+      if (inView && !el.classList.contains('is-visible')) {
+        el.classList.add('is-visible');
+      }
     });
   };
 
@@ -37,8 +40,13 @@ export function initReveal() {
     revealSections.forEach((section) => observer.observe(section));
     // Immediately reveal items currently in viewport
     revealNowInView();
+
+    // FIX: iPhone/Mobile Safari reload fix
+    // Při obnovení stránky (reload) si prohlížeč pamatuje pozici scrollování,
+    // ale IntersectionObserver se nemusí spustit správně. Vynutíme kontrolu znovu.
+    setTimeout(revealNowInView, 100);
+    setTimeout(revealNowInView, 400);
   } else {
     revealSections.forEach((section) => section.classList.add('is-visible'));
   }
 }
-

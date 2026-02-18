@@ -1,4 +1,4 @@
-﻿// Page-specific skript pro index — po refaktoringu
+﻿﻿// Page-specific skript pro index — po refaktoringu
 // Globální komponenty (nav, reveal, form, select) se inicializují z assets/js/main.js
 // Tady ponecháváme prostor jen pro případné budoucí chování specifické pro tuto stránku.
 
@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
         frequencyGroup.classList.add('form-group-hidden');
         frequencySelect.removeAttribute('required');
         frequencySelect.value = ''; // Reset hodnoty
+        // Odstranit validační třídy, aby při opětovném zobrazení nesvítila validace na prázdném poli
+        frequencySelect.classList.remove('is-valid', 'is-invalid');
       }
     };
 

@@ -277,6 +277,7 @@ Moduly se načítají paralelně pomocí dynamických importů (`import()`) v `m
 ### Kontaktní formulář - odeslaná data
 - `Jmeno` (text)
 - `Email` (email)
+- `Telefon` (tel, volitelné)
 - `Zprava` (textarea)
 
 ### Zpracování odpovědi
