@@ -26,8 +26,8 @@ const conversionValueByForm = {
   calculation: 1200
 };
 const conversionSendToByForm = {
-  contact: 'AW-17893281939/contact_form_submission',
-  calculation: 'AW-17893281939/calculation_form_submission'
+  contact: 'AW-17893281939/XoMGCP-N4-kbEJOhl9RC',
+  calculation: 'AW-17893281939/XoMGCP-N4-kbEJOhl9RC'
 };
 
 function readStoredAttribution() {
@@ -269,6 +269,12 @@ function trackFormConversion(formType, formName, extraData = {}) {
   });
 
   window.lesktopTrackEvent('event', 'form_submission', eventPayload);
+
+  // GA4 Generic Lead Event
+  window.lesktopTrackEvent('event', 'generate_lead', {
+    event_category: 'form',
+    event_label: 'kalkulacka_nebo_kontakt'
+  });
 
   if (sendTo) {
     window.lesktopTrackEvent('event', 'conversion', {

@@ -13,16 +13,10 @@ export function initEnhancedTracking() {
     link.addEventListener('click', function() {
       if (canTrack()) {
         const location = this.dataset.location || 'unknown';
-        const phoneNumber = this.getAttribute('href').replace('tel:', '');
         
-        window.lesktopTrackEvent('event', 'phone_click', {
-          phone_number: phoneNumber,
-          location: location
-        });
-        
-        // Google Ads conversion pro telefonní hovory
-        window.lesktopTrackEvent('event', 'conversion', {
-          'send_to': 'AW-17893281939/phone_click'
+        window.lesktopTrackEvent('event', 'generate_lead', {
+          event_category: 'engagement',
+          event_label: 'phone_click'
         });
       }
     });
@@ -47,10 +41,19 @@ export function initEnhancedTracking() {
     if (link.hostname && link.hostname !== window.location.hostname) {
       link.addEventListener('click', function() {
         if (canTrack()) {
-          window.lesktopTrackEvent('event', 'external_link_click', {
-            link_url: this.href,
-            link_text: this.textContent.trim()
-          });
+          const url = this.href;
+          // Pokud je to WhatsApp a nemá inline onclick (pojistka)
+          if (url.includes('wa.me') && !this.getAttribute('onclick')) {
+            window.lesktopTrackEvent('event', 'generate_lead', {
+              event_category: 'engagement',
+              event_label: 'whatsapp_click'
+            });
+          } else if (!url.includes('wa.me')) {
+            window.lesktopTrackEvent('event', 'external_link_click', {
+              link_url: this.href,
+              link_text: this.textContent.trim()
+            });
+          }
         }
       });
     }
