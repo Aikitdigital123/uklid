@@ -51,6 +51,7 @@ async function main() {
     'privacy.html',
     'terms.html',
     'faq.html',
+    'impresum.html',
     '404.html',
     'humans.txt',
     'robots.txt',
@@ -70,7 +71,7 @@ async function main() {
   }
 
   // Přepnutí odkazů na minifikované assety v HTML
-  const htmlFiles = ['index.html', 'privacy.html', 'terms.html', 'faq.html', '404.html'].map(f => path.join(dist, f));
+  const htmlFiles = ['index.html', 'privacy.html', 'terms.html', 'faq.html', 'impresum.html', '404.html'].map(f => path.join(dist, f));
   for (const file of htmlFiles) {
     await replaceInFile(file, [
       ['/assets/css/style.css', '/assets/css/style.min.css'],

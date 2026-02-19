@@ -79,6 +79,18 @@
   align-items: center;
   gap: 8px; /* Mezera mezi odkazy */
   margin-top: 10px;
+  max-width: 100%;
+  overflow: hidden;
+  scrollbar-width: none;
+}
+
+.main-footer .legal-links::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.main-footer .legal-links select {
+  display: none !important;
 }
 
 .main-footer .legal-links a {
