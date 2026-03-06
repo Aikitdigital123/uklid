@@ -384,11 +384,15 @@ export function initForms() {
 
       if (submitButton) {
         submitButton.disabled = true;
-        submitButton.textContent = 'Odesilam...';
+        submitButton.classList.add('is-loading');
+        const originalText = submitButton.textContent;
+        submitButton.dataset.originalText = originalText;
+        submitButton.innerHTML = '<span class="btn-spinner"></span> Odesílám...';
       }
 
-      formStatusContact.textContent = 'Odesilam...';
+      formStatusContact.textContent = 'Odesílám vaši zprávu...';
       formStatusContact.classList.remove('success', 'error', 'form-status-hidden');
+      formStatusContact.classList.add('is-loading');
 
       const formData = new FormData(contactForm);
       formData.append('_charset', 'UTF-8');
@@ -437,8 +441,11 @@ export function initForms() {
         delete contactForm.dataset.submitting;
         if (submitButton) {
           submitButton.disabled = false;
-          submitButton.textContent = 'Odeslat poptavku';
+          submitButton.classList.remove('is-loading');
+          submitButton.textContent = submitButton.dataset.originalText || 'Odeslat poptávku';
+          delete submitButton.dataset.originalText;
         }
+        formStatusContact.classList.remove('is-loading');
       }
     });
   }
@@ -463,11 +470,15 @@ export function initForms() {
 
       if (submitButton) {
         submitButton.disabled = true;
-        submitButton.textContent = 'Odesilam...';
+        submitButton.classList.add('is-loading');
+        const originalText = submitButton.textContent;
+        submitButton.dataset.originalText = originalText;
+        submitButton.innerHTML = '<span class="btn-spinner"></span> Odesílám...';
       }
 
-      formStatusCalc.textContent = 'Odesilam...';
+      formStatusCalc.textContent = 'Odesílám vaši poptávku...';
       formStatusCalc.classList.remove('success', 'error', 'form-status-hidden');
+      formStatusCalc.classList.add('is-loading');
 
       const formData = new FormData(calcForm);
       formData.append('_charset', 'UTF-8');
@@ -525,8 +536,11 @@ export function initForms() {
         delete calcForm.dataset.submitting;
         if (submitButton) {
           submitButton.disabled = false;
-          submitButton.textContent = 'Ziskat nezavaznou nabidku';
+          submitButton.classList.remove('is-loading');
+          submitButton.textContent = submitButton.dataset.originalText || 'Získat nezávaznou nabídku';
+          delete submitButton.dataset.originalText;
         }
+        formStatusCalc.classList.remove('is-loading');
       }
     });
   }

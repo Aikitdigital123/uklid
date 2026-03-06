@@ -12,8 +12,10 @@
   overflow: visible;
   display: flex;
   justify-content: center;
-  padding-top: 16px;
+  padding-top: max(16px, env(safe-area-inset-top, 0px));
   padding-bottom: 16px;
+  transform: translateZ(0); /* GPU optimalizace pro iOS */
+  -webkit-transform: translateZ(0); /* Safari prefix */
 }
 
 .header-inner {
@@ -39,12 +41,6 @@
   box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
-  .header-inner {
-    width: calc(100% - 32px) !important;
-    max-width: calc(100% - 32px) !important;
-  }
-}
 
 /* Glass shimmer efekt - stejný jako v původním projektu */
 .header-inner::before {
@@ -66,7 +62,8 @@
   left: 20px;
   width: 60px;
   background: linear-gradient(110deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%);
-  transform: skewX(-20deg);
+  transform: skewX(-20deg) translateZ(0); /* GPU optimalizace pro iOS */
+  -webkit-transform: skewX(-20deg) translateZ(0); /* Safari prefix */
   will-change: left, opacity;
   animation: glass-shimmer 6s ease-in-out infinite;
   pointer-events: none;
@@ -109,9 +106,27 @@
   min-height: 56px;
 }
 
-.brand:hover {
-  color: var(--color-background-white);
-  text-shadow: 0 0 10px rgba(124,168,224,0.75), 0 0 22px rgba(124,168,224,0.55);
+/* Hover efekty pouze pro zařízení která hover podporují */
+@media (hover: hover) {
+  .brand:hover {
+    color: var(--color-background-white);
+    text-shadow: 0 0 10px rgba(124,168,224,0.75), 0 0 22px rgba(124,168,224,0.55);
+  }
+  
+  .brand:hover .brand-logo {
+    transform: scale(1.05);
+  }
+  
+  .brand:hover .brand-text {
+    color: var(--color-background-white);
+    text-shadow: 0 0 10px rgba(124,168,224,0.75), 0 0 22px rgba(124,168,224,0.55);
+  }
+}
+
+/* Touch feedback pro zařízení bez hover */
+.brand:active {
+  transform: scale(0.98);
+  transition-duration: 0.1s;
 }
 
 .brand-logo {
@@ -123,9 +138,6 @@
   display: block;
 }
 
-.brand:hover .brand-logo {
-  transform: scale(1.05);
-}
 
 .brand-logo[style*="display: none"] {
   display: none !important;
@@ -151,10 +163,6 @@
   display: inline !important;
 }
 
-.brand:hover .brand-text {
-  color: var(--color-background-white);
-  text-shadow: 0 0 10px rgba(124,168,224,0.75), 0 0 22px rgba(124,168,224,0.55);
-}
 
 /* Navigation Toggle Button */
 .nav-toggle {
@@ -171,9 +179,19 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.nav-toggle:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.5);
+/* Hover efekty pouze pro zařízení která hover podporují */
+@media (hover: hover) {
+  .nav-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* Touch feedback pro zařízení bez hover */
+.nav-toggle:active {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(0.95);
+  transition-duration: 0.1s;
 }
 
 .nav-toggle:focus {
@@ -187,16 +205,6 @@
   align-items: center;
 }
 
-/* Desktop: navigation always visible */
-@media (min-width: 769px) {
-  .site-nav {
-    display: flex !important;
-  }
-  
-  .nav-toggle {
-    display: none !important;
-  }
-}
 
 .site-nav ul {
   display: flex;
@@ -237,28 +245,42 @@
   transition: width 0.3s ease;
 }
 
-.site-nav .nav-link:hover::after,
 .site-nav .nav-link.active::after {
   width: 100%;
 }
 
-.site-nav .nav-link:hover {
-  color: var(--color-accent, rgba(124,168,224,0.95));
-  background: rgba(255, 255, 255, 0.14);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+/* Hover efekty pouze pro zařízení která hover podporují */
+@media (hover: hover) {
+  .site-nav .nav-link:hover::after {
+    width: 100%;
+  }
+  
+  .site-nav .nav-link:hover {
+    color: var(--color-accent, rgba(124,168,224,0.95));
+    background: rgba(255, 255, 255, 0.14);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .site-header.is-scrolled .site-nav .nav-link:hover {
+    color: var(--color-accent, rgba(124,168,224,0.95));
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Touch feedback pro zařízení bez hover */
+.site-nav .nav-link:active {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(0.98);
+  transition-duration: 0.1s;
 }
 
 .site-header.is-scrolled .site-nav .nav-link {
   color: var(--color-background-white, #ffffff);
 }
 
-.site-header.is-scrolled .site-nav .nav-link:hover {
-  color: var(--color-accent, rgba(124,168,224,0.95));
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
 
 .site-nav .nav-link:focus,
 .site-nav .nav-link:focus-visible {
@@ -296,6 +318,8 @@
 @media (max-width: 768px) {
   .site-header {
     padding: 12px 10px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
   
   .header-inner {
@@ -335,10 +359,14 @@
     display: none;
     z-index: 1000;
     background: transparent;
+    pointer-events: none; /* Zabraňuje blokování touch událostí na iOS Safari */
+    visibility: hidden; /* Dvojitá ochrana - skryje element i z layoutu */
   }
   
   .site-nav.is-open {
     display: block;
+    pointer-events: auto; /* Obnoví touch události když je menu otevřené */
+    visibility: visible; /* Zobrazí element */
   }
   
   .site-nav ul {
@@ -361,14 +389,19 @@
     border-radius: 8px;
   }
   
-  .site-nav .nav-link:hover {
-    background: rgba(255,255,255,0.14);
-    color: var(--color-background-white);
+  /* Hover efekty pouze pro zařízení která hover podporují */
+  @media (hover: hover) {
+    .site-nav .nav-link:hover {
+      background: rgba(255,255,255,0.14);
+      color: var(--color-background-white);
+    }
   }
   
+  /* Touch feedback pro zařízení bez hover */
   .site-nav .nav-link:active {
     background: rgba(255,255,255,0.2);
     transform: scale(0.98);
+    transition-duration: 0.1s;
   }
 }
 
@@ -390,6 +423,14 @@
 
 /* Desktop: enforce horizontal nav layout */
 @media (min-width: 769px) {
+  .site-nav {
+    display: flex !important;
+  }
+  
+  .nav-toggle {
+    display: none !important;
+  }
+  
   .site-nav ul {
     display: flex;
     flex-direction: row;
@@ -404,13 +445,5 @@
   .site-nav .nav-link:hover {
     transform: translateY(-1px);
     text-shadow: 0 1px 2px rgba(0,0,0,0.25);
-  }
-}
-
-/* Mobilní padding pro site-header */
-@media (max-width: 768px) {
-  .site-header {
-    padding-top: 12px;
-    padding-bottom: 12px;
   }
 }

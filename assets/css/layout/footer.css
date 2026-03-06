@@ -9,7 +9,7 @@
   box-shadow: 0 12px 32px rgba(20,30,60,0.22);
   position: relative; /* Důležité: pro správné fungování pseudo-elementů */
   overflow: visible; /* Důležité: nesmí být hidden, aby pseudo-elementy nebyly ořezány */
-  margin: 28px auto 18px;
+  margin: 28px auto max(18px, env(safe-area-inset-bottom, 0px)); /* Safe area pro iPhone home indicator */
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -38,7 +38,8 @@
     width: 60px;
     /* Shimmer efekt nemá zaoblené rohy - je rovný */
     background: linear-gradient(110deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%);
-    transform: skewX(-20deg);
+    transform: skewX(-20deg) translateZ(0); /* GPU optimalizace pro iOS */
+    -webkit-transform: skewX(-20deg) translateZ(0); /* Safari prefix */
     will-change: left, opacity;
     animation: glass-shimmer 6s ease-in-out infinite;
     pointer-events: none;
@@ -52,6 +53,7 @@
   gap: 15px;
   min-height: var(--header-height); /* Místo pevné výšky použijeme min-height pro flexibilitu */
   padding: 20px; /* Vnitřní padding pro lepší čitelnost */
+  padding-bottom: max(20px, env(safe-area-inset-bottom, 0px)); /* Safe area pro iPhone home indicator */
 }
 
 .main-footer p {
@@ -67,8 +69,17 @@
   transition: color var(--transition-speed);
 }
 
-.social-links a:hover {
-  color: var(--color-accent);
+/* Hover efekty pouze pro zařízení která hover podporují */
+@media (hover: hover) {
+  .social-links a:hover {
+    color: var(--color-accent);
+  }
+}
+
+/* Touch feedback pro zařízení bez hover */
+.social-links a:active {
+  transform: scale(0.95);
+  transition-duration: 0.1s;
 }
 
 /* Footer legal links: subtle but clearly clickable */
@@ -123,7 +134,7 @@
   .main-footer {
     width: calc(100% - 20px);
     border-radius: 16px;
-    margin: 20px auto 16px;
+    margin: 20px auto max(16px, env(safe-area-inset-bottom, 0px)); /* Safe area pro iPhone home indicator */
     overflow: visible !important; /* Důležité: nesmí být hidden, aby pseudo-elementy nebyly ořezány */
     position: relative; /* Důležité: pro správné fungování pseudo-elementů */
   }
@@ -131,6 +142,7 @@
   .main-footer .container {
     min-height: auto; /* Odstraníme min-height na mobilech, aby se footer přizpůsobil obsahu */
     padding: 16px; /* Menší padding na mobilech */
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 0px)); /* Safe area pro iPhone home indicator */
     gap: 12px; /* Menší mezera mezi prvky */
   }
   

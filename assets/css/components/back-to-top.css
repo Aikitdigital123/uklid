@@ -15,14 +15,18 @@
   cursor: pointer;
   z-index: 1200;
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(10px) translateZ(0); /* GPU optimalizace pro iOS */
+  -webkit-transform: translateY(10px) translateZ(0); /* Safari prefix */
   pointer-events: none;
   transition: opacity var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+  will-change: transform, opacity; /* GPU optimalizace */
 }
 .back-to-top.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) translateZ(0); /* GPU optimalizace pro iOS */
+  -webkit-transform: translateY(0) translateZ(0); /* Safari prefix */
   pointer-events: auto;
+  will-change: auto; /* Reset po animaci */
 }
 .back-to-top:hover {
   box-shadow: 0 14px 32px rgba(20,30,60,0.3);

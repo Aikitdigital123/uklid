@@ -38,7 +38,7 @@
 
 ### images/
 **Typ:** Asset  
-**Popis:** Složka s grafickými assety webu. Obsahuje logo (Domecek.png), hero obrázky (hero.jpg, hero-mobile.jpg, hero-background.jpg, hero-background1.jpg, hero-background2.jpg), ikony úklidových pomůcek (houbička.png, kartáč.png, kbelík .png, koš.png, koště.png, lopatka.png, prádlo.png, rukavice.png, sprej.png, stěrka.png, vysavač.png, zahod.png, žehlička.png, zvon.png) a další obrázky (cleaning_girl.png, cleaning_products.png, clinching_car.png).
+**Popis:** Složka s grafickými assety webu. Obsahuje logo (Domecek.png) a hero obrázky (hero.jpg, hero-mobile.jpg). Nepoužívané obrázky byly odstraněny v rámci optimalizace projektu.
 
 ## Nástroje a konfigurace
 

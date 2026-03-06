@@ -51,10 +51,23 @@
   transition: color 180ms ease, border-color 180ms ease, text-shadow 180ms ease;
 }
 
-.cookie-banner__link:hover {
-  color: var(--color-background-white);
-  border-color: rgba(255, 255, 255, 0.85);
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+/* Hover efekty pouze pro zařízení která hover podporují */
+@media (hover: hover) {
+  .cookie-banner__link:hover {
+    color: var(--color-background-white);
+    border-color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+  }
+  
+  .cookie-banner__actions .btn.btn-primary:hover {
+    background: linear-gradient(150deg, rgba(124,168,224,0.44) 0%, rgba(124,168,224,0.2) 100%);
+    border-color: rgba(124,168,224,0.95);
+    transform: translateY(-2px);
+  }
+  
+  .cookie-banner__actions .btn.btn-outline:hover {
+    border-color: rgba(124,168,224,0.85);
+  }
 }
 
 .cookie-banner__link:focus-visible,
@@ -83,21 +96,11 @@
   box-shadow: 0 10px 28px rgba(20,30,60,0.18);
 }
 
-.cookie-banner__actions .btn.btn-primary:hover {
-  background: linear-gradient(150deg, rgba(124,168,224,0.44) 0%, rgba(124,168,224,0.2) 100%);
-  border-color: rgba(124,168,224,0.95);
-  transform: translateY(-2px);
-}
-
 .cookie-banner__actions .btn.btn-outline {
   background: transparent;
   color: var(--color-text);
   border: 1.5px solid rgba(124,168,224,0.55);
   box-shadow: none;
-}
-
-.cookie-banner__actions .btn.btn-outline:hover {
-  border-color: rgba(124,168,224,0.85);
 }
 
 .cookie-banner.is-hidden {

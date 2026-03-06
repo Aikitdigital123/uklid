@@ -1,4 +1,4 @@
-﻿﻿﻿﻿/* Touch action pro interaktivní prvky */
+﻿﻿/* Touch action pro interaktivní prvky */
 
 /* --- GLOBÁLNÍ FIXY PRO MOBILNÍ POCIT (APP-LIKE FEEL) --- */
 
@@ -50,11 +50,28 @@ body::before {
         rgba(var(--color-primary-dark-rgb), 0.15),
         rgba(var(--color-primary-dark-rgb), 0.15)
     ),
-    url('/images/hero.jpg') no-repeat center center;
-    background-size: cover;
+    -webkit-image-set(
+        url('/images/hero.jpg') 1x,
+        url('/images/hero@2x.jpg') 2x
+    );
+    background-image: 
+        linear-gradient(
+            rgba(var(--color-primary-dark-rgb), 0.15),
+            rgba(var(--color-primary-dark-rgb), 0.15)
+        ),
+        image-set(
+            url('/images/hero.jpg') 1x,
+            url('/images/hero@2x.jpg') 2x
+        );
+    background-size: cover; /* Robustní řešení - pokryje celou plochu */
+    background-position: center center; /* Zobrazí střed obrázku */
+    background-repeat: no-repeat;
     z-index: -1;
     transition: background 0.5s ease-in-out;
     animation: bg-breathe 40s ease-in-out infinite alternate;
+    transform: translateZ(0); /* GPU optimalizace pro iOS */
+    -webkit-transform: translateZ(0); /* Safari prefix */
+    will-change: transform; /* GPU optimalizace pro animaci */
 }
 
 /* Jemná animace pozadí ("dýchání"), aby web nepůsobil staticky */
@@ -159,7 +176,8 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 60vh;
+    min-height: 60dvh;
+    min-height: 60vh; /* Fallback pro starší prohlížeče */
 }
 
 .hero-content {
@@ -402,6 +420,23 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     content: none;
 }
 
+/* Nadpis "O nás" pod hlavním H1 - specifické styly */
+.about-section-subtitle {
+    font-family: var(--font-heading);
+    font-size: 1.8em;
+    color: var(--color-primary-dark);
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.about-section-subtitle::after {
+    content: none;
+}
+
 /* Skryti pole frekvence, pokud neni relevantni (prepina JS pres tridu). */
 .form-group-hidden {
     display: none !important;
@@ -447,6 +482,11 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 
 @media (max-width: 768px) {
     /* Změny pro tablety (na šířku) a menší laptopy */
+    /* Upravit background-position pro tablet viewport */
+    body::before {
+        background-position: center center; /* Zobrazí střed obrázku na tabletu */
+    }
+    
     .container {
         padding: 0 25px;
     }
@@ -471,7 +511,8 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 
     .hero-section {
         padding: 80px 20px;
-        min-height: 45vh;
+        min-height: 45dvh;
+        min-height: 45vh; /* Fallback pro starší prohlížeče */
         /* Průhlednost 50% */
         background: linear-gradient(rgba(var(--color-primary-dark-rgb), 0.5), rgba(var(--color-primary-dark-rgb), 0.5));
         background-size: cover;
@@ -582,8 +623,22 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
                                       rgba(var(--color-primary-dark-rgb), 0.15), /* Stejná průhlednost jako na desktopu */
                                       rgba(var(--color-primary-dark-rgb), 0.15)
                                     ),
-                                    url('/images/hero-mobile.jpg') no-repeat center center; /* Mobilní obrázek */
-        background-size: cover;
+                                    -webkit-image-set(
+                                        url('/images/hero-mobile.jpg') 1x,
+                                        url('/images/hero-mobile@2x.jpg') 2x
+                                    );
+        background-image: 
+            linear-gradient(
+                rgba(var(--color-primary-dark-rgb), 0.15),
+                rgba(var(--color-primary-dark-rgb), 0.15)
+            ),
+            image-set(
+                url('/images/hero-mobile.jpg') 1x,
+                url('/images/hero-mobile@2x.jpg') 2x
+            );
+        background-size: cover; /* Robustní řešení - pokryje celou plochu */
+        background-position: center center; /* Zobrazí střed obrázku na mobile */
+        background-repeat: no-repeat;
         background-attachment: scroll; /* KLÍČOVÉ: Aby se pozadí na mobilu scrolluje s obsahem */
     }
     /* --- Konec důležitých změn pro mobilní BODY --- */
@@ -591,7 +646,8 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 
     .hero-section {
         padding: 60px 15px;
-        min-height: 45vh;
+        min-height: 45dvh;
+        min-height: 45vh; /* Fallback pro starší prohlížeče */
         /* Průhlednost 15% - stejná jako na desktopu */
         background: linear-gradient(rgba(var(--color-primary-dark-rgb), 0.15), rgba(var(--color-primary-dark-rgb), 0.15));
         background-size: cover;
@@ -694,13 +750,38 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 .brand-logo { height: 72px; }
 @media (max-width: 768px) { .brand-logo { height: 56px; } }
 
-/* Scroll-in animace pro reveal-on-scroll */
-.js .reveal-on-scroll { opacity: 0; transform: translateY(14px) scale(0.98); }
-.reveal-on-scroll.is-visible { opacity: 1; transform: none; transition: opacity 600ms cubic-bezier(.2,.6,.2,1), transform 600ms cubic-bezier(.2,.6,.2,1); }
-.delay-1 { transition-delay: 80ms; }
-.delay-2 { transition-delay: 160ms; }
-.delay-3 { transition-delay: 240ms; }
-.delay-4 { transition-delay: 320ms; }
+/* Vylepšené scroll-in animace pro reveal-on-scroll */
+.js .reveal-on-scroll { 
+  opacity: 0; 
+  transform: translateY(20px) scale(0.96) translateZ(0); /* GPU optimalizace pro iOS */
+  filter: blur(4px);
+  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 800ms cubic-bezier(0.16, 1, 0.3, 1),
+              filter 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity, filter; /* GPU optimalizace */
+}
+
+.reveal-on-scroll.is-visible { 
+  opacity: 1; 
+  transform: translateY(0) scale(1) translateZ(0); /* GPU optimalizace pro iOS */
+  filter: blur(0);
+  will-change: auto; /* Reset po animaci */
+}
+
+.delay-1 { transition-delay: 100ms; }
+.delay-2 { transition-delay: 200ms; }
+.delay-3 { transition-delay: 300ms; }
+.delay-4 { transition-delay: 400ms; }
+
+/* Respektovat prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
 
 /* Sheen na tlaÄŤĂ­tkĂˇch */
 .btn { position: relative; overflow: hidden; }
@@ -926,11 +1007,13 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
   list-style: none;
   max-height: 280px;
   overflow: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling na iOS */
   display: none;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: none;
+  transform: translateZ(0); /* GPU optimalizace pro iOS */
+  -webkit-transform: translateZ(0); /* Safari prefix */
 }
 .select-modern.open .select-menu {
   display: block !important;
@@ -972,7 +1055,8 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
     left: 0;
     right: 0;
     top: calc(100% + 6px);
-    max-height: min(42vh, 260px);
+    max-height: min(42dvh, 260px);
+    max-height: min(42vh, 260px); /* Fallback pro starší prohlížeče */
     border-radius: 14px;
     padding: 6px;
     box-shadow: 0 18px 44px rgba(20,30,60,0.28);
@@ -1110,10 +1194,16 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
   .ba-card {
     padding: 10px !important;
     margin: 0 !important;
+    touch-action: manipulation; /* Lepší touch handling */
   }
   
   .ba-figure {
     height: 120px !important;
+    transition: transform 0.2s ease;
+  }
+  
+  .ba-figure:active {
+    transform: scale(0.98); /* Tactile feedback */
   }
   
   .ba-card h3 {
@@ -1123,6 +1213,32 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
   
   .ba-hint {
     display: none !important;
+  }
+}
+
+/* Vylepšené touch targets pro mobilní zařízení */
+@media (max-width: 768px) {
+  /* Zajištění minimální velikosti touch targetu (44x44px) */
+  .btn, .nav-link, .nav-toggle {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 20px;
+  }
+  
+  /* Větší mezery mezi interaktivními prvky */
+  .service-item, .price-card {
+    margin-bottom: 24px;
+  }
+  
+  /* Vylepšené scrollování na mobilu */
+  body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+  
+  /* Smooth scrolling pro kotvy */
+  html {
+    scroll-padding-top: calc(var(--header-height) + 20px);
   }
 }
 
@@ -1141,7 +1257,11 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 
 /* Plynulý přechod pro všechny inputy (border, shadow, bg) */
 input, select, textarea {
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    transition: border-color 0.3s ease, 
+                box-shadow 0.3s ease, 
+                background-color 0.3s ease,
+                transform 0.2s ease;
+    will-change: border-color, box-shadow, transform;
 }
 
 /* Výraznější a moderní focus pro všechny inputy */
@@ -1149,8 +1269,14 @@ input:focus, select:focus, textarea:focus {
     border-color: rgba(124, 168, 224, 0.8) !important;
     box-shadow: 0 0 0 4px rgba(124, 168, 224, 0.25) !important;
     outline: none;
-    background-color: rgba(255, 255, 255, 0.9) !important;
+    background-color: rgba(255, 255, 255, 0.95) !important;
     transform: translateY(-2px); /* Taktilní odezva - element se "zvedne" k uživateli */
+}
+
+/* Active state pro lepší feedback */
+input:active, select:active, textarea:active {
+    transform: translateY(0);
+    transition-duration: 0.1s;
 }
 
 /* Oprava barvy pro Autofill (prohlížečové vyplňování) - aby nerozbilo glass efekt */
@@ -1254,26 +1380,92 @@ html {
 
 /* --- Moderní interaktivní prvky (Polish) --- */
 
-/* Jemná animace načtení obsahu */
+/* Vylepšená animace načtení obsahu */
 @keyframes fadeInPage {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { 
+        opacity: 0; 
+        transform: translateY(20px);
+        filter: blur(8px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+        filter: blur(0);
+    }
 }
 
 main {
-    animation: fadeInPage 0.6s ease-out;
+    animation: fadeInPage 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Interaktivní karty (Služby a Ceník) - "Lift" efekt */
+/* Pulse efekt pro důležitá tlačítka */
+@keyframes pulse-subtle {
+    0%, 100% {
+        box-shadow: 0 10px 28px rgba(20,30,60,0.18);
+    }
+    50% {
+        box-shadow: 0 14px 40px rgba(124, 168, 224, 0.35);
+    }
+}
+
+.btn-primary:not(:disabled):not(.is-loading) {
+    animation: pulse-subtle 3s ease-in-out infinite;
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    main {
+        animation: none;
+    }
+    .btn-primary {
+        animation: none;
+    }
+}
+
+/* Vylepšené interaktivní karty (Služby a Ceník) - "Lift" efekt s micro-interactions */
 .service-item, .price-card {
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                box-shadow 0.4s ease, 
+                border-color 0.3s ease,
+                filter 0.3s ease;
+    will-change: transform, box-shadow;
+    transform: translateZ(0); /* GPU optimalizace pro iOS */
+    -webkit-transform: translateZ(0); /* Safari prefix */
 }
 
-.service-item:hover, .price-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-    border-color: rgba(255, 255, 255, 0.7);
-    z-index: 2;
+/* Hover efekty pouze pro zařízení která hover podporují */
+@media (hover: hover) {
+    .service-item:hover, .price-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 24px 48px rgba(20, 30, 60, 0.18);
+        border-color: rgba(255, 255, 255, 0.8);
+        filter: brightness(1.05);
+        z-index: 2;
+    }
+
+    /* Smooth hover pro ikony v kartách */
+    .service-item:hover i {
+        transform: scale(1.15) rotate(5deg);
+    }
+}
+
+/* Touch feedback pro zařízení bez hover */
+.service-item:active, .price-card:active {
+    transform: translateY(-4px) scale(1.01);
+    transition-duration: 0.15s;
+}
+
+/* Smooth hover pro ikony v kartách */
+.service-item i {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                color 0.3s ease;
 }
 
 /* Odkazy v patičce - podtržení při najetí */
@@ -1294,8 +1486,11 @@ main {
     opacity: 0.6;
 }
 
-.main-footer a:not(.btn):not(.social-links a):hover::after {
-    width: 100%;
+/* Hover efekty pouze pro zařízení která hover podporují */
+@media (hover: hover) {
+    .main-footer a:not(.btn):not(.social-links a):hover::after {
+        width: 100%;
+    }
 }
 
 /* --- Vylepšení sociálních ikon v patičce (Bouncy efekt) --- */
@@ -1319,11 +1514,20 @@ main {
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy efekt */
 }
 
-.social-links a:hover {
-    background: var(--color-primary-light);
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-    border-color: transparent;
+/* Hover efekty pouze pro zařízení která hover podporují */
+@media (hover: hover) {
+    .social-links a:hover {
+        background: var(--color-primary-light);
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        border-color: transparent;
+    }
+}
+
+/* Touch feedback pro zařízení bez hover */
+.social-links a:active {
+    transform: scale(0.95);
+    transition-duration: 0.1s;
 }
 
 /* --- Interaktivní seznamy v ceníku (Micro-interactions) --- */
@@ -1332,9 +1536,12 @@ main {
     cursor: default;
 }
 
-.price-list li:hover {
-    transform: translateX(6px);
-    color: var(--color-primary-dark);
+/* Hover efekty pouze pro zařízení která hover podporují */
+@media (hover: hover) {
+    .price-list li:hover {
+        transform: translateX(6px);
+        color: var(--color-primary-dark);
+    }
 }
 
 /* --- Custom Focus Ring (Přístupnost + Design) --- */
@@ -1352,4 +1559,55 @@ main {
     color: var(--color-primary-dark);
     transform: translateX(5px);
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+/* --- Skeleton screens pro loading states --- */
+@keyframes skeleton-loading {
+    0% {
+        background-position: -200px 0;
+    }
+    100% {
+        background-position: calc(200px + 100%) 0;
+    }
+}
+
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    background-size: 200px 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+    border-radius: 8px;
+}
+
+.skeleton-text {
+    height: 1em;
+    margin-bottom: 0.5em;
+}
+
+.skeleton-text:last-child {
+    width: 80%;
+}
+
+.skeleton-image {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 12px;
+}
+
+.skeleton-card {
+    padding: 20px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skeleton {
+        animation: none;
+        background: rgba(255, 255, 255, 0.1);
+    }
 }

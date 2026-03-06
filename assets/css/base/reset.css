@@ -8,8 +8,6 @@
 html {
   scroll-padding-top: var(--header-height);
   scroll-behavior: smooth;
-  overflow-x: hidden;
-  max-width: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -21,25 +19,23 @@ body {
   font-family: var(--font-body);
   line-height: 1.6;
   color: var(--color-text-dark);
-  min-height: 100vh;
+  min-height: 100dvh;
+  min-height: 100vh; /* Fallback pro starší prohlížeče */
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 100%;
 }
 
 main { 
   flex: 1 0 auto; 
   width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
 }
 
-html, body { 
-  max-width: 100%; 
+/* Zabránit horizontálnímu scrollování */
+html, body {
+  max-width: 100%;
   overflow-x: hidden;
 }
 
@@ -49,7 +45,6 @@ html, body {
 
 /* Zabránit horizontálnímu scrollování na všech úrovních */
 section, article, div, header, footer, nav, aside {
-  max-width: 100%;
   overflow-x: hidden;
 }
 
@@ -57,6 +52,7 @@ section, article, div, header, footer, nav, aside {
 table, pre, code {
   max-width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling na iOS */
   word-wrap: break-word;
 }
 
