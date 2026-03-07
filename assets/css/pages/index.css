@@ -387,29 +387,31 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 }
 
 /* --- Animace (pro JavaScript třídy) --- */
-/* Progressive enhancement: bez JS jsou sekce viditelné */
+/* Reveal animace odstraněny - sekce jsou viditelné hned */
 .reveal-on-scroll {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity var(--transition-speed) ease-out, transform var(--transition-speed) ease-out;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
 }
 
-/* S JS jsou sekce skryté, dokud nedostanou .is-visible */
+/* S JS jsou sekce také viditelné hned (bez animace) */
 .js .reveal-on-scroll:not(.is-visible) {
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1 !important;
+    transform: none !important;
 }
 
 .reveal-on-scroll.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1 !important;
+    transform: none !important;
 }
 
-/* Delay pro postupnĂ© zobrazenĂ­ */
-.reveal-on-scroll.delay-1 { transition-delay: 0.1s; }
-.reveal-on-scroll.delay-2 { transition-delay: 0.2s; }
-.reveal-on-scroll.delay-3 { transition-delay: 0.3s; }
-.reveal-on-scroll.delay-4 { transition-delay: 0.4s; }
+/* Delay odstraněny - sekce jsou viditelné hned */
+.reveal-on-scroll.delay-1,
+.reveal-on-scroll.delay-2,
+.reveal-on-scroll.delay-3,
+.reveal-on-scroll.delay-4 {
+    transition-delay: 0ms !important;
+}
 
 
 .section-subtitle {
@@ -757,29 +759,26 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 .brand-logo { height: 72px; }
 @media (max-width: 768px) { .brand-logo { height: 56px; } }
 
-/* Vylepšené scroll-in animace pro reveal-on-scroll */
-/* S JS jsou sekce skryté, dokud nedostanou .is-visible */
+/* Reveal animace odstraněny - sekce jsou viditelné hned */
 .js .reveal-on-scroll:not(.is-visible) { 
-  opacity: 0; 
-  transform: translateY(20px) scale(0.96) translateZ(0); /* GPU optimalizace pro iOS */
-  filter: blur(4px);
-  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 800ms cubic-bezier(0.16, 1, 0.3, 1),
-              filter 800ms cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity, filter; /* GPU optimalizace */
+  opacity: 1 !important; 
+  transform: none !important;
+  transition: none !important;
+  will-change: auto;
 }
 
 .reveal-on-scroll.is-visible { 
-  opacity: 1; 
-  transform: translateY(0) scale(1) translateZ(0); /* GPU optimalizace pro iOS */
-  filter: blur(0);
-  will-change: auto; /* Reset po animaci */
+  opacity: 1 !important; 
+  transform: none !important;
+  will-change: auto;
 }
 
-.delay-1 { transition-delay: 100ms; }
-.delay-2 { transition-delay: 200ms; }
-.delay-3 { transition-delay: 300ms; }
-.delay-4 { transition-delay: 400ms; }
+.delay-1,
+.delay-2,
+.delay-3,
+.delay-4 {
+  transition-delay: 0ms !important;
+}
 
 /* Respektovat prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
@@ -1051,8 +1050,17 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 }
 
 /* Zrychlit/redukovat zpoždění animací v sekci Ceník/Kalkulace */
-#pricing .reveal-on-scroll { transition-delay: 0ms !important; }
-#pricing .delay-1, #pricing .delay-2, #pricing .delay-3, #pricing .delay-4 { transition-delay: 0ms !important; }
+/* Reveal animace odstraněny - všechny sekce jsou viditelné hned */
+#pricing .reveal-on-scroll,
+#pricing .delay-1,
+#pricing .delay-2,
+#pricing .delay-3,
+#pricing .delay-4 {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  transition-delay: 0ms !important;
+}
 .select-modern .select-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 @media (max-width: 768px) {

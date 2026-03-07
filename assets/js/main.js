@@ -119,13 +119,26 @@
       }, false);
     }
 
+    // Kontrola, zda banner už není skrytý v DOM (při reinicializaci z bfcache)
+    // Toto zajistí, že banner se nezobrazí znovu, i když localStorage není dostupný
+    var isBannerHiddenInDOM = banner.classList.contains('is-hidden') || 
+                              banner.getAttribute('aria-hidden') === 'true';
+
     if (storedConsent === 'all' || storedConsent === 'necessary') {
       setGaDisabled(storedConsent !== 'all');
-      hideBanner();
+      // Skrýt banner pouze pokud není už skrytý v DOM
+      // Toto zabrání automatickému skrytí při reinicializaci, pokud uživatel ještě neklikl
+      if (!isBannerHiddenInDOM) {
+        hideBanner();
+      }
       return;
     }
 
-    showBanner();
+    // Zobrazit banner pouze pokud není už skrytý v DOM
+    // Toto zabrání zobrazení banneru při reinicializaci z bfcache, i když localStorage není dostupný
+    if (!isBannerHiddenInDOM) {
+      showBanner();
+    }
     bindConsentAction(acceptButton, 'all');
     bindConsentAction(necessaryButton, 'necessary');
   }

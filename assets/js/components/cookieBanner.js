@@ -170,8 +170,16 @@ export function initCookieBanner() {
     
     // Pokus o uložení souhlasu - pokud selže, banner zůstane viditelný
     const saved = setStoredConsent(value);
+    
+    // Fail-safe: Skrýt banner pouze pokud:
+    // 1. Uložení se povedlo (saved === true)
+    // 2. NEBO banner není už skrytý v DOM (zabrání duplicitnímu skrytí)
+    // Toto zajistí, že banner se neskryje automaticky bez akce uživatele
     if (saved) {
-      hideBanner();
+      // Kontrola, zda banner není už skrytý (zabrání duplicitnímu skrytí při reinicializaci)
+      if (!banner.classList.contains('is-hidden')) {
+        hideBanner();
+      }
     } else {
       // Pokud se nepodařilo uložit, banner zůstane viditelný
       // Uživatel může zkusit znovu nebo pokračovat bez uložení
@@ -206,13 +214,32 @@ export function initCookieBanner() {
     }
   }
 
+  // Fail-safe: Pokud je uložený souhlas, aplikovat ho pouze pokud banner není už skrytý v DOM
+  // Toto zabrání automatickému skrytí při reinicializaci, pokud uživatel ještě neklikl
   if (storedConsent === 'all') {
-    applyConsentChoice('all');
+    // Aplikovat souhlas pouze pokud banner není už skrytý (zabrání auto-hide)
+    if (!isBannerHiddenInDOM) {
+      applyConsentChoice('all');
+    } else {
+      // Banner je už skrytý, pouze aplikovat tracking bez změny viditelnosti
+      enableTracking();
+      ensureGtag('all');
+    }
     return;
   }
 
   if (storedConsent === 'necessary') {
-    applyConsentChoice('necessary');
+    // Aplikovat souhlas pouze pokud banner není už skrytý (zabrání auto-hide)
+    if (!isBannerHiddenInDOM) {
+      applyConsentChoice('necessary');
+    } else {
+      // Banner je už skrytý, pouze aplikovat tracking bez změny viditelnosti
+      disableTracking();
+      if (window.__lesktopGtagConfigured) {
+        applyConsent('necessary');
+      }
+      deleteGaCookies();
+    }
     return;
   }
 
