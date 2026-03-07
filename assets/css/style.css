@@ -1,0 +1,39 @@
+/**
+ * style.css – entry point.
+ * Order: tokens → base → layout → components → pages.
+ */
+@import url('./tokens/tokens.css');
+@import url('./base/reset.css');
+@import url('./base/typography.css');
+@import url('./base/utilities.css');
+
+@import url('./layout/container.css');
+@import url('./layout/header.css');
+@import url('./layout/sections.css');
+@import url('./layout/footer.css');
+
+@import url('./components/button.css');
+@import url('./components/card.css');
+@import url('./components/form.css');
+@import url('./components/features.css');
+@import url('./components/services.css');
+@import url('./components/pricing.css');
+@import url('./components/glass.css');
+@import url('./components/back-to-top.css');
+@import url('./components/cookie-banner.css');
+
+@import url('./pages/index.css');
+
+/* Homepage hero background (jediny zdroj pravdy) */
+body[data-page="index"] {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.82)),
+    url("/images/hero.jpg") center center / cover no-repeat fixed;
+}
+@media (max-width: 480px) {
+  body[data-page="index"] {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.88)),
+      url("/images/hero-mobile.jpg") center center / cover no-repeat fixed;
+  }
+}

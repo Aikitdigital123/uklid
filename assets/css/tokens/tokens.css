@@ -1,0 +1,78 @@
+/**
+ * Design tokens – single source for colors, spacing, radius, shadow, z-index, transition.
+ * Breakpoints (for reference): 480px (sm), 768px (md), 992px (lg), 1200px (xl).
+ */
+:root {
+  /* Colors */
+  --color-primary-dark: #3a4768;
+  --color-primary-light: #4c6292;
+  --color-accent: #7ca8e0;
+  --color-text-dark: #2c354a;
+  --color-text-light: #5f6b8c;
+  --color-text: var(--color-text-dark);
+  --color-background-white: #ffffff;
+  --color-background-offwhite: #f5f8fc;
+  --color-border: #e0e7ee;
+  --color-success: #28a745;
+  --color-error: #dc3545;
+
+  --color-primary-light-rgb: 76, 98, 146;
+  --color-primary-dark-rgb: 58, 71, 104;
+  --color-accent-rgb: 124, 168, 224;
+
+  /* Typography */
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Open Sans', sans-serif;
+
+  /* Spacing scale (4px base) */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-2xl: 24px;
+  --space-3xl: 28px;
+  --space-4xl: 32px;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 18px;
+  --radius-2xl: 22px;
+
+  /* Shadow */
+  --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.12);
+  --shadow-strong: 0 12px 32px rgba(20, 30, 60, 0.22);
+
+  /* Transition */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.4s ease;
+  --transition-speed: 0.4s;
+
+  /* Glass (shared) */
+  --glass-blur: 12px;
+  --glass-saturate: 180%;
+  --glass-stroke: rgba(255, 255, 255, 0.35);
+  --glass-radius-md: 12px;
+  --glass-radius-lg: 16px;
+
+  /* Z-index scale */
+  --z-below: 0;
+  --z-base: 1;
+  --z-dropdown: 200;
+  --z-sticky: 100;
+  --z-nav: 1000;
+  --z-nav-toggle: 1001;
+  --z-back-to-top: 1200;
+  --z-cookie: 3000;
+  --z-skip: 10000;
+
+  /* Layout */
+  --header-height: 90px;
+  --content-max: 1200px;
+  --content-gutter: 32px;
+  --mobile-menu-gap: 8px;
+}

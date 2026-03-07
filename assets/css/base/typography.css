@@ -1,0 +1,44 @@
+/* Typography – single source for type scale and headings */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  font-size: clamp(16px, 1.05vw, 18px);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@supports not (font-size: clamp(1rem, 2vw, 2rem)) {
+  body { font-size: 16px; }
+  h1, .hero-content h1 { font-size: 32px; }
+  h2, .section-title { font-size: 24px; }
+  h3 { font-size: 20px; }
+}
+
+h1, .hero-content h1 { font-family: var(--font-heading); font-weight: 700; font-size: clamp(28px, 4.2vw, 44px); line-height: 1.15; }
+h2, .section-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.2;
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, #5a7fb5 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+@supports not (-webkit-background-clip: text) {
+  h2, .section-title { background: none; color: var(--color-primary-dark); }
+}
+h3 { font-family: var(--font-heading); font-weight: 600; font-size: clamp(18px, 2.2vw, 24px); line-height: 1.25; }
+
+p, li { font-size: 1rem; }
+.content-section strong { color: var(--color-primary-dark); font-weight: 700; }
+.site-nav .nav-link { font-size: clamp(14px, 1vw, 17px); }
+.btn { font-size: clamp(14px, 1.05vw, 18px); }
+label { font-size: clamp(14px, 1vw, 16px); }
+input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
+.brand { font-size: clamp(22px, 2.6vw, 34px); transition: transform 0.3s ease, text-shadow 0.3s ease; }
+@media (hover: hover) {
+  .brand:hover { transform: scale(1.05); text-shadow: 0 0 15px rgba(255,255,255,0.5); }
+}
+

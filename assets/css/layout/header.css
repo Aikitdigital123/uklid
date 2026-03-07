@@ -1,0 +1,464 @@
+/* ==========================================================================
+   HEADER & NAVIGATION
+   Structure: .site-header > .header-inner > .brand, .nav-toggle, .site-nav
+   Mobile menu state: .site-nav.is-open (controlled by JS)
+   ========================================================================== */
+
+/* --- 1. Header shell (fixed bar, safe area) --- */
+/* Bez transform – v Safari by transform vytvořil containing block a fixed .site-nav by byl ořezán */
+.site-header {
+  position: fixed;
+  top: 10px;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  padding-top: max(16px, env(safe-area-inset-top, 0));
+  padding-bottom: 16px;
+  margin: 12px auto 0;
+  overflow: visible;
+  transition: transform 0.3s ease;
+  color: var(--color-background-white);
+}
+
+/* --- 2. Header inner (glass bar, blue tint) --- */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(var(--content-max), calc(100% - var(--content-gutter)));
+  max-width: var(--content-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 14px 20px !important;
+  min-height: 64px;
+  position: relative;
+  overflow: visible;
+  box-sizing: border-box;
+  background: linear-gradient(90deg, rgba(124,168,224,0.75), rgba(76,98,146,0.75));
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-strong);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(600px 200px at -10% -20%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 60%),
+              linear-gradient(145deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 35%);
+  opacity: 0.35;
+}
+
+/* Obsah headeru nad ::before a ::after (shimmer), aby nebyl překryt */
+.header-inner > .brand,
+.header-inner > .nav-toggle,
+.header-inner > .site-nav {
+  position: relative;
+  z-index: 1;
+}
+
+.header-inner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 20px;
+  width: 60px;
+  pointer-events: none;
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.55) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-20deg) translateZ(0);
+  -webkit-transform: skewX(-20deg) translateZ(0);
+  animation: header-shimmer 6s ease-in-out infinite;
+}
+
+@keyframes header-shimmer {
+  0%   { left: 20px; opacity: 0; }
+  10%  { opacity: 0.5; }
+  60%  { left: calc(100% - 80px); opacity: 0; }
+  100% { left: calc(100% - 80px); opacity: 0; }
+}
+
+@supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+  .header-inner {
+    background: rgba(124,168,224,0.92);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+}
+
+/* Optional: add .is-scrolled to .site-header in JS for scroll-dependent styling */
+.site-header.is-scrolled .header-inner {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 12px 32px rgba(20, 30, 60, 0.28);
+}
+
+@supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+  .site-header.is-scrolled .header-inner {
+    background: rgba(76, 98, 146, 0.94);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+}
+
+/* --- 3. Brand / logo --- */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 56px;
+  font-size: 2.8em;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-background-white, #fff);
+  text-decoration: none;
+  text-shadow: 0 0 6px rgba(124, 168, 224, 0.55), 0 0 14px rgba(124, 168, 224, 0.35);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  outline: none;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+.brand:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.brand:active {
+  transform: scale(0.98);
+  transition-duration: 0.1s;
+}
+
+.brand-logo {
+  display: block;
+  width: auto;
+  height: 120px;
+  vertical-align: middle;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition: transform 0.3s ease;
+}
+
+.brand-logo[style*="display: none"] {
+  display: none !important;
+}
+
+.brand-text {
+  display: inline;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  text-transform: none;
+  vertical-align: middle;
+  color: var(--color-background-white, #fff);
+  text-shadow: 0 0 6px rgba(124, 168, 224, 0.55), 0 0 14px rgba(124, 168, 224, 0.35);
+}
+
+.brand-text[style*="display: inline"] {
+  display: inline !important;
+}
+
+@media (hover: hover) {
+  .brand:hover {
+    color: var(--color-background-white, #fff);
+    text-shadow: 0 0 10px rgba(124, 168, 224, 0.75), 0 0 22px rgba(124, 168, 224, 0.55);
+  }
+  .brand:hover .brand-logo { transform: scale(1.05); }
+  .brand:hover .brand-text {
+    color: var(--color-background-white, #fff);
+    text-shadow: 0 0 10px rgba(124, 168, 224, 0.75), 0 0 22px rgba(124, 168, 224, 0.55);
+  }
+}
+
+.site-header.is-scrolled .brand-text {
+  color: var(--color-background-white, #fff);
+  text-shadow: 0 0 6px rgba(124, 168, 224, 0.55), 0 0 14px rgba(124, 168, 224, 0.35);
+}
+
+/* --- 4. Nav toggle (visible only in mobile; see @media below) --- */
+.nav-toggle {
+  display: none;
+  position: relative;
+  margin: 0;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-background-white, #fff);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  z-index: var(--z-nav-toggle);
+  pointer-events: auto;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.15);
+  touch-action: manipulation;
+}
+
+.nav-toggle:focus {
+  outline: 2px solid rgba(124, 168, 224, 0.5);
+  outline-offset: 2px;
+}
+
+.nav-toggle:active {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(0.95);
+  transition-duration: 0.1s;
+}
+
+@media (hover: hover) {
+  .nav-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* --- 5. Nav container (desktop: inline; mobile: overlay, see @media) --- */
+.site-nav {
+  display: flex;
+  align-items: center;
+}
+
+.site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav li {
+  margin: 0;
+}
+
+/* --- 6. Nav links (shared base; desktop hover/active in this block) --- */
+.site-nav .nav-link {
+  display: block;
+  position: relative;
+  padding: 10px 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-background-white, #fff);
+  text-decoration: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  border-bottom: none;
+  z-index: 1;
+  transition: color 0.3s ease, background 0.3s ease, transform 0.15s ease, text-shadow 0.18s ease;
+}
+
+.site-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background-color: var(--color-accent, rgba(124, 168, 224, 0.85));
+  transition: width 0.3s ease;
+}
+
+.site-nav .nav-link:active {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(0.98);
+  transition-duration: 0.1s;
+}
+
+.site-nav .nav-link:focus {
+  outline: none;
+}
+
+.site-nav .nav-link:focus-visible {
+  outline: none;
+  border-radius: 8px;
+  box-shadow: 0 0 0 4px rgba(124, 168, 224, 0.35);
+}
+
+@media (hover: hover) {
+  .site-nav .nav-link:hover {
+    color: var(--color-accent, rgba(124, 168, 224, 0.95));
+    background: rgba(255, 255, 255, 0.14);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .site-nav .nav-link:hover::after { width: 100%; }
+  .site-header.is-scrolled .site-nav .nav-link:hover {
+    color: var(--color-accent, rgba(124, 168, 224, 0.95));
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.site-header.is-scrolled .site-nav .nav-link {
+  color: var(--color-background-white, #fff);
+}
+
+/* --- 7. Nav link active state --- */
+.site-nav .nav-link.active {
+  font-weight: 600;
+  color: var(--color-background-white, #fff);
+  background: none;
+  border-radius: 0;
+  border-bottom: 2px solid var(--color-accent, rgba(124, 168, 224, 0.85));
+  box-shadow: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.site-nav .nav-link.active::before { display: none; }
+.site-nav .nav-link.active::after { width: 100%; }
+
+.site-header.is-scrolled .site-nav .nav-link.active {
+  color: var(--color-background-white, #fff);
+  background: none;
+  border-bottom: 2px solid var(--color-accent, rgba(124, 168, 224, 0.85));
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   MOBILE (max-width: 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .site-header {
+    margin-top: 8px;
+    top: 8px;
+    width: 100%;
+    padding: 12px 0;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .header-inner {
+    flex-wrap: nowrap;
+    padding: 12px 16px !important;
+    min-height: 56px;
+    width: calc(100% - 20px) !important;
+    max-width: calc(100% - 20px) !important;
+    border-radius: var(--radius-lg);
+  }
+
+  .brand {
+    min-height: 48px;
+    font-size: 2.2em;
+  }
+
+  .brand-logo {
+    height: 90px;
+  }
+
+  .nav-toggle {
+    display: block;
+    margin-left: auto;
+  }
+
+  /* Nav becomes overlay panel; visibility controlled by .is-open */
+  .site-nav {
+    position: fixed;
+    top: 68px;
+    left: 50%;
+    width: calc(100% - 20px) !important;
+    max-width: calc(100% - 20px) !important;
+    display: none;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: var(--z-nav);
+    background: transparent;
+    transform: translateX(-50%) translateZ(0);
+    -webkit-transform: translateX(-50%) translateZ(0);
+  }
+
+  .site-nav.is-open {
+    display: block;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateZ(0);
+    -webkit-transform: translateX(-50%) translateZ(0);
+  }
+
+  .site-nav ul {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin: 0;
+    padding: 10px 12px;
+    background: linear-gradient(90deg, rgba(124, 168, 224, 0.92), rgba(76, 98, 146, 0.92));
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  }
+
+  .site-nav .nav-link {
+    width: 100%;
+    padding: 12px 16px;
+    color: var(--color-background-white, #fff);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+  }
+
+  @media (hover: hover) {
+    .site-nav .nav-link:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: var(--color-background-white, #fff);
+    }
+  }
+
+  .site-nav .nav-link:active {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(0.98);
+    transition-duration: 0.1s;
+  }
+}
+
+/* --- Small mobile --- */
+@media (max-width: 480px) {
+  .brand {
+    font-size: 1.5em;
+    gap: 3px;
+  }
+
+  .brand-logo {
+    height: 56px;
+  }
+
+  .site-nav .nav-link {
+    padding: 10px 12px;
+    font-size: 0.875rem;
+  }
+}
+
+/* --- Desktop: ensure horizontal nav and hide toggle --- */
+@media (min-width: 769px) {
+  .nav-toggle {
+    display: none !important;
+  }
+
+  .site-nav {
+    display: flex !important;
+  }
+
+  .site-nav ul {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+@supports not (position: sticky) {
+  .site-header { position: relative; top: auto; }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header .header-inner { background: rgba(124,168,224,0.92); }
+}

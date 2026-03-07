@@ -1,0 +1,12 @@
+/**
+ * Page: index. Entry point – načítá index/*.css.
+ * Typography/base v base/; komponenty v components/.
+ */
+:root { --header-height: 100px; }
+
+@import url('./index/hero.css');
+@import url('./index/sections.css');
+@import url('./index/reveal.css');
+@import url('./index/responsive.css');
+@import url('./index/print.css');
+@import url('./index/misc.css');
