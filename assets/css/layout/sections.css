@@ -20,6 +20,10 @@ body[data-page="index"] #main-content > .content-section:first-of-type {
   .content-section {
     width: calc(100% - var(--content-gutter));
   }
+  /* Na mobilu je header v toku – stačí normální mezera pod ním */
+  body[data-page="index"] #main-content > .content-section:first-of-type {
+    margin-top: var(--space-xl) !important;
+  }
 }
 
 .content-section p,

@@ -34,6 +34,12 @@ body[data-page="index"] {
   body[data-page="index"] {
     background:
       linear-gradient(rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.88)),
-      url("/images/hero-mobile.jpg") center center / cover no-repeat fixed;
+      url("/images/hero-mobile.jpg") center center / cover no-repeat scroll;
+  }
+  body[data-page="index"] #main-content > .content-section:first-of-type {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.62)),
+      url("/images/hero-mobile.jpg") center 38% / 100% auto no-repeat fixed;
+    background-attachment: fixed;
   }
 }

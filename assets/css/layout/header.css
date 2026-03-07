@@ -329,104 +329,163 @@
 }
 
 /* ==========================================================================
-   MOBILE (max-width: 768px)
+   MOBILE (max-width: 768px) – header v toku: řádek 1 = logo + Menu, řádek 2 = menu (obsah se posune)
    ========================================================================== */
 @media (max-width: 768px) {
-  .site-header {
-    margin-top: 8px;
-    top: 8px;
-    width: 100%;
-    padding: 12px 0;
-    padding-top: 12px;
-    padding-bottom: 12px;
+  .site-header,
+  .site-header .header-inner,
+  .site-header .site-nav {
+    overflow: visible !important;
   }
 
+  /* Header v toku – při otevření menu se zvětší a obsah pod ním se posune dolů */
+  .site-header {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    margin: 10px auto 0;
+    width: calc(100% - 24px);
+    max-width: calc(100% - 24px);
+    padding: 0;
+  }
+
+  /* Horní řádek (brand + toggle) + pod ním při otevření .site-nav; order zajišťuje, že toggle zůstane vpravo */
   .header-inner {
-    flex-wrap: nowrap;
-    padding: 12px 16px !important;
-    min-height: 56px;
-    width: calc(100% - 20px) !important;
-    max-width: calc(100% - 20px) !important;
-    border-radius: var(--radius-lg);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+    padding: 18px 20px !important;
+    min-height: 64px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border-radius: var(--radius-xl);
+    box-sizing: border-box;
   }
 
   .brand {
-    min-height: 48px;
+    order: 1;
+    min-height: 44px;
     font-size: 2.2em;
+    flex-shrink: 0;
   }
 
   .brand-logo {
-    height: 90px;
+    height: 72px;
   }
 
   .nav-toggle {
-    display: block;
+    order: 2;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    min-width: 48px;
     margin-left: auto;
+    padding: 12px 16px;
+    flex-shrink: 0;
   }
 
-  /* Nav becomes overlay panel; visibility controlled by .is-open */
+  /* Menu jako druhý blok v toku – full width pod prvním řádkem, žádný fixed/overlay */
   .site-nav {
-    position: fixed;
-    top: 68px;
-    left: 50%;
-    width: calc(100% - 20px) !important;
-    max-width: calc(100% - 20px) !important;
+    order: 3;
+    position: relative;
+    width: 100%;
+    flex-basis: 100%;
+    margin-top: 10px;
+    max-height: 60vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     display: none;
     visibility: hidden;
     pointer-events: none;
-    z-index: var(--z-nav);
-    background: transparent;
-    transform: translateX(-50%) translateZ(0);
-    -webkit-transform: translateX(-50%) translateZ(0);
+    box-sizing: border-box;
   }
 
   .site-nav.is-open {
     display: block;
     visibility: visible;
     pointer-events: auto;
-    transform: translateX(-50%) translateZ(0);
-    -webkit-transform: translateX(-50%) translateZ(0);
   }
 
   .site-nav ul {
-    flex-direction: column;
-    gap: 8px;
+    display: block;
     width: 100%;
     margin: 0;
-    padding: 10px 12px;
-    background: linear-gradient(90deg, rgba(124, 168, 224, 0.92), rgba(76, 98, 146, 0.92));
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    border-radius: 14px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    padding: 10px 0;
+    list-style: none;
+    background: linear-gradient(180deg, rgba(124, 168, 224, 0.97), rgba(76, 98, 146, 0.97));
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-strong), 0 24px 48px rgba(20, 30, 60, 0.28);
+    box-sizing: border-box;
+  }
+
+  .site-nav li {
+    margin: 0;
+    list-style: none;
+    display: block;
+  }
+
+  .site-nav li:not(:last-child) .nav-link {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
   }
 
   .site-nav .nav-link {
+    display: block;
     width: 100%;
-    padding: 12px 16px;
+    min-height: 56px;
+    padding: 18px 24px;
+    font-size: 1.1rem;
+    font-weight: 500;
     color: var(--color-background-white, #fff);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 8px;
+    text-align: left;
+    text-decoration: none;
+    box-sizing: border-box;
+    line-height: 1.3;
+    transition: background var(--transition-fast), color var(--transition-fast);
   }
 
   @media (hover: hover) {
     .site-nav .nav-link:hover {
-      background: rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.2);
       color: var(--color-background-white, #fff);
     }
   }
 
   .site-nav .nav-link:active {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(0.98);
-    transition-duration: 0.1s;
+    background: rgba(255, 255, 255, 0.28);
+  }
+
+  .site-nav .nav-link:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.95);
+    outline-offset: 2px;
+    background: rgba(255, 255, 255, 0.15);
   }
 }
 
 /* --- Small mobile --- */
 @media (max-width: 480px) {
+  .site-header {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: calc(100% - 20px);
+    max-width: calc(100% - 20px);
+  }
+
+  .header-inner {
+    padding: 16px 18px !important;
+    min-height: 60px;
+  }
+
   .brand {
-    font-size: 1.5em;
-    gap: 3px;
+    font-size: 1.6em;
+    gap: 4px;
   }
 
   .brand-logo {
@@ -434,8 +493,9 @@
   }
 
   .site-nav .nav-link {
-    padding: 10px 12px;
-    font-size: 0.875rem;
+    min-height: 52px;
+    padding: 16px 20px;
+    font-size: 1.05rem;
   }
 }
 
