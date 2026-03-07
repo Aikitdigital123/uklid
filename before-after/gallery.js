@@ -130,12 +130,23 @@
     }
 
     var emptyState = document.getElementById('before-after-empty');
-    var data = Array.isArray(window.beforeAfterGallery)
-      ? window.beforeAfterGallery.slice()
-      : [];
+    
+    // Bezpečné načtení dat s error handlingem
+    var data = [];
+    try {
+      if (window.beforeAfterGallery && Array.isArray(window.beforeAfterGallery)) {
+        data = window.beforeAfterGallery.slice();
+      } else if (window.beforeAfterGallery && typeof window.beforeAfterGallery === 'object') {
+        // Fallback: pokud je to objekt, zkus převést na pole
+        data = Array.isArray(window.beforeAfterGallery) ? window.beforeAfterGallery.slice() : [];
+      }
+    } catch (e) {
+      // Pokud dojde k chybě při přístupu k window.beforeAfterGallery, použijeme prázdné pole
+      data = [];
+    }
 
     data = data.filter(function (item) {
-      return item && item.before && item.after;
+      return item && typeof item === 'object' && item.before && item.after;
     });
 
     if (!data.length) {
@@ -158,9 +169,28 @@
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', renderGallery);
-  } else {
+  // Bezpečná inicializace - čekáme na data.js nebo používáme fallback
+  function safeRenderGallery() {
+    // Pokud data.js ještě není načten, počkáme
+    if (typeof window.beforeAfterGallery === 'undefined') {
+      // Zkusíme znovu po krátké prodlevě (max 3 pokusy)
+      var attempts = 0;
+      var maxAttempts = 3;
+      var checkInterval = setInterval(function() {
+        attempts++;
+        if (typeof window.beforeAfterGallery !== 'undefined' || attempts >= maxAttempts) {
+          clearInterval(checkInterval);
+          renderGallery();
+        }
+      }, 50);
+      return;
+    }
     renderGallery();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', safeRenderGallery);
+  } else {
+    safeRenderGallery();
   }
 })();

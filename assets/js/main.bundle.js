@@ -31,3 +31,46 @@ safeInit('backToTop', initBackToTop);
 safeInit('cookieBanner', initCookieBanner);
 safeInit('enhancedTracking', initEnhancedTracking);
 safeInit('advancedTracking', initAdvancedTracking);
+
+// Reset dataset flags při načtení z bfcache (tlačítko Zpět)
+// Toto zajistí, že komponenty se reinicializují správně
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) {
+    // Nastavit flag, že probíhá reinicializace
+    window.__lesktopReinitializing = true;
+    
+    // Reset všech dataset flags pro reinicializaci komponent
+    const htmlEl = document.documentElement;
+    const flagsToReset = [
+      'revealInit',
+      'navInit',
+      'formInit',
+      'selectInit',
+      'backToTopInit',
+      'cookieBannerInit',
+      'enhancedTrackingInit',
+      'advancedTrackingInit',
+      'indexPageInit'
+    ];
+    
+    flagsToReset.forEach(flag => {
+      delete htmlEl.dataset[flag];
+    });
+    
+    // Reinicializovat komponenty po resetu flags
+    setTimeout(() => {
+      safeInit('reveal', initReveal);
+      safeInit('nav', initNav);
+      safeInit('forms', initForms);
+      safeInit('select', initSelects);
+      safeInit('backToTop', initBackToTop);
+      safeInit('cookieBanner', initCookieBanner);
+      safeInit('enhancedTracking', initEnhancedTracking);
+      safeInit('advancedTracking', initAdvancedTracking);
+      
+      // Označit, že reinicializace je dokončena
+      window.__lesktopReinitializing = false;
+      window.__lesktopReinitialized = true;
+    }, 0);
+  }
+});

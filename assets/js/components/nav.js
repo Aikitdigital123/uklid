@@ -41,10 +41,34 @@ export function initNav() {
       const targetId = this.getAttribute('href');
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
-        const headerOffset = headerEl ? headerEl.offsetHeight : 0;
-        const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-        const offsetPosition = Math.max(0, elementPosition - headerOffset - 20);
-        scrollToY(offsetPosition);
+        try {
+          const headerOffset = headerEl ? headerEl.offsetHeight : 0;
+          const rect = targetElement.getBoundingClientRect();
+          
+          // Bezpečná kontrola, zda getBoundingClientRect vrátil validní hodnoty
+          if (rect && typeof rect.top === 'number' && isFinite(rect.top)) {
+            const pageYOffset = window.pageYOffset || document.documentElement.scrollTop || 0;
+            const elementPosition = rect.top + pageYOffset;
+            const offsetPosition = Math.max(0, elementPosition - headerOffset - 20);
+            scrollToY(offsetPosition);
+          } else {
+            // Fallback: použij offsetTop pokud getBoundingClientRect selhal
+            const offsetTop = targetElement.offsetTop || 0;
+            const offsetPosition = Math.max(0, offsetTop - headerOffset - 20);
+            scrollToY(offsetPosition);
+          }
+        } catch (e) {
+          // Fallback při chybě: použij offsetTop
+          try {
+            const headerOffset = headerEl ? headerEl.offsetHeight : 0;
+            const offsetTop = targetElement.offsetTop || 0;
+            const offsetPosition = Math.max(0, offsetTop - headerOffset - 20);
+            scrollToY(offsetPosition);
+          } catch (fallbackError) {
+            // Pokud i fallback selhal, scrolluj na začátek sekce
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
       }
 
       // Active state within nav only
@@ -61,10 +85,34 @@ export function initNav() {
       const targetElement = document.querySelector(targetId);
       if (!targetElement) return;
       e.preventDefault();
-      const headerOffset = headerEl ? headerEl.offsetHeight : 0;
-      const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = Math.max(0, elementPosition - headerOffset - 20);
-      scrollToY(offsetPosition);
+      try {
+        const headerOffset = headerEl ? headerEl.offsetHeight : 0;
+        const rect = targetElement.getBoundingClientRect();
+        
+        // Bezpečná kontrola, zda getBoundingClientRect vrátil validní hodnoty
+        if (rect && typeof rect.top === 'number' && isFinite(rect.top)) {
+          const pageYOffset = window.pageYOffset || document.documentElement.scrollTop || 0;
+          const elementPosition = rect.top + pageYOffset;
+          const offsetPosition = Math.max(0, elementPosition - headerOffset - 20);
+          scrollToY(offsetPosition);
+        } else {
+          // Fallback: použij offsetTop pokud getBoundingClientRect selhal
+          const offsetTop = targetElement.offsetTop || 0;
+          const offsetPosition = Math.max(0, offsetTop - headerOffset - 20);
+          scrollToY(offsetPosition);
+        }
+      } catch (e) {
+        // Fallback při chybě: použij offsetTop
+        try {
+          const headerOffset = headerEl ? headerEl.offsetHeight : 0;
+          const offsetTop = targetElement.offsetTop || 0;
+          const offsetPosition = Math.max(0, offsetTop - headerOffset - 20);
+          scrollToY(offsetPosition);
+        } catch (fallbackError) {
+          // Pokud i fallback selhal, scrolluj na začátek sekce
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
     });
   }
 

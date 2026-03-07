@@ -5,11 +5,25 @@ export function initBackToTop() {
   if (document.documentElement.dataset.backToTopInit === '1') return;
   document.documentElement.dataset.backToTopInit = '1';
 
-  const btn = document.createElement('button');
-  btn.className = 'back-to-top';
-  btn.type = 'button';
-  btn.setAttribute('aria-label', 'Zpět na začátek');
-  btn.innerHTML = '<i class="fas fa-arrow-up" aria-hidden="true"></i>';
+  // Kontrola, zda už existuje back-to-top tlačítko v DOM (při reinicializaci z bfcache)
+  let btn = document.querySelector('.back-to-top');
+  
+  if (!btn) {
+    // Tlačítko neexistuje, vytvořit nové
+    btn = document.createElement('button');
+    btn.className = 'back-to-top';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Zpět na začátek');
+    btn.innerHTML = '<i class="fas fa-arrow-up" aria-hidden="true"></i>';
+    document.body.appendChild(btn);
+  } else {
+    // Tlačítko už existuje, odstranit staré event listeners (pokud existují)
+    // a připravit pro nové použití
+    const newBtn = btn.cloneNode(true);
+    btn.parentNode.replaceChild(newBtn, btn);
+    btn = newBtn;
+  }
+
   const scrollToTop = () => {
     try {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -21,8 +35,6 @@ export function initBackToTop() {
   btn.addEventListener('click', () => {
     scrollToTop();
   });
-
-  document.body.appendChild(btn);
 
   const isCookieBannerVisible = () => {
     const cookieBanner = document.getElementById('cookie-banner');

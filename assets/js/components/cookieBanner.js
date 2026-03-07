@@ -133,9 +133,16 @@ export function initCookieBanner() {
 
   const setStoredConsent = (value) => {
     try {
+      // Validace hodnoty před uložením
+      if (value !== 'all' && value !== 'necessary') {
+        return false; // Nevalidní hodnota
+      }
+      
       localStorage.setItem(storageKey, value);
+      return true; // Úspěšně uloženo
     } catch (e) {
-      // localStorage can be unavailable in private mode
+      // localStorage can be unavailable in private mode, quota exceeded, etc.
+      return false; // Selhalo uložení
     }
   };
 
@@ -160,14 +167,43 @@ export function initCookieBanner() {
       }
       deleteGaCookies();
     }
-    hideBanner();
+    
+    // Pokus o uložení souhlasu - pokud selže, banner zůstane viditelný
+    const saved = setStoredConsent(value);
+    if (saved) {
+      hideBanner();
+    } else {
+      // Pokud se nepodařilo uložit, banner zůstane viditelný
+      // Uživatel může zkusit znovu nebo pokračovat bez uložení
+      // (v private mode se banner zobrazí při každém reloadu, což je očekávané chování)
+    }
   };
+
+  // Kontrola, zda banner už není skrytý v DOM (při reinicializaci z bfcache)
+  // Toto zajistí, že banner se nezobrazí znovu, i když localStorage není dostupný
+  const isBannerHiddenInDOM = banner.classList.contains('is-hidden') || 
+                               banner.getAttribute('aria-hidden') === 'true';
 
   let storedConsent = null;
   try {
-    storedConsent = localStorage.getItem(storageKey);
+    const raw = localStorage.getItem(storageKey);
+    // Validace načtené hodnoty
+    if (raw === 'all' || raw === 'necessary') {
+      storedConsent = raw;
+    } else if (raw !== null) {
+      // Pokud je uložena nevalidní hodnota, smaž ji
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (removeError) {
+        // Ignore remove errors
+      }
+    }
   } catch (e) {
     // localStorage can be unavailable in private mode
+    // Pokud je banner už skrytý v DOM, neukazovat ho znovu
+    if (isBannerHiddenInDOM) {
+      return;
+    }
   }
 
   if (storedConsent === 'all') {
@@ -180,7 +216,11 @@ export function initCookieBanner() {
     return;
   }
 
-  showBanner();
+  // Zobrazit banner pouze pokud není už skrytý v DOM
+  // Toto zabrání zobrazení banneru při reinicializaci z bfcache, i když localStorage není dostupný
+  if (!isBannerHiddenInDOM) {
+    showBanner();
+  }
 
   const bindConsentAction = (button, value) => {
     if (!button) return;

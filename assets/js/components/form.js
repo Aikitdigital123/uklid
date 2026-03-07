@@ -33,19 +33,60 @@ const conversionSendToByForm = {
 function readStoredAttribution() {
   try {
     const raw = localStorage.getItem(attributionStorageKey);
-    if (!raw) return {};
-    const parsed = JSON.parse(raw);
-    return parsed && typeof parsed === 'object' ? parsed : {};
+    if (!raw || typeof raw !== 'string') return {};
+    
+    // Validace, zda je to validní JSON string před parsováním
+    const trimmed = raw.trim();
+    if (!trimmed || (trimmed[0] !== '{' && trimmed[0] !== '[')) {
+      // Pokud to není JSON objekt nebo pole, smaž poškozená data
+      try {
+        localStorage.removeItem(attributionStorageKey);
+      } catch (removeError) {
+        // Ignore remove errors
+      }
+      return {};
+    }
+    
+    const parsed = JSON.parse(trimmed);
+    // Validace, zda je parsovaný výsledek objekt (ne pole, ne null, ne primitiv)
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed) && parsed !== null) {
+      return parsed;
+    }
+    
+    // Pokud parsování vrátilo nevalidní typ, smaž data
+    try {
+      localStorage.removeItem(attributionStorageKey);
+    } catch (removeError) {
+      // Ignore remove errors
+    }
+    return {};
   } catch (e) {
+    // Pokud dojde k chybě při parsování, smaž poškozená data
+    try {
+      localStorage.removeItem(attributionStorageKey);
+    } catch (removeError) {
+      // Ignore remove errors
+    }
     return {};
   }
 }
 
 function writeStoredAttribution(data) {
   try {
-    localStorage.setItem(attributionStorageKey, JSON.stringify(data));
+    // Validace dat před uložením
+    if (!data || typeof data !== 'object' || Array.isArray(data)) {
+      return; // Neukládat nevalidní data
+    }
+    
+    const serialized = JSON.stringify(data);
+    if (!serialized || serialized === 'null') {
+      return; // Neukládat null nebo prázdné hodnoty
+    }
+    
+    localStorage.setItem(attributionStorageKey, serialized);
   } catch (e) {
-    // localStorage can be unavailable
+    // localStorage can be unavailable (private mode, quota exceeded, etc.)
+    // Silently fail - attribution is not critical
   }
 }
 
@@ -387,7 +428,14 @@ export function initForms() {
         submitButton.classList.add('is-loading');
         const originalText = submitButton.textContent;
         submitButton.dataset.originalText = originalText;
-        submitButton.innerHTML = '<span class="btn-spinner"></span> Odesílám...';
+        
+        // Bezpečné vytvoření spinneru a textu bez innerHTML
+        submitButton.textContent = ''; // Vymazat obsah
+        const spinner = document.createElement('span');
+        spinner.className = 'btn-spinner';
+        spinner.setAttribute('aria-hidden', 'true');
+        submitButton.appendChild(spinner);
+        submitButton.appendChild(document.createTextNode(' Odesílám...'));
       }
 
       formStatusContact.textContent = 'Odesílám vaši zprávu...';
@@ -473,7 +521,14 @@ export function initForms() {
         submitButton.classList.add('is-loading');
         const originalText = submitButton.textContent;
         submitButton.dataset.originalText = originalText;
-        submitButton.innerHTML = '<span class="btn-spinner"></span> Odesílám...';
+        
+        // Bezpečné vytvoření spinneru a textu bez innerHTML
+        submitButton.textContent = ''; // Vymazat obsah
+        const spinner = document.createElement('span');
+        spinner.className = 'btn-spinner';
+        spinner.setAttribute('aria-hidden', 'true');
+        submitButton.appendChild(spinner);
+        submitButton.appendChild(document.createTextNode(' Odesílám...'));
       }
 
       formStatusCalc.textContent = 'Odesílám vaši poptávku...';

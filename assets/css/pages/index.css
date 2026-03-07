@@ -387,10 +387,17 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 }
 
 /* --- Animace (pro JavaScript třídy) --- */
+/* Progressive enhancement: bez JS jsou sekce viditelné */
 .reveal-on-scroll {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity var(--transition-speed) ease-out, transform var(--transition-speed) ease-out;
+}
+
+/* S JS jsou sekce skryté, dokud nedostanou .is-visible */
+.js .reveal-on-scroll:not(.is-visible) {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity var(--transition-speed) ease-out, transform var(--transition-speed) ease-out;
 }
 
 .reveal-on-scroll.is-visible {
@@ -751,7 +758,8 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
 @media (max-width: 768px) { .brand-logo { height: 56px; } }
 
 /* Vylepšené scroll-in animace pro reveal-on-scroll */
-.js .reveal-on-scroll { 
+/* S JS jsou sekce skryté, dokud nedostanou .is-visible */
+.js .reveal-on-scroll:not(.is-visible) { 
   opacity: 0; 
   transform: translateY(20px) scale(0.96) translateZ(0); /* GPU optimalizace pro iOS */
   filter: blur(4px);

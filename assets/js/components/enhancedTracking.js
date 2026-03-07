@@ -67,6 +67,8 @@ export function initEnhancedTracking() {
 
   // Track viditelnosti sekcí (pro lepší engagement tracking)
   const sections = document.querySelectorAll('section[id]');
+  if (!sections.length) return;
+
   const observerOptions = {
     root: null,
     rootMargin: '0px',
@@ -75,27 +77,44 @@ export function initEnhancedTracking() {
 
   if (!('IntersectionObserver' in window)) return;
 
-  const sectionObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting && canTrack()) {
-        const sectionId = entry.target.id;
-        if (!entry.target.dataset.tracked) {
-          entry.target.dataset.tracked = 'true';
-          const sectionTitleEl = entry.target.querySelector('.section-title');
-          const sectionName = sectionTitleEl && sectionTitleEl.textContent ? sectionTitleEl.textContent : sectionId;
-          window.lesktopTrackEvent('event', 'section_view', {
-            section_id: sectionId,
-            section_name: sectionName
-          });
-          
-          // Stop observing this section once tracked to save resources
-          observer.unobserve(entry.target);
+  let sectionObserver;
+  try {
+    sectionObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && canTrack()) {
+          const sectionId = entry.target.id;
+          if (!entry.target.dataset.tracked) {
+            entry.target.dataset.tracked = 'true';
+            const sectionTitleEl = entry.target.querySelector('.section-title');
+            const sectionName = sectionTitleEl && sectionTitleEl.textContent ? sectionTitleEl.textContent : sectionId;
+            window.lesktopTrackEvent('event', 'section_view', {
+              section_id: sectionId,
+              section_name: sectionName
+            });
+            
+            // Stop observing this section once tracked to save resources
+            try {
+              observer.unobserve(entry.target);
+            } catch (unobserveError) {
+              // Ignore unobserve errors (element may have been removed)
+            }
+          }
         }
-      }
-    });
-  }, observerOptions);
+      });
+    }, observerOptions);
+  } catch (observerError) {
+    // IntersectionObserver initialization failed - silently fail
+    return;
+  }
 
+  // Safely observe all sections with error handling
   sections.forEach((section) => {
-    sectionObserver.observe(section);
+    try {
+      if (section && sectionObserver) {
+        sectionObserver.observe(section);
+      }
+    } catch (observeError) {
+      // Ignore observe errors for individual sections
+    }
   });
 }

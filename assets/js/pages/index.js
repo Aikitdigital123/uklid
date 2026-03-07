@@ -1,4 +1,4 @@
-﻿﻿﻿﻿// Page-specific skript pro index — po refaktoringu
+﻿﻿// Page-specific skript pro index — po refaktoringu
 // Globální komponenty (nav, reveal, form, select) se inicializují z assets/js/main.js
 // Tady ponecháváme prostor jen pro případné budoucí chování specifické pro tuto stránku.
 
@@ -52,19 +52,49 @@ document.addEventListener('DOMContentLoaded', () => {
 // Tento kód musí být mimo DOMContentLoaded, aby reagoval i na načtení z bfcache (tlačítko Zpět)
 window.addEventListener('pageshow', (event) => {
   // Spustí se při každém zobrazení stránky (i z historie)
-  setTimeout(() => {
-    const hiddenElements = document.querySelectorAll('.reveal-on-scroll:not(.is-visible)');
-    hiddenElements.forEach(el => {
-      el.classList.add('is-visible');
-      el.style.opacity = '1'; // Hard fallback pro jistotu
-      el.style.transform = 'none'; // Reset transformace
-    });
-  }, 100); // Krátká prodleva stačí
-
-  // Pokud stránka byla načtena z cache (tlačítko Zpět), vynutíme překreslení
+  
+  // Pokud stránka byla načtena z cache (tlačítko Zpět), počkáme na dokončení reinicializace
   if (event.persisted) {
-    document.body.style.display = 'none';
-    document.body.offsetHeight; // Trigger reflow
-    document.body.style.display = '';
+    // Čekat na dokončení reinicializace v main.bundle.js
+    const waitForReinit = () => {
+      if (window.__lesktopReinitializing) {
+        // Stále probíhá reinicializace, zkusit znovu
+        setTimeout(waitForReinit, 10);
+        return;
+      }
+      
+      // Reinicializace dokončena, nyní můžeme použít force reveal
+      setTimeout(() => {
+        // Pokud reveal.js poskytuje force reveal funkci, použijeme ji
+        if (typeof window.__lesktopForceReveal === 'function') {
+          window.__lesktopForceReveal();
+        } else {
+          // Fallback: pokud reveal.js ještě není načten, použijeme jednoduchou logiku
+          const hiddenElements = document.querySelectorAll('.reveal-on-scroll:not(.is-visible)');
+          hiddenElements.forEach(el => {
+            el.classList.add('is-visible');
+          });
+        }
+      }, 50);
+    };
+    
+    waitForReinit();
+    
+    // Vynutíme překreslení pomocí requestAnimationFrame
+    requestAnimationFrame(() => {
+      document.body.offsetHeight;
+    });
+  } else {
+    // Normální načtení (ne bfcache) - použijeme standardní logiku
+    setTimeout(() => {
+      if (typeof window.__lesktopForceReveal === 'function') {
+        window.__lesktopForceReveal();
+      } else {
+        const hiddenElements = document.querySelectorAll('.reveal-on-scroll:not(.is-visible)');
+        hiddenElements.forEach(el => {
+          el.classList.add('is-visible');
+        });
+      }
+    }, 100);
   }
 });
