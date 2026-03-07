@@ -116,7 +116,7 @@ export function initNav() {
     });
   }
 
-  // Mobile menu toggle - robustní pro Safari mobile
+  // Mobile menu toggle - jednoduché a robustní řešení s ochranou proti duplicitě
   if (menuToggle && siteNav) {
     // Funkce pro toggle menu (idempotentní)
     const toggleMenu = () => {
@@ -125,36 +125,51 @@ export function initNav() {
       menuToggle.setAttribute('aria-expanded', String(isExpanded));
     };
 
-    // Prevent double-tap zoom na iOS Safari
-    let lastTouchTime = 0;
-    const handleTouch = (e) => {
-      const currentTime = Date.now();
-      const timeDiff = currentTime - lastTouchTime;
-      
-      // Pokud je to rychlý double-tap, ignoruj
-      if (timeDiff < 300) {
+    // Ochrana proti duplicitnímu volání při jednom tapu
+    let isProcessing = false;
+    let lastToggleTime = 0;
+    const TOGGLE_COOLDOWN = 300; // Minimální interval mezi toggle akcemi (ms)
+
+    const handleToggle = (e) => {
+      // Pokud už probíhá zpracování, ignoruj
+      if (isProcessing) {
         e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+
+      const currentTime = Date.now();
+      const timeDiff = currentTime - lastToggleTime;
+      
+      // Pokud proběhlo toggle příliš nedávno, ignoruj (ochrana proti double-tap)
+      if (timeDiff < TOGGLE_COOLDOWN) {
+        e.preventDefault();
+        e.stopPropagation();
         return;
       }
       
-      lastTouchTime = currentTime;
-      e.preventDefault(); // Prevent default touch behavior
+      isProcessing = true;
+      lastToggleTime = currentTime;
+      
       toggleMenu();
+      
+      // Reset flagu po krátké prodlevě
+      setTimeout(() => {
+        isProcessing = false;
+      }, TOGGLE_COOLDOWN);
     };
 
-    // Multiple event listeners pro maximální kompatibilitu
-    // Safari mobile často vyžaduje touchstart místo click
-    menuToggle.addEventListener('touchstart', handleTouch, { passive: false });
+    // Pouze touchend s preventDefault - zabrání následnému click eventu
+    // Toto je nejspolehlivější řešení pro Safari mobile
     menuToggle.addEventListener('touchend', (e) => {
       e.preventDefault();
-      toggleMenu();
+      e.stopPropagation();
+      handleToggle(e);
     }, { passive: false });
-    menuToggle.addEventListener('click', (e) => {
-      // Pokud už bylo zpracováno touch event, ignoruj click
-      if (e.type === 'click' && (e.target === menuToggle || menuToggle.contains(e.target))) {
-        toggleMenu();
-      }
-    });
+
+    // Click jako fallback pro desktop (kde touchend neproběhne)
+    // isProcessing flag zajistí, že pokud už proběhl touchend, click bude ignorován
+    menuToggle.addEventListener('click', handleToggle);
 
     // Resize handler with throttling to prevent excessive calls
     let resizeTimeout;
