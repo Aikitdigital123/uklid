@@ -169,28 +169,73 @@
     }
   }
 
-  // Bezpečná inicializace - čekáme na data.js nebo používáme fallback
+  // Robustní inicializace - čekáme na data.js s delším timeoutem a více pokusy
   function safeRenderGallery() {
-    // Pokud data.js ještě není načten, počkáme
-    if (typeof window.beforeAfterGallery === 'undefined') {
-      // Zkusíme znovu po krátké prodlevě (max 3 pokusy)
-      var attempts = 0;
-      var maxAttempts = 3;
-      var checkInterval = setInterval(function() {
-        attempts++;
-        if (typeof window.beforeAfterGallery !== 'undefined' || attempts >= maxAttempts) {
-          clearInterval(checkInterval);
-          renderGallery();
-        }
-      }, 50);
+    var target = document.getElementById('before-after-gallery');
+    if (!target) {
+      // Pokud target ještě neexistuje, zkusíme znovu po DOMContentLoaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', safeRenderGallery);
+      } else {
+        setTimeout(safeRenderGallery, 100);
+      }
       return;
     }
+
+    // Pokud data.js ještě není načten, počkáme s více pokusy a delším intervalem
+    if (typeof window.beforeAfterGallery === 'undefined') {
+      var attempts = 0;
+      var maxAttempts = 10; // Zvýšeno z 3 na 10
+      var checkInterval = setInterval(function() {
+        attempts++;
+        // Zkontrolovat, zda data.js je načten
+        if (typeof window.beforeAfterGallery !== 'undefined') {
+          clearInterval(checkInterval);
+          renderGallery();
+        } else if (attempts >= maxAttempts) {
+          clearInterval(checkInterval);
+          // Po vyčerpání pokusů zkontrolovat, zda data.js existuje
+          // Pokud ano, ale není načten, zkusit ještě jednou po delší prodlevě
+          var scripts = document.querySelectorAll('script[src*="data.js"]');
+          if (scripts.length > 0) {
+            // Script existuje v HTML, ale ještě není načten - počkat déle
+            setTimeout(function() {
+              if (typeof window.beforeAfterGallery !== 'undefined') {
+                renderGallery();
+              } else {
+                // Pokud po dlouhé prodlevě stále není, zobrazit prázdný stav
+                renderGallery();
+              }
+            }, 500);
+          } else {
+            // Script neexistuje v HTML - zobrazit prázdný stav
+            renderGallery();
+          }
+        }
+      }, 100); // Zvýšeno z 50ms na 100ms pro stabilnější kontrolu
+      return;
+    }
+    
+    // Data jsou dostupná - renderovat hned
     renderGallery();
   }
 
+  // Inicializace - čekat na DOMContentLoaded nebo použít okamžitou inicializaci
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', safeRenderGallery);
   } else {
+    // DOM je už připraven, ale data.js může být stále načítán
     safeRenderGallery();
+  }
+  
+  // Fallback: zkusit znovu po window.load (když jsou všechny skripty načteny)
+  if (document.readyState !== 'complete') {
+    window.addEventListener('load', function() {
+      // Pokud galerie ještě nebyla vykreslena, zkusit znovu
+      var target = document.getElementById('before-after-gallery');
+      if (target && target.children.length === 0) {
+        safeRenderGallery();
+      }
+    });
   }
 })();

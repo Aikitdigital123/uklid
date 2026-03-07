@@ -116,12 +116,44 @@ export function initNav() {
     });
   }
 
-  // Mobile menu toggle
+  // Mobile menu toggle - robustní pro Safari mobile
   if (menuToggle && siteNav) {
-    menuToggle.addEventListener('click', () => {
+    // Funkce pro toggle menu (idempotentní)
+    const toggleMenu = () => {
       siteNav.classList.toggle('is-open');
       const isExpanded = siteNav.classList.contains('is-open');
       menuToggle.setAttribute('aria-expanded', String(isExpanded));
+    };
+
+    // Prevent double-tap zoom na iOS Safari
+    let lastTouchTime = 0;
+    const handleTouch = (e) => {
+      const currentTime = Date.now();
+      const timeDiff = currentTime - lastTouchTime;
+      
+      // Pokud je to rychlý double-tap, ignoruj
+      if (timeDiff < 300) {
+        e.preventDefault();
+        return;
+      }
+      
+      lastTouchTime = currentTime;
+      e.preventDefault(); // Prevent default touch behavior
+      toggleMenu();
+    };
+
+    // Multiple event listeners pro maximální kompatibilitu
+    // Safari mobile často vyžaduje touchstart místo click
+    menuToggle.addEventListener('touchstart', handleTouch, { passive: false });
+    menuToggle.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleMenu();
+    }, { passive: false });
+    menuToggle.addEventListener('click', (e) => {
+      // Pokud už bylo zpracováno touch event, ignoruj click
+      if (e.type === 'click' && (e.target === menuToggle || menuToggle.contains(e.target))) {
+        toggleMenu();
+      }
     });
 
     // Resize handler with throttling to prevent excessive calls
