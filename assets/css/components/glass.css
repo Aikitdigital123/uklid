@@ -90,6 +90,28 @@
   z-index: 1;
 }
 
+/* Modifier: higher text contrast on glass */
+.glass-effect.glass-readable::before {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.55) 22%, rgba(255,255,255,0.18) 55%, rgba(255,255,255,0.10) 100%),
+    radial-gradient(1200px 400px at -10% -20%, rgba(255,255,255,0.55), rgba(255,255,255,0) 60%),
+    linear-gradient(145deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 35%);
+  opacity: 0.45;
+}
+
+/* Utility: text block with its own contrast halo */
+.glass-text-contrast {
+  position: relative;
+}
+.glass-text-contrast::before {
+  content: "";
+  position: absolute;
+  inset: -8px -10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.55) 40%, rgba(255,255,255,0.12) 100%);
+  border-radius: 14px;
+  z-index: -1;
+}
+
 /* Fallback when backdrop-filter is not supported */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass-effect,

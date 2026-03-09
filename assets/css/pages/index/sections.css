@@ -1,0 +1,41 @@
+/**
+ * Index: sekční nadpisy a pomocné třídy.
+ */
+.section-subtitle {
+  font-family: var(--font-heading);
+  font-size: 2em;
+  color: var(--color-primary-dark);
+  margin-top: 60px;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.section-subtitle::after {
+  content: none;
+}
+
+.about-section-subtitle {
+  font-family: var(--font-heading);
+  font-size: 1.8em;
+  color: var(--color-primary-dark);
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.about-section-subtitle::after {
+  content: none;
+}
+
+/* Skrytí pole frekvence (přepíná JS) */
+.form-group-hidden {
+  display: none !important;
+}

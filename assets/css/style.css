@@ -1,13 +1,17 @@
-﻿/*\n  style.css — entry point pro vývoj\n  Sem můžeš postupně skládat jednotlivé části (tokens, base, layout, components, pages).\n  Pokud budeš chtít, později to nahradíme build procesem (PostCSS/Vite) a importy rozdělíme.\n*/
-
+/**
+ * style.css – entry point.
+ * Order: tokens → base → layout → components → pages.
+ */
 @import url('./tokens/tokens.css');
 @import url('./base/reset.css');
 @import url('./base/typography.css');
 @import url('./base/utilities.css');
+
+@import url('./layout/container.css');
 @import url('./layout/header.css');
 @import url('./layout/sections.css');
 @import url('./layout/footer.css');
-@import url('./layout/container.css');
+
 @import url('./components/button.css');
 @import url('./components/card.css');
 @import url('./components/form.css');
@@ -20,3 +24,49 @@
 
 @import url('./pages/index.css');
 
+/* Homepage hero background (jediny zdroj pravdy) */
+body[data-page="index"] {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.82)),
+    url("/images/hero.jpg") center center / cover no-repeat fixed;
+}
+
+/* Mobile/iOS Safari: emulate static hero background via fixed layer (not background-attachment: fixed). */
+@media (max-width: 768px) {
+  body[data-page="index"] {
+    background: none;
+    isolation: isolate;
+  }
+
+  body[data-page="index"] #main-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  body[data-page="index"]::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.56)),
+      url("/images/hero.jpg") center center / cover no-repeat;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  body[data-page="index"] #main-content > .content-section:first-of-type {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.38));
+    background-attachment: scroll;
+  }
+}
+
+@media (max-width: 480px) {
+  body[data-page="index"]::before {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.54)),
+      url("/images/hero-mobile.jpg") center 38% / cover no-repeat;
+  }
+}

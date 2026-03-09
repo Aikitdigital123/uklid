@@ -20,7 +20,8 @@ body {
   line-height: 1.6;
   color: var(--color-text-dark);
   min-height: 100dvh;
-  min-height: 100vh; /* Fallback pro starší prohlížeče */
+  min-height: -webkit-fill-available; /* iOS Safari: vyplní dostupnou výšku při změně UI (adresář) */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -39,13 +40,11 @@ html, body {
   overflow-x: hidden;
 }
 
-* {
-  max-width: 100%;
-}
-
-/* Zabránit horizontálnímu scrollování na všech úrovních */
-section, article, div, header, footer, nav, aside {
-  overflow-x: hidden;
+/* Safari/iOS: overflow-x clip redukuje vedlejsi clipping interakci */
+@supports (overflow: clip) {
+  html, body {
+    overflow-x: clip;
+  }
 }
 
 /* Zajistit, že tabulky a pre nezpůsobují overflow */
@@ -70,3 +69,4 @@ select,
 textarea {
   font-family: inherit;
 }
+

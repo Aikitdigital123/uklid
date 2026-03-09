@@ -1,32 +1,33 @@
-/* Sekce a nadpisy sekcí */
+/* Sections; width uses layout tokens */
 .content-section {
-    padding: 88px 0;
-    text-align: center;
-    margin: 28px auto;
-    width: min(1200px, calc(100% - 32px));
+  padding: 88px 0;
+  text-align: center;
+  margin: var(--space-3xl) auto;
+  width: min(var(--content-max), calc(100% - var(--content-gutter)));
 }
 
-/* Sekce "O nás" potřebuje margin-top, aby celá sekce včetně obdélníku byla pod fixed headerem s vizuálním odstupem jako ostatní sekce */
-#about.content-section {
-    margin-top: 180px;
+/* Homepage: mezera přímo na první content blok pod headerem */
+body[data-page="index"] #main-content > .content-section:first-of-type {
+  margin-top: calc(var(--header-height) + var(--space-xl)) !important;
 }
 
 /* Sekce "Naše služby" - prevence horizontálního overflow z box-shadow a animací */
 #services.content-section {
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 @media (max-width: 768px) {
   .content-section {
-    width: calc(100% - 32px);
+    width: calc(100% - var(--content-gutter));
   }
-  
-  #about.content-section {
-    margin-top: 120px;
+  /* Na mobilu je header fixed – držíme bezpečný offset pod ním */
+  body[data-page="index"] #main-content > .content-section:first-of-type {
+    margin-top: calc(var(--header-height) + var(--space-xl) + env(safe-area-inset-top, 0)) !important;
   }
 }
 
-.content-section p {
+.content-section p,
+.content-section .section-intro {
     max-width: 800px;
     margin: 20px auto 40px;
     font-size: 1.1em;
@@ -46,4 +47,3 @@
 .section-title::after {
     content: none;
 }
-

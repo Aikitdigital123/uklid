@@ -1,30 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="cs">
 <head>
+    <!-- HEAD: charset → viewport → title → description → canonical → robots → OG/Twitter → favicon & theme-color → CSS → preload → structured data -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Lesktop | Profesionální úklidové služby pro domácnosti a firmy</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://www.googletagmanager.com">
-    <link rel="preconnect" href="https://www.google-analytics.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap"></noscript>
     <meta name="description" content="Lesktop nabízí spolehlivé a důsledné úklidové služby s ověřenými prostředky. Specializujeme se na úklid domácností, kanceláří a společných prostor v Praze a Středních Čechách.">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#3a4768">
-    <!-- Google Search Console verification - přidej svůj verification tag zde -->
-    <!-- <meta name="google-site-verification" content="TVŮJ_VERIFICATION_CODE" /> -->
     <link rel="canonical" href="https://lesktop.cz/">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
     <meta property="og:url" content="https://lesktop.cz/">
     <meta property="og:site_name" content="Lesktop">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Lesktop | Profesionální úklidové služby">
-    <meta name="twitter:description" content="Spolehlivé úklidové služby pro domácnosti a firmy v Praze a Středních Čechách.">
-    <meta name="twitter:image" content="https://lesktop.cz/images/hero.jpg">
-
-
-    <meta property="og:type" content="website">
     <meta property="og:locale" content="cs_CZ">
     <meta property="og:title" content="Lesktop | Profesionální úklidové služby">
     <meta property="og:description" content="Spolehlivé úklidové služby pro domácnosti a firmy v Praze a Středních Čechách.">
@@ -32,177 +18,132 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Lesktop - Profesionální úklidové služby">
-
-    <!-- Preload kritických obrázků pro rychlejší načtení -->
-    <link rel="preload" href="/images/Domecek.png" as="image" type="image/png">
-    <!-- Preload hero obrázků -->
-    <link rel="preload" href="/images/hero.jpg" as="image" type="image/jpeg" media="(min-width: 481px)">
-    <link rel="preload" href="/images/hero-mobile.jpg" as="image" type="image/jpeg" media="(max-width: 480px)">
-
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
-
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="before-after/before-after.css">
-
-    <!-- Favicon -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Lesktop | Profesionální úklidové služby">
+    <meta name="twitter:description" content="Spolehlivé úklidové služby pro domácnosti a firmy v Praze a Středních Čechách.">
+    <meta name="twitter:image" content="https://lesktop.cz/images/hero.jpg">
     <link rel="icon" type="image/png" href="images/Domecek.png">
     <link rel="shortcut icon" type="image/png" href="images/Domecek.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/Domecek.png">
     <link rel="icon" type="image/png" sizes="32x32" href="images/Domecek.png">
     <link rel="icon" type="image/png" sizes="48x48" href="images/Domecek.png">
-    <!-- Apple Touch Icons - optimalizované velikosti pro různé Apple zařízení -->
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon-180x180.png">
     <link rel="apple-touch-icon" sizes="152x152" href="images/apple-touch-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="120x120" href="images/apple-touch-icon-120x120.png">
-    <!-- Fallback pro starší zařízení -->
     <link rel="apple-touch-icon" href="images/Domecek.png">
     <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#3a4768">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
+    <!-- Loading: critical CSS blocking; fonts + FA non-blocking (media=print swap); scripts defer; LCP preload below -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="before-after/before-after.css">
+    <!-- LCP: hero (body v hero.css) + logo; preload 1x by viewport -->
+    <link rel="preload" href="images/hero.jpg" as="image" type="image/jpeg" media="(min-width: 481px)">
+    <link rel="preload" href="images/hero-mobile.jpg" as="image" type="image/jpeg" media="(max-width: 480px)">
+    <link rel="preload" href="images/Domecek.png" as="image" type="image/png">
+    <!-- Google Search Console: <meta name="google-site-verification" content="..." /> -->
+    <!-- Structured data: LocalBusiness + WebSite pro vyhledávače a AI (local SEO, AI discoverability). -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "Lesktop",
-      "url": "https://lesktop.cz",
-      "description": "Profesionální úklidové služby pro domácnosti a firmy v Praze a Středních Čechách.",
-      "areaServed": [
+      "@graph": [
         {
-          "@type": "City",
-          "name": "Praha"
+          "@type": "LocalBusiness",
+          "@id": "https://lesktop.cz/#organization",
+          "name": "Lesktop",
+          "url": "https://lesktop.cz",
+          "description": "Profesionální úklidové služby pro domácnosti a firmy v Praze a Středních Čechách.",
+          "telephone": "+420775344145",
+          "email": "team@lesktop.cz",
+          "image": [
+            "https://lesktop.cz/images/hero.jpg",
+            "https://lesktop.cz/images/Domecek.png"
+          ],
+          "priceRange": "800 Kč - 4500 Kč",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Šmeralova 378/28",
+            "addressLocality": "Praha - Bubeneč",
+            "postalCode": "170 00",
+            "addressRegion": "Střední Čechy",
+            "addressCountry": "CZ"
+          },
+          "areaServed": [
+            { "@type": "City", "name": "Praha" },
+            { "@type": "State", "name": "Střední Čechy" }
+          ],
+          "sameAs": [
+            "https://www.facebook.com/lesktop.cz",
+            "https://www.instagram.com/lesktop.cz"
+          ],
+          "knowsAbout": [
+            "úklid domácností",
+            "úklid kanceláří",
+            "generální úklid",
+            "pravidelný úklid",
+            "úklid po rekonstrukci"
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Úklidové služby",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Pravidelný úklid domácností",
+                  "description": "Pravidelný úklid domácností dle plochy",
+                  "provider": { "@id": "https://lesktop.cz/#organization" }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Jednorázový úklid",
+                  "description": "Jednorázový úklid po stěhování, rekonstrukci nebo pro hloubkové čištění",
+                  "provider": { "@id": "https://lesktop.cz/#organization" }
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Úklid kanceláří a komerčních prostor",
+                  "description": "Profesionální úklid kanceláří, obchodů a společných prostor",
+                  "provider": { "@id": "https://lesktop.cz/#organization" }
+                }
+              }
+            ]
+          }
         },
         {
-          "@type": "State",
-          "name": "Střední Čechy"
+          "@type": "WebSite",
+          "@id": "https://lesktop.cz/#website",
+          "url": "https://lesktop.cz",
+          "name": "Lesktop",
+          "description": "Profesionální úklidové služby pro domácnosti a firmy v Praze a Středních Čechách.",
+          "inLanguage": "cs",
+          "publisher": { "@id": "https://lesktop.cz/#organization" }
         }
-      ],
-      "telephone": "+420775344145",
-      "email": "team@lesktop.cz",
-      "image": "https://lesktop.cz/images/Domecek.png",
-      "priceRange": "800 Kč - 4500 Kč",
-      "address": {
-        "@type": "PostalAddress",
-        "addressRegion": "Střední Čechy",
-        "addressCountry": "CZ"
-      },
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Úklidové služby",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Pravidelný úklid domácností",
-              "description": "Pravidelný úklid domácností dle plochy",
-              "provider": {
-                "@type": "LocalBusiness",
-                "name": "Lesktop"
-              }
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Jednorázový úklid",
-              "description": "Jednorázový úklid po stěhování, rekonstrukci nebo pro hloubkové čištění",
-              "provider": {
-                "@type": "LocalBusiness",
-                "name": "Lesktop"
-              }
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Úklid kanceláří a komerčních prostor",
-              "description": "Profesionální úklid kanceláří, obchodů a společných prostor",
-              "provider": {
-                "@type": "LocalBusiness",
-                "name": "Lesktop"
-              }
-            }
-          }
-        ]
-      }
+      ]
     }
     </script>
-    <style>
-      /* Global fixes for cross-browser stability */
-      html {
-        /* Prevents layout shift when scrollbar appears/disappears (Windows fix) */
-        scrollbar-gutter: stable;
-        /* Better text rendering on Mac/iOS */
-        -webkit-text-size-adjust: 100%;
-      }
-      .form-status{margin-top:8px;font-size:.95rem}
-      
-      /* Form validation styles */
-      .is-valid {
-        border-color: #198754 !important;
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right calc(0.375em + 0.1875rem) center;
-        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
-      }
-      .is-invalid {
-        border-color: #dc3545 !important;
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linecap='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right calc(0.375em + 0.1875rem) center;
-        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
-      }
-      input.is-valid, input.is-invalid, select.is-valid, select.is-invalid, textarea.is-valid, textarea.is-invalid { padding-right: 2.5rem !important; }
-
-      /* Removed old mobile nav overrides to allow new horizontal bar styles */
-      
-      /* Safe area insets for phones with notches (iPhone X+, modern Androids) */
-      body {
-        padding-left: env(safe-area-inset-left);
-        padding-right: env(safe-area-inset-right);
-      }
-
-      /* Mobile: lock horizontal panning/overflow */
-      @media (max-width: 768px) {
-        html, body {
-          width: 100%;
-          max-width: 100%;
-          overflow-x: hidden;
-          overflow-x: clip;
-          overscroll-behavior-x: none;
-        }
-
-        body {
-          touch-action: pan-y pinch-zoom;
-        }
-
-        .site-header,
-        .site-header .header-inner,
-        .site-header .site-nav,
-        .hero-section,
-        .content-section,
-        .main-footer,
-        .cookie-banner {
-          max-width: 100vw !important;
-        }
-
-        /* iOS Fix: Prevent zoom on focus for inputs < 16px */
-        input, select, textarea {
-          font-size: 16px !important;
-        }
-      }
-    </style>
 
 </head>
-<body>
+<body data-page="index">
     <!-- Skip link pro lepší přístupnost -->
     <a href="#main-content" class="skip-link">Přeskočit na hlavní obsah</a>
 
+    <!-- Header: inner wrapper = .container.header-inner (šířka + layout) -->
     <header class="site-header">
         <div class="container header-inner">
             <a href="#about" class="brand">
@@ -215,6 +156,7 @@
                     <li><a href="#about" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'o_nas'})">O nás</a></li>
                     <li><a href="#services" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'sluzby'})">Služby</a></li>
                     <li><a href="#pricing" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'cenik'})">Ceník</a></li>
+                    <li><a href="/prezentace.html" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'prezentace'})">Prezentace</a></li>
                     <li><a href="#contact" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'kontakt'})">Kontakt</a></li>
                 </ul>
             </nav>
@@ -222,88 +164,62 @@
     </header>
 
     <main id="main-content">
+        <!-- Section: O nás (lead) -->
         <section id="about" class="content-section glass-panel reveal-on-scroll">
             <div class="container">
                 <h1 class="section-title">Profesionální úklidové služby pro domácnosti a firmy v Praze a Středních Čechách</h1>
                 <h2 class="about-section-subtitle">O nás</h2>
-                <p>Jsme profesionální úklidová firma <strong>Lesktop</strong>, která nabízí komplexní úklidové služby pro domácnosti i firmy v <strong>Praze a Středních Čechách</strong>. Naší prioritou je důslednost, spolehlivost a efektivita. S osobním přístupem a pečlivostí zajistíme čistotu, kterou si zasloužíte.</p>
+                <p class="section-intro">Jsme profesionální úklidová firma <strong>Lesktop</strong>, která nabízí komplexní úklidové služby pro domácnosti i firmy v <strong>Praze a Středních Čechách</strong>. Naší prioritou je důslednost, spolehlivost a efektivita. S osobním přístupem a pečlivostí zajistíme čistotu, kterou si zasloužíte.</p>
             </div>
         </section>
 
-        <section class="content-section glass-panel" id="services">
+        <!-- Section: Služby (grid karet) -->
+        <section id="services" class="content-section glass-panel">
             <div class="container">
                 <h2 class="section-title reveal-on-scroll">Naše Služby</h2>
-                <p class="reveal-on-scroll delay-1">Nabízíme komplexní úklidové služby pro domácnosti i firmy. Vše přizpůsobíme vašim individuálním potřebám.</p>
+                <p class="section-intro reveal-on-scroll delay-1">Nabízíme komplexní úklidové služby pro domácnosti i firmy. Vše přizpůsobíme vašim individuálním potřebám.</p>
 
+                <!-- Karty: ikona, nadpis, popis, CTA -->
                 <div class="services-grid">
-
-                    <div class="service-item glass-panel reveal-on-scroll delay-2">
-                        <i class="fas fa-home"></i> <h3>Úklid pro domácnosti a firmy</h3>
-                        <p>Postaráme se o kompletní úklid vaší domácnosti nebo firmy. Od pravidelné údržby až po generální úklid. Jednoduše, rychle a spolehlivě.</p>
-                        <a href="#kalkulacka" class="btn btn-secondary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'kalkulace'})">Chci nezávaznou kalkulaci</a>
-                    </div>
-
-                    <div class="service-item glass-panel reveal-on-scroll delay-3">
-                        <i class="fas fa-star"></i> <h3>Speciální úklidové služby</h3>
-                        <p>Nabízíme mytí oken, čištění koberců i další služby navíc. Pracujeme s ověřenými prostředky a přizpůsobíme se vašemu rozvrhu. Vše pro vaši spokojenost.</p>
-                        <a href="#contact" class="btn btn-secondary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'dotaz_nebo_poptavka'})">Mám dotaz nebo poptávku</a>
-                    </div>
-
-                    <div class="service-item glass-panel reveal-on-scroll delay-2">
-                        <i class="fas fa-sync-alt"></i> <h3>Pravidelný úklid domácností</h3>
+                    <article class="service-item glass-panel reveal-on-scroll delay-2">
+                        <h3>Pravidelný úklid domácností</h3>
                         <p>Udržujte svůj domov neustále svěží a čistý s našimi pravidelnými úklidovými plány. Frekvenci a rozsah úklidu přizpůsobíme přesně vašim požadavkům.</p>
                         <a href="#pricing" class="btn btn-secondary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'zjistit_vice_kalkulace'})">Zjistit více & kalkulace</a>
-                    </div>
-
-                    <div class="service-item glass-panel reveal-on-scroll delay-3">
-                        <i class="fas fa-broom"></i> <h3>Jednorázový a generální úklid</h3>
+                    </article>
+                    <article class="service-item glass-panel reveal-on-scroll delay-3">
+                        <h3>Jednorázový a generální úklid</h3>
                         <p>Potřebujete důkladný úklid po stěhování, rekonstrukci, oslavě nebo jen jarní úklid? Jsme připraveni vyčistit každý kout vašeho bytu či domu.</p>
                         <a href="#pricing" class="btn btn-secondary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'zjistit_vice_kalkulace'})">Zjistit více & kalkulace</a>
-                    </div>
-
-                    <div class="service-item glass-panel reveal-on-scroll delay-4">
-                        <i class="fas fa-building"></i> <h3>Úklid kanceláří a komerčních prostor</h3>
+                    </article>
+                    <article class="service-item glass-panel reveal-on-scroll delay-4">
+                        <h3>Úklid kanceláří a komerčních prostor</h3>
                         <p>Zajistíme profesionální čistotu pro vaše podnikání. Od pravidelné údržby až po hloubkové čištění kanceláří, obchodů a společných prostor.</p>
                         <a href="#pricing" class="btn btn-secondary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'zjistit_vice_kalkulace'})">Zjistit více & kalkulace</a>
-                    </div>
-
-                    <div class="service-item glass-panel reveal-on-scroll delay-2">
-                        <i class="fas fa-tint"></i> <h3>Mytí oken a další doplňkové služby</h3>
-                        <p>Nabízíme precizní mytí oken, žehlení prádla, čištění koberců a čalounění. Vše dle individuální domluvy a vašich specifických přání.</p>
-                        <a href="#contact" class="btn btn-secondary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'kontaktujte_nas'})">Kontaktujte nás</a>
-                    </div>
-
-                    <div class="service-item glass-panel reveal-on-scroll delay-3">
-                        <i class="fas fa-pump-soap"></i> <h3>Ověřené a účinné čisticí prostředky</h3>
-                        <p>Používáme pouze ověřené čisticí prostředky, které zajistí perfektní výsledky úklidu a odpovídají veškerým hygienickým normám.</p>
-                        <a href="#contact" class="btn btn-secondary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'zjistete_vice'})">Zjistěte více</a>
-                    </div>
-
-                    <div class="service-item glass-panel reveal-on-scroll delay-4">
-                        <i class="fas fa-handshake"></i> <h3>Individuální plán a flexibilita</h3>
-                        <p>Ke každému klientovi přistupujeme individuálně. Vytvoříme úklidový plán na míru a přizpůsobíme se vašemu rozvrhu a specifickým požadavkům.</p>
-                        <a href="#contact" class="btn btn-secondary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'domluvit_detaily'})">Domluvit detaily</a>
-                    </div>
+                    </article>
+                </div>
+                <div class="form-actions">
+                    <a href="sluzby.html" class="btn btn-primary">Zobrazit všechny služby</a>
                 </div>
             </div>
         </section>
 
-        
+        <!-- Section: Před / Po (galerie) -->
         <section id="before-after" class="content-section glass-panel ba-section">
             <div class="container">
                 <h2 class="section-title">Před / Po úklidu</h2>
-                <p class="ba-intro">Ukázky skutečných zakázek. Každá karta obsahuje fotky před a po úklidu.</p>
+                <p class="section-intro ba-intro">Ukázky skutečných zakázek. Každá karta obsahuje fotky před a po úklidu.</p>
                 <p class="ba-interaction">Kliknutím nebo klepnutím na fotografii přepnete pohled PŘED / PO.</p>
                 <div id="before-after-gallery" class="ba-gallery"></div>
                 <div id="before-after-empty" class="ba-empty" hidden>Galerie zatím nemá žádné fotky.</div>
             </div>
         </section>
 
+        <!-- Section: Ceník (karty + kalkulačka) -->
         <section id="pricing" class="content-section glass-panel bg-offwhite reveal-on-scroll">
             <div class="container">
                 <h2 class="section-title">Ceník a nezávazná kalkulace</h2>
-                <p>Naše ceny jsou transparentní a flexibilní, přizpůsobené vašim individuálním potřebám. Získejte rychlý odhad ceny úklidu pomocí naší kalkulačky.</p>
-                
+                <p class="section-intro">Naše ceny jsou transparentní a flexibilní, přizpůsobené vašim individuálním potřebám. Získejte rychlý odhad ceny úklidu pomocí naší kalkulačky.</p>
+
                 <div class="pricing-grid">
                     <div class="price-card glass-panel reveal-on-scroll delay-1">
                         <h3>Pravidelný úklid domácností</h3>
@@ -336,10 +252,10 @@
                     <div class="price-card glass-panel reveal-on-scroll delay-3">
                         <h3>Komerční prostory</h3>
                         <p class="price-from">Individuální nabídka</p>
-                        <ul>
-                            <li><i class="fas fa-check-circle"></i> Kanceláře, obchody</li>
-                            <li><i class="fas fa-check-circle"></i> Flexibilní časy</li>
-                            <li><i class="fas fa-check-circle"></i> Pravidelná péče</li>
+                        <ul class="price-list">
+                            <li><i class="fas fa-check-circle" aria-hidden="true"></i> Kanceláře, obchody</li>
+                            <li><i class="fas fa-check-circle" aria-hidden="true"></i> Flexibilní časy</li>
+                            <li><i class="fas fa-check-circle" aria-hidden="true"></i> Pravidelná péče</li>
                         </ul>
                         <p class="price-note">Pro cenovou nabídku nás prosím kontaktujte.</p>
                     </div>
@@ -348,10 +264,11 @@
                 <h3 class="section-subtitle">Nezávazná kalkulace úklidu</h3>
                 <p>Vyplňte prosím následující formulář a my vám obratem zašleme nezávaznou cenovou nabídku.</p>
 
+                <!-- Formulář kalkulačky: .form-group (label + pole + volitelně small), .form-actions (submit + status) -->
                 <form class="calculator-form glass-panel" id="kalkulacka" action="https://api.web3forms.com/submit" method="POST" accept-charset="UTF-8" autocomplete="on">
                     <input type="hidden" name="access_key" value="4e724eab-1a15-4f9c-9c19-caa25c2b95fc">
                     <input type="hidden" name="subject" value="Nová poptávka z kalkulačky úklidu - Lesktop">
-                    <input type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none !important">
+                    <input type="text" name="botcheck" class="input-botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
 
                     <div class="form-group">
                         <label for="cleaningType">Typ úklidu:</label>
@@ -516,18 +433,21 @@
                         <label for="notes">Doplňující poznámky (specifikace, preferovaný termín):</label>
                         <textarea id="notes" name="notes" rows="4" placeholder="Např. úklid bytu 2+kk, preferuji úterky dopoledne..." aria-describedby="calc-form-status"></textarea>
                     </div>
-                    
-                    <button type="submit" class="btn btn-primary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'ziskat_nezavaznou_nabidku'})">Získat nezávaznou nabídku</button>
-                    <div id="calc-form-status" class="form-status form-status-hidden" role="status" aria-live="polite"></div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'ziskat_nezavaznou_nabidku'})">Získat nezávaznou nabídku</button>
+                        <div id="calc-form-status" class="form-status form-status-hidden" role="status" aria-live="polite"></div>
+                    </div>
                 </form>
 
             </div>
         </section>
         
+        <!-- Section: Kontakt (kontaktní údaje + formulář) -->
         <section id="contact" class="content-section glass-panel reveal-on-scroll">
             <div class="container">
                 <h2 class="section-title">Kontaktujte nás</h2>
-                <p>Máte zájem o naše služby? Vyplňte formulář nebo nás kontaktujte přímo!</p>
+                <p class="section-intro">Máte zájem o naše služby? Vyplňte formulář nebo nás kontaktujte přímo!</p>
                 <div class="contact-info">
                     <p><i class="fas fa-phone-alt"></i> Telefon: <strong><a href="tel:+420775344145" data-track="phone" data-location="contact_section">+420 775 344 145</a></strong></p>
                     <p><a href="https://wa.me/420775344145" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Kontaktovat nás na WhatsApp" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event', 'generate_lead', {'event_category': 'engagement', 'event_label': 'whatsapp_click'})"><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp</a></p>
@@ -535,10 +455,11 @@
                     <p><i class="fas fa-map-marker-alt"></i> Působíme v Praze a Středních Čechách</p>
                     <p><i class="fas fa-id-card"></i> <a href="/impresum.html"><strong>Provozovatel a fakturační údaje</strong></a></p>
                 </div>
+                <!-- Kontaktní formulář: stejný pattern .form-group, .form-actions -->
                 <form class="contact-form glass-panel" id="contactForm" action="https://api.web3forms.com/submit" method="POST" accept-charset="UTF-8" autocomplete="on">
                     <input type="hidden" name="access_key" value="4e724eab-1a15-4f9c-9c19-caa25c2b95fc">
                     <input type="hidden" name="subject" value="Nová zpráva z webu Lesktop">
-                    <input type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none !important">
+                    <input type="text" name="botcheck" class="input-botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
 
                     <div class="form-group">
                         <label for="name">Jméno:</label>
@@ -556,8 +477,10 @@
                         <label for="message">Zpráva:</label>
                         <textarea id="message" name="Zprava" rows="6" required minlength="10" placeholder="Popište, s čím potřebujete pomoci..." aria-describedby="form-status"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'odeslat_poptavku'})">Odeslat poptávku</button>
-                    <div id="form-status" class="form-status form-status-hidden" role="status" aria-live="polite"></div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'odeslat_poptavku'})">Odeslat poptávku</button>
+                        <div id="form-status" class="form-status form-status-hidden" role="status" aria-live="polite"></div>
+                    </div>
                 </form>
             </div>
         </section>
@@ -579,6 +502,10 @@
                 <span aria-hidden="true"> &middot; </span>
                 <a href="/terms.html">Obchodní podmínky</a>
                 <span aria-hidden="true"> &middot; </span>
+                <a href="/sluzby.html">Služby</a>
+                <span aria-hidden="true"> &middot; </span>
+                <a href="/prezentace.html">Prezentace</a>
+                <span aria-hidden="true"> &middot; </span>
                 <a href="/faq.html">FAQ</a>
                 <span aria-hidden="true"> &middot; </span>
                 <a href="/impresum.html">Provozovatel</a>
@@ -598,7 +525,8 @@
     </div>
     
     
-        <script src="/before-after/data.js"></script>
+        <!-- Order: data (defer) → gallery (defer) → main (defer); no blocking scripts -->
+        <script src="/before-after/data.js" defer></script>
         <script src="/before-after/gallery.js" defer></script>
         <script src="/assets/js/main.js" defer></script>
     </body>

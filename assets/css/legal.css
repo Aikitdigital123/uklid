@@ -1,0 +1,136 @@
+/**
+ * Content-page pattern: terms, privacy, impresum, faq.
+ * Jednotný layout (page content wrapper), spacing a typography.
+ * Header .main-header je specifický pro tyto stránky (na homepage je .site-header).
+ */
+
+/* --- Content wrapper (všechny čtyři stránky) --- */
+.legal {
+  max-width: 980px;
+  margin: 40px auto;
+  padding: 0 var(--space-xl);
+}
+
+/* Page title */
+.legal h1 {
+  margin-bottom: var(--space-sm);
+}
+
+/* Section headings; první h2 má odstup od intro, další od předchozí sekce */
+.legal h2 {
+  margin-top: var(--space-3xl);
+}
+
+/* Seskupení nadpisu s následujícím obsahem (FAQ Q&A i legal bloky) */
+.legal h2 + p {
+  margin-top: var(--space-sm);
+}
+
+.legal p,
+.legal li {
+  line-height: 1.75;
+}
+
+.legal ul {
+  margin: var(--space-md) 0 0 var(--space-xl);
+}
+
+.legal li + li {
+  margin-top: var(--space-sm);
+}
+
+/* Datum poslední aktualizace */
+.legal-updated {
+  margin-top: var(--space-2xl);
+  color: var(--color-text-light);
+}
+
+/* --- Header pro content stránky (terms, privacy, impresum, faq) --- */
+.main-header {
+  padding: 14px 0 0;
+}
+
+.main-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-text-dark);
+}
+
+.logo-img {
+  width: 48px;
+  height: 48px;
+  max-width: none;
+  object-fit: contain;
+  flex: 0 0 48px;
+}
+
+.main-nav .nav-list {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  list-style: none;
+}
+
+.main-nav .nav-list a {
+  font-weight: 600;
+  color: var(--color-text-dark);
+}
+
+.main-nav .nav-list a[aria-current="page"] {
+  color: var(--color-primary-light);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  .main-header .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .main-nav .nav-list {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+/* --- Presentation page --- */
+body[data-page="prezentace"] .presentation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 16px 0 20px;
+}
+
+body[data-page="prezentace"] .presentation-frame {
+  padding: 10px;
+}
+
+body[data-page="prezentace"] .presentation-frame object {
+  display: block;
+  width: 100%;
+  min-height: 78vh;
+  border: 0;
+  border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+  body[data-page="prezentace"] .presentation-actions .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  body[data-page="prezentace"] .presentation-frame object {
+    min-height: 64vh;
+  }
+}

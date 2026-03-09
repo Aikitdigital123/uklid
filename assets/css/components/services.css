@@ -1,28 +1,12 @@
-/* Služby Grid */
+/* Services grid; card base in card.css */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
+  gap: var(--space-3xl);
   margin-top: 50px;
 }
 
-/* Show only the two consolidated service blocks */
-.services-grid .service-item:nth-child(n+3) { display: none; }
-
-.service-item {
-  text-align: left;
-  padding: 30px;
-  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-  position: relative;
-  overflow: hidden;
-}
-
-.service-item:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-medium);
-}
-
-.service-item i {
+.services-grid .service-item i {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -32,12 +16,12 @@
   color: var(--color-accent);
   background: rgba(255, 255, 255, 0.22);
   border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   margin-right: 10px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 6px 14px rgba(20,30,60,0.18);
 }
 
-.service-item h3 {
+.services-grid .service-item h3 {
   display: inline-block;
   font-family: var(--font-heading);
   font-size: 1.1rem;
@@ -45,16 +29,16 @@
   vertical-align: middle;
 }
 
-.service-item p {
+.services-grid .service-item p {
   color: var(--color-text-dark);
   margin-top: 6px;
 }
 
-.service-item::after {
+.services-grid .service-item::after {
   content: none;
 }
 
 /* Responsivní styly */
 @media (max-width: 768px) {
-  .services-grid { grid-template-columns: 1fr; gap: 30px; }
+  .services-grid { grid-template-columns: 1fr; gap: var(--space-3xl); }
 }

@@ -1,6 +1,4 @@
-// main.js - browser bootstrap with a compatibility fallback for older browsers.
-// Loads the module entry for modern browsers and keeps cookie consent functional
-// when module scripts are unavailable.
+// main.js – entry point. Loads main.bundle.js (init order and guards live there) or legacy cookie fallback when modules unsupported.
 
 (function bootstrapMain() {
   var isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';

@@ -5,8 +5,8 @@
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   border: 1px solid rgba(255,255,255,0.35);
   border-radius: 18px;
-  width: min(1200px, calc(100% - 32px));
-  box-shadow: 0 12px 32px rgba(20,30,60,0.22);
+  width: min(var(--content-max), calc(100% - var(--content-gutter)));
+  box-shadow: var(--shadow-strong);
   position: relative; /* Důležité: pro správné fungování pseudo-elementů */
   overflow: visible; /* Důležité: nesmí být hidden, aby pseudo-elementy nebyly ořezány */
   margin: 28px auto max(18px, env(safe-area-inset-bottom, 0px)); /* Safe area pro iPhone home indicator */
@@ -30,30 +30,37 @@
 }
 
 .main-footer::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: -60px;
-    width: 60px;
-    /* Shimmer efekt nemá zaoblené rohy - je rovný */
-    background: linear-gradient(110deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%);
-    transform: skewX(-20deg) translateZ(0); /* GPU optimalizace pro iOS */
-    -webkit-transform: skewX(-20deg) translateZ(0); /* Safari prefix */
-    will-change: left, opacity;
-    animation: glass-shimmer 6s ease-in-out infinite;
-    pointer-events: none;
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 20px;
+  width: 60px;
+  pointer-events: none;
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.55) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-20deg) translateZ(0);
+  -webkit-transform: skewX(-20deg) translateZ(0);
+  animation: footer-shimmer 6s ease-in-out infinite;
 }
 
-/* Footer base layout */
+@keyframes footer-shimmer {
+  0%   { left: 20px; opacity: 0; }
+  10%  { opacity: 0.5; }
+  60%  { left: calc(100% - 80px); opacity: 0; }
+  100% { left: calc(100% - 80px); opacity: 0; }
+}
+
+/* Footer base layout – z-index nad ::before/::after (shimmer), aby text nebyl překryt */
 .main-footer .container {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
-  min-height: var(--header-height); /* Místo pevné výšky použijeme min-height pro flexibilitu */
-  padding: 20px; /* Vnitřní padding pro lepší čitelnost */
-  padding-bottom: max(20px, env(safe-area-inset-bottom, 0px)); /* Safe area pro iPhone home indicator */
+  min-height: var(--header-height);
+  padding: 20px;
+  padding-bottom: max(20px, env(safe-area-inset-bottom, 0px));
 }
 
 .main-footer p {
@@ -66,7 +73,15 @@
   color: var(--color-background-white);
   font-size: clamp(1.2em, 1.3vw, 1.5em);
   margin: 0 10px;
+  padding: 10px;
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: color var(--transition-speed);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 /* Hover efekty pouze pro zařízení která hover podporují */
@@ -108,10 +123,16 @@
   color: rgba(255, 255, 255, 0.92);
   text-decoration: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.35);
-  padding-bottom: 2px;
+  padding: 8px 4px 6px;
   cursor: pointer;
   transition: color 180ms ease, border-color 180ms ease, text-shadow 180ms ease;
-  white-space: nowrap; /* Zabraňuje zalomení uvnitř odkazu */
+  white-space: nowrap;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .main-footer .legal-links a:hover,

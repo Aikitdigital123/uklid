@@ -1,5 +1,6 @@
 // Form components: contact and calculator submission via Web3Forms.
-// Idempotent: safe to initialize multiple times.
+// Expects: form (id contactForm / kalkulacka), status node (id form-status / calc-form-status)
+// with class form-status form-status-hidden. Idempotent: safe to initialize multiple times.
 
 const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 const logError = isDev ? console.error : () => {};

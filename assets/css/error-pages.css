@@ -1,0 +1,28 @@
+/**
+ * Chybové stránky (404).
+ * Záměrně odlišný pattern: bez headeru, centrováný blok s CTA (ne content-page wrapper).
+ */
+.error-container {
+  min-height: 100dvh;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.error-card {
+  max-width: 600px;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+.error-code {
+  font-size: 4em;
+  margin-bottom: 1rem;
+  color: var(--color-primary-dark);
+  font-weight: 700;
+}
+.error-description {
+  margin-bottom: 2rem;
+  font-size: 1.1em;
+  color: var(--color-text-light);
+}

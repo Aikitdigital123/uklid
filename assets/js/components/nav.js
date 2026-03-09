@@ -1,204 +1,203 @@
-// Navigation component: mobile menu toggle + smooth scroll + a11y
-// Idempotent: safe to call multiple times
-// Upraveno pro strukturu z návrhu (site-header, brand, nav-toggle, site-nav, nav-link)
+/**
+ * Header & navigation: smooth scroll, mobile menu, a11y.
+ * Single source of truth for menu open state; all updates go through setMenuOpen().
+ */
+const BREAKPOINT_MOBILE_PX = 768;
+const SCROLL_OFFSET_PX = 20;
+const RESIZE_DEBOUNCE_MS = 150;
+const INIT_GUARD_KEY = 'navInit';
+const MENU_OPEN_CLASS = 'menu-open';
+
+function isMobile() {
+  return typeof window !== 'undefined' && window.innerWidth <= BREAKPOINT_MOBILE_PX;
+}
+
+function scrollToY(top) {
+  try {
+    window.scrollTo({ top, behavior: 'smooth' });
+  } catch {
+    window.scrollTo(0, top);
+  }
+}
+
+/**
+ * Compute scroll position for a section, accounting for fixed header.
+ */
+function getScrollTargetY(element, headerHeight) {
+  const top = element.getBoundingClientRect().top;
+  const pageY = window.pageYOffset ?? document.documentElement.scrollTop ?? 0;
+  return Math.max(0, top + pageY - headerHeight - SCROLL_OFFSET_PX);
+}
 
 export function initNav() {
-  if (document.documentElement.dataset.navInit === '1') return;
-  document.documentElement.dataset.navInit = '1';
+  if (document.documentElement.dataset[INIT_GUARD_KEY] === '1') return;
+  document.documentElement.dataset[INIT_GUARD_KEY] = '1';
 
-  const headerEl = document.querySelector('.site-header');
-  const menuToggle = document.querySelector('.nav-toggle');
-  const siteNav = document.querySelector('.site-nav');
-  const scrollToY = (top) => {
-    try {
-      window.scrollTo({ top: top, behavior: 'smooth' });
-    } catch (e) {
-      window.scrollTo(0, top);
-    }
-  };
+  const header = document.querySelector('.site-header');
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.site-nav');
+  const body = document.body;
+  const docEl = document.documentElement;
 
-  // A11y attributes
-  if (menuToggle) {
-    if (!menuToggle.hasAttribute('aria-expanded')) menuToggle.setAttribute('aria-expanded', 'false');
-    if (siteNav) {
-      if (!siteNav.id) siteNav.id = 'main-menu';
-      if (!menuToggle.hasAttribute('aria-controls')) menuToggle.setAttribute('aria-controls', siteNav.id);
-    }
+  const headerHeight = () => (header ? header.offsetHeight : 0);
+
+  // --- State: menu open (only writer is setMenuOpen) ---
+  let menuOpen = false;
+  let lockedScrollY = 0;
+  let suppressOutsideUntil = 0;
+
+  function lockPageScroll() {
+    if (!body) return;
+    lockedScrollY = window.pageYOffset ?? document.documentElement.scrollTop ?? 0;
+    docEl.classList.add(MENU_OPEN_CLASS);
+    body.classList.add(MENU_OPEN_CLASS);
+    body.style.top = `-${lockedScrollY}px`;
   }
 
-  // Smooth scroll for main nav anchors
-  const navAnchors = document.querySelectorAll('.site-nav .nav-link[href^="#"]');
-  navAnchors.forEach((anchor) => {
-    anchor.addEventListener('click', function (e) {
+  function unlockPageScroll() {
+    if (!body) return;
+    const bodyTop = parseInt(body.style.top || '0', 10);
+    docEl.classList.remove(MENU_OPEN_CLASS);
+    body.classList.remove(MENU_OPEN_CLASS);
+    body.style.top = '';
+    if (Number.isFinite(bodyTop) && bodyTop !== 0) {
+      window.scrollTo(0, Math.abs(bodyTop));
+      return;
+    }
+    if (lockedScrollY > 0) window.scrollTo(0, lockedScrollY);
+  }
+
+  function setMenuOpen(open) {
+    menuOpen = open;
+    if (!nav) return;
+    nav.classList.toggle('is-open', open);
+    nav.setAttribute('aria-hidden', String(!open));
+    if (toggle) toggle.setAttribute('aria-expanded', String(open));
+    if (isMobile() && open) lockPageScroll();
+    else unlockPageScroll();
+  }
+
+  function closeMenuIfNeeded() {
+    if (isMobile() && menuOpen) setMenuOpen(false);
+  }
+
+  // --- A11y: ensure toggle and nav are linked ---
+  if (toggle && nav) {
+    if (!nav.id) nav.id = 'site-navigation';
+    if (!toggle.getAttribute('aria-controls')) toggle.setAttribute('aria-controls', nav.id);
+    if (!toggle.hasAttribute('aria-expanded')) toggle.setAttribute('aria-expanded', 'false');
+    nav.setAttribute('aria-hidden', 'true');
+    if (body) {
+      body.classList.remove(MENU_OPEN_CLASS);
+      body.style.top = '';
+    }
+    docEl.classList.remove(MENU_OPEN_CLASS);
+  }
+
+  // --- Nav links: smooth scroll, close mobile menu, set active ---
+  const navLinks = document.querySelectorAll('.site-nav .nav-link[href^="#"]');
+  navLinks.forEach((link) => {
+    link.addEventListener('click', (e) => {
       e.preventDefault();
+      closeMenuIfNeeded();
 
-      // Close mobile menu if open (mobile only)
-      if (siteNav && menuToggle && siteNav.classList.contains('is-open') && window.innerWidth <= 768) {
-        siteNav.classList.remove('is-open');
-        menuToggle.setAttribute('aria-expanded', 'false');
+      const id = link.getAttribute('href');
+      const target = id ? document.querySelector(id) : null;
+      if (target) {
+        const y = getScrollTargetY(target, headerHeight());
+        if (Number.isFinite(y)) scrollToY(y);
+        else target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
 
-      const targetId = this.getAttribute('href');
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        try {
-          const headerOffset = headerEl ? headerEl.offsetHeight : 0;
-          const rect = targetElement.getBoundingClientRect();
-          
-          // Bezpečná kontrola, zda getBoundingClientRect vrátil validní hodnoty
-          if (rect && typeof rect.top === 'number' && isFinite(rect.top)) {
-            const pageYOffset = window.pageYOffset || document.documentElement.scrollTop || 0;
-            const elementPosition = rect.top + pageYOffset;
-            const offsetPosition = Math.max(0, elementPosition - headerOffset - 20);
-            scrollToY(offsetPosition);
-          } else {
-            // Fallback: použij offsetTop pokud getBoundingClientRect selhal
-            const offsetTop = targetElement.offsetTop || 0;
-            const offsetPosition = Math.max(0, offsetTop - headerOffset - 20);
-            scrollToY(offsetPosition);
-          }
-        } catch (e) {
-          // Fallback při chybě: použij offsetTop
-          try {
-            const headerOffset = headerEl ? headerEl.offsetHeight : 0;
-            const offsetTop = targetElement.offsetTop || 0;
-            const offsetPosition = Math.max(0, offsetTop - headerOffset - 20);
-            scrollToY(offsetPosition);
-          } catch (fallbackError) {
-            // Pokud i fallback selhal, scrolluj na začátek sekce
-            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }
-      }
-
-      // Active state within nav only
-      document.querySelectorAll('.site-nav .nav-link').forEach((link) => link.classList.remove('active'));
-      this.classList.add('active');
+      navLinks.forEach((l) => l.classList.remove('active'));
+      link.classList.add('active');
     });
   });
 
-  // Smooth scroll for logo link (doesn't touch nav active state)
-  const logoLink = document.querySelector('a.brand[href^="#"]');
-  if (logoLink) {
-    logoLink.addEventListener('click', function (e) {
-      const targetId = this.getAttribute('href');
-      const targetElement = document.querySelector(targetId);
-      if (!targetElement) return;
+  // --- Logo link: smooth scroll only ---
+  const logo = document.querySelector('a.brand[href^="#"]');
+  if (logo) {
+    logo.addEventListener('click', (e) => {
+      const id = logo.getAttribute('href');
+      const target = id ? document.querySelector(id) : null;
+      if (!target) return;
       e.preventDefault();
-      try {
-        const headerOffset = headerEl ? headerEl.offsetHeight : 0;
-        const rect = targetElement.getBoundingClientRect();
-        
-        // Bezpečná kontrola, zda getBoundingClientRect vrátil validní hodnoty
-        if (rect && typeof rect.top === 'number' && isFinite(rect.top)) {
-          const pageYOffset = window.pageYOffset || document.documentElement.scrollTop || 0;
-          const elementPosition = rect.top + pageYOffset;
-          const offsetPosition = Math.max(0, elementPosition - headerOffset - 20);
-          scrollToY(offsetPosition);
-        } else {
-          // Fallback: použij offsetTop pokud getBoundingClientRect selhal
-          const offsetTop = targetElement.offsetTop || 0;
-          const offsetPosition = Math.max(0, offsetTop - headerOffset - 20);
-          scrollToY(offsetPosition);
-        }
-      } catch (e) {
-        // Fallback při chybě: použij offsetTop
-        try {
-          const headerOffset = headerEl ? headerEl.offsetHeight : 0;
-          const offsetTop = targetElement.offsetTop || 0;
-          const offsetPosition = Math.max(0, offsetTop - headerOffset - 20);
-          scrollToY(offsetPosition);
-        } catch (fallbackError) {
-          // Pokud i fallback selhal, scrolluj na začátek sekce
-          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }
+      const y = getScrollTargetY(target, headerHeight());
+      if (Number.isFinite(y)) scrollToY(y);
+      else target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
 
-  // Mobile menu toggle - jednoduché a robustní řešení s ochranou proti duplicitě
-  if (menuToggle && siteNav) {
-    // Funkce pro toggle menu (idempotentní)
-    const toggleMenu = () => {
-      siteNav.classList.toggle('is-open');
-      const isExpanded = siteNav.classList.contains('is-open');
-      menuToggle.setAttribute('aria-expanded', String(isExpanded));
-    };
+  // --- Mobile menu toggle (Safari: touchend + click without double toggle) ---
+  if (toggle && nav) {
+    let touchHandled = false;
 
-    // Ochrana proti duplicitnímu volání při jednom tapu
-    let isProcessing = false;
-    let lastToggleTime = 0;
-    const TOGGLE_COOLDOWN = 300; // Minimální interval mezi toggle akcemi (ms)
+    toggle.addEventListener('touchstart', () => {
+      touchHandled = false;
+    }, { passive: true });
 
-    const handleToggle = (e) => {
-      // Pokud už probíhá zpracování, ignoruj
-      if (isProcessing) {
-        e.preventDefault();
-        e.stopPropagation();
-        return;
-      }
-
-      const currentTime = Date.now();
-      const timeDiff = currentTime - lastToggleTime;
-      
-      // Pokud proběhlo toggle příliš nedávno, ignoruj (ochrana proti double-tap)
-      if (timeDiff < TOGGLE_COOLDOWN) {
-        e.preventDefault();
-        e.stopPropagation();
-        return;
-      }
-      
-      isProcessing = true;
-      lastToggleTime = currentTime;
-      
-      toggleMenu();
-      
-      // Reset flagu po krátké prodlevě
-      setTimeout(() => {
-        isProcessing = false;
-      }, TOGGLE_COOLDOWN);
-    };
-
-    // Pouze touchend s preventDefault - zabrání následnému click eventu
-    // Toto je nejspolehlivější řešení pro Safari mobile
-    menuToggle.addEventListener('touchend', (e) => {
+    toggle.addEventListener('touchend', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      handleToggle(e);
+      touchHandled = true;
+      suppressOutsideUntil = Date.now() + 350;
+      setMenuOpen(!menuOpen);
     }, { passive: false });
 
-    // Click jako fallback pro desktop (kde touchend neproběhne)
-    // isProcessing flag zajistí, že pokud už proběhl touchend, click bude ignorován
-    menuToggle.addEventListener('click', handleToggle);
+    toggle.addEventListener('click', (e) => {
+      if (touchHandled) {
+        e.preventDefault();
+        e.stopPropagation();
+        touchHandled = false;
+        return;
+      }
+      e.stopPropagation();
+      suppressOutsideUntil = Date.now() + 350;
+      setMenuOpen(!menuOpen);
+    });
 
-    // Resize handler with throttling to prevent excessive calls
-    let resizeTimeout;
-    const handleResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        if (window.innerWidth > 768 && siteNav.classList.contains('is-open')) {
-          siteNav.classList.remove('is-open');
-          menuToggle.setAttribute('aria-expanded', 'false');
-        }
-      }, 150);
+    const outsideClickHandler = (event) => {
+      if (!menuOpen || !isMobile()) return;
+      if (Date.now() < suppressOutsideUntil) return;
+      const target = event && event.target;
+      if (!target) return;
+      if (nav.contains(target) || toggle.contains(target)) return;
+      setMenuOpen(false);
     };
-    window.addEventListener('resize', handleResize, false);
-  }
 
-  // Header scroll effect - vypnuto (header nemá měnit barvu)
-  // if (headerEl) {
-  //   function handleScroll() {
-  //     if (window.scrollY > 20) {
-  //       headerEl.classList.add('is-scrolled');
-  //     } else {
-  //       headerEl.classList.remove('is-scrolled');
-  //     }
-  //   }
-  //   
-  //   // Check on load
-  //   handleScroll();
-  //   
-  //   // Listen to scroll events
-  //   window.addEventListener('scroll', handleScroll, { passive: true });
-  // }
+    const escapeHandler = (event) => {
+      if (!menuOpen) return;
+      if (!event || event.key !== 'Escape') return;
+      setMenuOpen(false);
+      if (toggle && typeof toggle.focus === 'function') toggle.focus();
+    };
+
+    if (window.__lesktopNavOutsideClickHandler) {
+      document.removeEventListener('click', window.__lesktopNavOutsideClickHandler);
+      document.removeEventListener('touchstart', window.__lesktopNavOutsideClickHandler, { passive: true });
+    }
+    window.__lesktopNavOutsideClickHandler = outsideClickHandler;
+    document.addEventListener('click', outsideClickHandler);
+    document.addEventListener('touchstart', outsideClickHandler, { passive: true });
+
+    if (window.__lesktopNavEscapeHandler) {
+      document.removeEventListener('keydown', window.__lesktopNavEscapeHandler);
+    }
+    window.__lesktopNavEscapeHandler = escapeHandler;
+    document.addEventListener('keydown', escapeHandler);
+
+    let resizeTimer;
+    const resizeHandler = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (window.innerWidth > BREAKPOINT_MOBILE_PX && menuOpen) setMenuOpen(false);
+        if (window.innerWidth > BREAKPOINT_MOBILE_PX) unlockPageScroll();
+      }, RESIZE_DEBOUNCE_MS);
+    };
+    if (window.__lesktopNavResizeHandler) {
+      window.removeEventListener('resize', window.__lesktopNavResizeHandler);
+    }
+    window.__lesktopNavResizeHandler = resizeHandler;
+    window.addEventListener('resize', resizeHandler);
+  }
 }

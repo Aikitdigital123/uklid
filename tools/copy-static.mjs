@@ -45,9 +45,11 @@ async function main() {
     await removePathSafe(path.join(dist, folder));
   }
 
-  // Kořenové soubory
+  // Root files copied to dist/.
   const rootFiles = [
     'index.html',
+    'sluzby.html',
+    'prezentace.html',
     'privacy.html',
     'terms.html',
     'faq.html',
@@ -56,27 +58,40 @@ async function main() {
     'humans.txt',
     'robots.txt',
     'favicon.ico',
+    'Lesktop_Cleaning_Services.pdf',
     'site.webmanifest',
     'sitemap.xml',
     'CNAME',
     '.nojekyll'
   ];
+
   for (const f of rootFiles) {
     await copyFileSafe(path.join(root, f), path.join(dist, f));
   }
 
-  // Statické složky
+  // Static folders.
   for (const folder of ['images', '.well-known', 'before-after']) {
     await copyDirRecursive(path.join(root, folder), path.join(dist, folder));
   }
 
-  // Přepnutí odkazů na minifikované assety v HTML
-  const htmlFiles = ['index.html', 'privacy.html', 'terms.html', 'faq.html', 'impresum.html', '404.html'].map(f => path.join(dist, f));
+  // Switch HTML references to production-minified assets.
+  const htmlFiles = rootFiles
+    .filter((fileName) => fileName.toLowerCase().endsWith('.html'))
+    .map((fileName) => path.join(dist, fileName));
+
+  const replacements = [
+    ['/assets/css/style.css', '/assets/css/style.min.css'],
+    ['/assets/css/legal.css', '/assets/css/legal.min.css'],
+    ['/assets/css/error-pages.css', '/assets/css/error-pages.min.css'],
+    ['/assets/css/pages/sluzby.css', '/assets/css/pages/sluzby.min.css'],
+    ['before-after/before-after.css', '/assets/css/before-after.min.css'],
+    ['/assets/js/main.js', '/assets/js/main.min.js'],
+    ['/before-after/data.js', '/assets/js/before-after-data.min.js'],
+    ['/before-after/gallery.js', '/assets/js/before-after-gallery.min.js']
+  ];
+
   for (const file of htmlFiles) {
-    await replaceInFile(file, [
-      ['/assets/css/style.css', '/assets/css/style.min.css'],
-      ['/assets/js/main.js', '/assets/js/main.min.js']
-    ]);
+    await replaceInFile(file, replacements);
   }
 
   console.log('Static files prepared in dist/');

@@ -10,7 +10,7 @@
   color: var(--color-background-white);
   padding: 8px 16px;
   text-decoration: none;
-  z-index: 10000;
+  z-index: var(--z-skip);
   border-radius: 0 0 4px 0;
   font-weight: 600;
   transition: transform 180ms ease, opacity 180ms ease;
@@ -39,4 +39,65 @@
   clip: rect(0, 0, 0, 0) !important;
   white-space: nowrap !important;
   border: 0 !important;
+}
+
+/* Global interaction: tap, focus, touch. Skrýt outline při click jen pokud prohlížeč podporuje :focus-visible (WebView fallback) */
+*, *::before, *::after { -webkit-tap-highlight-color: transparent; }
+@supports selector(:focus-visible) {
+  button:focus:not(:focus-visible),
+  a:focus:not(:focus-visible),
+  .btn:focus:not(:focus-visible),
+  .nav-toggle:focus:not(:focus-visible) {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+button, .btn, .nav-toggle, .select-trigger, .select-modern .select-trigger, a.brand {
+  -webkit-user-select: none;
+  user-select: none;
+}
+a, button, .btn, .nav-toggle { touch-action: manipulation; }
+
+/* Scrollbar (glass theme); scrollbar-gutter reduces layout shift when scrollbar appears */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(124, 168, 224, 0.5) rgba(255, 255, 255, 0.05);
+  scrollbar-gutter: stable;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Honeypot / botcheck pole – skrýt před uživatelem */
+.input-botcheck {
+  display: none !important;
+}
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+::-webkit-scrollbar-thumb {
+  background-color: rgba(124, 168, 224, 0.5);
+  border-radius: 6px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+::-webkit-scrollbar-thumb:hover { background-color: rgba(124, 168, 224, 0.8); }
+@media (max-width: 768px) {
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { border: none; border-radius: 4px; }
+}
+
+/* Selection */
+::selection {
+  background: rgba(124, 168, 224, 0.3);
+  color: var(--color-text-dark);
+}
+
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Smooth scroll a stabilita na iOS Safari */
+body {
+  -webkit-overflow-scrolling: touch;
 }

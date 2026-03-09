@@ -1,5 +1,12 @@
+# Lesktop – robots.txt
+# Vyhledávače: plný přístup. Chybové stránky (404) jsou noindex v HTML.
+
 User-agent: *
 Allow: /
 
-Sitemap: https://lesktop.cz/sitemap.xml
+# ChatGPT Search (OAI-SearchBot) – povoleno pro dohledatelnost v AI vyhledávání a citace.
+# GPTBot (trénink modelů) není výslovně blokován; pro blokování přidej sekci User-agent: GPTBot + Disallow: /
+User-agent: OAI-SearchBot
+Allow: /
 
+Sitemap: https://lesktop.cz/sitemap.xml

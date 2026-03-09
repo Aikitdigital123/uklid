@@ -31,12 +31,16 @@ export function initAdvancedTracking() {
       });
 
       if (sentDepths['100']) {
-        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('scroll', handleScroll, { passive: true });
       }
       ticking = false;
     });
   };
 
+  if (window.__lesktopAdvancedTrackingScroll) {
+    window.removeEventListener('scroll', window.__lesktopAdvancedTrackingScroll, { passive: true });
+  }
+  window.__lesktopAdvancedTrackingScroll = handleScroll;
   window.addEventListener('scroll', handleScroll, { passive: true });
   handleScroll();
 

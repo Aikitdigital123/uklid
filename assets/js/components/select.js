@@ -1,5 +1,5 @@
-// Select module - reliability mode.
-// Uses native <select> controls for robust behavior on mobile and desktop.
+// Select module: enforce native <select> (no custom wrapper).
+// Removes any .select-modern / .dropdown-wrap so kalkulačka používá nativní select.
 
 export function initSelects() {
   if (document.documentElement.dataset.selectInit === '1') return;

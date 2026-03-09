@@ -63,6 +63,12 @@ export function initBackToTop() {
     }
   };
 
+  if (window.__lesktopBackToTopScroll) {
+    window.removeEventListener('scroll', window.__lesktopBackToTopScroll, { passive: true });
+    window.removeEventListener('load', window.__lesktopBackToTopLoad);
+  }
+  window.__lesktopBackToTopScroll = handleScroll;
+  window.__lesktopBackToTopLoad = toggle;
   window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('load', toggle);
 }
