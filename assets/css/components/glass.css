@@ -5,6 +5,9 @@
   overflow: hidden;
   isolation: isolate;
   transition: background 300ms ease, box-shadow 300ms ease, border-color 300ms ease, transform 300ms ease;
+  /* Safari performance fix: vynucení GPU vrstvy proti flickeringu při scrollu */
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
 }
 
 .glass-effect {
@@ -72,6 +75,9 @@
   color: rgba(44, 53, 74, 0.95);
   position: relative;
   overflow: hidden;
+  /* Safari performance fix */
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
 }
 .glass-panel::before {
   content: "";
@@ -117,7 +123,7 @@
   .glass-effect,
   .glass-effect-small,
   .glass-panel {
-    background: rgba(255, 255, 255, 0.15); /* Maximálně průhledný fallback pro velmi viditelné pozadí */
+    background: rgba(255, 255, 255, 0.95); /* Solidnější fallback pro čitelnost textu */
     border-color: rgba(255, 255, 255, 0.25);
   }
 }

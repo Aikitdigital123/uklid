@@ -41,3 +41,7 @@
   color: var(--color-text-light);
   margin: 0;
 }
+
+@media (max-width: 768px) {
+  .features-list { grid-template-columns: 1fr; }
+}

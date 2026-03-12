@@ -1,0 +1,37 @@
+/**
+ * Index: form-related visual effects a focus stavy.
+ */
+input, select, textarea {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):focus, select:focus, textarea:focus {
+  border-color: rgba(var(--color-accent-rgb), 0.8) !important;
+  box-shadow: 0 0 0 4px rgba(var(--color-accent-rgb), 0.25) !important;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  transform: translateY(-2px);
+}
+
+input:not([type="checkbox"]):not([type="radio"]):active, select:active, textarea:active {
+  transform: translateY(0);
+  transition-duration: 0.1s;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.95) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.form-group label {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.form-group:focus-within label {
+  color: var(--color-primary-dark);
+  transform: translateX(5px);
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}

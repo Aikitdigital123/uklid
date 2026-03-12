@@ -4,21 +4,22 @@
  */
 :root {
   /* Colors */
-  --color-primary-dark: #3a4768;
-  --color-primary-light: #4c6292;
-  --color-accent: #7ca8e0;
-  --color-text-dark: #2c354a;
-  --color-text-light: #5f6b8c;
+  --color-primary-dark: #134e4a; /* Deep Teal (900) - pro texty a nadpisy */
+  --color-primary-light: #0f766e; /* Strong Teal (700) - pro branding a checkmarky */
+  --color-accent: #14b8a6; /* Fresh Teal (500) - pro tlačítka, odkazy a akcenty */
+  --color-text-dark: #134e4a; /* Sjednoceno s Primary Dark pro konzistenci */
+  --color-text-light: #4b6468; /* Slate Teal - jemnější text */
   --color-text: var(--color-text-dark);
   --color-background-white: #ffffff;
-  --color-background-offwhite: #f5f8fc;
-  --color-border: #e0e7ee;
+  --color-background-offwhite: #f2f9f9; /* Velmi jemný mint nádech */
+  --color-border: #dae3e3;
   --color-success: #28a745;
   --color-error: #dc3545;
 
-  --color-primary-light-rgb: 76, 98, 146;
-  --color-primary-dark-rgb: 58, 71, 104;
-  --color-accent-rgb: 124, 168, 224;
+  --color-primary-light-rgb: 15, 118, 110;
+  --color-primary-dark-rgb: 19, 78, 74;
+  --color-accent-rgb: 20, 184, 166;
+  --color-shadow-base-rgb: 15, 50, 55; /* Stíny s nádechem petrolejové */
 
   /* Typography */
   --font-heading: 'Montserrat', sans-serif;
@@ -42,9 +43,9 @@
   --radius-2xl: 22px;
 
   /* Shadow */
-  --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08);
-  --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.12);
-  --shadow-strong: 0 12px 32px rgba(20, 30, 60, 0.22);
+  --shadow-light: 0 4px 15px rgba(var(--color-shadow-base-rgb), 0.08);
+  --shadow-medium: 0 8px 25px rgba(var(--color-shadow-base-rgb), 0.12);
+  --shadow-strong: 0 12px 32px rgba(var(--color-shadow-base-rgb), 0.22);
 
   /* Transition */
   --transition-fast: 0.15s ease;

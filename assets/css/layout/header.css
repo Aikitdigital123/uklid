@@ -4,20 +4,16 @@
    Mobile menu state: .site-nav.is-open (controlled by JS)
    ========================================================================== */
 
-/* --- 1. Header shell (fixed bar, safe area) --- */
-/* Bez transform – v Safari by transform vytvořil containing block a fixed .site-nav by byl ořezán */
+/* --- 1. Header shell (sticky bar, safe area) --- */
 .site-header {
-  position: fixed;
-  top: 10px;
-  left: 0;
-  right: 0;
+  position: sticky;
+  top: 0;
   z-index: var(--z-sticky);
   display: flex;
   justify-content: center;
-  padding: 0;
-  padding-top: max(16px, env(safe-area-inset-top, 0));
-  padding-bottom: 16px;
-  margin: 12px auto 0;
+  width: 100%;
+  padding: max(16px, env(safe-area-inset-top, 0)) 0 0;
+  margin: 0 auto;
   overflow: visible;
   transition: transform 0.3s ease;
   color: var(--color-background-white);
@@ -38,13 +34,16 @@
   position: relative;
   overflow: visible;
   box-sizing: border-box;
-  background: linear-gradient(90deg, rgba(124,168,224,0.75), rgba(76,98,146,0.75));
+  background: linear-gradient(90deg, rgba(var(--color-accent-rgb),0.75), rgba(var(--color-primary-light-rgb),0.75));
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-strong);
   transition: background 0.3s ease, box-shadow 0.3s ease;
+  /* Safari performance fix */
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
 }
 
 .header-inner::before {
@@ -89,7 +88,7 @@
 
 @supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
   .header-inner {
-    background: rgba(124,168,224,0.92);
+    background: rgba(var(--color-accent-rgb), 0.92);
     border-color: rgba(255, 255, 255, 0.25);
   }
 }
@@ -99,12 +98,12 @@
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  box-shadow: 0 12px 32px rgba(20, 30, 60, 0.28);
+  box-shadow: 0 12px 32px rgba(var(--color-shadow-base-rgb), 0.28);
 }
 
 @supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
   .site-header.is-scrolled .header-inner {
-    background: rgba(76, 98, 146, 0.94);
+    background: rgba(var(--color-primary-light-rgb), 0.94);
     border-color: rgba(255, 255, 255, 0.25);
   }
 }
@@ -120,7 +119,7 @@
   line-height: 1;
   color: var(--color-background-white, #fff);
   text-decoration: none;
-  text-shadow: 0 0 6px rgba(124, 168, 224, 0.55), 0 0 14px rgba(124, 168, 224, 0.35);
+  text-shadow: 0 0 6px rgba(var(--color-accent-rgb), 0.55), 0 0 14px rgba(var(--color-accent-rgb), 0.35);
   transition: color 0.3s ease, text-shadow 0.3s ease;
   outline: none;
   border: none;
@@ -161,7 +160,7 @@
   text-transform: none;
   vertical-align: middle;
   color: var(--color-background-white, #fff);
-  text-shadow: 0 0 6px rgba(124, 168, 224, 0.55), 0 0 14px rgba(124, 168, 224, 0.35);
+  text-shadow: 0 0 6px rgba(var(--color-accent-rgb), 0.55), 0 0 14px rgba(var(--color-accent-rgb), 0.35);
 }
 
 .brand-text[style*="display: inline"] {
@@ -171,18 +170,18 @@
 @media (hover: hover) {
   .brand:hover {
     color: var(--color-background-white, #fff);
-    text-shadow: 0 0 10px rgba(124, 168, 224, 0.75), 0 0 22px rgba(124, 168, 224, 0.55);
+    text-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.75), 0 0 22px rgba(var(--color-accent-rgb), 0.55);
   }
   .brand:hover .brand-logo { transform: scale(1.05); }
   .brand:hover .brand-text {
     color: var(--color-background-white, #fff);
-    text-shadow: 0 0 10px rgba(124, 168, 224, 0.75), 0 0 22px rgba(124, 168, 224, 0.55);
+    text-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.75), 0 0 22px rgba(var(--color-accent-rgb), 0.55);
   }
 }
 
 .site-header.is-scrolled .brand-text {
   color: var(--color-background-white, #fff);
-  text-shadow: 0 0 6px rgba(124, 168, 224, 0.55), 0 0 14px rgba(124, 168, 224, 0.35);
+  text-shadow: 0 0 6px rgba(var(--color-accent-rgb), 0.55), 0 0 14px rgba(var(--color-accent-rgb), 0.35);
 }
 
 /* --- 4. Nav toggle (visible only in mobile; see @media below) --- */
@@ -207,7 +206,7 @@
 }
 
 .nav-toggle:focus {
-  outline: 2px solid rgba(124, 168, 224, 0.5);
+  outline: 2px solid rgba(var(--color-accent-rgb), 0.5);
   outline-offset: 2px;
 }
 
@@ -267,7 +266,7 @@
   bottom: 0;
   width: 0;
   height: 3px;
-  background-color: var(--color-accent, rgba(124, 168, 224, 0.85));
+  background-color: var(--color-accent);
   transition: width 0.3s ease;
 }
 
@@ -284,19 +283,19 @@
 .site-nav .nav-link:focus-visible {
   outline: none;
   border-radius: 8px;
-  box-shadow: 0 0 0 4px rgba(124, 168, 224, 0.35);
+  box-shadow: 0 0 0 4px rgba(var(--color-accent-rgb), 0.35);
 }
 
 @media (hover: hover) {
   .site-nav .nav-link:hover {
-    color: var(--color-accent, rgba(124, 168, 224, 0.95));
+    color: var(--color-accent);
     background: rgba(255, 255, 255, 0.14);
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
   .site-nav .nav-link:hover::after { width: 100%; }
   .site-header.is-scrolled .site-nav .nav-link:hover {
-    color: var(--color-accent, rgba(124, 168, 224, 0.95));
+    color: var(--color-accent);
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -313,7 +312,7 @@
   color: var(--color-background-white, #fff);
   background: none;
   border-radius: 0;
-  border-bottom: 2px solid var(--color-accent, rgba(124, 168, 224, 0.85));
+  border-bottom: 2px solid var(--color-accent);
   box-shadow: none;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
@@ -324,8 +323,14 @@
 .site-header.is-scrolled .site-nav .nav-link.active {
   color: var(--color-background-white, #fff);
   background: none;
-  border-bottom: 2px solid var(--color-accent, rgba(124, 168, 224, 0.85));
+  border-bottom: 2px solid var(--color-accent);
   box-shadow: none;
+}
+
+/* --- Tablet (max-width: 992px) --- */
+@media (max-width: 992px) {
+  .brand { font-size: 2.2em; }
+  .brand-logo { height: 90px; }
 }
 
 /* ==========================================================================
@@ -351,16 +356,27 @@
     overflow: visible !important;
   }
 
-  /* Header zůstává připnutý nahoře i při scrollu */
+  /* Header zůstává nahoře, ale zůstává v toku stránky */
   .site-header {
+    position: sticky;
+    top: 0;
+    margin: 0 auto;
+    width: calc(100% - 24px);
+    max-width: calc(100% - 24px);
+    padding: max(8px, env(safe-area-inset-top, 0)) 0 0;
+  }
+
+  /* STABILIZACE: Když je aktivní JS scroll lock (body fixed), header musí být fixed,
+     aby neodjel nahoru spolu s posunutým body. */
+  body.menu-open .site-header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    margin: 10px auto 0;
+    margin: 0 auto;
+    /* Šířka musí odpovídat sticky stavu */
     width: calc(100% - 24px);
     max-width: calc(100% - 24px);
-    padding: max(8px, env(safe-area-inset-top, 0)) 0 0;
   }
 
   /* Horní řádek (brand + toggle) + pod ním při otevření .site-nav; order zajišťuje, že toggle zůstane vpravo */
@@ -382,12 +398,12 @@
   .brand {
     order: 1;
     min-height: 44px;
-    font-size: 2.2em;
+    font-size: 2em;
     flex-shrink: 0;
   }
 
   .brand-logo {
-    height: 72px;
+    height: 56px;
   }
 
   .nav-toggle {
@@ -431,12 +447,12 @@
     margin: 0;
     padding: 10px 0;
     list-style: none;
-    background: linear-gradient(180deg, rgba(124, 168, 224, 0.97), rgba(76, 98, 146, 0.97));
+    background: linear-gradient(180deg, rgba(var(--color-accent-rgb), 0.97), rgba(var(--color-primary-light-rgb), 0.97));
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-strong), 0 24px 48px rgba(20, 30, 60, 0.28);
+    box-shadow: var(--shadow-strong), 0 24px 48px rgba(var(--color-shadow-base-rgb), 0.28);
     box-sizing: border-box;
   }
 
@@ -498,18 +514,21 @@
   }
 
   .brand {
-    font-size: 1.6em;
+    font-size: 1.5em;
     gap: 4px;
-  }
-
-  .brand-logo {
-    height: 56px;
   }
 
   .site-nav .nav-link {
     min-height: 52px;
     padding: 16px 20px;
     font-size: 1.05rem;
+  }
+}
+
+/* --- Extra small mobile (320px - 360px) --- */
+@media (max-width: 360px) {
+  .header-inner {
+    padding: 14px 12px !important; /* Získání místa po stranách */
   }
 }
 
@@ -534,5 +553,5 @@
   .site-header { position: relative; top: auto; }
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .site-header .header-inner { background: rgba(124,168,224,0.92); }
+  .site-header .header-inner { background: rgba(var(--color-accent-rgb), 0.92); }
 }

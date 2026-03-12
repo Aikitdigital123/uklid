@@ -1,14 +1,11 @@
 /**
- * Index: responzivní breakpointy.
+ * Index: responzivni breakpointy.
  */
 @media (max-width: 1200px) {
   .container { padding: 0 30px; }
 }
 
 @media (max-width: 992px) {
-  :root { --header-height: 80px; }
-  .brand { font-size: 2.2em; }
-  .brand-logo { height: 90px; }
   .hero-content h1 { font-size: 2.8em; }
   .hero-content .subtitle { font-size: 1.1em; }
   .section-title { font-size: 2.4em; }
@@ -17,11 +14,7 @@
 }
 
 @media (max-width: 768px) {
-  :root { --header-height: 64px; }
-  .site-header .header-inner { justify-content: space-between; }
-  .brand { font-size: 2em; }
-  .btn,
-  .site-nav .nav-link {
+  .btn {
     min-height: 44px;
     display: inline-flex;
     align-items: center;
@@ -29,189 +22,41 @@
   .hero-content h1 { font-size: 2.4em; }
   .hero-content .subtitle { font-size: 1em; }
   .btn { font-size: 1em; }
-  .content-section {
-    padding: 72px 0;
-    margin: 22px auto;
-    width: calc(100% - 28px);
-  }
   .section-title { font-size: 2em; }
-  .features-list {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-  .pricing-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .service-item, .feature-item, .price-card {
-    margin: 0 auto;
-    max-width: 450px;
-  }
-  .contact-form { padding: 30px; }
-  #kalkulacka { padding: 30px; max-width: 550px; }
-  .contact-info p {
-    flex-direction: column;
-    gap: 5px;
-    margin-bottom: 15px;
-  }
-  .contact-info i { margin-right: 0; margin-bottom: 5px; }
-  /* Sjednocený průhledný glass na mobilu – jako první blok (profesionální úklidové služby) */
-  .glass-effect, .glass-effect-small {
-    border-radius: 10px;
-    box-shadow: 0 6px 20px rgba(20, 30, 60, 0.1);
-    background: linear-gradient(150deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
-    backdrop-filter: blur(18px) saturate(185%);
-    -webkit-backdrop-filter: blur(18px) saturate(185%);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-  }
-  .glass-effect::after {
-    top: 10px; left: 10px; right: 10px; bottom: 10px;
-    border-radius: 8px;
-  }
-  .content-section.glass-panel,
-  #kalkulacka {
-    background: linear-gradient(150deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
-    backdrop-filter: blur(18px) saturate(185%);
-    -webkit-backdrop-filter: blur(18px) saturate(185%);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    box-shadow: 0 10px 26px rgba(20, 30, 60, 0.12);
-  }
-
-  .service-item.glass-panel,
-  .price-card.glass-panel,
-  .feature-item,
-  .ba-card.glass-panel {
-    background: linear-gradient(150deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.012) 100%);
-    border-color: rgba(255, 255, 255, 0.12);
-  }
-
-  .glass-panel::before,
-  .service-item::before {
-    opacity: 0.035;
-  }
-  .price-card h3 { font-size: 1.4em; }
-  .price-card .price-from { font-size: 1.5em; }
   .section-subtitle { font-size: 1.4em; margin-top: 40px; }
-  #kalkulacka .checkbox-group > div { margin-bottom: 8px; }
-  #kalkulacka .checkbox-group input[type="checkbox"] { margin-right: 6px; }
 }
 
 @media (max-width: 480px) {
   .brand { font-size: 1.5em; gap: 3px; }
   .hero-content .subtitle { font-size: 0.9em; margin-bottom: 30px; }
   .btn { padding: 10px 20px; font-size: 0.9em; }
-  .content-section {
-    padding: 58px 0;
-    margin: 18px auto;
-    width: calc(100% - 22px);
-  }
   .section-title { font-size: 1.8em; }
-  .service-item, .feature-item, .price-card {
-    max-width: 100%;
-    padding: 25px;
-  }
-  .contact-form, #kalkulacka {
-    max-width: 100%;
-    padding: 25px;
-  }
-  .service-item i { font-size: 3em; margin-bottom: 20px; }
-  .service-item h3 { font-size: 1.4em; }
-  .service-item p { font-size: 0.95em; margin-bottom: 20px; }
-  .service-item .btn { padding: 10px 20px; font-size: 0.9em; }
-  .form-group label { font-size: 0.9em; }
-  .form-group input, .form-group textarea, .form-group select {
-    padding: 10px;
-  }
-  #kalkulacka .checkbox-group > div { margin-bottom: 6px; }
 }
-
-.brand-logo { height: 72px; }
 
 @media (max-width: 1024px) {
   .container { padding: 0 18px; }
 }
 
 @media (max-width: 768px) {
-  .brand-logo { height: 56px; }
   select#cleaningType, select#cleaningFrequency, .btn { min-height: 52px; }
 }
 
 @media (max-width: 480px) {
-  :root { --header-height: 56px; }
   .container { padding: 0 16px; }
   .hero-content h1 { font-size: 2em; }
 }
 
-/* Before/After galerie – mobil */
-@media (max-width: 768px) {
-  #before-after.content-section {
-    padding: 52px 0;
-    margin: 16px auto;
-  }
-
-  #before-after-gallery {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 10px !important;
-  }
-  .ba-card {
-    padding: 10px !important;
-    margin: 0 !important;
-    touch-action: manipulation;
-  }
-  .ba-figure { height: 120px !important; transition: transform 0.2s ease; }
-  .ba-figure:active { transform: scale(0.98); }
-  .ba-title { font-size: 0.9rem !important; margin-bottom: 4px !important; }
-  .ba-toggle-hint { display: none !important; }
-}
-
-@media (max-width: 480px) {
-  #before-after-gallery {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 8px !important;
-  }
-
-  .ba-card {
-    padding: 8px !important;
-  }
-
-  .ba-figure {
-    height: 100px !important;
-    aspect-ratio: auto;
-  }
-}
-
-/* Touch targets a omezení horizontálního scrollu na index */
+/* Touch targets a omezeni horizontalniho scrollu na index */
 @media (max-width: 768px) {
   .btn, .nav-link, .nav-toggle {
     min-height: 44px;
     min-width: 44px;
     padding: 12px 20px;
   }
-  .service-item, .price-card { margin-bottom: 24px; }
   body {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
     touch-action: pan-y pinch-zoom;
   }
-  html { scroll-padding-top: calc(var(--header-height) + 20px); }
-  .site-header,
-  .site-header .header-inner,
-  .site-header .site-nav,
-  .hero-section,
-  .content-section,
-  .main-footer,
-  .cookie-banner {
-    max-width: 100%;
-  }
+  html { scroll-padding-top: 84px; }
 }
-
-/* iOS Safari: zabránit auto-zoomu i v landscape šířkách (např. iPhone 11 ~896px) */
-@media (max-width: 1024px) {
-  input,
-  select,
-  textarea {
-    font-size: 16px;
-  }
-}
-

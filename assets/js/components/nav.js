@@ -21,7 +21,7 @@ function scrollToY(top) {
 }
 
 /**
- * Compute scroll position for a section, accounting for fixed header.
+ * Compute scroll position for a section, accounting for the sticky header.
  */
 function getScrollTargetY(element, headerHeight) {
   const top = element.getBoundingClientRect().top;
@@ -60,11 +60,21 @@ export function initNav() {
     docEl.classList.remove(MENU_OPEN_CLASS);
     body.classList.remove(MENU_OPEN_CLASS);
     body.style.top = '';
-    if (Number.isFinite(bodyTop) && bodyTop !== 0) {
-      window.scrollTo(0, Math.abs(bodyTop));
-      return;
-    }
-    if (lockedScrollY > 0) window.scrollTo(0, lockedScrollY);
+
+    // Disable smooth scroll temporarily for instant restore
+    const originalBehavior = docEl.style.scrollBehavior;
+    docEl.style.scrollBehavior = 'auto';
+
+    requestAnimationFrame(() => {
+      if (Number.isFinite(bodyTop) && bodyTop !== 0) {
+        window.scrollTo(0, Math.abs(bodyTop));
+      } else if (lockedScrollY > 0) {
+        window.scrollTo(0, lockedScrollY);
+      }
+    });
+
+    // Restore original behavior
+    setTimeout(() => { docEl.style.scrollBehavior = originalBehavior; }, 0);
   }
 
   function setMenuOpen(open) {

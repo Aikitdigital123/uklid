@@ -1,6 +1,6 @@
 /* === Glass chrome pro footer s animací === */
 .main-footer {
-  background: linear-gradient(90deg, rgba(124,168,224,0.78), rgba(76,98,146,0.78));
+  background: linear-gradient(90deg, rgba(var(--color-accent-rgb),0.78), rgba(var(--color-primary-light-rgb),0.78));
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   border: 1px solid rgba(255,255,255,0.35);
@@ -14,7 +14,7 @@
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .main-footer {
-    background: rgba(124,168,224,0.92);
+    background: rgba(var(--color-accent-rgb), 0.92);
   }
 }
 
@@ -58,7 +58,7 @@
   flex-direction: column;
   align-items: center;
   gap: 15px;
-  min-height: var(--header-height);
+  min-height: 90px;
   padding: 20px;
   padding-bottom: max(20px, env(safe-area-inset-bottom, 0px));
 }
@@ -174,5 +174,13 @@
   
   .main-footer .legal-links span[aria-hidden="true"] {
     display: none; /* Skryjeme oddělovač "·" na mobilech, protože odkazy jsou pod sebou */
+  }
+
+  /* Větší touch targety pro odkazy na mobilu */
+  .main-footer .legal-links a {
+    padding: 12px 8px;
+    margin: 2px 0;
+    white-space: normal; /* Povolit zalomení dlouhých odkazů na úzkých displejích */
+    text-align: center;
   }
 }

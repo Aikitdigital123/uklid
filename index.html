@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="cs">
 <head>
     <!-- HEAD: charset → viewport → title → description → canonical → robots → OG/Twitter → favicon & theme-color → CSS → preload → structured data -->
@@ -31,7 +31,7 @@
     <link rel="apple-touch-icon" sizes="152x152" href="images/apple-touch-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="120x120" href="images/apple-touch-icon-120x120.png">
     <link rel="apple-touch-icon" href="images/Domecek.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="manifest" href="site.webmanifest">
     <meta name="theme-color" content="#3a4768">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -156,7 +156,7 @@
                     <li><a href="#about" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'o_nas'})">O nás</a></li>
                     <li><a href="#services" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'sluzby'})">Služby</a></li>
                     <li><a href="#pricing" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'cenik'})">Ceník</a></li>
-                    <li><a href="/prezentace.html" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'prezentace'})">Prezentace</a></li>
+                    <li><a href="prezentace.html" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'prezentace'})">Prezentace</a></li>
                     <li><a href="#contact" class="nav-link" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','nav_click',{menu_item:'kontakt'})">Kontakt</a></li>
                 </ul>
             </nav>
@@ -170,6 +170,9 @@
                 <h1 class="section-title">Profesionální úklidové služby pro domácnosti a firmy v Praze a Středních Čechách</h1>
                 <h2 class="about-section-subtitle">O nás</h2>
                 <p class="section-intro">Jsme profesionální úklidová firma <strong>Lesktop</strong>, která nabízí komplexní úklidové služby pro domácnosti i firmy v <strong>Praze a Středních Čechách</strong>. Naší prioritou je důslednost, spolehlivost a efektivita. S osobním přístupem a pečlivostí zajistíme čistotu, kterou si zasloužíte.</p>
+                <div class="form-actions">
+                    <a href="#pricing" class="btn btn-primary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','hero_cta_click')">Nezávazná kalkulace ceny</a>
+                </div>
             </div>
         </section>
 
@@ -184,17 +187,17 @@
                     <article class="service-item glass-panel reveal-on-scroll delay-2">
                         <h3>Pravidelný úklid domácností</h3>
                         <p>Udržujte svůj domov neustále svěží a čistý s našimi pravidelnými úklidovými plány. Frekvenci a rozsah úklidu přizpůsobíme přesně vašim požadavkům.</p>
-                        <a href="#pricing" class="btn btn-secondary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'zjistit_vice_kalkulace'})">Zjistit více & kalkulace</a>
+                        <a href="#pricing" class="btn btn-secondary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'chci_spocitat_cenu'})">Spočítat cenu úklidu</a>
                     </article>
                     <article class="service-item glass-panel reveal-on-scroll delay-3">
                         <h3>Jednorázový a generální úklid</h3>
                         <p>Potřebujete důkladný úklid po stěhování, rekonstrukci, oslavě nebo jen jarní úklid? Jsme připraveni vyčistit každý kout vašeho bytu či domu.</p>
-                        <a href="#pricing" class="btn btn-secondary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'zjistit_vice_kalkulace'})">Zjistit více & kalkulace</a>
+                        <a href="#pricing" class="btn btn-secondary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'chci_spocitat_cenu'})">Spočítat cenu úklidu</a>
                     </article>
                     <article class="service-item glass-panel reveal-on-scroll delay-4">
                         <h3>Úklid kanceláří a komerčních prostor</h3>
                         <p>Zajistíme profesionální čistotu pro vaše podnikání. Od pravidelné údržby až po hloubkové čištění kanceláří, obchodů a společných prostor.</p>
-                        <a href="#pricing" class="btn btn-secondary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'zjistit_vice_kalkulace'})">Zjistit více & kalkulace</a>
+                        <a href="#pricing" class="btn btn-secondary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'chci_spocitat_cenu'})">Spočítat cenu úklidu</a>
                     </article>
                 </div>
                 <div class="form-actions">
@@ -207,7 +210,7 @@
         <section id="before-after" class="content-section glass-panel ba-section">
             <div class="container">
                 <h2 class="section-title">Před / Po úklidu</h2>
-                <p class="section-intro ba-intro">Ukázky skutečných zakázek. Každá karta obsahuje fotky před a po úklidu.</p>
+                <p class="section-intro ba-intro">Rozdíl, který uvidíte. Prohlédněte si ukázky naší práce u reálných zákazníků.</p>
                 <p class="ba-interaction">Kliknutím nebo klepnutím na fotografii přepnete pohled PŘED / PO.</p>
                 <div id="before-after-gallery" class="ba-gallery"></div>
                 <div id="before-after-empty" class="ba-empty" hidden>Galerie zatím nemá žádné fotky.</div>
@@ -218,7 +221,7 @@
         <section id="pricing" class="content-section glass-panel bg-offwhite reveal-on-scroll">
             <div class="container">
                 <h2 class="section-title">Ceník a nezávazná kalkulace</h2>
-                <p class="section-intro">Naše ceny jsou transparentní a flexibilní, přizpůsobené vašim individuálním potřebám. Získejte rychlý odhad ceny úklidu pomocí naší kalkulačky.</p>
+                <p class="section-intro">Férové ceny na míru vašim potřebám. Žádné skryté poplatky. Zjistěte orientační cenu ihned pomocí naší kalkulačky.</p>
 
                 <div class="pricing-grid">
                     <div class="price-card glass-panel reveal-on-scroll delay-1">
@@ -262,7 +265,7 @@
                 </div>
 
                 <h3 class="section-subtitle">Nezávazná kalkulace úklidu</h3>
-                <p>Vyplňte prosím následující formulář a my vám obratem zašleme nezávaznou cenovou nabídku.</p>
+                <p>Vyplňte formulář a my se vám ozveme s přesnou nabídkou. Vše je zcela nezávazné.</p>
 
                 <!-- Formulář kalkulačky: .form-group (label + pole + volitelně small), .form-actions (submit + status) -->
                 <form class="calculator-form glass-panel" id="kalkulacka" action="https://api.web3forms.com/submit" method="POST" accept-charset="UTF-8" autocomplete="on">
@@ -283,7 +286,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="areaSize">Přibližná velikost plochy (v m²):</label>
+                        <label for="areaSize">Velikost plochy (m²):</label>
                         <input type="number" id="areaSize" name="area_size" min="10" max="1000" step="1" placeholder="Např. 80" required inputmode="numeric" enterkeyhint="next" aria-describedby="calc-form-status">
                         <small>Uveďte celkovou plochu pro úklid.</small>
                     </div>
@@ -415,27 +418,27 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="customerName">Vaše jméno:</label>
+                        <label for="customerName">Jméno a příjmení:</label>
                         <input type="text" id="customerName" name="customer_name" required placeholder="Jméno a příjmení" minlength="3" autocomplete="name" enterkeyhint="next" aria-describedby="calc-form-status">
                     </div>
 
                     <div class="form-group">
-                        <label for="customerEmail">Váš e-mail:</label>
+                        <label for="customerEmail">E-mail:</label>
                         <input type="email" id="customerEmail" name="customer_email" required placeholder="vas@email.cz" autocomplete="email" enterkeyhint="next" aria-describedby="calc-form-status">
                     </div>
 
                     <div class="form-group">
-                        <label for="customerPhone">Váš telefon (volitelné):</label>
-                        <input type="tel" id="customerPhone" name="customer_phone" placeholder="+420 123 456 789" inputmode="tel" autocomplete="tel" pattern="^\+?[0-9\s-]{7,18}$" enterkeyhint="next" aria-describedby="calc-form-status">
+                        <label for="customerPhone">Telefon (volitelné):</label>
+                        <input type="tel" id="customerPhone" name="customer_phone" placeholder="+420 777 123 456" inputmode="tel" autocomplete="tel" pattern="^\+?[0-9\s-]{7,18}$" enterkeyhint="next" aria-describedby="calc-form-status">
                     </div>
 
                     <div class="form-group">
-                        <label for="notes">Doplňující poznámky (specifikace, preferovaný termín):</label>
+                        <label for="notes">Poznámka (specifikace, termín):</label>
                         <textarea id="notes" name="notes" rows="4" placeholder="Např. úklid bytu 2+kk, preferuji úterky dopoledne..." aria-describedby="calc-form-status"></textarea>
                     </div>
 
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'ziskat_nezavaznou_nabidku'})">Získat nezávaznou nabídku</button>
+                        <button type="submit" class="btn btn-primary" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event','cta_click',{button_name:'ziskat_nezavaznou_nabidku'})">Odeslat nezávaznou poptávku</button>
                         <div id="calc-form-status" class="form-status form-status-hidden" role="status" aria-live="polite"></div>
                     </div>
                 </form>
@@ -447,13 +450,13 @@
         <section id="contact" class="content-section glass-panel reveal-on-scroll">
             <div class="container">
                 <h2 class="section-title">Kontaktujte nás</h2>
-                <p class="section-intro">Máte zájem o naše služby? Vyplňte formulář nebo nás kontaktujte přímo!</p>
+                <p class="section-intro">Máte dotaz nebo speciální přání? Zavolejte nám, napište na WhatsApp nebo vyplňte formulář.</p>
                 <div class="contact-info">
                     <p><i class="fas fa-phone-alt"></i> Telefon: <strong><a href="tel:+420775344145" data-track="phone" data-location="contact_section">+420 775 344 145</a></strong></p>
                     <p><a href="https://wa.me/420775344145" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Kontaktovat nás na WhatsApp" onclick="window.lesktopTrackEvent && window.lesktopTrackEvent('event', 'generate_lead', {'event_category': 'engagement', 'event_label': 'whatsapp_click'})"><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp</a></p>
                     <p><i class="fas fa-envelope"></i> E-mail: <a href="mailto:team@lesktop.cz"><strong>team@lesktop.cz</strong></a></p>
-                    <p><i class="fas fa-map-marker-alt"></i> Působíme v Praze a Středních Čechách</p>
-                    <p><i class="fas fa-id-card"></i> <a href="/impresum.html"><strong>Provozovatel a fakturační údaje</strong></a></p>
+                    <p><i class="fas fa-map-marker-alt"></i> <strong>Působíme v Praze a Středních Čechách</strong></p>
+                    <p><i class="fas fa-id-card"></i> <a href="impresum.html"><strong>Provozovatel a fakturační údaje</strong></a></p>
                 </div>
                 <!-- Kontaktní formulář: stejný pattern .form-group, .form-actions -->
                 <form class="contact-form glass-panel" id="contactForm" action="https://api.web3forms.com/submit" method="POST" accept-charset="UTF-8" autocomplete="on">
@@ -498,17 +501,17 @@
                 </a>
             </div>
             <div class="legal-links">
-                <a href="/privacy.html">Zásady ochrany osobních údajů</a>
+                <a href="privacy.html">Zásady ochrany osobních údajů</a>
                 <span aria-hidden="true"> &middot; </span>
-                <a href="/terms.html">Obchodní podmínky</a>
+                <a href="terms.html">Obchodní podmínky</a>
                 <span aria-hidden="true"> &middot; </span>
-                <a href="/sluzby.html">Služby</a>
+                <a href="sluzby.html">Služby</a>
                 <span aria-hidden="true"> &middot; </span>
-                <a href="/prezentace.html">Prezentace</a>
+                <a href="prezentace.html">Prezentace</a>
                 <span aria-hidden="true"> &middot; </span>
-                <a href="/faq.html">FAQ</a>
+                <a href="faq.html">FAQ</a>
                 <span aria-hidden="true"> &middot; </span>
-                <a href="/impresum.html">Provozovatel</a>
+                <a href="impresum.html">Provozovatel</a>
             </div>
         </div>
     </footer>
@@ -516,7 +519,7 @@
     <div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie informace">
         <div class="cookie-banner__text">
             <p>Používáme Google Analytics a Google Ads měření (se souhlasem), abychom mohli web Lesktop i kampaně neustále zlepšovat. Respektujeme vaše soukromí, proto si můžete zvolit, zda s tím souhlasíte.</p>
-            <a href="/privacy.html" class="cookie-banner__link">Více informací</a>
+            <a href="privacy.html" class="cookie-banner__link">Více informací</a>
         </div>
         <div class="cookie-banner__actions">
             <button id="cookie-accept" class="btn btn-primary" type="button">Souhlasím</button>
@@ -526,8 +529,6 @@
     
     
         <!-- Order: data (defer) → gallery (defer) → main (defer); no blocking scripts -->
-        <script src="/before-after/data.js" defer></script>
-        <script src="/before-after/gallery.js" defer></script>
-        <script src="/assets/js/main.js" defer></script>
+        <script type="module" src="/assets/js/entries/index.js"></script>
     </body>
 </html>

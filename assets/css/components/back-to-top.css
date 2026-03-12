@@ -8,12 +8,12 @@
   -webkit-tap-highlight-color: transparent;
   border-radius: 50%;
   border: 1px solid rgba(255,255,255,0.35);
-  background: linear-gradient(150deg, rgba(124,168,224,0.9), rgba(76,98,146,0.9));
+  background: linear-gradient(150deg, rgba(var(--color-accent-rgb), 0.9), rgba(var(--color-primary-light-rgb), 0.9));
   color: var(--color-background-white);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 24px rgba(20,30,60,0.22);
+  box-shadow: 0 10px 24px rgba(var(--color-shadow-base-rgb), 0.22);
   cursor: pointer;
   z-index: var(--z-back-to-top);
   opacity: 0;
@@ -29,21 +29,20 @@
   pointer-events: auto;
 }
 .back-to-top:hover {
-  box-shadow: 0 14px 32px rgba(20,30,60,0.3);
+  box-shadow: 0 14px 32px rgba(var(--color-shadow-base-rgb), 0.3);
 }
 .back-to-top:focus-visible {
   outline: 2px solid rgba(var(--color-accent-rgb), 0.9);
   outline-offset: 3px;
-  box-shadow: 0 0 0 4px rgba(var(--color-accent-rgb), 0.25), 0 14px 32px rgba(20,30,60,0.3);
+  box-shadow: 0 0 0 4px rgba(var(--color-accent-rgb), 0.25), 0 14px 32px rgba(var(--color-shadow-base-rgb), 0.3);
 }
 .back-to-top i { font-size: 18px; }
 
 @media (max-width: 480px) {
   .back-to-top {
     right: max(14px, env(safe-area-inset-right, 0px));
-    bottom: max(14px, env(safe-area-inset-bottom, 0px));
+    bottom: max(20px, env(safe-area-inset-bottom, 0px)); /* Větší odstup pro bezpečné ovládání palcem */
     width: 44px;
     height: 44px;
   }
 }
-

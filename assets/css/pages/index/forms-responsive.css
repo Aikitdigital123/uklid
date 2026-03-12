@@ -1,0 +1,62 @@
+/**
+ * Index: responsive layout upravy formulare a kontaktni sekce.
+ */
+@media (max-width: 768px) {
+  .contact-form {
+    padding: 30px;
+  }
+
+  #kalkulacka {
+    padding: 30px;
+    max-width: 550px;
+  }
+
+  .contact-info p {
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 15px;
+  }
+
+  .contact-info i {
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+
+  #kalkulacka .checkbox-group > div {
+    margin-bottom: 8px;
+  }
+
+  #kalkulacka .checkbox-group input[type="checkbox"] {
+    margin-right: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form,
+  #kalkulacka {
+    max-width: 100%;
+    padding: 25px;
+  }
+
+  .form-group label {
+    font-size: 0.9em;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 10px;
+  }
+
+  #kalkulacka .checkbox-group > div {
+    margin-bottom: 6px;
+  }
+}
+
+@media (max-width: 1024px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
