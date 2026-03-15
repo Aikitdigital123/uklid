@@ -1,0 +1,28 @@
+{
+  "name": "lesktop-site",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "legacy:build:css": "node tools/build-css.mjs",
+    "legacy:build:js": "node tools/build-js.mjs",
+    "legacy:build:static": "node tools/copy-static.mjs",
+    "legacy:build": "npm run legacy:build:css && npm run legacy:build:js && npm run legacy:build:static"
+  },
+  "devDependencies": {
+    "cssnano": "^6.1.2",
+    "esbuild": "^0.27.4",
+    "postcss": "^8.4.47",
+    "postcss-import": "^16.1.0",
+    "sharp": "^0.34.5",
+    "vite": "^8.0.0",
+    "vite-plugin-purgecss": "^0.2.13",
+    "vite-plugin-sri3": "^2.0.0",
+    "vite-plugin-webfont-dl": "^3.12.0"
+  }
+}

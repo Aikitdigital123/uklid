@@ -1,0 +1,616 @@
+/* ==========================================================================
+   HEADER & NAVIGATION
+   Structure: .site-header > .header-inner > .brand, .nav-toggle, .site-nav
+   Mobile menu state: .site-nav.is-open (controlled by JS)
+   ========================================================================== */
+
+/* --- 1. Header shell (sticky bar, safe area) --- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: max(16px, env(safe-area-inset-top, 0)) 0 0;
+  margin: 0 auto;
+  overflow: visible;
+  transition: transform 0.3s ease;
+  color: var(--color-background-white);
+}
+
+/* --- 2. Header inner (glass bar, blue tint) --- */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(var(--content-max), calc(100% - var(--content-gutter)));
+  max-width: var(--content-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 14px 20px !important;
+  min-height: 64px;
+  position: relative;
+  overflow: visible;
+  box-sizing: border-box;
+  background: linear-gradient(90deg, rgba(var(--color-accent-rgb),0.75), rgba(var(--color-primary-light-rgb),0.75));
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-strong);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  /* Safari performance fix */
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+}
+
+.header-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(600px 200px at -10% -20%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 60%),
+              linear-gradient(145deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 35%);
+  opacity: 0.35;
+}
+
+/* Obsah headeru nad ::before a ::after (shimmer), aby nebyl překryt */
+.header-inner > .brand,
+.header-inner > .nav-toggle,
+.header-inner > .site-nav {
+  position: relative;
+  z-index: 1;
+}
+
+.header-inner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 20px;
+  width: 60px;
+  pointer-events: none;
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.55) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-20deg) translateZ(0);
+  -webkit-transform: skewX(-20deg) translateZ(0);
+  animation: header-shimmer 6s ease-in-out infinite;
+}
+
+@keyframes header-shimmer {
+  0%   { left: 20px; opacity: 0; }
+  10%  { opacity: 0.5; }
+  60%  { left: calc(100% - 80px); opacity: 0; }
+  100% { left: calc(100% - 80px); opacity: 0; }
+}
+
+@supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+  .header-inner {
+    background: rgba(var(--color-accent-rgb), 0.92);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+}
+
+/* Optional: add .is-scrolled to .site-header in JS for scroll-dependent styling */
+.site-header.is-scrolled .header-inner {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 12px 32px rgba(var(--color-shadow-base-rgb), 0.28);
+}
+
+@supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+  .site-header.is-scrolled .header-inner {
+    background: rgba(var(--color-primary-light-rgb), 0.94);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+}
+
+/* --- 3. Brand / logo --- */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 56px;
+  font-size: 2.8em;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-background-white, #fff);
+  text-decoration: none;
+  text-shadow: 0 0 6px rgba(var(--color-accent-rgb), 0.55), 0 0 14px rgba(var(--color-accent-rgb), 0.35);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  outline: none;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+.brand:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.brand:active {
+  transform: scale(0.98);
+  transition-duration: 0.1s;
+}
+
+.brand-logo {
+  display: block;
+  width: auto;
+  height: 120px;
+  vertical-align: middle;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition: transform 0.3s ease;
+}
+
+.brand-logo.is-hidden {
+  display: none !important;
+}
+
+.brand-text {
+  display: inline;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  text-transform: none;
+  vertical-align: middle;
+  color: var(--color-background-white, #fff);
+  text-shadow: 0 0 6px rgba(var(--color-accent-rgb), 0.55), 0 0 14px rgba(var(--color-accent-rgb), 0.35);
+}
+
+.brand-text.is-visible {
+  display: inline !important;
+}
+
+@media (hover: hover) {
+  .brand:hover {
+    color: var(--color-background-white, #fff);
+    text-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.75), 0 0 22px rgba(var(--color-accent-rgb), 0.55);
+  }
+  .brand:hover .brand-logo { transform: scale(1.05); }
+  .brand:hover .brand-text {
+    color: var(--color-background-white, #fff);
+    text-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.75), 0 0 22px rgba(var(--color-accent-rgb), 0.55);
+  }
+}
+
+.site-header.is-scrolled .brand-text {
+  color: var(--color-background-white, #fff);
+  text-shadow: 0 0 6px rgba(var(--color-accent-rgb), 0.55), 0 0 14px rgba(var(--color-accent-rgb), 0.35);
+}
+
+/* --- 4. Nav toggle (visible only in mobile; see @media below) --- */
+.nav-toggle {
+  display: none;
+  position: relative;
+  margin: 0;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-background-white, #fff);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  z-index: var(--z-nav-toggle);
+  pointer-events: auto;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.15);
+  touch-action: manipulation;
+}
+
+.nav-toggle:focus {
+  outline: none;
+}
+
+.nav-toggle:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 2px;
+}
+
+.nav-toggle:active {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(0.95);
+  transition-duration: 0.1s;
+}
+
+@media (hover: hover) {
+  .nav-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* --- 5. Nav container (desktop: inline; mobile: overlay, see @media) --- */
+.site-nav {
+  display: flex;
+  align-items: center;
+}
+
+.site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav li {
+  margin: 0;
+}
+
+/* --- 6. Nav links (shared base; desktop hover/active in this block) --- */
+.site-nav .nav-link {
+  display: block;
+  position: relative;
+  padding: 10px 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-background-white, #fff);
+  text-decoration: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  border-bottom: none;
+  z-index: 1;
+  transition: color 0.3s ease, background 0.3s ease, transform 0.15s ease, text-shadow 0.18s ease;
+}
+
+.site-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background-color: var(--color-accent);
+  transition: width 0.3s ease;
+}
+
+.site-nav .nav-link:active {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(0.98);
+  transition-duration: 0.1s;
+}
+
+.site-nav .nav-link:focus {
+  outline: none;
+}
+
+.site-nav .nav-link:focus-visible {
+  outline: none;
+  border-radius: 8px;
+  box-shadow: 0 0 0 4px rgba(var(--color-accent-rgb), 0.35);
+}
+
+@media (hover: hover) {
+  .site-nav .nav-link:hover {
+    color: var(--color-accent);
+    background: rgba(255, 255, 255, 0.14);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .site-nav .nav-link:hover::after { width: 100%; }
+  .site-header.is-scrolled .site-nav .nav-link:hover {
+    color: var(--color-accent);
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.site-header.is-scrolled .site-nav .nav-link {
+  color: var(--color-background-white, #fff);
+}
+
+/* --- 7. Nav link active state --- */
+.site-nav .nav-link.active {
+  font-weight: 600;
+  color: var(--color-background-white, #fff);
+  background: none;
+  border-radius: 0;
+  border-bottom: 2px solid var(--color-accent);
+  box-shadow: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.site-nav .nav-link.active::before { display: none; }
+.site-nav .nav-link.active::after { width: 100%; }
+
+.site-header.is-scrolled .site-nav .nav-link.active {
+  color: var(--color-background-white, #fff);
+  background: none;
+  border-bottom: 2px solid var(--color-accent);
+  box-shadow: none;
+}
+
+/* --- Tablet (max-width: 992px) --- */
+@media (max-width: 992px) {
+  .brand { font-size: 2.2em; }
+  .brand-logo { height: 90px; }
+}
+
+/* ==========================================================================
+   MOBILE (max-width: 768px) – kompaktní lišta + menu jako rozbalení pod ní (obsah nikdy pod menu)
+   ========================================================================== */
+@media (max-width: 768px) {
+  html.menu-open,
+  body.menu-open {
+    overflow: hidden !important;
+    overscroll-behavior: none;
+  }
+
+  /* Na mobilu fixed header, aby po scrollu (např. na Ceník) nezmizel a toggle vždy fungoval */
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: max(4px, env(safe-area-inset-top, 0)) 12px 0;
+    transition: none;
+    z-index: 200;
+  }
+
+  /* Místo pro fixed header (liška cca 64px), aby obsah nebyl pod ním */
+  body {
+    padding-top: calc(64px + env(safe-area-inset-top, 0px));
+  }
+
+  /* Kotvy (#pricing atd.) – scrollovat s odsazením pod header */
+  html {
+    scroll-padding-top: calc(64px + env(safe-area-inset-top, 0px));
+  }
+
+  /* Nadpisy sekcí: při přímém #services / #pricing atd. zůstanou pod headerem */
+  .content-section .section-title,
+  .content-section h1,
+  .content-section h2,
+  .content-section h3 {
+    scroll-margin-top: calc(64px + env(safe-area-inset-top, 0px));
+  }
+
+  .site-header .header-inner,
+  .site-header .site-nav {
+    overflow: visible !important;
+  }
+
+  /* Jedna řádka: logo + Menu; při otevření menu druhý řádek = full-width panel (flex-wrap) */
+  .header-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+    padding: 8px 14px !important;
+    min-height: 48px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border-radius: var(--radius-md);
+    box-sizing: border-box;
+    -webkit-transform: none;
+    transform: none;
+    /* Na mobilu méně dekorace – pevnější vzhled */
+    box-shadow: 0 2px 8px rgba(var(--color-shadow-base-rgb), 0.12);
+    background: linear-gradient(90deg, rgba(var(--color-accent-rgb), 0.92), rgba(var(--color-primary-light-rgb), 0.92));
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .header-inner::before {
+    opacity: 0.2;
+  }
+
+  .header-inner::after {
+    display: none;
+  }
+
+  .brand {
+    order: 1;
+    min-height: 36px;
+    font-size: 1.5rem;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .brand-logo {
+    height: 40px;
+  }
+
+  /* Výraznější tlačítko Menu – větší úchop, čitelný stav */
+  .nav-toggle {
+    order: 2;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 44px;
+    margin-left: auto;
+    padding: 10px 16px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: var(--radius-sm);
+  }
+
+  .nav-toggle[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.55);
+  }
+
+  /* Menu v toku dokumentu – pod headerem, full-width, hero zůstává vždy pod ním */
+  .site-nav {
+    order: 3;
+    flex-basis: 100%;
+    width: 100%;
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    pointer-events: none;
+    box-sizing: border-box;
+    z-index: var(--z-nav);
+    transition: max-height 0.25s ease-out, visibility 0.2s;
+  }
+
+  .site-nav.is-open {
+    visibility: visible;
+    pointer-events: auto;
+    max-height: 70vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-nav {
+      transition: none;
+    }
+  }
+
+  /* Když je menu otevřené, lišta zaoblená jen nahoře – jeden vizuální blok */
+  .header-inner:has(.site-nav.is-open) {
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+  }
+
+  /* Panel na celou šířku, bez vzhledu „plovoucí karty“ – čisté rozbalení */
+  .site-nav ul {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 6px 0 10px;
+    list-style: none;
+    background: rgba(var(--color-primary-light-rgb), 0.98);
+    border: none;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    box-shadow: none;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .site-nav li {
+    margin: 0;
+    list-style: none;
+    display: block;
+  }
+
+  .site-nav li:not(:last-child) .nav-link {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  /* Čistší vertikální rytmus navigace */
+  .site-nav .nav-link {
+    display: block;
+    width: 100%;
+    min-height: 48px;
+    padding: 14px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-background-white, #fff);
+    text-align: left;
+    text-decoration: none;
+    box-sizing: border-box;
+    line-height: 1.35;
+    transition: background var(--transition-fast), color var(--transition-fast);
+  }
+
+  @media (hover: hover) {
+    .site-nav .nav-link:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--color-background-white, #fff);
+    }
+  }
+
+  .site-nav .nav-link:active {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .site-nav .nav-link:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.95);
+    outline-offset: -2px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* --- Small mobile --- */
+@media (max-width: 480px) {
+  .site-header {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .header-inner {
+    padding: 8px 12px !important;
+    min-height: 46px;
+  }
+
+  .brand {
+    min-height: 32px;
+    font-size: 1.35rem;
+    gap: 4px;
+  }
+
+  .brand-logo {
+    height: 36px;
+  }
+
+  .nav-toggle {
+    min-height: 42px;
+    min-width: 42px;
+    padding: 8px 14px;
+    font-size: 0.875rem;
+  }
+
+  .site-nav .nav-link {
+    min-height: 46px;
+    padding: 12px 18px;
+    font-size: 0.9375rem;
+  }
+}
+
+/* --- Extra small mobile (320px - 360px) --- */
+@media (max-width: 360px) {
+  .header-inner {
+    padding: 8px 10px !important;
+  }
+}
+
+/* --- Desktop: ensure horizontal nav and hide toggle --- */
+@media (min-width: 769px) {
+  .nav-toggle {
+    display: none !important;
+  }
+
+  .site-nav {
+    display: flex !important;
+  }
+
+  .site-nav ul {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+@supports not (position: sticky) {
+  .site-header { position: relative; top: auto; }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header .header-inner { background: rgba(var(--color-accent-rgb), 0.92); }
+}

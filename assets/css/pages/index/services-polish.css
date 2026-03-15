@@ -1,0 +1,73 @@
+/**
+ * Index: service/card specific visual polish.
+ */
+body[data-page="index"] .services-grid .service-item i {
+  display: none;
+}
+
+body[data-page="index"] .services-grid .service-item h3 {
+  margin: 0 0 10px 0;
+}
+
+body[data-page="index"] .service-item,
+body[data-page="index"] .price-card {
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease, border-color 0.3s ease, filter 0.3s ease;
+}
+
+@media (hover: hover) {
+  body[data-page="index"] .service-item:hover,
+  body[data-page="index"] .price-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 24px 48px rgba(20, 30, 60, 0.18);
+    border-color: rgba(255, 255, 255, 0.8);
+    filter: brightness(1.05);
+    z-index: 2;
+  }
+}
+
+body[data-page="index"] .service-item:active,
+body[data-page="index"] .price-card:active {
+  transform: translateY(-4px) scale(1.01);
+  transition-duration: 0.15s;
+}
+
+body[data-page="index"] .price-list li {
+  transition: transform 0.2s ease, color 0.2s ease;
+  cursor: default;
+}
+
+@media (hover: hover) {
+  body[data-page="index"] .price-list li:hover {
+    transform: translateX(6px);
+    color: var(--color-primary-dark);
+  }
+}
+
+/* Mobile specific visual polish for glass cards on homepage */
+@media (max-width: 992px) {
+  body[data-page="index"] .service-item,
+  body[data-page="index"] .price-card,
+  body[data-page="index"] .feature-item {
+    background: linear-gradient(150deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.012) 100%);
+    border-color: rgba(255, 255, 255, 0.12);
+    padding: 25px;
+  }
+
+  body[data-page="index"] .service-item::before {
+    opacity: 0.035;
+  }
+
+  body[data-page="index"] .price-card h3 { font-size: 1.4em; }
+  body[data-page="index"] .price-card .price-from { font-size: 1.5em; }
+}
+
+@media (max-width: 480px) {
+  body[data-page="index"] .service-item h3 {
+    font-size: 1.4em;
+  }
+  
+  body[data-page="index"] .service-item p {
+    font-size: 0.95em;
+    margin-bottom: 20px;
+  }
+}

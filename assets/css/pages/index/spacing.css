@@ -1,0 +1,17 @@
+/**
+ * Index: homepage section spacing overrides for smaller screens only.
+ */
+
+@media (max-width: 768px) {
+  .content-section {
+    padding: 72px 0;
+    margin: 22px auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-section {
+    padding: 58px 0;
+    margin: 18px auto;
+  }
+}

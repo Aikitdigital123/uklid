@@ -1,0 +1,62 @@
+/**
+ * Index: responzivni breakpointy.
+ */
+@media (max-width: 1200px) {
+  .container { padding: 0 30px; }
+}
+
+@media (max-width: 992px) {
+  .hero-content h1 { font-size: 2.8em; }
+  .hero-content .subtitle { font-size: 1.1em; }
+  .section-title { font-size: 2.4em; }
+  .content-section p { font-size: 1em; }
+  .pricing-grid { gap: 25px; }
+}
+
+@media (max-width: 768px) {
+  .btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .hero-content h1 { font-size: 2.4em; }
+  .hero-content .subtitle { font-size: 1em; }
+  .btn { font-size: 1em; }
+  .section-title { font-size: 2em; }
+  .section-subtitle { font-size: 1.4em; margin-top: 40px; }
+}
+
+@media (max-width: 480px) {
+  .brand { font-size: 1.5em; gap: 3px; }
+  .hero-content .subtitle { font-size: 0.9em; margin-bottom: 30px; }
+  .btn { padding: 10px 20px; font-size: 0.9em; }
+  .section-title { font-size: 1.8em; }
+}
+
+@media (max-width: 1024px) {
+  .container { padding: 0 18px; }
+}
+
+@media (max-width: 768px) {
+  select#cleaningType, select#cleaningFrequency, .btn { min-height: 52px; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .hero-content h1 { font-size: 2em; }
+}
+
+/* Touch targets a omezeni horizontalniho scrollu na index */
+@media (max-width: 768px) {
+  .btn, .nav-link, .nav-toggle {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 20px;
+  }
+  body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    touch-action: pan-y pinch-zoom;
+  }
+  html { scroll-padding-top: 84px; }
+}

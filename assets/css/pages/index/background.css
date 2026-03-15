@@ -1,0 +1,47 @@
+/**
+ * Index: homepage-only background a vizualni vrstva hero pozadi.
+ */
+body[data-page="index"] {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.82)),
+    url("/images/hero.jpg") center center / cover no-repeat fixed;
+}
+
+@media (max-width: 768px) {
+  body[data-page="index"] {
+    background: none;
+    isolation: isolate;
+  }
+
+  body[data-page="index"] #main-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  body[data-page="index"]::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.56)),
+      url("/images/hero.jpg") center center / cover no-repeat;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  body[data-page="index"] #main-content > .content-section:first-of-type {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.38));
+    background-attachment: scroll;
+  }
+}
+
+@media (max-width: 480px) {
+  body[data-page="index"]::before {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.54)),
+      url("/images/hero-mobile.jpg") center 38% / cover no-repeat;
+  }
+}

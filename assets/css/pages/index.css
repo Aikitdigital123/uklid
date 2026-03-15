@@ -1,0 +1,16 @@
+/**
+ * Page: index. Entry point – načítá index/*.css.
+ * Typography/base v base/; komponenty v components/.
+ */
+@import url('./index/background.css');
+@import url('./index/hero.css');
+@import url('./index/sections.css');
+@import url('./index/spacing.css');
+@import url('./index/reveal.css');
+@import url('./index/responsive.css');
+@import url('./index/forms-responsive.css');
+@import url('./index/gallery-responsive.css');
+@import url('./index/print.css');
+@import url('./index/services-polish.css');
+@import url('./index/misc.css');
+@import url('./index/forms-effects.css');

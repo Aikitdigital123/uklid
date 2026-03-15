@@ -1,0 +1,79 @@
+/**
+ * Design tokens – single source for colors, spacing, radius, shadow, z-index, transition.
+ * Breakpoints (for reference): 480px (sm), 768px (md), 992px (lg), 1200px (xl).
+ */
+:root {
+  /* Colors */
+  --color-primary-dark: #134e4a; /* Deep Teal (900) - pro texty a nadpisy */
+  --color-primary-light: #0f766e; /* Strong Teal (700) - pro branding a checkmarky */
+  --color-accent: #14b8a6; /* Fresh Teal (500) - pro tlačítka, odkazy a akcenty */
+  --color-text-dark: #134e4a; /* Sjednoceno s Primary Dark pro konzistenci */
+  --color-text-light: #4b6468; /* Slate Teal - jemnější text */
+  --color-text: var(--color-text-dark);
+  --color-background-white: #ffffff;
+  --color-background-offwhite: #f2f9f9; /* Velmi jemný mint nádech */
+  --color-border: #dae3e3;
+  --color-success: #28a745;
+  --color-error: #dc3545;
+
+  --color-primary-light-rgb: 15, 118, 110;
+  --color-primary-dark-rgb: 19, 78, 74;
+  --color-accent-rgb: 20, 184, 166;
+  --color-shadow-base-rgb: 15, 50, 55; /* Stíny s nádechem petrolejové */
+
+  /* Typography */
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Open Sans', sans-serif;
+
+  /* Spacing scale (4px base) */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-2xl: 24px;
+  --space-3xl: 28px;
+  --space-4xl: 32px;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 18px;
+  --radius-2xl: 22px;
+
+  /* Shadow */
+  --shadow-light: 0 4px 15px rgba(var(--color-shadow-base-rgb), 0.08);
+  --shadow-medium: 0 8px 25px rgba(var(--color-shadow-base-rgb), 0.12);
+  --shadow-strong: 0 12px 32px rgba(var(--color-shadow-base-rgb), 0.22);
+
+  /* Transition */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.4s ease;
+  --transition-speed: 0.4s;
+
+  /* Glass (shared) */
+  --glass-blur: 12px;
+  --glass-saturate: 180%;
+  --glass-stroke: rgba(255, 255, 255, 0.35);
+  --glass-radius-md: 12px;
+  --glass-radius-lg: 16px;
+
+  /* Z-index scale */
+  --z-below: 0;
+  --z-base: 1;
+  --z-dropdown: 200;
+  --z-sticky: 100;
+  --z-nav: 1000;
+  --z-nav-toggle: 1001;
+  --z-back-to-top: 1200;
+  --z-cookie: 3000;
+  --z-skip: 10000;
+
+  /* Layout */
+  --header-height: 90px;
+  --content-max: 1200px;
+  --content-gutter: 32px;
+  --mobile-menu-gap: 8px;
+}

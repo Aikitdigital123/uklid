@@ -1,0 +1,23 @@
+/**
+ * Index: tiskové styly.
+ */
+@media print {
+  .site-header, .nav-toggle, .cookie-banner, .back-to-top, .hero-section { display: none !important; }
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+  .content-section { margin: 0; padding: 20px 0; width: 100%; }
+  .glass-panel, .glass-effect {
+    background: none !important;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    backdrop-filter: none !important;
+    color: black !important;
+  }
+  .reveal-on-scroll { opacity: 1 !important; transform: none !important; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #555; }
+  .btn { display: none; }
+  .contact-info a { text-decoration: none; color: black !important; }
+}

@@ -1,0 +1,43 @@
+/* sluzby.html specific hardening (mobile tap targets + long-text wrapping) */
+body[data-page="sluzby"] .legal {
+  margin-top: 40px;
+  overflow-wrap: break-word;
+}
+
+body[data-page="sluzby"] .main-nav .nav-list a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+body[data-page="sluzby"] .main-nav .nav-list a:focus-visible {
+  outline: 2px solid rgba(var(--color-accent-rgb), 0.85);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  body[data-page="sluzby"] .legal {
+    margin-top: 24px;
+  }
+
+  body[data-page="sluzby"] .main-nav {
+    width: 100%;
+  }
+
+  body[data-page="sluzby"] .main-nav .nav-list {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  body[data-page="sluzby"] .main-nav .nav-list {
+    gap: 8px;
+  }
+
+  body[data-page="sluzby"] .main-nav .nav-list a {
+    padding: 8px 8px;
+  }
+}
