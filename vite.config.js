@@ -6,6 +6,7 @@ import { cp, mkdir, stat, readdir, readFile, writeFile } from 'node:fs/promises'
 import { createHash } from 'node:crypto';
 import { dirname, resolve, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { seoMetadata } from './vite-plugin-seo-metadata.js';
 
 const htmlPages = [
   'index.html',
@@ -16,6 +17,13 @@ const htmlPages = [
   'terms.html',
   'impresum.html',
   '404.html',
+  'en/index.html',
+  'en/services.html',
+  'en/faq.html',
+  'en/presentation.html',
+  'en/terms.html',
+  'en/privacy.html',
+  'en/impresum.html',
 ];
 
 /** Base URL pro sitemap (bez koncového lomítka). */
@@ -31,6 +39,13 @@ const sitemapPageConfig = {
   'terms.html': { priority: 0.5, changefreq: 'yearly' },
   'impresum.html': { priority: 0.4, changefreq: 'yearly' },
   '404.html': null, // vynecháno ze sitemap
+  'en/index.html': { priority: 1.0, changefreq: 'weekly' },
+  'en/services.html': { priority: 0.9, changefreq: 'monthly' },
+  'en/faq.html': { priority: 0.8, changefreq: 'monthly' },
+  'en/presentation.html': { priority: 0.7, changefreq: 'monthly' },
+  'en/terms.html': { priority: 0.5, changefreq: 'yearly' },
+  'en/privacy.html': { priority: 0.5, changefreq: 'yearly' },
+  'en/impresum.html': { priority: 0.4, changefreq: 'yearly' },
 };
 
 const staticDirs = [
@@ -211,7 +226,16 @@ function generateSitemap() {
         const config = sitemapPageConfig[page];
         if (config === null) continue; // 404 a další vynechané
 
-        const pathname = page === 'index.html' ? '' : page.replace(/\.html$/, '.html');
+        let pathname;
+        if (page === 'index.html') {
+          pathname = '';
+        } else if (page === 'en/index.html') {
+          pathname = 'en/';
+        } else if (page.startsWith('en/')) {
+          pathname = page.replace(/\.html$/, '.html');
+        } else {
+          pathname = page.replace(/\.html$/, '.html');
+        }
         const loc = pathname ? `${SITEMAP_BASE}/${pathname}` : `${SITEMAP_BASE}/`;
 
         let lastmod = new Date().toISOString().slice(0, 10);
@@ -384,6 +408,7 @@ export default defineConfig(() => {
         content: purgeContent,
         safelist: purgeSafelist,
       }),
+      seoMetadata(), // Centralizované SEO metadata – před injectCspMeta, aby CSP viděl finální HTML
       injectCspMeta(),
       copyStaticFiles(),
       generateSitemap(),

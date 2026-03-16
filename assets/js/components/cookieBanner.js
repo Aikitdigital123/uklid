@@ -261,6 +261,12 @@ export function initCookieBanner() {
       setStoredConsent(value);
       applyConsentChoice(value);
 
+      // Track cookie consent choice
+      if (typeof window.lesktopTrackEvent === 'function') {
+        const consentEvent = value === 'all' ? 'cookie_consent_accepted' : 'cookie_consent_necessary_only';
+        window.lesktopTrackEvent('event', consentEvent);
+      }
+
       window.setTimeout(() => {
         recentlyHandled = false;
       }, 500);

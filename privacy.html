@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <!-- HEAD: charset → viewport → title → description → canonical → robots → OG → favicon & theme-color → CSS -->
+  <!-- HEAD: charset → viewport → title → description → canonical → robots → OG/Twitter (společné tagy se doplní automaticky při buildu) → favicon & theme-color → CSS -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Zásady ochrany osobních údajů | Lesktop</title>
   <meta name="description" content="Zásady ochrany osobních údajů Lesktop: jaké údaje zpracováváme, za jakým účelem, jak dlouho je uchováváme a jak můžete uplatnit svá práva.">
   <link rel="canonical" href="https://lesktop.cz/privacy.html">
+  <link rel="alternate" hreflang="cs" href="https://lesktop.cz/privacy.html">
+  <link rel="alternate" hreflang="en" href="https://lesktop.cz/en/privacy.html">
+  <link rel="alternate" hreflang="x-default" href="https://lesktop.cz/privacy.html">
   <meta name="robots" content="index,follow">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lesktop.cz/privacy.html">
   <meta property="og:title" content="Ochrana osobních údajů | Lesktop">
   <meta property="og:description" content="Informace o tom, jak zpracováváme a chráníme vaše osobní údaje v souladu s GDPR.">
-  <meta property="og:image" content="https://lesktop.cz/images/hero.jpg">
-  <meta property="og:locale" content="cs_CZ">
+  <meta property="og:image:alt" content="Lesktop - Ochrana osobních údajů">
+  <meta name="twitter:title" content="Ochrana osobních údajů | Lesktop">
+  <meta name="twitter:description" content="Informace o tom, jak zpracováváme a chráníme vaše osobní údaje v souladu s GDPR.">
   <link rel="icon" type="image/png" href="images/Domecek.png">
   <meta name="theme-color" content="#3a4768">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,22 +31,27 @@
 </head>
 <body data-page="privacy">
   <a href="#main-content" class="skip-link">Přeskočit na hlavní obsah</a>
-  <header class="main-header">
-    <div class="container">
-      <a href="index.html" class="logo"><img src="images/Domecek.png" alt="Lesktop logo" class="logo-img" width="120" height="120" loading="eager" decoding="async">Lesktop</a>
-      <nav class="main-nav">
-        <ul class="nav-list" id="main-menu">
-          <li><a href="index.html#about">O nás</a></li>
-          <li><a href="sluzby.html">Služby</a></li>
-          <li><a href="index.html#pricing">Ceník</a></li>
-          <li><a href="prezentace.html">Prezentace</a></li>
-          <li><a href="index.html#contact">Kontakt</a></li>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <img src="images/Domecek.png" alt="Lesktop – úklidové služby" class="brand-logo" width="120" height="120" loading="eager" decoding="async">
+        <span class="brand-text">Lesktop</span>
+      </a>
+      <a href="en/privacy.html" class="lang-switcher" hreflang="en" aria-label="Přepnout na angličtinu" title="English">EN</a>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-navigation" type="button">Menu</button>
+      <nav id="site-navigation" class="site-nav" aria-label="Hlavní navigace">
+        <ul>
+          <li><a href="/#about" class="nav-link">O nás</a></li>
+          <li><a href="sluzby.html" class="nav-link">Služby</a></li>
+          <li><a href="/#pricing" class="nav-link">Ceník</a></li>
+          <li><a href="prezentace.html" class="nav-link">Prezentace</a></li>
+          <li><a href="/#contact" class="nav-link">Kontakt</a></li>
         </ul>
       </nav>
     </div>
   </header>
   <main id="main-content">
-    <section class="legal">
+    <section class="legal glass-panel">
       <h1>Zásady ochrany osobních údajů</h1>
       <p>Tyto zásady popisují, jak společnost Lesktop ("my") zpracovává osobní údaje v souvislosti s provozem webu a poskytováním úklidových služeb.</p>
 

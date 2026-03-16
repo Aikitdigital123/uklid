@@ -139,8 +139,12 @@ export function initNav() {
       closeMenuIfNeeded({ restoreScroll: false });
       touchHandledRef.current = false;
 
-      navLinksAnchor.forEach((l) => l.classList.remove('active'));
+      navLinksAnchor.forEach((l) => {
+        l.classList.remove('active');
+        l.removeAttribute('aria-current');
+      });
       link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
     });
   });
 

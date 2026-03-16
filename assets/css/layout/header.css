@@ -59,6 +59,7 @@
 
 /* Obsah headeru nad ::before a ::after (shimmer), aby nebyl překryt */
 .header-inner > .brand,
+.header-inner > .lang-switcher,
 .header-inner > .nav-toggle,
 .header-inner > .site-nav {
   position: relative;
@@ -184,7 +185,56 @@
   text-shadow: 0 0 6px rgba(var(--color-accent-rgb), 0.55), 0 0 14px rgba(var(--color-accent-rgb), 0.35);
 }
 
-/* --- 4. Nav toggle (visible only in mobile; see @media below) --- */
+/* --- 4. Language switcher --- */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px 14px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-background-white, #fff);
+  text-decoration: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  z-index: var(--z-nav-toggle);
+  pointer-events: auto;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.15);
+  touch-action: manipulation;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.lang-switcher:focus {
+  outline: none;
+}
+
+.lang-switcher:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 2px;
+}
+
+.lang-switcher:active {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(0.95);
+  transition-duration: 0.1s;
+}
+
+@media (hover: hover) {
+  .lang-switcher:hover {
+    background: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+    transform: translateY(-1px);
+  }
+}
+
+/* --- 5. Nav toggle (visible only in mobile; see @media below) --- */
 .nav-toggle {
   display: none;
   position: relative;
@@ -227,7 +277,7 @@
   }
 }
 
-/* --- 5. Nav container (desktop: inline; mobile: overlay, see @media) --- */
+/* --- 6. Nav container (desktop: inline; mobile: overlay, see @media) --- */
 .site-nav {
   display: flex;
   align-items: center;
@@ -246,37 +296,36 @@
   margin: 0;
 }
 
-/* --- 6. Nav links (shared base; desktop hover/active in this block) --- */
+/* --- 7. Nav links (shared base; desktop hover/active in this block) --- */
 .site-nav .nav-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  padding: 10px 0;
+  padding: 10px 14px;
+  min-width: 44px;
+  min-height: 44px;
   font-size: 0.9375rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--color-background-white, #fff);
   text-decoration: none;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
-  border-bottom: none;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   z-index: 1;
-  transition: color 0.3s ease, background 0.3s ease, transform 0.15s ease, text-shadow 0.18s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
 }
 
 .site-nav .nav-link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 3px;
-  background-color: var(--color-accent);
-  transition: width 0.3s ease;
+  display: none;
 }
 
 .site-nav .nav-link:active {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(0.98);
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(0.95);
   transition-duration: 0.1s;
 }
 
@@ -285,24 +334,24 @@
 }
 
 .site-nav .nav-link:focus-visible {
-  outline: none;
-  border-radius: 8px;
-  box-shadow: 0 0 0 4px rgba(var(--color-accent-rgb), 0.35);
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 2px;
 }
 
 @media (hover: hover) {
   .site-nav .nav-link:hover {
-    color: var(--color-accent);
-    background: rgba(255, 255, 255, 0.14);
+    color: var(--color-background-white, #fff);
+    background: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.7);
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
   }
-  .site-nav .nav-link:hover::after { width: 100%; }
   .site-header.is-scrolled .site-nav .nav-link:hover {
-    color: var(--color-accent);
-    background: rgba(255, 255, 255, 0.2);
+    color: var(--color-background-white, #fff);
+    background: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.7);
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
   }
 }
 
@@ -310,25 +359,25 @@
   color: var(--color-background-white, #fff);
 }
 
-/* --- 7. Nav link active state --- */
+/* --- 8. Nav link active state --- */
 .site-nav .nav-link.active {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-background-white, #fff);
-  background: none;
-  border-radius: 0;
-  border-bottom: 2px solid var(--color-accent);
-  box-shadow: none;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .site-nav .nav-link.active::before { display: none; }
-.site-nav .nav-link.active::after { width: 100%; }
+.site-nav .nav-link.active::after { display: none; }
 
 .site-header.is-scrolled .site-nav .nav-link.active {
   color: var(--color-background-white, #fff);
-  background: none;
-  border-bottom: 2px solid var(--color-accent);
-  box-shadow: none;
+  background: rgba(255, 255, 255, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
 }
 
 /* --- Tablet (max-width: 992px) --- */
@@ -426,15 +475,31 @@
     height: 40px;
   }
 
+  /* Tlačítko jazyků vedle menu tlačítka */
+  .lang-switcher {
+    order: 2;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-left: auto;
+    margin-right: 8px;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.25);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+
   /* Výraznější tlačítko Menu – větší úchop, čitelný stav */
   .nav-toggle {
-    order: 2;
+    order: 3;
     display: flex !important;
     align-items: center;
     justify-content: center;
     min-height: 44px;
     min-width: 44px;
-    margin-left: auto;
     padding: 10px 16px;
     font-size: 0.9375rem;
     font-weight: 600;
@@ -451,7 +516,7 @@
 
   /* Menu v toku dokumentu – pod headerem, full-width, hero zůstává vždy pod ním */
   .site-nav {
-    order: 3;
+    order: 4;
     flex-basis: 100%;
     width: 100%;
     position: relative;
@@ -570,6 +635,14 @@
     height: 36px;
   }
 
+  .lang-switcher {
+    min-width: 42px;
+    min-height: 42px;
+    padding: 8px 12px;
+    font-size: 0.8125rem;
+    margin-right: 6px;
+  }
+
   .nav-toggle {
     min-height: 42px;
     min-width: 42px;
@@ -595,6 +668,11 @@
 @media (min-width: 769px) {
   .nav-toggle {
     display: none !important;
+  }
+
+  .lang-switcher {
+    margin-left: auto;
+    margin-right: 8px;
   }
 
   .site-nav {

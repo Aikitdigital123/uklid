@@ -31,7 +31,8 @@ body[data-page="index"] {
     -webkit-transform: translateZ(0);
   }
 
-  body[data-page="index"] #main-content > .content-section:first-of-type {
+  /* Background pro první sekci - pouze pokud není glass-panel (glass-panel má vlastní globální default) */
+  body[data-page="index"] #main-content > .content-section:first-of-type:not(.glass-panel) {
     background:
       linear-gradient(rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.38));
     background-attachment: scroll;

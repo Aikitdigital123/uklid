@@ -57,11 +57,22 @@ input, select, textarea { font-size: clamp(14px, 1.05vw, 16px); }
   border-radius: 12px;
   text-align: left;
   box-shadow: var(--shadow-medium);
+  /* Pokud má třídu .glass-panel, použij globální glass-panel default */
   background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   border: 1px solid rgba(var(--color-primary-light-rgb), 0.15);
   overflow: visible;
+}
+/* Pokud má kalkulačka třídu .glass-panel, použij úplně průhledný styl */
+#kalkulacka.glass-panel,
+.calculator-form.glass-panel,
+.contact-form.glass-panel {
+  background: transparent !important;
+  backdrop-filter: blur(4px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(4px) saturate(120%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 2px 12px rgba(20, 30, 60, 0.01) !important;
 }
 #kalkulacka .form-group { margin-bottom: 18px; }
 #kalkulacka label { font-weight: 700; }

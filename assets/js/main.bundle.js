@@ -12,6 +12,7 @@ import { initBackToTop } from './components/backToTop.js';
 import { initCookieBanner } from './components/cookieBanner.js';
 import { initEnhancedTracking } from './components/enhancedTracking.js';
 import { initAdvancedTracking } from './components/advancedTracking.js';
+import { initUniversalTracking } from './components/universalTracking.js';
 import { initIndexPage } from './pages/index.js';
 
 const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
@@ -49,6 +50,7 @@ const GLOBAL_INIT_REGISTRY = [
   { key: 'cookieBannerInit', init: initCookieBanner },
   { key: 'enhancedTrackingInit', init: initEnhancedTracking },
   { key: 'advancedTrackingInit', init: initAdvancedTracking },
+  { key: 'universalTrackingInit', init: initUniversalTracking },
 ];
 
 /**

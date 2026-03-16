@@ -64,34 +64,71 @@
 }
 
 /* Unified glass panel used across content blocks */
-.glass-panel {
+/* Průhledný glass efekt - světlý, bez tmavého šedého nádechu */
+.glass-panel,
+.content-section.glass-panel,
+section.glass-panel {
+  /* Klíčové pro LIQUID GLASS EFEKT - světlý efekt */
+  background-color: rgba(255, 255, 255, 0.4); /* Světlé bílé pozadí místo tmavého */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Světlejší okraj */
   border-radius: 22px;
-  /* Maximálně průhledné pozadí - velmi viditelné pozadí za panelem */
-  background: linear-gradient(150deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 12px 30px rgba(20, 30, 60, 0.06);
-  backdrop-filter: blur(14px) saturate(180%);
-  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.3); /* Světlý stín místo tmavého */
+  
+  /* Backdrop-filter pro rozmazání pozadí za prvkem - jemnější blur */
+  backdrop-filter: blur(2px) saturate(120%); /* Snížený blur pro méně kouřivý efekt */
+  -webkit-backdrop-filter: blur(2px) saturate(120%); /* Pro Safari */
+
+  position: relative; /* Důležité pro pseudo-elementy */
+  overflow: hidden; /* Zamezí přetečení obsahu nebo stínů */
+  transition: all 0.3s ease-in-out; /* Plynulý přechod pro hover efekty */
   color: rgba(44, 53, 74, 0.95);
-  position: relative;
-  overflow: hidden;
   /* Safari performance fix */
   -webkit-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);
 }
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-panel,
+  .content-section.glass-panel,
+  section.glass-panel {
+    background-color: rgba(255, 255, 255, 0.9); /* Světlé fallback pozadí */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* Odstraněn kouřivý nádech - ::before buď vypnutý nebo velmi jemný */
 .glass-panel::before {
-  content: "";
+  content: '';
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Velmi jemný nebo žádný gradient - odstraněn kouřivý nádech */
+  background: none; /* Vypnutý gradient pro čistý průhledný efekt */
+  border-radius: inherit;
   pointer-events: none;
-  background: 
-    radial-gradient(1200px 400px at -10% -20%, rgba(255,255,255,0.12), rgba(255,255,255,0) 60%),
-    linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 35%);
-  opacity: 0.2;
+  opacity: 0; /* Úplně průhledný */
+}
+
+/* Vnitřní okraj - světlejší pro světlý vzhled */
+.glass-panel::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4); /* Světlejší vnitřní okraj */
+  border-radius: 20px;
+  pointer-events: none;
+  box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.2); /* Světlejší vnitřní stín */
 }
 .glass-panel p,
 .glass-panel li {
-  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.7);
+  /* Odstraněn text-shadow - způsoboval mléčný efekt při načtení textu */
+  /* text-shadow: 0 1px 4px rgba(255, 255, 255, 0.7); */
   position: relative;
   z-index: 1;
 }

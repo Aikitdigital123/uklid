@@ -7,6 +7,12 @@ export function initEnhancedTracking() {
 
   const canTrack = () => typeof window.lesktopTrackEvent === 'function';
 
+  // Helper function to get page type from body data attribute
+  const getPageType = () => {
+    const pageData = document.body?.dataset?.page;
+    return pageData || 'unknown';
+  };
+
   // Track telefonních odkazů
   const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
   phoneLinks.forEach((link) => {
@@ -16,7 +22,10 @@ export function initEnhancedTracking() {
         
         window.lesktopTrackEvent('event', 'generate_lead', {
           event_category: 'engagement',
-          event_label: 'phone_click'
+          event_label: 'phone_click',
+          contact_type: 'phone',
+          lead_source: 'phone',
+          page_type: getPageType()
         });
       }
     });
@@ -29,7 +38,11 @@ export function initEnhancedTracking() {
       if (canTrack()) {
         const rawHref = this.getAttribute('href').replace('mailto:', '');
         const [email, queryString] = rawHref.split('?');
-        const params = {};
+        const params = {
+          contact_type: 'email',
+          lead_source: 'email',
+          page_type: getPageType()
+        };
         if (queryString) {
           const urlParams = new URLSearchParams(queryString);
           if (urlParams.has('subject')) params.subject = urlParams.get('subject');
@@ -52,7 +65,10 @@ export function initEnhancedTracking() {
           if (url.includes('wa.me') && !this.getAttribute('onclick')) {
             window.lesktopTrackEvent('event', 'generate_lead', {
               event_category: 'engagement',
-              event_label: 'whatsapp_click'
+              event_label: 'whatsapp_click',
+              contact_type: 'whatsapp',
+              lead_source: 'whatsapp',
+              page_type: getPageType()
             });
           } else if (!url.includes('wa.me')) {
             window.lesktopTrackEvent('event', 'external_link_click', {

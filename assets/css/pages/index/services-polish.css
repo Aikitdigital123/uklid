@@ -9,24 +9,43 @@ body[data-page="index"] .services-grid .service-item h3 {
   margin: 0 0 10px 0;
 }
 
-body[data-page="index"] .service-item,
-body[data-page="index"] .price-card {
+body[data-page="index"] .service-item:not(.glass-panel),
+body[data-page="index"] .price-card:not(.glass-panel) {
   transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease, border-color 0.3s ease, filter 0.3s ease;
 }
 
+/* Glass panely používají globální glass-panel transition (bez background/backdrop/opacity) */
+/* Žádné přepisy - glass-panel má vlastní globální default v glass.css */
+
 @media (hover: hover) {
-  body[data-page="index"] .service-item:hover,
-  body[data-page="index"] .price-card:hover {
+  body[data-page="index"] .service-item:not(.glass-panel):hover,
+  body[data-page="index"] .price-card:not(.glass-panel):hover {
     transform: translateY(-8px) scale(1.02);
     box-shadow: 0 24px 48px rgba(20, 30, 60, 0.18);
     border-color: rgba(255, 255, 255, 0.8);
     filter: brightness(1.05);
     z-index: 2;
   }
+
+  /* Glass panely bez filter brightness, aby zůstaly průhledné */
+  body[data-page="index"] .service-item.glass-panel:hover,
+  body[data-page="index"] .price-card.glass-panel:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 24px 48px rgba(20, 30, 60, 0.18);
+    border-color: rgba(255, 255, 255, 0.8);
+    z-index: 2;
+    /* Žádné změny na background/backdrop/opacity, aby zůstaly průhledné */
+  }
 }
 
-body[data-page="index"] .service-item:active,
-body[data-page="index"] .price-card:active {
+body[data-page="index"] .service-item:not(.glass-panel):active,
+body[data-page="index"] .price-card:not(.glass-panel):active {
+  transform: translateY(-4px) scale(1.01);
+  transition-duration: 0.15s;
+}
+
+body[data-page="index"] .service-item.glass-panel:active,
+body[data-page="index"] .price-card.glass-panel:active {
   transform: translateY(-4px) scale(1.01);
   transition-duration: 0.15s;
 }
@@ -45,17 +64,27 @@ body[data-page="index"] .price-list li {
 
 /* Mobile specific visual polish for glass cards on homepage */
 @media (max-width: 992px) {
-  body[data-page="index"] .service-item,
-  body[data-page="index"] .price-card,
+  body[data-page="index"] .service-item:not(.glass-panel),
+  body[data-page="index"] .price-card:not(.glass-panel),
   body[data-page="index"] .feature-item {
     background: linear-gradient(150deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.012) 100%);
     border-color: rgba(255, 255, 255, 0.12);
     padding: 25px;
   }
 
-  body[data-page="index"] .service-item::before {
+  /* Glass panely používají globální glass-panel default i na mobilu */
+  body[data-page="index"] .service-item.glass-panel,
+  body[data-page="index"] .price-card.glass-panel {
+    /* Všechny glass vlastnosti jsou zděděny z globálního .glass-panel v glass.css */
+    padding: 25px;
+  }
+
+  body[data-page="index"] .service-item:not(.glass-panel)::before {
     opacity: 0.035;
   }
+
+  /* Glass panely používají globální glass-panel::before opacity (0.15) */
+  /* Žádné přepisy - glass-panel má vlastní globální default v glass.css */
 
   body[data-page="index"] .price-card h3 { font-size: 1.4em; }
   body[data-page="index"] .price-card .price-from { font-size: 1.5em; }

@@ -19,8 +19,22 @@ const attributionKeys = [
 ];
 
 const minFormFillMs = 500;
-const fastSubmitMessage = 'Prosim vyplnte formular a odeslete ho znovu za par sekund.';
-const invalidSubmitMessage = 'Prosim zkontrolujte povinna pole formulare.';
+
+// Get language-aware messages
+function getFormMessages() {
+  const isEnglish = document.documentElement.lang === 'en';
+  return {
+    fastSubmit: isEnglish 
+      ? 'Please fill out the form and submit it again in a few seconds.' 
+      : 'Prosim vyplnte formular a odeslete ho znovu za par sekund.',
+    invalidSubmit: isEnglish 
+      ? 'Please check the required form fields.' 
+      : 'Prosim zkontrolujte povinna pole formulare.'
+  };
+}
+
+const fastSubmitMessage = getFormMessages().fastSubmit;
+const invalidSubmitMessage = getFormMessages().invalidSubmit;
 const conversionCurrency = 'CZK';
 const conversionValueByForm = {
   contact: 900,
@@ -214,18 +228,28 @@ function scheduleStatusHide(statusNode, delay) {
 function showFastSubmitError(statusNode) {
   if (!statusNode) return;
   if (statusNode._hideTimeout) clearTimeout(statusNode._hideTimeout); // Reset předchozího časovače
-  statusNode.textContent = fastSubmitMessage;
+  const messages = getFormMessages();
+  statusNode.textContent = messages.fastSubmit;
   statusNode.classList.remove('success', 'form-status-hidden');
   statusNode.classList.add('error');
+  // Fast submit errors are less critical, keep polite
+  if (!statusNode.getAttribute('aria-live')) {
+    statusNode.setAttribute('aria-live', 'polite');
+  }
   scheduleStatusHide(statusNode, 3500);
 }
 
 function showInvalidSubmitError(statusNode, message) {
   if (!statusNode) return;
   if (statusNode._hideTimeout) clearTimeout(statusNode._hideTimeout); // Chyba validace má zůstat viset
-  statusNode.textContent = message || invalidSubmitMessage;
+  const messages = getFormMessages();
+  statusNode.textContent = message || messages.invalidSubmit;
   statusNode.classList.remove('success', 'form-status-hidden');
   statusNode.classList.add('error');
+  // Validation errors are less critical, keep polite
+  if (!statusNode.getAttribute('aria-live')) {
+    statusNode.setAttribute('aria-live', 'polite');
+  }
 }
 
 function hideStatusNode(statusNode) {
@@ -266,6 +290,16 @@ function bindValidationFeedback(form, statusNode) {
       field.classList.remove('is-valid');
       field.classList.add('is-invalid');
       field.setAttribute('aria-invalid', 'true');
+      // Ensure aria-describedby points to status element for error messages
+      if (statusNode && statusNode.id && !field.getAttribute('aria-describedby')) {
+        const existingDescribedBy = field.getAttribute('aria-describedby');
+        if (!existingDescribedBy || !existingDescribedBy.includes(statusNode.id)) {
+          const describedBy = existingDescribedBy 
+            ? `${existingDescribedBy} ${statusNode.id}` 
+            : statusNode.id;
+          field.setAttribute('aria-describedby', describedBy);
+        }
+      }
     }
   };
 
@@ -275,11 +309,33 @@ function bindValidationFeedback(form, statusNode) {
       target.classList.add('is-invalid');
       target.classList.remove('is-valid');
       target.setAttribute('aria-invalid', 'true');
+      // Ensure aria-describedby points to status element for error messages
+      if (statusNode && statusNode.id) {
+        const existingDescribedBy = target.getAttribute('aria-describedby');
+        if (!existingDescribedBy || !existingDescribedBy.includes(statusNode.id)) {
+          const describedBy = existingDescribedBy 
+            ? `${existingDescribedBy} ${statusNode.id}` 
+            : statusNode.id;
+          target.setAttribute('aria-describedby', describedBy);
+        }
+      }
     }
     const message = target && typeof target.validationMessage === 'string'
       ? target.validationMessage
       : invalidSubmitMessage;
     showInvalidSubmitError(statusNode, message);
+
+    // Track validation error
+    if (typeof window.lesktopTrackEvent === 'function' && target) {
+      const formType = form.id === 'kalkulacka' ? 'calculation' : form.id === 'contactForm' ? 'contact' : 'unknown';
+      const fieldName = target.name || target.id || 'unknown';
+      const errorType = target.validationMessage || 'validation_failed';
+      window.lesktopTrackEvent('event', 'form_validation_error', {
+        form_type: formType,
+        field_name: fieldName,
+        error_type: errorType
+      });
+    }
   }, true);
 
   form.addEventListener('input', (event) => {
@@ -378,9 +434,11 @@ function trackFormConversion(formType, formName, extraData = {}) {
   window.lesktopTrackEvent('event', 'form_submission', eventPayload);
 
   // GA4 Generic Lead Event
+  const leadSource = formType === 'contact' ? 'contact_form' : 'calculation_form';
   window.lesktopTrackEvent('event', 'generate_lead', {
     event_category: 'form',
-    event_label: 'kalkulacka_nebo_kontakt'
+    event_label: 'kalkulacka_nebo_kontakt',
+    lead_source: leadSource
   });
 
   if (sendTo) {
@@ -402,6 +460,18 @@ export function initForms() {
   const formStatusContact = document.getElementById('form-status');
   const calcForm = document.getElementById('kalkulacka');
   const formStatusCalc = document.getElementById('calc-form-status');
+
+  // Add aria-required to required fields for better accessibility
+  function addAriaRequired(form) {
+    if (!form) return;
+    const requiredFields = form.querySelectorAll('input[required], textarea[required], select[required]');
+    requiredFields.forEach((field) => {
+      field.setAttribute('aria-required', 'true');
+    });
+  }
+
+  addAriaRequired(contactForm);
+  addAriaRequired(calcForm);
 
   markFormStart(contactForm);
   markFormStart(calcForm);
@@ -475,6 +545,8 @@ export function initForms() {
           formStatusContact.textContent = 'Dekujeme! Vase zprava byla uspesne odeslana.';
           formStatusContact.classList.remove('error');
           formStatusContact.classList.add('success');
+          // Reset to polite for success messages
+          formStatusContact.setAttribute('aria-live', 'polite');
           scrollStatusIntoView(formStatusContact);
           trackFormConversion('contact', 'Kontaktni formular');
           contactForm.reset();
@@ -485,14 +557,34 @@ export function initForms() {
           formStatusContact.textContent = result.message || 'Pri odesilani zpravy doslo k chybe. Zkuste to prosim pozdeji.';
           formStatusContact.classList.remove('success');
           formStatusContact.classList.add('error');
+          // Use assertive for critical errors (server failures)
+          formStatusContact.setAttribute('aria-live', 'assertive');
           scrollStatusIntoView(formStatusContact);
+          // Track submit error
+          if (typeof window.lesktopTrackEvent === 'function') {
+            window.lesktopTrackEvent('event', 'form_submit_error', {
+              form_type: 'contact',
+              error_type: 'server_error',
+              error_message: result.message || 'unknown'
+            });
+          }
         }
       } catch (error) {
         logError('Network submit error (contact form):', error);
         formStatusContact.textContent = 'Pri odesilani zpravy doslo k chybe site. Zkuste to prosim pozdeji.';
         formStatusContact.classList.remove('success');
         formStatusContact.classList.add('error');
+        // Use assertive for critical errors (network/server failures)
+        formStatusContact.setAttribute('aria-live', 'assertive');
         scrollStatusIntoView(formStatusContact);
+        // Track submit error
+        if (typeof window.lesktopTrackEvent === 'function') {
+          window.lesktopTrackEvent('event', 'form_submit_error', {
+            form_type: 'contact',
+            error_type: 'network_error',
+            error_message: error.message || 'unknown'
+          });
+        }
       } finally {
         contactForm.removeAttribute('aria-busy');
         delete contactForm.dataset.submitting;
@@ -569,6 +661,8 @@ export function initForms() {
           formStatusCalc.textContent = 'Dekujeme! Vase poptavka byla uspesne odeslana.';
           formStatusCalc.classList.remove('error');
           formStatusCalc.classList.add('success');
+          // Reset to polite for success messages
+          formStatusCalc.setAttribute('aria-live', 'polite');
           scrollStatusIntoView(formStatusCalc);
           const cleaningTypeField = calcForm.querySelector('#cleaningType');
           const frequencyField = calcForm.querySelector('#cleaningFrequency');
@@ -590,14 +684,34 @@ export function initForms() {
           formStatusCalc.textContent = result.message || 'Pri odesilani poptavky doslo k chybe. Zkuste to prosim pozdeji.';
           formStatusCalc.classList.remove('success');
           formStatusCalc.classList.add('error');
+          // Use assertive for critical errors (server failures)
+          formStatusCalc.setAttribute('aria-live', 'assertive');
           scrollStatusIntoView(formStatusCalc);
+          // Track submit error
+          if (typeof window.lesktopTrackEvent === 'function') {
+            window.lesktopTrackEvent('event', 'form_submit_error', {
+              form_type: 'calculation',
+              error_type: 'server_error',
+              error_message: result.message || 'unknown'
+            });
+          }
         }
       } catch (error) {
         logError('Network submit error (calculator form):', error);
         formStatusCalc.textContent = 'Pri odesilani poptavky doslo k chybe site. Zkuste to prosim pozdeji.';
         formStatusCalc.classList.remove('success');
         formStatusCalc.classList.add('error');
+        // Use assertive for critical errors (network/server failures)
+        formStatusCalc.setAttribute('aria-live', 'assertive');
         scrollStatusIntoView(formStatusCalc);
+        // Track submit error
+        if (typeof window.lesktopTrackEvent === 'function') {
+          window.lesktopTrackEvent('event', 'form_submit_error', {
+            form_type: 'calculation',
+            error_type: 'network_error',
+            error_message: error.message || 'unknown'
+          });
+        }
       } finally {
         calcForm.removeAttribute('aria-busy');
         delete calcForm.dataset.submitting;

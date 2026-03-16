@@ -5,10 +5,19 @@
 const PAGE_INIT_KEY = 'indexPageInit';
 
 /** Typy úklidu, u kterých se zobrazí pole frekvence */
-const TYPES_REQUIRING_FREQUENCY = [
-  'Pravidelný úklid domácnosti',
-  'Úklid komerčních prostor (kanceláře, obchody)',
-];
+function getTypesRequiringFrequency() {
+  const isEnglish = document.documentElement.lang === 'en';
+  if (isEnglish) {
+    return [
+      'Regular home cleaning',
+      'Commercial space cleaning (offices, shops)',
+    ];
+  }
+  return [
+    'Pravidelný úklid domácnosti',
+    'Úklid komerčních prostor (kanceláře, obchody)',
+  ];
+}
 
 export function initIndexPage() {
   if (document.documentElement.dataset[PAGE_INIT_KEY] === '1') return;
@@ -30,7 +39,8 @@ export function initIndexPage() {
   if (!cleaningTypeSelect || !frequencyGroup || !frequencySelect) return;
 
   function toggleFrequencyDisplay() {
-    const show = TYPES_REQUIRING_FREQUENCY.includes(cleaningTypeSelect.value);
+    const typesRequiringFrequency = getTypesRequiringFrequency();
+    const show = typesRequiringFrequency.includes(cleaningTypeSelect.value);
     if (show) {
       frequencyGroup.classList.remove('form-group-hidden');
       frequencySelect.setAttribute('required', 'required');
@@ -131,7 +141,13 @@ function initCalculatorExpandable() {
   group.id = group.id || 'kalkulacka-checkbox-group';
   btn.setAttribute('aria-expanded', 'false');
   btn.setAttribute('aria-controls', group.id);
-  btn.innerHTML = `Zobrazit další služby (+${hiddenItems.length}) <i class="fas fa-chevron-down" aria-hidden="true"></i>`;
+  
+  // Detect language for button text
+  const isEnglish = document.documentElement.lang === 'en';
+  const textShowMore = isEnglish ? `Show more services (+${hiddenItems.length})` : `Zobrazit další služby (+${hiddenItems.length})`;
+  const textShowLess = isEnglish ? 'Show less' : 'Zobrazit méně';
+  
+  btn.innerHTML = `${textShowMore} <i class="fas fa-chevron-down" aria-hidden="true"></i>`;
   group.after(btn);
 
   let isExpanded = false;
@@ -143,21 +159,32 @@ function initCalculatorExpandable() {
         item.classList.remove('checkbox-item-hidden');
         item.classList.add('checkbox-item-reveal');
       });
-      btn.innerHTML = `Zobrazit méně <i class="fas fa-chevron-up" aria-hidden="true"></i>`;
+      btn.innerHTML = `${textShowLess} <i class="fas fa-chevron-up" aria-hidden="true"></i>`;
       btn.classList.add('is-expanded');
     } else {
       hiddenItems.forEach(item => {
         item.classList.add('checkbox-item-hidden');
         item.classList.remove('checkbox-item-reveal');
       });
-      btn.innerHTML = `Zobrazit další služby (+${hiddenItems.length}) <i class="fas fa-chevron-down" aria-hidden="true"></i>`;
+      btn.innerHTML = `${textShowMore} <i class="fas fa-chevron-down" aria-hidden="true"></i>`;
       btn.classList.remove('is-expanded');
     }
   };
 
+  let hasTrackedExpand = false;
   btn.addEventListener('click', () => {
+    const wasExpanded = isExpanded;
     isExpanded = !isExpanded;
     updateButtonState();
+    
+    // Track expansion only once, when first expanded
+    if (isExpanded && !wasExpanded && !hasTrackedExpand) {
+      hasTrackedExpand = true;
+      if (typeof window.lesktopTrackEvent === 'function') {
+        window.lesktopTrackEvent('event', 'services_expand');
+      }
+    }
+    
     if (!isExpanded) {
       const rect = group.getBoundingClientRect();
       if (rect.top < 0) {

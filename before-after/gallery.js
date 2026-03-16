@@ -25,18 +25,35 @@
     return 0;
   }
 
+  function normalizeMediaPath(path) {
+    if (!path || typeof path !== 'string') {
+      return '';
+    }
+
+    if (/^(?:[a-z]+:)?\/\//i.test(path) || path.indexOf('data:') === 0 || path.indexOf('blob:') === 0) {
+      return path;
+    }
+
+    if (path.charAt(0) === '/') {
+      return path;
+    }
+
+    return '/' + path.replace(/^\.?\/*/, '');
+  }
+
   function updateToggle(figure, img, label, hint, state) {
+    var isEnglish = document.documentElement.lang === 'en';
     if (state === 'after') {
       img.src = img.dataset.after;
       img.alt = img.dataset.afterAlt;
-      label.textContent = 'Po';
-      hint.textContent = 'Klikněte pro Před';
+      label.textContent = isEnglish ? 'After' : 'Po';
+      hint.textContent = isEnglish ? 'Click for Before' : 'Klikněte pro Před';
       figure.setAttribute('aria-pressed', 'true');
     } else {
       img.src = img.dataset.before;
       img.alt = img.dataset.beforeAlt;
-      label.textContent = 'Před';
-      hint.textContent = 'Klikněte pro Po';
+      label.textContent = isEnglish ? 'Before' : 'Před';
+      hint.textContent = isEnglish ? 'Click for After' : 'Klikněte pro Po';
       figure.setAttribute('aria-pressed', 'false');
     }
     figure.dataset.state = state;
@@ -51,7 +68,8 @@
 
     var title = document.createElement('div');
     title.className = 'ba-title';
-    title.textContent = item.title || 'Zakázka';
+    var isEnglish = document.documentElement.lang === 'en';
+    title.textContent = item.title || (isEnglish ? 'Job' : 'Zakázka');
 
     var date = document.createElement('div');
     date.className = 'ba-date';
@@ -71,10 +89,12 @@
     figure.setAttribute('tabindex', '0');
 
     var img = document.createElement('img');
-    img.dataset.before = item.before;
-    img.dataset.after = item.after;
-    img.dataset.beforeAlt = 'Před úklidem - ' + (item.title || 'zakázka');
-    img.dataset.afterAlt = 'Po úklidu - ' + (item.title || 'zakázka');
+    img.dataset.before = normalizeMediaPath(item.before);
+    img.dataset.after = normalizeMediaPath(item.after);
+    var isEnglish = document.documentElement.lang === 'en';
+    var defaultTitle = item.title || (isEnglish ? 'job' : 'zakázka');
+    img.dataset.beforeAlt = isEnglish ? ('Before cleaning - ' + defaultTitle) : ('Před úklidem - ' + defaultTitle);
+    img.dataset.afterAlt = isEnglish ? ('After cleaning - ' + defaultTitle) : ('Po úklidu - ' + defaultTitle);
     img.loading = 'lazy';
     img.decoding = 'async';
     img.width = 4032;
@@ -151,6 +171,12 @@
 
     if (!data.length) {
       if (emptyState) {
+        var isEnglish = document.documentElement.lang === 'en';
+        if (isEnglish && emptyState.textContent === 'Galerie zatím nemá žádné fotky.') {
+          emptyState.textContent = 'The gallery currently has no photos.';
+        } else if (!isEnglish && emptyState.textContent === 'The gallery currently has no photos.') {
+          emptyState.textContent = 'Galerie zatím nemá žádné fotky.';
+        }
         emptyState.hidden = false;
       }
       return;
