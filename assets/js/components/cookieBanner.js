@@ -8,6 +8,7 @@ export function initCookieBanner() {
   const acceptButton = document.getElementById('cookie-accept');
   const necessaryButton = document.getElementById('cookie-necessary');
   const storageKey = 'lesktop_cookie_consent';
+  const memoryKey = '__lesktopCookieConsent';
   const measurementId = 'G-FLL5D5LE75';
   const adsId = 'AW-17893281939';
   const gtagSrc = `https://www.googletagmanager.com/gtag/js?id=${adsId}`;
@@ -26,6 +27,8 @@ export function initCookieBanner() {
     ad_personalization: 'denied'
   };
 
+  const normalizeConsent = (value) => (value === 'all' || value === 'necessary' ? value : null);
+
   const disableTracking = () => {
     window[`ga-disable-${measurementId}`] = true;
   };
@@ -34,7 +37,6 @@ export function initCookieBanner() {
     window[`ga-disable-${measurementId}`] = false;
   };
 
-  // Safe default: until explicit consent, tracking stays disabled.
   disableTracking();
 
   window.lesktopTrackEvent = function lesktopTrackEvent() {
@@ -54,6 +56,7 @@ export function initCookieBanner() {
   const loadGtagScript = () => {
     const existingScript = document.querySelector(`script[src="${gtagSrc}"]`);
     if (existingScript) return;
+
     const script = document.createElement('script');
     script.async = true;
     script.src = gtagSrc;
@@ -109,8 +112,7 @@ export function initCookieBanner() {
     const candidateDomains = [''];
 
     if (hostParts.length >= 2) {
-      const rootDomain = `.${hostParts.slice(-2).join('.')}`;
-      candidateDomains.push(rootDomain);
+      candidateDomains.push(`.${hostParts.slice(-2).join('.')}`);
     }
 
     candidateDomains.forEach((domain) => {
@@ -121,8 +123,7 @@ export function initCookieBanner() {
   };
 
   const deleteGaCookies = () => {
-    const cookies = document.cookie.split(';');
-    cookies.forEach((cookie) => {
+    document.cookie.split(';').forEach((cookie) => {
       const [name] = cookie.split('=');
       const trimmed = name ? name.trim() : '';
       if (trimmed && (trimmed.indexOf('_ga') === 0 || trimmed === '_gid')) {
@@ -131,32 +132,63 @@ export function initCookieBanner() {
     });
   };
 
-  const setStoredConsent = (value) => {
+  const removeStoredConsent = (storage) => {
+    if (!storage || typeof storage.removeItem !== 'function') return;
     try {
-      // Validace hodnoty před uložením
-      if (value !== 'all' && value !== 'necessary') {
-        return false; // Nevalidní hodnota
-      }
-      
-      localStorage.setItem(storageKey, value);
-      return true; // Úspěšně uloženo
+      storage.removeItem(storageKey);
     } catch (e) {
-      // localStorage can be unavailable in private mode, quota exceeded, etc.
-      return false; // Selhalo uložení
+      // Ignore cleanup failures in restricted browsers.
     }
+  };
+
+  const readStoredConsent = (storage) => {
+    if (!storage || typeof storage.getItem !== 'function') return null;
+
+    try {
+      const value = normalizeConsent(storage.getItem(storageKey));
+      if (value) return value;
+      removeStoredConsent(storage);
+    } catch (e) {
+      // Ignore inaccessible storage and fall back to another source.
+    }
+
+    return null;
+  };
+
+  const rememberConsent = (value) => {
+    const normalizedValue = normalizeConsent(value);
+    if (!normalizedValue) return;
+
+    try {
+      localStorage.setItem(storageKey, normalizedValue);
+    } catch (e) {
+      // Ignore localStorage failures.
+    }
+
+    try {
+      sessionStorage.setItem(storageKey, normalizedValue);
+    } catch (e) {
+      // Ignore sessionStorage failures.
+    }
+
+    window[memoryKey] = normalizedValue;
   };
 
   const hideBanner = () => {
     banner.classList.add('is-hidden');
     banner.setAttribute('aria-hidden', 'true');
+    document.documentElement.dataset.cookieBannerHidden = '1';
   };
 
   const showBanner = () => {
     banner.classList.remove('is-hidden');
     banner.setAttribute('aria-hidden', 'false');
+    delete document.documentElement.dataset.cookieBannerHidden;
   };
 
-  const applyConsentChoice = (value) => {
+  const applyConsentChoice = (value, options = {}) => {
+    const { persist = true, hide = true } = options;
+
     if (value === 'all') {
       enableTracking();
       ensureGtag('all');
@@ -167,84 +199,34 @@ export function initCookieBanner() {
       }
       deleteGaCookies();
     }
-    
-    // Pokus o uložení souhlasu - pokud selže, banner zůstane viditelný
-    const saved = setStoredConsent(value);
-    
-    // Fail-safe: Skrýt banner pouze pokud:
-    // 1. Uložení se povedlo (saved === true)
-    // 2. NEBO banner není už skrytý v DOM (zabrání duplicitnímu skrytí)
-    // Toto zajistí, že banner se neskryje automaticky bez akce uživatele
-    if (saved) {
-      // Kontrola, zda banner není už skrytý (zabrání duplicitnímu skrytí při reinicializaci)
-      if (!banner.classList.contains('is-hidden')) {
-        hideBanner();
-      }
-    } else {
-      // Pokud se nepodařilo uložit, banner zůstane viditelný
-      // Uživatel může zkusit znovu nebo pokračovat bez uložení
-      // (v private mode se banner zobrazí při každém reloadu, což je očekávané chování)
+
+    if (persist) {
+      rememberConsent(value);
+    }
+
+    if (hide) {
+      hideBanner();
     }
   };
 
-  // Kontrola, zda banner už není skrytý v DOM (při reinicializaci z bfcache)
-  // Toto zajistí, že banner se nezobrazí znovu, i když localStorage není dostupný
-  const isBannerHiddenInDOM = banner.classList.contains('is-hidden') || 
-                               banner.getAttribute('aria-hidden') === 'true';
+  const isBannerHiddenInDOM =
+    banner.classList.contains('is-hidden') || banner.getAttribute('aria-hidden') === 'true';
 
-  let storedConsent = null;
-  try {
-    const raw = localStorage.getItem(storageKey);
-    // Validace načtené hodnoty
-    if (raw === 'all' || raw === 'necessary') {
-      storedConsent = raw;
-    } else if (raw !== null) {
-      // Pokud je uložena nevalidní hodnota, smaž ji
-      try {
-        localStorage.removeItem(storageKey);
-      } catch (removeError) {
-        // Ignore remove errors
-      }
-    }
-  } catch (e) {
-    // localStorage can be unavailable in private mode
-    // Pokud je banner už skrytý v DOM, neukazovat ho znovu
-    if (isBannerHiddenInDOM) {
-      return;
-    }
-  }
+  const storedConsent =
+    readStoredConsent(window.localStorage) ||
+    readStoredConsent(window.sessionStorage) ||
+    normalizeConsent(window[memoryKey]);
 
-  // Fail-safe: Pokud je uložený souhlas, aplikovat ho pouze pokud banner není už skrytý v DOM
-  // Toto zabrání automatickému skrytí při reinicializaci, pokud uživatel ještě neklikl
   if (storedConsent === 'all') {
-    // Aplikovat souhlas pouze pokud banner není už skrytý (zabrání auto-hide)
-    if (!isBannerHiddenInDOM) {
-      applyConsentChoice('all');
-    } else {
-      // Banner je už skrytý, pouze aplikovat tracking bez změny viditelnosti
-      enableTracking();
-      ensureGtag('all');
-    }
+    applyConsentChoice('all', { persist: false, hide: !isBannerHiddenInDOM });
     return;
   }
 
   if (storedConsent === 'necessary') {
-    // Aplikovat souhlas pouze pokud banner není už skrytý (zabrání auto-hide)
-    if (!isBannerHiddenInDOM) {
-      applyConsentChoice('necessary');
-    } else {
-      // Banner je už skrytý, pouze aplikovat tracking bez změny viditelnosti
-      disableTracking();
-      if (window.__lesktopGtagConfigured) {
-        applyConsent('necessary');
-      }
-      deleteGaCookies();
-    }
+    applyConsentChoice('necessary', { persist: false, hide: !isBannerHiddenInDOM });
     return;
   }
 
-  // Zobrazit banner pouze pokud není už skrytý v DOM
-  // Toto zabrání zobrazení banneru při reinicializaci z bfcache, i když localStorage není dostupný
   if (!isBannerHiddenInDOM) {
     showBanner();
   }
@@ -258,10 +240,8 @@ export function initCookieBanner() {
       if (recentlyHandled) return;
 
       recentlyHandled = true;
-      setStoredConsent(value);
       applyConsentChoice(value);
 
-      // Track cookie consent choice
       if (typeof window.lesktopTrackEvent === 'function') {
         const consentEvent = value === 'all' ? 'cookie_consent_accepted' : 'cookie_consent_necessary_only';
         window.lesktopTrackEvent('event', consentEvent);
@@ -274,10 +254,14 @@ export function initCookieBanner() {
 
     button.addEventListener('click', onActivate, false);
     button.addEventListener('touchend', onActivate, false);
-    button.addEventListener('keyup', (event) => {
-      if (!event) return;
-      if (event.key === 'Enter' || event.key === ' ') onActivate(event);
-    }, false);
+    button.addEventListener(
+      'keyup',
+      (event) => {
+        if (!event) return;
+        if (event.key === 'Enter' || event.key === ' ') onActivate(event);
+      },
+      false
+    );
   };
 
   bindConsentAction(acceptButton, 'all');

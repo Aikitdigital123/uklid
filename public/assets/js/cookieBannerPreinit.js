@@ -1,14 +1,21 @@
 // Preinit cookie banner visibility before first paint.
-// This script ONLY toggles a data-attribute on <html> to prevent flash when consent is already stored.
-// It does NOT initialize analytics/ads and does NOT change any tracking/gtag state.
+// This script only toggles a data-attribute on <html> to prevent flash
+// when consent is already known.
 (function () {
-  try {
-    var key = 'lesktop_cookie_consent';
-    var val = window.localStorage && window.localStorage.getItem(key);
-    if (val === 'all' || val === 'necessary') {
-      document.documentElement.dataset.cookieBannerHidden = '1';
+  var key = 'lesktop_cookie_consent';
+
+  function readConsent(storage) {
+    if (!storage || typeof storage.getItem !== 'function') return null;
+    try {
+      var value = storage.getItem(key);
+      return value === 'all' || value === 'necessary' ? value : null;
+    } catch (e) {
+      return null;
     }
-  } catch (e) {
-    // localStorage may be unavailable (private mode). In that case we keep the banner visible as a fallback.
+  }
+
+  var value = readConsent(window.localStorage) || readConsent(window.sessionStorage);
+  if (value === 'all' || value === 'necessary') {
+    document.documentElement.dataset.cookieBannerHidden = '1';
   }
 })();
