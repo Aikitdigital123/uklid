@@ -29,8 +29,8 @@
     display: grid !important;
     /* Na tabletech a mobilech přecházíme na 1 sloupec pro lepší čitelnost */
     grid-template-columns: 1fr !important;
-    gap: 24px !important;
-    max-width: 450px; /* Omezíme maximální šířku, aby se karta neroztáhla příliš */
+    gap: 18px !important;
+    max-width: 360px; /* Omezíme šířku, aby galerie nepůsobila přes celou plochu obsahu */
     margin: 0 auto;
   }
 
@@ -67,6 +67,7 @@
 
 @media (max-width: 480px) {
   #before-after-gallery {
+    max-width: 330px;
     gap: 16px !important;
   }
 

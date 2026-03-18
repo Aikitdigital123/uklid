@@ -29,6 +29,9 @@
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" skip-sri></noscript>
   <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="stylesheet" href="/assets/css/legal.css">
+
+  <!-- Cookie banner preinit: toggles visibility based on stored consent (prevents flash-and-hide) -->
+  <script type="module" src="/assets/js/cookieBannerPreinit.js"></script>
 </head>
 <body data-page="terms">
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -38,6 +41,7 @@
         <img src="../images/Domecek.png" alt="Lesktop – cleaning services" class="brand-logo" width="120" height="120" loading="eager" decoding="async">
         <span class="brand-text">Lesktop</span>
       </a>
+      <button type="button" class="header-back" data-back-button data-back-fallback="/en/" aria-label="Back">Back</button>
       <a href="../terms.html" class="lang-switcher" hreflang="cs" aria-label="Switch to Czech" title="Česky">CS</a>
       <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-navigation" type="button">Menu</button>
       <nav id="site-navigation" class="site-nav" aria-label="Main navigation">
@@ -108,19 +112,6 @@
         <a href="https://www.instagram.com/lesktop.cz" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-instagram"></i>
         </a>
-      </div>
-      <div class="legal-links">
-        <a href="privacy.html">Privacy Policy</a>
-        <span aria-hidden="true"> &middot; </span>
-        <a href="terms.html">Terms and Conditions</a>
-        <span aria-hidden="true"> &middot; </span>
-        <a href="services.html">Services</a>
-        <span aria-hidden="true"> &middot; </span>
-        <a href="presentation.html">Presentation</a>
-        <span aria-hidden="true"> &middot; </span>
-        <a href="faq.html">FAQ</a>
-        <span aria-hidden="true"> &middot; </span>
-        <a href="impresum.html">Operator</a>
       </div>
     </div>
   </footer>

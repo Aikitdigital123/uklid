@@ -225,8 +225,52 @@
   transition-duration: 0.1s;
 }
 
+/* --- 4b. Header back button (subpages only) --- */
+.header-back {
+  display: none; /* default (desktop): hidden to avoid layout changes */
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px 14px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-background-white, #fff);
+  text-decoration: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  z-index: var(--z-nav-toggle);
+  pointer-events: auto;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.15);
+  touch-action: manipulation;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.header-back:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 2px;
+}
+
+.header-back:active {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(0.95);
+  transition-duration: 0.1s;
+}
+
 @media (hover: hover) {
   .lang-switcher:hover {
+    background: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+    transform: translateY(-1px);
+  }
+
+  .header-back:hover {
     background: rgba(255, 255, 255, 0.35);
     border-color: rgba(255, 255, 255, 0.7);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
@@ -387,9 +431,9 @@
 }
 
 /* ==========================================================================
-   MOBILE (max-width: 768px) – kompaktní lišta + menu jako rozbalení pod ní (obsah nikdy pod menu)
+   MOBILE (max-width: 992px) – kompaktní lišta + menu jako rozbalení pod ní (obsah nikdy pod menu)
    ========================================================================== */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   html.menu-open,
   body.menu-open {
     overflow: hidden !important;
@@ -460,7 +504,12 @@
   }
 
   .header-inner::after {
-    display: none;
+    /* Na mobilu shimmer nechat, ale jemnější kvůli výkonu a menší šířce */
+    display: block;
+    left: 12px;
+    width: 44px;
+    opacity: 0.25;
+    animation-duration: 7.5s;
   }
 
   .brand {
@@ -473,6 +522,24 @@
 
   .brand-logo {
     height: 40px;
+  }
+
+  /* Tlačítko "Zpět" vedle jazykového přepínače */
+  .header-back {
+    display: flex !important;
+    order: 2;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.25);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    margin-left: auto;
+    margin-right: 6px;
   }
 
   /* Tlačítko jazyků vedle menu tlačítka */
@@ -490,6 +557,11 @@
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: var(--radius-sm);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Když existuje "Zpět", jazykové tlačítko by mělo zůstat hned vedle něj */
+  .header-back + .lang-switcher {
+    margin-left: 0;
   }
 
   /* Výraznější tlačítko Menu – větší úchop, čitelný stav */
@@ -547,6 +619,9 @@
     .site-nav {
       transition: none;
     }
+    .header-inner::after {
+      animation: none;
+    }
   }
 
   /* Když je menu otevřené, lišta zaoblená jen nahoře – jeden vizuální blok */
@@ -561,12 +636,13 @@
     margin: 0;
     padding: 6px 0 10px;
     list-style: none;
-    background: rgba(var(--color-primary-light-rgb), 0.98);
+    /* Bez další vrstvy/panelu pod tlačítky – jen samotné odkazy */
+    background: transparent;
     border: none;
-    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    border-radius: 0;
     box-shadow: none;
     box-sizing: border-box;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: none;
   }
 
   .site-nav li {
@@ -665,7 +741,7 @@
 }
 
 /* --- Desktop: ensure horizontal nav and hide toggle --- */
-@media (min-width: 769px) {
+@media (min-width: 993px) {
   .nav-toggle {
     display: none !important;
   }

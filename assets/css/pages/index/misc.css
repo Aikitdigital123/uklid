@@ -80,7 +80,7 @@ main {
 .social-links {
   display: flex;
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .social-links a {

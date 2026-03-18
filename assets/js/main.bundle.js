@@ -9,6 +9,7 @@ import { initNav } from './components/nav.js';
 import { initForms } from './components/form.js';
 import { initSelects } from './components/select.js';
 import { initBackToTop } from './components/backToTop.js';
+import { initBackButton } from './components/backButton.js';
 import { initCookieBanner } from './components/cookieBanner.js';
 import { initEnhancedTracking } from './components/enhancedTracking.js';
 import { initAdvancedTracking } from './components/advancedTracking.js';
@@ -42,12 +43,14 @@ function initHeadAssets() {
 const GLOBAL_INIT_REGISTRY = [
   { key: 'headAssetsInit', init: initHeadAssets },
   { key: 'currentYearInit', init: initCurrentYear },
+  // Cookie banner musí být inicializovaný co nejdřív kvůli stabilní viditelnosti
+  { key: 'cookieBannerInit', init: initCookieBanner },
   { key: 'revealInit', init: initReveal },
   { key: 'navInit', init: initNav },
+  { key: 'backButtonInit', init: initBackButton },
   { key: 'formInit', init: initForms },
   { key: 'selectInit', init: initSelects },
   { key: 'backToTopInit', init: initBackToTop },
-  { key: 'cookieBannerInit', init: initCookieBanner },
   { key: 'enhancedTrackingInit', init: initEnhancedTracking },
   { key: 'advancedTrackingInit', init: initAdvancedTracking },
   { key: 'universalTrackingInit', init: initUniversalTracking },

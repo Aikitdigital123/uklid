@@ -30,6 +30,9 @@
   <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="stylesheet" href="/assets/css/legal.css">
   <link rel="stylesheet" href="/assets/css/pages/sluzby.css">
+
+  <!-- Cookie banner preinit: toggles visibility based on stored consent (prevents flash-and-hide) -->
+  <script type="module" src="/assets/js/cookieBannerPreinit.js"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -129,6 +132,7 @@
         <img src="../images/Domecek.png" alt="Lesktop – cleaning services" class="brand-logo" width="120" height="120" loading="eager" decoding="async">
         <span class="brand-text">Lesktop</span>
       </a>
+      <button type="button" class="header-back" data-back-button data-back-fallback="/en/" aria-label="Back">Back</button>
       <a href="../sluzby.html" class="lang-switcher" hreflang="cs" aria-label="Switch to Czech" title="Česky">CS</a>
       <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-navigation" type="button">Menu</button>
       <nav id="site-navigation" class="site-nav" aria-label="Main navigation">
@@ -189,19 +193,6 @@
         <a href="https://www.instagram.com/lesktop.cz" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-instagram"></i>
         </a>
-      </div>
-      <div class="legal-links">
-        <a href="privacy.html">Privacy Policy</a>
-        <span aria-hidden="true"> &middot; </span>
-        <a href="terms.html">Terms and Conditions</a>
-        <span aria-hidden="true"> &middot; </span>
-        <a href="services.html">Services</a>
-        <span aria-hidden="true"> &middot; </span>
-        <a href="presentation.html">Presentation</a>
-        <span aria-hidden="true"> &middot; </span>
-        <a href="faq.html">FAQ</a>
-        <span aria-hidden="true"> &middot; </span>
-        <a href="impresum.html">Operator</a>
       </div>
     </div>
   </footer>

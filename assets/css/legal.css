@@ -2,83 +2,34 @@
  * Content-page pattern: terms, privacy, impresum, faq.
  * Jednotný layout (page content wrapper), spacing a typography.
  * Header .main-header je specifický pro tyto stránky (na homepage je .site-header).
+ *
+ * Note:
+ * Background hero is shared across the whole site in:
+ * - assets/css/pages/shared/hero-background.css
  */
 
-/* --- Background stejný jako homepage --- */
-body[data-page="sluzby"],
-body[data-page="faq"],
-body[data-page="prezentace"],
-body[data-page="terms"],
-body[data-page="privacy"],
-body[data-page="impresum"],
-body[data-page="404"] {
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.82)),
-    url("/images/hero.jpg") center center / cover no-repeat fixed;
-}
-
-@media (max-width: 768px) {
-  body[data-page="sluzby"],
-  body[data-page="faq"],
-  body[data-page="prezentace"],
-  body[data-page="terms"],
-  body[data-page="privacy"],
-  body[data-page="impresum"],
-  body[data-page="404"] {
-    background: none;
-    isolation: isolate;
-  }
-
-  body[data-page="sluzby"] #main-content,
-  body[data-page="faq"] #main-content,
-  body[data-page="prezentace"] #main-content,
-  body[data-page="terms"] #main-content,
-  body[data-page="privacy"] #main-content,
-  body[data-page="impresum"] #main-content,
-  body[data-page="404"] #main-content {
-    position: relative;
-    z-index: 1;
-  }
-
-  body[data-page="sluzby"]::before,
-  body[data-page="faq"]::before,
-  body[data-page="prezentace"]::before,
-  body[data-page="terms"]::before,
-  body[data-page="privacy"]::before,
-  body[data-page="impresum"]::before,
-  body[data-page="404"]::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      linear-gradient(rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.56)),
-      url("/images/hero.jpg") center center / cover no-repeat;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-  }
-}
-
-@media (max-width: 480px) {
-  body[data-page="sluzby"]::before,
-  body[data-page="faq"]::before,
-  body[data-page="prezentace"]::before,
-  body[data-page="terms"]::before,
-  body[data-page="privacy"]::before,
-  body[data-page="impresum"]::before,
-  body[data-page="404"]::before {
-    background:
-      linear-gradient(rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.54)),
-      url("/images/hero-mobile.jpg") center 38% / cover no-repeat;
-  }
-}
+@import url('./pages/shared/hero-background.css');
 
 /* --- Content wrapper (všechny čtyři stránky) --- */
 .legal {
   max-width: 980px;
   margin: 40px auto;
-  padding: 0 var(--space-xl);
+  /* Vnitřní odsazení obsahu uvnitř glass panelu (reset odstraňuje defaultní marginy) */
+  padding: var(--space-3xl) var(--space-2xl) var(--space-3xl);
+}
+
+/* Tablet: stále vzdušné odsazení, ale o chlup menší */
+@media (max-width: 768px) {
+  .legal {
+    padding: var(--space-2xl) var(--space-xl) var(--space-2xl);
+  }
+}
+
+/* Mobile: komfortní padding bez toho, aby obsah byl moc úzký */
+@media (max-width: 480px) {
+  .legal {
+    padding: var(--space-xl) var(--space-lg) var(--space-xl);
+  }
 }
 
 /* Page title */

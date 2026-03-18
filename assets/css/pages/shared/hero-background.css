@@ -1,0 +1,96 @@
+/**
+ * Shared hero background (image + jemný overlay) across the whole site.
+ *
+ * Usage:
+ * - pages that set `body[data-page="..."]` to one of the selectors below will automatically get:
+ *   - desktop background: /images/hero.jpg with subtle overlay (no image mutation)
+ *   - mobile background: ::before layer using /images/hero.jpg (<=768px) and /images/hero-mobile.jpg (<=480px)
+ * - homepage can still apply a tiny extra override (see assets/css/pages/index/background.css)
+ */
+
+/* Desktop: background layers directly on body */
+body[data-page="index"],
+body[data-page="sluzby"],
+body[data-page="faq"],
+body[data-page="prezentace"],
+body[data-page="terms"],
+body[data-page="privacy"],
+body[data-page="impresum"],
+body[data-page="404"],
+body[data-page="feedback"] {
+  background:
+    /* Jemné ztmavení (bez "špinavého" filtru) */
+    linear-gradient(rgba(15, 23, 42, 0.14), rgba(15, 23, 42, 0.2)),
+    /* Zachování současné světlé glass/luxury nálady */
+    linear-gradient(rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0.74)),
+    url("/images/hero.jpg") center center / cover no-repeat fixed;
+}
+
+/* Tablet/Mobile: use pseudo-element layer to keep content above */
+@media (max-width: 768px) {
+  body[data-page="index"],
+  body[data-page="sluzby"],
+  body[data-page="faq"],
+  body[data-page="prezentace"],
+  body[data-page="terms"],
+  body[data-page="privacy"],
+  body[data-page="impresum"],
+  body[data-page="404"],
+  body[data-page="feedback"] {
+    background: none;
+    isolation: isolate;
+  }
+
+  body[data-page="index"] #main-content,
+  body[data-page="sluzby"] #main-content,
+  body[data-page="faq"] #main-content,
+  body[data-page="prezentace"] #main-content,
+  body[data-page="terms"] #main-content,
+  body[data-page="privacy"] #main-content,
+  body[data-page="impresum"] #main-content,
+  body[data-page="404"] #main-content,
+  body[data-page="feedback"] #main-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  body[data-page="index"]::before,
+  body[data-page="sluzby"]::before,
+  body[data-page="faq"]::before,
+  body[data-page="prezentace"]::before,
+  body[data-page="terms"]::before,
+  body[data-page="privacy"]::before,
+  body[data-page="impresum"]::before,
+  body[data-page="404"]::before,
+  body[data-page="feedback"]::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(rgba(15, 23, 42, 0.12), rgba(15, 23, 42, 0.18)),
+      linear-gradient(rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.48)),
+      url("/images/hero.jpg") center center / cover no-repeat;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+}
+
+@media (max-width: 480px) {
+  body[data-page="index"]::before,
+  body[data-page="sluzby"]::before,
+  body[data-page="faq"]::before,
+  body[data-page="prezentace"]::before,
+  body[data-page="terms"]::before,
+  body[data-page="privacy"]::before,
+  body[data-page="impresum"]::before,
+  body[data-page="404"]::before,
+  body[data-page="feedback"]::before {
+    background:
+      linear-gradient(rgba(15, 23, 42, 0.12), rgba(15, 23, 42, 0.18)),
+      linear-gradient(rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.46)),
+      url("/images/hero-mobile.jpg") center 38% / cover no-repeat;
+  }
+}
+

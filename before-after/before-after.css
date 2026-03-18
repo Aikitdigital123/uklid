@@ -17,13 +17,17 @@
 
 .ba-gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
+  /* Limit šířky sloupců, aby se galerie neroztahovala přes celý obsah. */
+  justify-content: center;
+  max-width: 980px;
+  margin: 0 auto;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 320px));
+  gap: 20px;
 }
 
 .ba-card {
   border-radius: 22px;
-  padding: 18px;
+  padding: 16px;
   text-align: left;
 }
 
@@ -58,7 +62,7 @@
 .ba-figure {
   margin: 0;
   position: relative;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 5;
   isolation: isolate;
   border-radius: 18px;
   overflow: hidden;
@@ -87,7 +91,8 @@
 @supports not (aspect-ratio: 1 / 1) {
   .ba-figure {
     height: 0;
-    padding-top: 133.3333%;
+    /* aspect-ratio 4/5 => height = width * 5/4 => 125% */
+    padding-top: 125%;
   }
   .ba-figure img {
     position: absolute;
@@ -145,5 +150,25 @@
 
   .ba-card {
     padding: 16px;
+  }
+}
+
+/* Kompaktnější výška fotek na menších displejích (aby nezabíraly téměř celý viewport). */
+@media (max-width: 768px) {
+  .ba-figure {
+    max-height: 260px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ba-figure {
+    max-height: 210px;
+  }
+}
+
+/* Ještě lehce omezit dominantní výšku i na větších displejích (jen safety). */
+@media (min-width: 769px) {
+  .ba-figure {
+    max-height: 420px;
   }
 }

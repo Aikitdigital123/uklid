@@ -146,6 +146,9 @@
     }
     </script>
 
+    <!-- Cookie banner preinit: toggles visibility based on stored consent (prevents flash-and-hide) -->
+    <script type="module" src="/assets/js/cookieBannerPreinit.js"></script>
+
 </head>
 <body data-page="index">
     <!-- Skip link for better accessibility -->
@@ -183,6 +186,16 @@
                 <div class="form-actions">
                     <a href="#pricing" class="btn btn-primary" data-track-event="hero_cta_click">Get a Free Quote</a>
                 </div>
+                <nav class="quick-links" aria-label="Quick links">
+                    <ul class="quick-links__list">
+                        <li><a class="quick-links__link" href="privacy.html">Privacy Policy</a></li>
+                        <li><a class="quick-links__link" href="terms.html">Terms and Conditions</a></li>
+                        <li><a class="quick-links__link" href="feedback.html">Cleaning Feedback</a></li>
+                        <li><a class="quick-links__link" href="presentation.html">Presentation</a></li>
+                        <li><a class="quick-links__link" href="faq.html">FAQ</a></li>
+                        <li><a class="quick-links__link" href="impresum.html">Operator</a></li>
+                    </ul>
+                </nav>
             </div>
         </section>
 
@@ -509,19 +522,6 @@
                 <a href="https://www.instagram.com/lesktop.cz" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-instagram"></i>
                 </a>
-            </div>
-            <div class="legal-links">
-                <a href="privacy.html">Privacy Policy</a>
-                <span aria-hidden="true"> &middot; </span>
-                <a href="terms.html">Terms and Conditions</a>
-                <span aria-hidden="true"> &middot; </span>
-                <a href="services.html">Services</a>
-                <span aria-hidden="true"> &middot; </span>
-                <a href="presentation.html">Presentation</a>
-                <span aria-hidden="true"> &middot; </span>
-                <a href="faq.html">FAQ</a>
-                <span aria-hidden="true"> &middot; </span>
-                <a href="impresum.html">Operator</a>
             </div>
         </div>
     </footer>

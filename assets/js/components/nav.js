@@ -3,7 +3,9 @@
  * Single source of truth for menu open state; all updates go through setMenuOpen().
  * iOS/iPhone: pouze click pro „tap outside“, delší suppress po otevření, resize jen při změně breakpointu.
  */
-const BREAKPOINT_MOBILE_PX = 768;
+// Breakpoint must match CSS media queries in `assets/css/layout/header.css`
+// to avoid mezistav, kdy je vidět desktop layout, ale položky se už lámou.
+const BREAKPOINT_MOBILE_PX = 992;
 const SCROLL_OFFSET_PX = 20;
 const RESIZE_DEBOUNCE_MS = 200;
 const INIT_GUARD_KEY = 'navInit';
@@ -16,7 +18,7 @@ function isMobile() {
 }
 
 function isMobileMedia() {
-  return typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+  return typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width: 992px)').matches;
 }
 
 function scrollToY(top) {

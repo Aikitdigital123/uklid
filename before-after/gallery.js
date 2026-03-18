@@ -1,5 +1,8 @@
 (function () {
   var ITEMS_PER_PAGE = 6;
+  var INIT_GUARD_KEY = 'beforeAfterGalleryInit';
+  var VISIBLE_LIMIT = 1;
+  var EXPAND_BTN_ID = 'before-after-expand';
 
   function parseDate(value) {
     var parsed = Date.parse(value);
@@ -22,6 +25,20 @@
       return -1;
     }
 
+    return 0;
+  }
+
+  function sortByDateDesc(a, b) {
+    var dateA = parseDate(a.date);
+    var dateB = parseDate(b.date);
+
+    if (dateA && dateB) {
+      return dateB - dateA;
+    }
+
+    // Items without a valid date go last.
+    if (dateA) return -1;
+    if (dateB) return 1;
     return 0;
   }
 
@@ -182,7 +199,7 @@
       return;
     }
 
-    data.sort(sortByDateAsc);
+    data.sort(sortByDateDesc);
 
     var fragment = document.createDocumentFragment();
     data.forEach(function (item) {
@@ -193,6 +210,62 @@
     if (emptyState) {
       emptyState.hidden = true;
     }
+
+    // --- Progressive disclosure: show only first item, rest after expand ---
+    // Idempotence: if gallery is re-rendered or page is restored from bfcache, avoid duplicating button.
+    if (document.documentElement.dataset[INIT_GUARD_KEY] !== '1') {
+      document.documentElement.dataset[INIT_GUARD_KEY] = '1';
+    }
+
+    var cards = target.querySelectorAll('.ba-card');
+    if (!cards || cards.length <= VISIBLE_LIMIT) {
+      // Remove old expand button if any (e.g., if items were removed)
+      var oldBtn = document.getElementById(EXPAND_BTN_ID);
+      if (oldBtn) oldBtn.remove();
+      return;
+    }
+
+    // Hide cards above the visible limit (preserve first item)
+    for (var i = 0; i < cards.length; i++) {
+      if (i < VISIBLE_LIMIT) {
+        cards[i].hidden = false;
+        cards[i].classList.remove('is-hidden');
+      } else {
+        cards[i].hidden = true;
+        cards[i].classList.add('is-hidden');
+      }
+    }
+
+    var existingBtn = document.getElementById(EXPAND_BTN_ID);
+    if (existingBtn) existingBtn.remove();
+
+    var isEnglish = document.documentElement.lang === 'en';
+    var btn = document.createElement('button');
+    btn.id = EXPAND_BTN_ID;
+    btn.type = 'button';
+    btn.className = 'btn btn-secondary btn-expand-services';
+    btn.setAttribute('aria-controls', 'before-after-gallery');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.textContent = isEnglish ? 'Show more photos' : 'Zobrazit další fotky';
+
+    // Place button under the gallery
+    target.insertAdjacentElement('afterend', btn);
+
+    btn.addEventListener('click', function () {
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      var nextExpanded = !expanded;
+      btn.setAttribute('aria-expanded', String(nextExpanded));
+      btn.textContent = nextExpanded
+        ? (isEnglish ? 'Show fewer photos' : 'Zobrazit méně fotek')
+        : (isEnglish ? 'Show more photos' : 'Zobrazit další fotky');
+
+      for (var j = 0; j < cards.length; j++) {
+        if (j < VISIBLE_LIMIT) continue;
+        cards[j].hidden = !nextExpanded;
+        if (nextExpanded) cards[j].classList.remove('is-hidden');
+        else cards[j].classList.add('is-hidden');
+      }
+    });
   }
 
   // Robustní inicializace - čekáme na data.js s delším timeoutem a více pokusy

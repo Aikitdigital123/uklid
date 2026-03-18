@@ -146,6 +146,8 @@
     }
     </script>
 
+    <!-- Cookie banner preinit: minimal toggle based on stored consent (prevents flash-and-hide). -->
+    <script type="module" src="/assets/js/cookieBannerPreinit.js"></script>
 </head>
 <body data-page="index">
     <!-- Skip link pro lepší přístupnost -->
@@ -183,6 +185,16 @@
                 <div class="form-actions">
                     <a href="#pricing" class="btn btn-primary" data-track-event="hero_cta_click">Nezávazná kalkulace ceny</a>
                 </div>
+                <nav class="quick-links" aria-label="Rychlé odkazy">
+                    <ul class="quick-links__list">
+                        <li><a class="quick-links__link" href="privacy.html">Zásady ochrany osobních údajů</a></li>
+                        <li><a class="quick-links__link" href="terms.html">Obchodní podmínky</a></li>
+                        <li><a class="quick-links__link" href="spokojenost.html">Hodnocení úklidu</a></li>
+                        <li><a class="quick-links__link" href="prezentace.html">Prezentace</a></li>
+                        <li><a class="quick-links__link" href="faq.html">FAQ</a></li>
+                        <li><a class="quick-links__link" href="impresum.html">Provozovatel</a></li>
+                    </ul>
+                </nav>
             </div>
         </section>
 
@@ -509,19 +521,6 @@
                 <a href="https://www.instagram.com/lesktop.cz" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-instagram"></i>
                 </a>
-            </div>
-            <div class="legal-links">
-                <a href="privacy.html">Zásady ochrany osobních údajů</a>
-                <span aria-hidden="true"> &middot; </span>
-                <a href="terms.html">Obchodní podmínky</a>
-                <span aria-hidden="true"> &middot; </span>
-                <a href="sluzby.html">Služby</a>
-                <span aria-hidden="true"> &middot; </span>
-                <a href="prezentace.html">Prezentace</a>
-                <span aria-hidden="true"> &middot; </span>
-                <a href="faq.html">FAQ</a>
-                <span aria-hidden="true"> &middot; </span>
-                <a href="impresum.html">Provozovatel</a>
             </div>
         </div>
     </footer>
