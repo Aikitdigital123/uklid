@@ -5,6 +5,7 @@ const MESSAGES = {
     missingRating: 'Vyberte prosim hodnoceni alespon u jedne oblasti.',
     invalidCleaningDate: 'Vyberte datum úklidu v kalendáři.',
     missingConfig: 'Formular neni spravne nastaven. Zkuste to prosim pozdeji.',
+    fastSubmit: 'Odeslani probehlo prilis rychle. Chvili pockejte a zkuste to znovu.',
     photoUploadError: 'Fotku se nepodarilo nahrat. Zkuste to prosim znovu.',
     submitError: 'Odeslani se nepodarilo. Zkuste to prosim znovu pozdeji.',
     anonymousYes: 'Ano',
@@ -32,6 +33,7 @@ const MESSAGES = {
     missingRating: 'Please select a rating for at least one area.',
     invalidCleaningDate: 'Please select the cleaning date using the calendar picker.',
     missingConfig: 'The form is not configured correctly. Please try again later.',
+    fastSubmit: 'Submission was too fast. Please wait a moment and try again.',
     photoUploadError: 'The photo could not be uploaded. Please try again.',
     submitError: 'The submission failed. Please try again later.',
     anonymousYes: 'Yes',
@@ -72,6 +74,8 @@ const RATING_LABELS = {
   }
 };
 
+const MIN_FEEDBACK_FILL_MS = 1500;
+
 function safeTrim(value) {
   return String(value || '').trim();
 }
@@ -87,6 +91,17 @@ function getRatingLabel(value, lang) {
 function getFormLanguage(form) {
   const lang = safeTrim(form?.dataset?.lang || document.documentElement.lang || 'cs').toLowerCase();
   return lang === 'en' ? 'en' : 'cs';
+}
+
+function markFeedbackFormStart(form) {
+  if (!form) return;
+  form.dataset.startedAt = String(Date.now());
+}
+
+function isFeedbackSubmitTooFast(form) {
+  const startedAt = Number(form?.dataset?.startedAt || '0');
+  if (!Number.isFinite(startedAt) || startedAt <= 0) return false;
+  return Date.now() - startedAt < MIN_FEEDBACK_FILL_MS;
 }
 
 // Autoritativní sety chipů pro sekce "Co bylo dobré?" / "Co je potřeba zlepšit?"
@@ -494,6 +509,8 @@ function buildPayload(form, config, areas, photoUrl) {
   const anonymous = Boolean(form.querySelector('#feedbackAnonymous')?.checked);
   const signatureValue = safeTrim(form.querySelector('#feedbackSignature')?.value);
   const cleaningDate = safeTrim(form.querySelector('#cleaningDate')?.value);
+  const subject = safeTrim(form.querySelector('input[name="subject"]')?.value || 'Lesktop feedback - cleaning_satisfaction');
+  const gotcha = safeTrim(form.querySelector('input[name="_gotcha"]')?.value);
   const submittedAt = new Date().toISOString();
   const pageUrl = window.location.href;
   const formType = safeTrim(form.querySelector('input[name="form_type"]')?.value || 'cleaning_satisfaction');
@@ -510,8 +527,20 @@ function buildPayload(form, config, areas, photoUrl) {
     improve_labels: area.improve_labels,
     note: area.note
   }));
+  const summaryText = buildSummaryText({
+    lang,
+    submittedAt,
+    pageUrl,
+    anonymous,
+    signature: safeSignature,
+    cleaningDate,
+    photoUrl,
+    areas: areaPayload
+  });
 
   return {
+    subject,
+    _gotcha: gotcha,
     form_type: formType,
     lang,
     submitted_at: submittedAt,
@@ -520,28 +549,17 @@ function buildPayload(form, config, areas, photoUrl) {
     signature: safeSignature,
     cleaning_date: cleaningDate || '',
     photo_url: photoUrl || '',
+    photo: photoUrl || '',
+    photo_link: photoUrl || '',
     areas_count: areaPayload.length,
     areas_keys_csv: areaPayload.map((area) => area.key).join(','),
     areas_json: JSON.stringify(areaPayload),
-    summary_text: buildSummaryText({
-      lang,
-      submittedAt,
-      pageUrl,
-      anonymous,
-      signature: safeSignature,
-      cleaningDate,
-      photoUrl,
-      areas: areaPayload
-    })
+    summary_text: summaryText,
+    message: summaryText
   };
 }
 
 async function uploadPhotoToCloudinary(file, config) {
-  console.log('[feedback] cloudinary upload start:', {
-    has_file: Boolean(file),
-    cloud_name: config.cloudinaryCloudName || null,
-    preset: config.cloudinaryUploadPreset || null,
-  });
   const endpoint = `https://api.cloudinary.com/v1_1/${encodeURIComponent(config.cloudinaryCloudName)}/image/upload`;
   const formData = new FormData();
   formData.append('file', file);
@@ -551,7 +569,6 @@ async function uploadPhotoToCloudinary(file, config) {
     method: 'POST',
     body: formData
   });
-  console.log('[feedback] cloudinary status:', response.status, response.statusText);
 
   if (!response.ok) {
     throw new Error('cloudinary_upload_failed');
@@ -568,7 +585,6 @@ async function uploadPhotoToCloudinary(file, config) {
     throw new Error('cloudinary_upload_invalid_response');
   }
 
-  console.log('[feedback] cloudinary secure_url:', result.secure_url);
   return result.secure_url;
 }
 
@@ -581,7 +597,6 @@ async function submitToFormspree(payload, config) {
     },
     body: JSON.stringify(payload)
   });
-  console.log('[feedback] formspree status:', response.status, response.statusText);
 
   if (!response.ok) {
     throw new Error('formspree_submit_failed');
@@ -700,16 +715,23 @@ async function handleSubmit(event) {
   const msg = getMessages(config.lang);
   const statusNode = form.querySelector('#feedback-form-status');
   const submitButton = form.querySelector('#feedbackSubmitButton');
+  const botcheckValue = safeTrim(form.querySelector('input[name="botcheck"]')?.value);
+  const gotchaValue = safeTrim(form.querySelector('input[name="_gotcha"]')?.value);
   const photoInput = form.querySelector('#feedbackPhoto');
   const photoFile = photoInput?.files?.[0] || null;
-  console.log('[feedback] selected file:', photoFile ? {
-    name: photoFile.name,
-    size: photoFile.size,
-    type: photoFile.type
-  } : null);
   const cleaningDate = safeTrim(form.querySelector('#cleaningDate')?.value);
   const areas = collectAreas(form, config.lang);
   const ratedAreas = areas.filter((area) => Number.isInteger(area.rating) && area.rating >= 1 && area.rating <= 5);
+
+  if (botcheckValue || gotchaValue) {
+    showStatus(statusNode, msg.submitError, 'error');
+    return;
+  }
+
+  if (isFeedbackSubmitTooFast(form)) {
+    showStatus(statusNode, msg.fastSubmit, 'error');
+    return;
+  }
 
   if (!isConfigValid(config, Boolean(photoFile))) {
     showStatus(statusNode, msg.missingConfig, 'error');
@@ -737,16 +759,15 @@ async function handleSubmit(event) {
       try {
         photoUrl = await uploadPhotoToCloudinary(photoFile, config);
       } catch (error) {
-        console.error('[feedback] cloudinary upload error:', error?.message || error);
         throw new Error('photo_upload_failed');
       }
     }
 
     const payload = buildPayload(form, config, ratedAreas, photoUrl);
-    console.log('[feedback] payload photo_url before formspree:', payload.photo_url || null);
     await submitToFormspree(payload, config);
 
     resetFeedbackForm(form);
+    markFeedbackFormStart(form);
     showStatus(statusNode, msg.success, 'success');
   } catch (error) {
     if (error && error.message === 'photo_upload_failed') {
@@ -764,6 +785,7 @@ export function initFeedbackForm() {
   if (!form || form.dataset.feedbackInitialized === 'true') return;
 
   form.dataset.feedbackInitialized = 'true';
+  markFeedbackFormStart(form);
   // Nahrazuje existující chipy v každé oblasti přesně definovaným setem (CZ/EN).
   applyFeedbackChipSets(form);
   updateAllAreaCompletionStates(form);
