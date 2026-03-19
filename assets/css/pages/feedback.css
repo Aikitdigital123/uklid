@@ -237,6 +237,7 @@ body[data-page="feedback"] #feedbackForm .form-group:not(fieldset) label {
 
 body[data-page="feedback"] #feedbackForm textarea,
 body[data-page="feedback"] #feedbackForm input[type="text"],
+body[data-page="feedback"] #feedbackForm input[type="date"],
 body[data-page="feedback"] #feedbackForm input[type="file"] {
   width: 100%;
   padding: var(--space-md) var(--space-lg);
@@ -253,6 +254,7 @@ body[data-page="feedback"] #feedbackForm input[type="file"] {
 
 body[data-page="feedback"] #feedbackForm textarea:focus,
 body[data-page="feedback"] #feedbackForm input[type="text"]:focus,
+body[data-page="feedback"] #feedbackForm input[type="date"]:focus,
 body[data-page="feedback"] #feedbackForm input[type="file"]:focus {
   outline: none;
   border-color: rgba(var(--color-accent-rgb), 0.6);

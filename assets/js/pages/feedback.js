@@ -3,6 +3,7 @@ const MESSAGES = {
     sending: 'Odesilam hodnoceni...',
     success: 'Dekujeme, vase hodnoceni bylo uspesne odeslano.',
     missingRating: 'Vyberte prosim hodnoceni alespon u jedne oblasti.',
+    invalidCleaningDate: 'Vyberte datum úklidu v kalendáři.',
     missingConfig: 'Formular neni spravne nastaven. Zkuste to prosim pozdeji.',
     photoUploadError: 'Fotku se nepodarilo nahrat. Zkuste to prosim znovu.',
     submitError: 'Odeslani se nepodarilo. Zkuste to prosim znovu pozdeji.',
@@ -10,6 +11,7 @@ const MESSAGES = {
     anonymousNo: 'Ne',
     anonymousLabel: 'Anonymne',
     signatureLabel: 'Podpis',
+    cleaningDateLabel: 'Datum úklidu',
     photoLabel: 'Fotka',
     pageLabel: 'Stranka',
     submittedAtLabel: 'Odeslano',
@@ -28,6 +30,7 @@ const MESSAGES = {
     sending: 'Sending feedback...',
     success: 'Thank you, your feedback has been sent successfully.',
     missingRating: 'Please select a rating for at least one area.',
+    invalidCleaningDate: 'Please select the cleaning date using the calendar picker.',
     missingConfig: 'The form is not configured correctly. Please try again later.',
     photoUploadError: 'The photo could not be uploaded. Please try again.',
     submitError: 'The submission failed. Please try again later.',
@@ -35,6 +38,7 @@ const MESSAGES = {
     anonymousNo: 'No',
     anonymousLabel: 'Anonymous',
     signatureLabel: 'Signature',
+    cleaningDateLabel: 'Cleaning date',
     photoLabel: 'Photo',
     pageLabel: 'Page',
     submittedAtLabel: 'Submitted',
@@ -373,7 +377,85 @@ function getHumanDateTime(isoValue, lang) {
   }
 }
 
-function buildSummaryText({ lang, submittedAt, pageUrl, anonymous, signature, photoUrl, areas }) {
+function isValidCleaningDateFormat(value) {
+  const trimmed = safeTrim(value);
+  if (!trimmed) return true;
+
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(trimmed);
+  if (!match) return false;
+
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (!Number.isInteger(day) || !Number.isInteger(month) || !Number.isInteger(year)) return false;
+  if (month < 1 || month > 12 || day < 1 || day > 31) return false;
+
+  const date = new Date(year, month - 1, day);
+  return (
+    date.getFullYear() === year &&
+    date.getMonth() === month - 1 &&
+    date.getDate() === day
+  );
+}
+
+function bindCleaningDatePickerOnly(form) {
+  const cleaningDateInput = form.querySelector('#cleaningDate');
+  if (!(cleaningDateInput instanceof HTMLInputElement)) return;
+  if (cleaningDateInput.type !== 'date') return;
+
+  // Keep native date picker UX and block manual free-text editing.
+  cleaningDateInput.setAttribute('inputmode', 'none');
+
+  cleaningDateInput.addEventListener('keydown', (event) => {
+    const allowedKeys = new Set(['Tab', 'Shift', 'Escape']);
+    if (!allowedKeys.has(event.key)) {
+      event.preventDefault();
+    }
+  });
+
+  cleaningDateInput.addEventListener('paste', (event) => event.preventDefault());
+  cleaningDateInput.addEventListener('drop', (event) => event.preventDefault());
+
+  const openPicker = () => {
+    if (typeof cleaningDateInput.showPicker === 'function') {
+      cleaningDateInput.showPicker();
+    }
+  };
+
+  cleaningDateInput.addEventListener('click', openPicker);
+  cleaningDateInput.addEventListener('focus', openPicker);
+}
+
+function bindSingleOpenAccordion(form) {
+  const areas = Array.from(form.querySelectorAll('details.area-item[data-area-key]'));
+  if (!areas.length) return;
+
+  areas.forEach((area) => {
+    area.addEventListener('toggle', () => {
+      // Accordion behavior: when one section opens, close all others.
+      if (!area.open) return;
+      const summary = area.querySelector('.area-summary');
+      const beforeTop = summary ? summary.getBoundingClientRect().top : null;
+
+      areas.forEach((otherArea) => {
+        if (otherArea !== area && otherArea.open) {
+          otherArea.open = false;
+        }
+      });
+
+      // Prevent jumpy scrolling after collapsing sections above the clicked one.
+      if (summary && Number.isFinite(beforeTop)) {
+        const afterTop = summary.getBoundingClientRect().top;
+        const delta = afterTop - beforeTop;
+        if (delta !== 0) {
+          window.scrollBy(0, delta);
+        }
+      }
+    });
+  });
+}
+
+function buildSummaryText({ lang, submittedAt, pageUrl, anonymous, signature, cleaningDate, photoUrl, areas }) {
   const msg = getMessages(lang);
   const areaKeys = areas.map((area) => area.key).join(',');
   const lines = [
@@ -384,6 +466,7 @@ function buildSummaryText({ lang, submittedAt, pageUrl, anonymous, signature, ph
     `${msg.pageLabel}: ${pageUrl}`,
     `${msg.anonymousLabel}: ${anonymous ? msg.anonymousYes : msg.anonymousNo}`,
     `${msg.signatureLabel}: ${anonymous ? msg.noValue : (signature || msg.noValue)}`,
+    `${msg.cleaningDateLabel}: ${cleaningDate || msg.noValue}`,
     `${msg.photoLabel}: ${photoUrl || msg.noValue}`,
     '',
     `${msg.ratedAreasLabel}: ${areas.length}`,
@@ -405,6 +488,7 @@ function buildSummaryText({ lang, submittedAt, pageUrl, anonymous, signature, ph
 function buildPayload(form, config, areas, photoUrl) {
   const anonymous = Boolean(form.querySelector('#feedbackAnonymous')?.checked);
   const signatureValue = safeTrim(form.querySelector('#feedbackSignature')?.value);
+  const cleaningDate = safeTrim(form.querySelector('#cleaningDate')?.value);
   const submittedAt = new Date().toISOString();
   const pageUrl = window.location.href;
   const formType = safeTrim(form.querySelector('input[name="form_type"]')?.value || 'cleaning_satisfaction');
@@ -429,6 +513,7 @@ function buildPayload(form, config, areas, photoUrl) {
     page_url: pageUrl,
     anonymous,
     signature: safeSignature,
+    cleaning_date: cleaningDate || '',
     photo_url: photoUrl || '',
     areas_count: areaPayload.length,
     areas_keys_csv: areaPayload.map((area) => area.key).join(','),
@@ -439,6 +524,7 @@ function buildPayload(form, config, areas, photoUrl) {
       pageUrl,
       anonymous,
       signature: safeSignature,
+      cleaningDate,
       photoUrl,
       areas: areaPayload
     })
@@ -460,7 +546,13 @@ async function uploadPhotoToCloudinary(file, config) {
     throw new Error('cloudinary_upload_failed');
   }
 
-  const result = await response.json();
+  let result;
+  try {
+    result = await response.json();
+  } catch (error) {
+    throw new Error('cloudinary_upload_invalid_json');
+  }
+
   if (!result || !result.secure_url) {
     throw new Error('cloudinary_upload_invalid_response');
   }
@@ -490,10 +582,35 @@ async function submitToFormspree(payload, config) {
   return result;
 }
 
-function showStatus(statusNode, message) {
+function scrollStatusIntoView(statusNode) {
+  if (!statusNode) return;
+  const rect = statusNode.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  const isFullyVisible = rect.top >= 0 && rect.bottom <= viewportHeight;
+  if (!isFullyVisible) {
+    statusNode.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function showStatus(statusNode, message, tone) {
   if (!statusNode) return;
   statusNode.textContent = message;
-  statusNode.classList.remove('form-status-hidden');
+  statusNode.classList.remove('form-status-hidden', 'success', 'error', 'is-loading');
+
+  if (tone === 'success') {
+    statusNode.classList.add('success');
+    statusNode.setAttribute('aria-live', 'polite');
+  } else if (tone === 'error') {
+    statusNode.classList.add('error');
+    statusNode.setAttribute('aria-live', 'assertive');
+  } else if (tone === 'loading') {
+    statusNode.classList.add('is-loading');
+    statusNode.setAttribute('aria-live', 'polite');
+  } else {
+    statusNode.classList.remove('form-status-hidden');
+  }
+
+  scrollStatusIntoView(statusNode);
 }
 
 function setSubmittingState(form, submitButton, isSubmitting, message) {
@@ -508,7 +625,7 @@ function setSubmittingState(form, submitButton, isSubmitting, message) {
 
   if (message) {
     const statusNode = form.querySelector('#feedback-form-status');
-    showStatus(statusNode, message);
+    showStatus(statusNode, message, isSubmitting ? 'loading' : undefined);
   }
 }
 
@@ -572,17 +689,24 @@ async function handleSubmit(event) {
   const submitButton = form.querySelector('#feedbackSubmitButton');
   const photoInput = form.querySelector('#feedbackPhoto');
   const photoFile = photoInput?.files?.[0] || null;
+  const cleaningDate = safeTrim(form.querySelector('#cleaningDate')?.value);
   const areas = collectAreas(form, config.lang);
   const ratedAreas = areas.filter((area) => Number.isInteger(area.rating) && area.rating >= 1 && area.rating <= 5);
 
   if (!isConfigValid(config, Boolean(photoFile))) {
-    showStatus(statusNode, msg.missingConfig);
+    showStatus(statusNode, msg.missingConfig, 'error');
     return;
   }
 
   if (ratedAreas.length === 0) {
-    showStatus(statusNode, msg.missingRating);
+    showStatus(statusNode, msg.missingRating, 'error');
     openArea(findAreaToOpen(areas));
+    return;
+  }
+
+  if (!isValidCleaningDateFormat(cleaningDate)) {
+    showStatus(statusNode, msg.invalidCleaningDate, 'error');
+    form.querySelector('#cleaningDate')?.focus();
     return;
   }
 
@@ -603,12 +727,12 @@ async function handleSubmit(event) {
     await submitToFormspree(payload, config);
 
     resetFeedbackForm(form);
-    showStatus(statusNode, msg.success);
+    showStatus(statusNode, msg.success, 'success');
   } catch (error) {
     if (error && error.message === 'photo_upload_failed') {
-      showStatus(statusNode, msg.photoUploadError);
+      showStatus(statusNode, msg.photoUploadError, 'error');
     } else {
-      showStatus(statusNode, msg.submitError);
+      showStatus(statusNode, msg.submitError, 'error');
     }
   } finally {
     setSubmittingState(form, submitButton, false);
@@ -625,6 +749,8 @@ export function initFeedbackForm() {
   updateAllAreaCompletionStates(form);
   bindAnonymousToggle(form);
   bindRatingToggle(form);
+  bindCleaningDatePickerOnly(form);
+  bindSingleOpenAccordion(form);
 
   // Sledujeme změny v dané accordion sekci a aktualizujeme fajfku "vyplněno".
   form.addEventListener('change', (event) => {
