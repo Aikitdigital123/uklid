@@ -433,30 +433,29 @@ function bindSingleOpenAccordion(form) {
 
   areas.forEach((area) => {
     const summary = area.querySelector('.area-summary');
-    if (summary) {
-      summary.addEventListener('click', (event) => {
-        // If already open, keep native close behavior.
-        if (area.open) return;
+    if (!summary) return;
 
-        // Close previous section first, then open the clicked one.
-        event.preventDefault();
-        areas.forEach((otherArea) => {
-          if (otherArea !== area && otherArea.open) {
-            otherArea.open = false;
-          }
-        });
-        area.open = true;
-        summary.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    }
+    summary.addEventListener('click', (event) => {
+      // If already open, keep native close behavior.
+      if (area.open) return;
 
-    area.addEventListener('toggle', () => {
-      if (!area.open) return;
+      event.preventDefault();
+
+      const beforeTop = summary.getBoundingClientRect().top;
+
       areas.forEach((otherArea) => {
         if (otherArea !== area && otherArea.open) {
           otherArea.open = false;
         }
       });
+
+      area.open = true;
+
+      const afterTop = summary.getBoundingClientRect().top;
+      const delta = afterTop - beforeTop;
+      if (delta !== 0) {
+        window.scrollBy(0, delta);
+      }
     });
   });
 }
@@ -538,6 +537,11 @@ function buildPayload(form, config, areas, photoUrl) {
 }
 
 async function uploadPhotoToCloudinary(file, config) {
+  console.log('[feedback] cloudinary upload start:', {
+    has_file: Boolean(file),
+    cloud_name: config.cloudinaryCloudName || null,
+    preset: config.cloudinaryUploadPreset || null,
+  });
   const endpoint = `https://api.cloudinary.com/v1_1/${encodeURIComponent(config.cloudinaryCloudName)}/image/upload`;
   const formData = new FormData();
   formData.append('file', file);
@@ -547,6 +551,7 @@ async function uploadPhotoToCloudinary(file, config) {
     method: 'POST',
     body: formData
   });
+  console.log('[feedback] cloudinary status:', response.status, response.statusText);
 
   if (!response.ok) {
     throw new Error('cloudinary_upload_failed');
@@ -563,6 +568,7 @@ async function uploadPhotoToCloudinary(file, config) {
     throw new Error('cloudinary_upload_invalid_response');
   }
 
+  console.log('[feedback] cloudinary secure_url:', result.secure_url);
   return result.secure_url;
 }
 
@@ -575,6 +581,7 @@ async function submitToFormspree(payload, config) {
     },
     body: JSON.stringify(payload)
   });
+  console.log('[feedback] formspree status:', response.status, response.statusText);
 
   if (!response.ok) {
     throw new Error('formspree_submit_failed');
@@ -695,6 +702,11 @@ async function handleSubmit(event) {
   const submitButton = form.querySelector('#feedbackSubmitButton');
   const photoInput = form.querySelector('#feedbackPhoto');
   const photoFile = photoInput?.files?.[0] || null;
+  console.log('[feedback] selected file:', photoFile ? {
+    name: photoFile.name,
+    size: photoFile.size,
+    type: photoFile.type
+  } : null);
   const cleaningDate = safeTrim(form.querySelector('#cleaningDate')?.value);
   const areas = collectAreas(form, config.lang);
   const ratedAreas = areas.filter((area) => Number.isInteger(area.rating) && area.rating >= 1 && area.rating <= 5);
@@ -725,11 +737,13 @@ async function handleSubmit(event) {
       try {
         photoUrl = await uploadPhotoToCloudinary(photoFile, config);
       } catch (error) {
+        console.error('[feedback] cloudinary upload error:', error?.message || error);
         throw new Error('photo_upload_failed');
       }
     }
 
     const payload = buildPayload(form, config, ratedAreas, photoUrl);
+    console.log('[feedback] payload photo_url before formspree:', payload.photo_url || null);
     await submitToFormspree(payload, config);
 
     resetFeedbackForm(form);
