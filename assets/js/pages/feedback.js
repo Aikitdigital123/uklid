@@ -416,14 +416,15 @@ function bindCleaningDatePickerOnly(form) {
   cleaningDateInput.addEventListener('paste', (event) => event.preventDefault());
   cleaningDateInput.addEventListener('drop', (event) => event.preventDefault());
 
-  const openPicker = () => {
+  cleaningDateInput.addEventListener('click', () => {
     if (typeof cleaningDateInput.showPicker === 'function') {
-      cleaningDateInput.showPicker();
+      try {
+        cleaningDateInput.showPicker();
+      } catch (error) {
+        // browser může showPicker blokovat; nesmí to rozbít formulář
+      }
     }
-  };
-
-  cleaningDateInput.addEventListener('click', openPicker);
-  cleaningDateInput.addEventListener('focus', openPicker);
+  });
 }
 
 function bindSingleOpenAccordion(form) {
@@ -431,26 +432,31 @@ function bindSingleOpenAccordion(form) {
   if (!areas.length) return;
 
   areas.forEach((area) => {
-    area.addEventListener('toggle', () => {
-      // Accordion behavior: when one section opens, close all others.
-      if (!area.open) return;
-      const summary = area.querySelector('.area-summary');
-      const beforeTop = summary ? summary.getBoundingClientRect().top : null;
+    const summary = area.querySelector('.area-summary');
+    if (summary) {
+      summary.addEventListener('click', (event) => {
+        // If already open, keep native close behavior.
+        if (area.open) return;
 
+        // Close previous section first, then open the clicked one.
+        event.preventDefault();
+        areas.forEach((otherArea) => {
+          if (otherArea !== area && otherArea.open) {
+            otherArea.open = false;
+          }
+        });
+        area.open = true;
+        summary.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+
+    area.addEventListener('toggle', () => {
+      if (!area.open) return;
       areas.forEach((otherArea) => {
         if (otherArea !== area && otherArea.open) {
           otherArea.open = false;
         }
       });
-
-      // Prevent jumpy scrolling after collapsing sections above the clicked one.
-      if (summary && Number.isFinite(beforeTop)) {
-        const afterTop = summary.getBoundingClientRect().top;
-        const delta = afterTop - beforeTop;
-        if (delta !== 0) {
-          window.scrollBy(0, delta);
-        }
-      }
     });
   });
 }
