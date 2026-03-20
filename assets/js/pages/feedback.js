@@ -10,8 +10,6 @@ const MESSAGES = {
   cs: {
     sending: 'Odesíláme vaše hodnocení, děkujeme za chvíli strpení.',
     success: 'Děkujeme, vaše hodnocení jsme úspěšně přijali.',
-    successFollowup: 'Pokud chcete, můžete hned odeslat další hodnocení.',
-    fillAgain: 'Vyplnit další hodnocení',
     missingRating: 'Vyberte prosim hodnoceni alespon u jedne oblasti.',
     invalidCleaningDate: 'Vyberte datum úklidu v kalendáři.',
     missingConfig: 'Formular neni spravne nastaven. Zkuste to prosim pozdeji.',
@@ -41,8 +39,6 @@ const MESSAGES = {
   en: {
     sending: 'Sending feedback...',
     success: 'Thank you, your feedback has been received successfully.',
-    successFollowup: 'If you want, you can submit another feedback right away.',
-    fillAgain: 'Submit another feedback',
     missingRating: 'Please select a rating for at least one area.',
     invalidCleaningDate: 'Please select the cleaning date using the calendar picker.',
     missingConfig: 'The form is not configured correctly. Please try again later.',
@@ -89,6 +85,10 @@ const RATING_LABELS = {
 };
 
 const MIN_FEEDBACK_FILL_MS = 1500;
+const RECAPTCHA_ACTION = 'feedback_submit';
+const RECAPTCHA_READY_TIMEOUT_MS = 10000;
+
+let recaptchaReadyPromise = null;
 
 function escapeHtml(value) {
   return String(value || '')
@@ -282,8 +282,69 @@ function readConfig(form) {
     formspreeEndpoint: safeTrim(form.dataset.formspreeEndpoint),
     cloudinaryCloudName: safeTrim(form.dataset.cloudinaryCloudName),
     cloudinaryUploadPreset: safeTrim(form.dataset.cloudinaryUploadPreset),
+    recaptchaSiteKey: safeTrim(form.dataset.recaptchaSiteKey),
     lang: getFormLanguage(form)
   };
+}
+
+function waitForRecaptchaApi() {
+  if (window.grecaptcha?.ready) {
+    return Promise.resolve(window.grecaptcha);
+  }
+
+  if (recaptchaReadyPromise) {
+    return recaptchaReadyPromise;
+  }
+
+  recaptchaReadyPromise = new Promise((resolve, reject) => {
+    const startedAt = Date.now();
+
+    const check = () => {
+      if (window.grecaptcha?.ready) {
+        resolve(window.grecaptcha);
+        return;
+      }
+
+      if (Date.now() - startedAt >= RECAPTCHA_READY_TIMEOUT_MS) {
+        reject(new Error('recaptcha_not_ready'));
+        return;
+      }
+
+      window.setTimeout(check, 100);
+    };
+
+    check();
+  }).catch((error) => {
+    recaptchaReadyPromise = null;
+    throw error;
+  });
+
+  return recaptchaReadyPromise;
+}
+
+async function getRecaptchaToken(siteKey) {
+  const safeSiteKey = safeTrim(siteKey);
+  if (!safeSiteKey) {
+    throw new Error('recaptcha_missing_site_key');
+  }
+
+  const grecaptcha = await waitForRecaptchaApi();
+
+  return new Promise((resolve, reject) => {
+    grecaptcha.ready(() => {
+      grecaptcha.execute(safeSiteKey, { action: RECAPTCHA_ACTION })
+        .then((token) => {
+          const safeToken = safeTrim(token);
+          if (!safeToken) {
+            reject(new Error('recaptcha_missing_token'));
+            return;
+          }
+
+          resolve(safeToken);
+        })
+        .catch(() => reject(new Error('recaptcha_execute_failed')));
+    });
+  });
 }
 
 function getLabelTextForInput(input) {
@@ -526,8 +587,7 @@ function buildSummaryText({ submittedAt, anonymous, signature, cleaningDate, has
   ].filter(Boolean);
 
   if (hasPhoto && photoUrl) {
-    const obfuscatedPhotoUrl = String(photoUrl).replace(/^https:\/\//i, 'https[:]//');
-    lines.push(`Odkaz na fotografii: ${obfuscatedPhotoUrl}`);
+    lines.push(`Odkaz na fotografii: ${String(photoUrl)}`);
   }
 
   areas.forEach((area) => {
@@ -543,7 +603,7 @@ function buildSummaryText({ submittedAt, anonymous, signature, cleaningDate, has
   return lines.join('\n');
 }
 
-function buildPayload(form, config, areas, photoUrl, photoPublicId) {
+function buildPayload(form, config, areas, photoUrl, photoPublicId, recaptchaToken) {
   const anonymous = Boolean(form.querySelector('#feedbackAnonymous')?.checked);
   const signatureValue = safeTrim(form.querySelector('#feedbackSignature')?.value);
   const cleaningDate = safeTrim(form.querySelector('#cleaningDate')?.value);
@@ -594,6 +654,7 @@ function buildPayload(form, config, areas, photoUrl, photoPublicId) {
   return {
     subject,
     _gotcha: gotcha,
+    'g-recaptcha-response': safeTrim(recaptchaToken),
     form_type: formType,
     lang,
     submitted_at: submittedAt,
@@ -778,7 +839,7 @@ function resetFeedbackForm(form) {
 }
 
 function isConfigValid(config, requiresPhotoUpload) {
-  if (!config.formspreeEndpoint) return false;
+  if (!config.formspreeEndpoint || !config.recaptchaSiteKey) return false;
   if (!requiresPhotoUpload) return true;
   return Boolean(config.cloudinaryCloudName && config.cloudinaryUploadPreset);
 }
@@ -879,7 +940,8 @@ async function handleSubmit(event) {
       }
     }
 
-    const payload = buildPayload(form, config, ratedAreas, photoUrl, photoPublicId);
+    const recaptchaToken = await getRecaptchaToken(config.recaptchaSiteKey);
+    const payload = buildPayload(form, config, ratedAreas, photoUrl, photoPublicId, recaptchaToken);
     await submitToFormspree(payload, config);
     trackFormConversion('feedback', 'Feedback formular', {
       rated_areas_count: ratedAreas.length,
@@ -888,19 +950,7 @@ async function handleSubmit(event) {
 
     resetFeedbackForm(form);
     markFeedbackFormStart(form);
-    showStatus(statusNode, msg.success, 'success', {
-      secondaryMessage: msg.successFollowup,
-      actionText: msg.fillAgain,
-      onAction: () => {
-        clearStatus(statusNode);
-        const firstSummary = form.querySelector('details.area-item[data-area-key] .area-summary');
-        if (firstSummary) {
-          firstSummary.focus();
-        } else {
-          form.querySelector('#cleaningDate')?.focus();
-        }
-      }
-    });
+    showStatus(statusNode, msg.success, 'success');
   } catch (error) {
     if (error && error.message === 'photo_upload_failed') {
       showStatus(statusNode, msg.photoUploadError, 'error');

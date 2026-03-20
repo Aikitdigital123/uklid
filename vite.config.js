@@ -104,7 +104,13 @@ function collectJsonLdHashes(html) {
  */
 function buildCspPolicy(html) {
   const jsonLdHashes = collectJsonLdHashes(html);
-  const scriptSrc = ["'self'", 'https://www.googletagmanager.com', ...jsonLdHashes];
+  const scriptSrc = [
+    "'self'",
+    'https://www.googletagmanager.com',
+    'https://www.google.com',
+    'https://www.gstatic.com',
+    ...jsonLdHashes
+  ];
   const imgSrc = [
     "'self'",
     'data:',
@@ -112,6 +118,7 @@ function buildCspPolicy(html) {
     'https://www.google-analytics.com',
     'https://www.googletagmanager.com',
     'https://www.google.com',
+    'https://www.gstatic.com',
     'https://stats.g.doubleclick.net',
     'https://region1.google-analytics.com',
   ].join(' ');
@@ -123,8 +130,9 @@ function buildCspPolicy(html) {
     `style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com`,
     `font-src 'self' https://cdnjs.cloudflare.com data:`,
     `img-src ${imgSrc}`,
-    `connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://www.googleadservices.com https://googleads.g.doubleclick.net`,
+    `connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://www.gstatic.com https://api.cloudinary.com https://formspree.io`,
     `form-action 'self' https://api.web3forms.com`,
+    `frame-src 'self' https://www.google.com https://www.gstatic.com`,
     `object-src 'self'`,
     `manifest-src 'self'`,
   ].join('; ');
