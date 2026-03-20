@@ -14,8 +14,39 @@ body[data-page="index"] .price-card:not(.glass-panel) {
   transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease, border-color 0.3s ease, filter 0.3s ease;
 }
 
-/* Glass panely používají globální glass-panel transition (bez background/backdrop/opacity) */
-/* Žádné přepisy - glass-panel má vlastní globální default v glass.css */
+/**
+ * Homepage karty (služby + ceník): výraznější „mléčný“ frost + mírně čtverčitější rohy.
+ * Přepisuje globální .service-item.glass-panel / .price-card.glass-panel z card.css (transparent).
+ */
+body[data-page="index"] .services-grid .service-item.glass-panel,
+body[data-page="index"] .pricing-grid .price-card.glass-panel {
+  border-radius: 16px !important;
+  background: rgba(255, 255, 255, 0.78) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(145%) !important;
+  backdrop-filter: blur(14px) saturate(145%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.72) !important;
+  box-shadow: 0 10px 28px rgba(20, 30, 60, 0.12) !important;
+}
+
+/* Jemnější vnitřní lem u menšího radiusu */
+body[data-page="index"] .services-grid .service-item.glass-panel::after,
+body[data-page="index"] .pricing-grid .price-card.glass-panel::after {
+  border-radius: 12px;
+  top: 8px;
+  right: 8px;
+  bottom: 8px;
+  left: 8px;
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  body[data-page="index"] .services-grid .service-item.glass-panel,
+  body[data-page="index"] .pricing-grid .price-card.glass-panel {
+    background: rgba(255, 255, 255, 0.94) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
 
 @media (hover: hover) {
   body[data-page="index"] .service-item:not(.glass-panel):hover,
