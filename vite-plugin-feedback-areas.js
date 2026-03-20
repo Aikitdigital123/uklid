@@ -92,7 +92,8 @@ export function feedbackAreas() {
     transformIndexHtml: {
       order: 'pre',
       handler(html, context) {
-        if (!context?.path || !context.path.endsWith('/spokojenost.html')) {
+        const normalizedPath = String(context?.path || '').replace(/^\//, '');
+        if (normalizedPath !== 'spokojenost.html') {
           return html;
         }
 
