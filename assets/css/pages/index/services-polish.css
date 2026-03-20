@@ -15,20 +15,27 @@ body[data-page="index"] .price-card:not(.glass-panel) {
 }
 
 /**
- * Homepage karty (služby + ceník): výraznější „mléčný“ frost + mírně čtverčitější rohy.
- * Přepisuje globální .service-item.glass-panel / .price-card.glass-panel z card.css (transparent).
+ * Homepage karty (služby + ceník): lehké průhledné sklo (ne „plná“ bílá deska).
+ * Nižší alfa + silnější blur = vidět rozostřené pozadí; preview (build) pak odpovídá pocitu z dev serveru.
  */
 body[data-page="index"] .services-grid .service-item.glass-panel,
 body[data-page="index"] .pricing-grid .price-card.glass-panel {
   border-radius: 16px !important;
-  background: rgba(255, 255, 255, 0.78) !important;
-  -webkit-backdrop-filter: blur(14px) saturate(145%) !important;
-  backdrop-filter: blur(14px) saturate(145%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.72) !important;
-  box-shadow: 0 10px 28px rgba(20, 30, 60, 0.12) !important;
+  /* O chlup průhlednější + výraznější rozostření pozadí = „víc skla“ */
+  background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.13) 42%,
+      rgba(255, 255, 255, 0.06) 100%
+    ) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(175%) !important;
+  backdrop-filter: blur(22px) saturate(175%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.48) !important;
+  box-shadow:
+    0 14px 44px rgba(20, 30, 60, 0.11),
+    0 1px 0 rgba(255, 255, 255, 0.35) inset !important;
 }
 
-/* Jemnější vnitřní lem u menšího radiusu */
 body[data-page="index"] .services-grid .service-item.glass-panel::after,
 body[data-page="index"] .pricing-grid .price-card.glass-panel::after {
   border-radius: 12px;
@@ -36,13 +43,21 @@ body[data-page="index"] .pricing-grid .price-card.glass-panel::after {
   right: 8px;
   bottom: 8px;
   left: 8px;
-  border-color: rgba(255, 255, 255, 0.45);
+  border-color: rgba(255, 255, 255, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06);
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   body[data-page="index"] .services-grid .service-item.glass-panel,
   body[data-page="index"] .pricing-grid .price-card.glass-panel {
-    background: rgba(255, 255, 255, 0.94) !important;
+    /* Bez backdropu jen mírně zakryté pozadí — ne plná neprůhledná bílá */
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.88) 0%,
+        rgba(255, 255, 255, 0.78) 100%
+      ) !important;
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
   }
@@ -58,14 +73,15 @@ body[data-page="index"] .pricing-grid .price-card.glass-panel::after {
     z-index: 2;
   }
 
-  /* Glass panely bez filter brightness, aby zůstaly průhledné */
+  /* Glass panely bez filter brightness; stín + jemný horní lem jako v klidovém stavu */
   body[data-page="index"] .service-item.glass-panel:hover,
   body[data-page="index"] .price-card.glass-panel:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 24px 48px rgba(20, 30, 60, 0.18);
-    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow:
+      0 26px 52px rgba(20, 30, 60, 0.16),
+      0 1px 0 rgba(255, 255, 255, 0.38) inset;
+    border-color: rgba(255, 255, 255, 0.62);
     z-index: 2;
-    /* Žádné změny na background/backdrop/opacity, aby zůstaly průhledné */
   }
 }
 
@@ -103,19 +119,15 @@ body[data-page="index"] .price-list li {
     padding: 25px;
   }
 
-  /* Glass panely používají globální glass-panel default i na mobilu */
+  /* Glass panely: styl výše; jen hustší padding na mobilu */
   body[data-page="index"] .service-item.glass-panel,
   body[data-page="index"] .price-card.glass-panel {
-    /* Všechny glass vlastnosti jsou zděděny z globálního .glass-panel v glass.css */
     padding: 25px;
   }
 
   body[data-page="index"] .service-item:not(.glass-panel)::before {
     opacity: 0.035;
   }
-
-  /* Glass panely používají globální glass-panel::before opacity (0.15) */
-  /* Žádné přepisy - glass-panel má vlastní globální default v glass.css */
 
   body[data-page="index"] .price-card h3 { font-size: 1.4em; }
   body[data-page="index"] .price-card .price-from { font-size: 1.5em; }
