@@ -321,12 +321,14 @@ function optimizeImages() {
         try {
           const buf = await readFile(filePath);
           let out;
+          // Respect EXIF orientation before encoding so before/after photos keep correct rotation in production.
+          const image = sharp(buf).rotate();
           if (ext === '.jpg' || ext === '.jpeg') {
-            out = await sharp(buf).jpeg({ quality: 82, mozjpeg: true }).toBuffer();
+            out = await image.jpeg({ quality: 82, mozjpeg: true }).toBuffer();
           } else if (ext === '.png') {
-            out = await sharp(buf).png({ compressionLevel: 9 }).toBuffer();
+            out = await image.png({ compressionLevel: 9 }).toBuffer();
           } else if (ext === '.webp') {
-            out = await sharp(buf).webp({ quality: 82 }).toBuffer();
+            out = await image.webp({ quality: 82 }).toBuffer();
           } else {
             continue;
           }
@@ -375,6 +377,9 @@ const purgeSafelist = {
     'is-valid',
     'is-invalid',
     'is-open',
+    // EN homepage service cards: keep panel/grid classes even if PurgeCSS content scan misses a route variant.
+    'services-grid',
+    'service-item',
     // Feedback accordion/completion indicator classes are injected/rendered via build-time generation and JS.
     'feedback-areas',
     'area-item',
