@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <!-- HEAD: charset → viewport → title → description → canonical → robots → OG/Twitter (společné tagy se doplní automaticky při buildu) → favicon & theme-color → CSS -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Hodnocení úklidu | Lesktop</title>
+  <meta name="description" content="Rychlé hodnocení spokojenosti po úklidu. Pomozte nám zlepšovat služby Lesktop během pár kliknutí.">
+  <link rel="canonical" href="https://lesktop.cz/spokojenost.html">
+  <link rel="alternate" hreflang="cs" href="https://lesktop.cz/spokojenost.html">
+  <link rel="alternate" hreflang="en" href="https://lesktop.cz/en/feedback.html">
+  <link rel="alternate" hreflang="x-default" href="https://lesktop.cz/spokojenost.html">
+  <meta name="robots" content="index,follow">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lesktop.cz/spokojenost.html">
+  <meta property="og:title" content="Hodnocení úklidu | Lesktop">
+  <meta property="og:description" content="Rychlé hodnocení spokojenosti po úklidu během pár kliknutí.">
+  <meta property="og:image:alt" content="Lesktop - Hodnocení úklidu">
+  <meta name="twitter:title" content="Hodnocení úklidu | Lesktop">
+  <meta name="twitter:description" content="Rychlé hodnocení spokojenosti po úklidu během pár kliknutí.">
+  <link rel="icon" type="image/png" href="/assets/Domecek-BHU1GWZo.png">
+  <meta name="theme-color" content="#3a4768">
+  <noscript></noscript>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-async-stylesheet>
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
+
+    <!-- Cookie banner preinit: minimal toggle based on stored consent (prevents flash-and-hide). -->
+    <script src="/assets/js/cookieBannerPreinit.js" integrity="sha384-5WuafguP2vDN+/FcETa4RxoBM1vAkZWpCAz166FCykUPNFSoRKlaf3yufaXldi3H"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfBiZEsAAAAAKcw8q3O3ee8eZqFv0cIY_Q26HaX" async defer></script>
+  <script type="module" crossorigin src="/assets/main.bundle-2Ru_04kx.js" integrity="sha384-CtgqwXo1Yq+ij5hZBehg9i1hozmazhA2UQ4g97benIrgWa+EpJfpT7d8edRS5Hrk"></script>
+  <script type="module" crossorigin src="/assets/feedback-DcxIpn9z.js" integrity="sha384-vJkXDcHIMkzyV+8bJTt3fOJ/y9IjgSopGUnLbhTzvvldB/ENeZcfK7hN2MdmCzJY"></script>
+  <script type="module" crossorigin src="/assets/site-C0xIJ6yT.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-DvcDLrO8.css" integrity="sha384-6X2Plp3VbFNzZlxZcgHqn/mLuS16zVHw5uyVQawM3nxGt1/bf2eOuJZ97OuRQGjf">
+  <link rel="stylesheet" crossorigin href="/assets/feedback-zhvXdCIo.css" integrity="sha384-M9sxsCf3HcbixwaFRmZsqQ9PZVtE9aKISjiU9QseoYdPwnDaMCmJygtv7sDr4vrL">
+<style>@font-face{font-family:Montserrat;font-style:normal;font-weight:400;font-display:swap;src:url(/assets/JTUSjIg1_i6t8kCHKm459Wdhyzbi-BsZE-iaG.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Montserrat;font-style:normal;font-weight:400;font-display:swap;src:url(/assets/JTUSjIg1_i6t8kCHKm459Wlhyw-l_AIctKy.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Montserrat;font-style:normal;font-weight:500;font-display:swap;src:url(/assets/JTUSjIg1_i6t8kCHKm459Wdhyzbi-BsZE-iaG.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Montserrat;font-style:normal;font-weight:500;font-display:swap;src:url(/assets/JTUSjIg1_i6t8kCHKm459Wlhyw-l_AIctKy.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Montserrat;font-style:normal;font-weight:600;font-display:swap;src:url(/assets/JTUSjIg1_i6t8kCHKm459Wdhyzbi-BsZE-iaG.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Montserrat;font-style:normal;font-weight:600;font-display:swap;src:url(/assets/JTUSjIg1_i6t8kCHKm459Wlhyw-l_AIctKy.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Montserrat;font-style:normal;font-weight:700;font-display:swap;src:url(/assets/JTUSjIg1_i6t8kCHKm459Wdhyzbi-BsZE-iaG.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Montserrat;font-style:normal;font-weight:700;font-display:swap;src:url(/assets/JTUSjIg1_i6t8kCHKm459Wlhyw-l_AIctKy.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Open Sans';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(/assets/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSGmu1aB-DPNHYqvY.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Open Sans';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(/assets/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw-CWNzRldh.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Open Sans';font-style:normal;font-weight:600;font-stretch:100%;font-display:swap;src:url(/assets/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSGmu1aB-DPNHYqvY.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Open Sans';font-style:normal;font-weight:600;font-stretch:100%;font-display:swap;src:url(/assets/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw-CWNzRldh.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}</style>
+</head>
+<body data-page="feedback">
+  <a href="#main-content" class="skip-link">Přeskočit na hlavní obsah</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <img src="/assets/Domecek-BHU1GWZo.png" alt="Lesktop – úklidové služby" class="brand-logo" width="120" height="120" loading="eager" decoding="async">
+        <span class="brand-text">Lesktop</span>
+      </a>
+      <button type="button" class="header-back" data-back-button data-back-fallback="/" aria-label="Zpět">Zpět</button>
+      <a href="en/feedback.html" class="lang-switcher" hreflang="en" aria-label="Přepnout na angličtinu" title="English">EN</a>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-navigation" type="button">Menu</button>
+      <nav id="site-navigation" class="site-nav" aria-label="Hlavní navigace">
+        <ul>
+          <li><a href="/#about" class="nav-link">O nás</a></li>
+          <li><a href="sluzby.html" class="nav-link">Služby</a></li>
+          <li><a href="/#pricing" class="nav-link">Ceník</a></li>
+          <li><a href="prezentace.html" class="nav-link">Prezentace</a></li>
+          <li><a href="/#contact" class="nav-link">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="content-section glass-panel">
+      <div class="container">
+        <h1 class="section-title">Jak jste byli spokojeni s úklidem?</h1>
+        <p class="section-intro">Zabere to jen chvilku. Vaše zpětná vazba nám pomáhá hlídat kvalitu a zlepšovat služby.</p>
+        <p class="section-intro">Údaje používáme pouze pro vyřízení zpětné vazby (GDPR).</p>
+
+        <form id="feedbackForm" class="contact-form glass-panel" method="post" action="#" accept-charset="UTF-8" autocomplete="on" novalidate data-formspree-endpoint="https://formspree.io/f/xzdjkjvb" data-cloudinary-cloud-name="db07wcfrw" data-cloudinary-upload-preset="lesktop_feedback" data-recaptcha-site-key="6LfBiZEsAAAAAKcw8q3O3ee8eZqFv0cIY_Q26HaX" data-lang="cs">
+          <!-- Meta (JS doplní při odeslání): form_type, lang, submitted_at, page_url, souhrn, photo_url -->
+          <input type="hidden" name="form_type" value="cleaning_satisfaction">
+          <input type="hidden" name="lang" value="cs">
+          <input type="hidden" name="subject" value="Lesktop | Hodnocení úklidu">
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+          <input type="text" name="botcheck" class="input-botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <!-- Accordion seznam oblastí k hodnocení -->
+          <!-- Source of truth pro oblasti/chips je v tools/feedback-areas-data.mjs; při buildu se vyrenderují do statického HTML. -->
+          <section class="feedback-areas" aria-label="Hodnocení podle oblastí úklidu">
+                        <!-- Koupelna -->
+            <details class="area-item" data-area-key="bathroom">
+              <summary class="area-summary">
+                <span class="area-name">Koupelna</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni s koupelnou?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Hodnocení koupelny">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[bathroom][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[bathroom][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[bathroom][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[bathroom][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[bathroom][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[bathroom][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bathroom][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bathroom][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bathroom][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bathroom][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bathroom][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[bathroom][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bathroom][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bathroom][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bathroom][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bathroom][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bathroom][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bathroom][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-bathroom-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-bathroom-note" name="area[bathroom][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- Kuchyň -->
+            <details class="area-item" data-area-key="kitchen">
+              <summary class="area-summary">
+                <span class="area-name">Kuchyň</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni s kuchyní?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Hodnocení kuchyně">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[kitchen][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[kitchen][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[kitchen][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[kitchen][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[kitchen][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[kitchen][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[kitchen][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[kitchen][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[kitchen][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[kitchen][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[kitchen][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[kitchen][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[kitchen][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[kitchen][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[kitchen][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[kitchen][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[kitchen][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[kitchen][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-kitchen-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-kitchen-note" name="area[kitchen][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- WC -->
+            <details class="area-item" data-area-key="toilet">
+              <summary class="area-summary">
+                <span class="area-name">WC</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni s WC?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Hodnocení WC">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[toilet][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[toilet][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[toilet][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[toilet][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[toilet][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[toilet][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[toilet][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[toilet][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[toilet][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[toilet][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[toilet][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[toilet][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[toilet][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[toilet][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[toilet][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[toilet][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[toilet][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[toilet][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-toilet-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-toilet-note" name="area[toilet][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- Ložnice -->
+            <details class="area-item" data-area-key="bedroom">
+              <summary class="area-summary">
+                <span class="area-name">Ložnice</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni s ložnicí?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Hodnocení ložnice">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[bedroom][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[bedroom][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[bedroom][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[bedroom][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[bedroom][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[bedroom][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bedroom][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bedroom][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bedroom][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bedroom][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bedroom][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[bedroom][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bedroom][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bedroom][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bedroom][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bedroom][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bedroom][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[bedroom][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-bedroom-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-bedroom-note" name="area[bedroom][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- Obývací pokoj -->
+            <details class="area-item" data-area-key="living_room">
+              <summary class="area-summary">
+                <span class="area-name">Obývací pokoj</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni s obývacím pokojem?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Hodnocení obývacího pokoje">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[living_room][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[living_room][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[living_room][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[living_room][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[living_room][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[living_room][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[living_room][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[living_room][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[living_room][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[living_room][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[living_room][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[living_room][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[living_room][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[living_room][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[living_room][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[living_room][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[living_room][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[living_room][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-living-room-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-living-room-note" name="area[living_room][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- Chodba -->
+            <details class="area-item" data-area-key="hallway">
+              <summary class="area-summary">
+                <span class="area-name">Chodba</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni s chodbou?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Hodnocení chodby">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[hallway][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[hallway][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[hallway][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[hallway][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[hallway][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[hallway][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[hallway][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[hallway][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[hallway][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[hallway][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[hallway][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[hallway][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[hallway][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[hallway][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[hallway][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[hallway][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[hallway][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[hallway][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-hallway-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-hallway-note" name="area[hallway][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- Schody -->
+            <details class="area-item" data-area-key="stairs">
+              <summary class="area-summary">
+                <span class="area-name">Schody</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni se schody?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Hodnocení schodů">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[stairs][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[stairs][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[stairs][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[stairs][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[stairs][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[stairs][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[stairs][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[stairs][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[stairs][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[stairs][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[stairs][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[stairs][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[stairs][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[stairs][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[stairs][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[stairs][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[stairs][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[stairs][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-stairs-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-stairs-note" name="area[stairs][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- Podlahy -->
+            <details class="area-item" data-area-key="floors">
+              <summary class="area-summary">
+                <span class="area-name">Podlahy</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni s podlahami?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Hodnocení podlah">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[floors][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[floors][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[floors][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[floors][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[floors][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[floors][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[floors][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[floors][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[floors][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[floors][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[floors][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[floors][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[floors][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[floors][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[floors][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[floors][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[floors][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[floors][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-floors-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-floors-note" name="area[floors][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- Okna -->
+            <details class="area-item" data-area-key="windows">
+              <summary class="area-summary">
+                <span class="area-name">Okna</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni s umytím oken?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Hodnocení oken">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[windows][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[windows][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[windows][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[windows][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[windows][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[windows][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[windows][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[windows][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[windows][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[windows][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[windows][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[windows][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[windows][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[windows][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[windows][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[windows][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[windows][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[windows][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-windows-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-windows-note" name="area[windows][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- Terasa -->
+            <details class="area-item" data-area-key="terrace">
+              <summary class="area-summary">
+                <span class="area-name">Terasa</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni s terasou?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Hodnocení terasy">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[terrace][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[terrace][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[terrace][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[terrace][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[terrace][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[terrace][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[terrace][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[terrace][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[terrace][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[terrace][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[terrace][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[terrace][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[terrace][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[terrace][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[terrace][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[terrace][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[terrace][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[terrace][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-terrace-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-terrace-note" name="area[terrace][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- Balkon -->
+            <details class="area-item" data-area-key="balcony">
+              <summary class="area-summary">
+                <span class="area-name">Balkon</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni s balkonem?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Hodnocení balkonu">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[balcony][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[balcony][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[balcony][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[balcony][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[balcony][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[balcony][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[balcony][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[balcony][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[balcony][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[balcony][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[balcony][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[balcony][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[balcony][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[balcony][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[balcony][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[balcony][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[balcony][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[balcony][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-balcony-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-balcony-note" name="area[balcony][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- Vstup / předsíň -->
+            <details class="area-item" data-area-key="entrance">
+              <summary class="area-summary">
+                <span class="area-name">Vstup / předsíň</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni se vstupem / předsíní?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Hodnocení vstupu / předsíně">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[entrance][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[entrance][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[entrance][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[entrance][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[entrance][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[entrance][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[entrance][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[entrance][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[entrance][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[entrance][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[entrance][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[entrance][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[entrance][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[entrance][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[entrance][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[entrance][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[entrance][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[entrance][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-entrance-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-entrance-note" name="area[entrance][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- Kancelář -->
+            <details class="area-item" data-area-key="office">
+              <summary class="area-summary">
+                <span class="area-name">Kancelář</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni s kanceláří?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Hodnocení kanceláře">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[office][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[office][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[office][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[office][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[office][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[office][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[office][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[office][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[office][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[office][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[office][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[office][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[office][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[office][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[office][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[office][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[office][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[office][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-office-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-office-note" name="area[office][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- Celý byt / dům -->
+            <details class="area-item" data-area-key="whole_home">
+              <summary class="area-summary">
+                <span class="area-name">Celý byt / dům</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni celkově?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Celkové hodnocení úklidu">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[whole_home][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[whole_home][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[whole_home][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[whole_home][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[whole_home][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[whole_home][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[whole_home][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[whole_home][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[whole_home][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[whole_home][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[whole_home][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[whole_home][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[whole_home][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[whole_home][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[whole_home][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[whole_home][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[whole_home][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[whole_home][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-whole-home-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-whole-home-note" name="area[whole_home][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- Jiné -->
+            <details class="area-item" data-area-key="other_space">
+              <summary class="area-summary">
+                <span class="area-name">Jiné</span>
+                <span class="area-summary-icon" aria-hidden="true">▼</span>
+              </summary>
+              <div class="area-panel">
+                <fieldset class="form-group">
+                  <legend><strong>Jak jste byli spokojeni s touto oblastí?</strong></legend>
+                  <div class="rating-block" role="radiogroup" aria-label="Hodnocení jiné oblasti">
+                    <label class="rating-chip">
+                      <input type="radio" name="area[other_space][rating]" value="5">
+                      ★★★★★
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[other_space][rating]" value="4">
+                      ★★★★☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[other_space][rating]" value="3">
+                      ★★★☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[other_space][rating]" value="2">
+                      ★★☆☆☆
+                    </label>
+                    <label class="rating-chip">
+                      <input type="radio" name="area[other_space][rating]" value="1">
+                      ★☆☆☆☆
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co bylo dobré?</strong></legend>
+                  <div class="chip-group best-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[other_space][best][]" value="cleanliness">
+                      Čistota
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[other_space][best][]" value="shine">
+                      Lesk
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[other_space][best][]" value="scent">
+                      Vůně
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[other_space][best][]" value="tidiness">
+                      Pořádek
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[other_space][best][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[other_space][best][]" value="completeness">
+                      Kompletnost
+                    </label>
+                  </div>
+                </fieldset>
+                <fieldset class="form-group">
+                  <legend><strong>Co je potřeba zlepšit?</strong></legend>
+                  <div class="chip-group improve-chip-group" role="group">
+                    <label class="chip">
+                      <input type="checkbox" name="area[other_space][improve][]" value="dust">
+                      Prach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[other_space][improve][]" value="smudges">
+                      Šmouhy
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[other_space][improve][]" value="odor">
+                      Zápach
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[other_space][improve][]" value="details">
+                      Detaily
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[other_space][improve][]" value="speed">
+                      Rychlost
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[other_space][improve][]" value="missed">
+                      Vynecháno
+                    </label>
+                    <label class="chip">
+                      <input type="checkbox" name="area[other_space][improve][]" value="all_ok">
+                      Vše v pořádku
+                    </label>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="area-other-space-note">Chcete k této oblasti něco doplnit? (nepovinné)</label>
+                  <textarea id="area-other-space-note" name="area[other_space][note]" rows="2" placeholder="Např. co konkrétně bylo super / co doladit…"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <!-- Volitelné další oblasti (dětský pokoj, pracovna, jídelna, sklep, garáž) lze doplnit stejným vzorem. -->
+          
+          </section>
+
+          <!-- Spodní společná část formuláře -->
+
+          <div class="form-group">
+            <label for="feedbackPhoto">Fotka (nepovinné)</label>
+            <small>Stačí 1 fotka. Pomůže nám rychleji pochopit situaci.</small>
+            <input type="file" id="feedbackPhoto" name="photo_file" accept="image/*">
+          </div>
+
+          <div class="form-group">
+            <label for="feedbackSignature">Jméno nebo podpis (nepovinné)</label>
+            <input type="text" id="feedbackSignature" name="signature" placeholder="Např. Jana" autocomplete="name">
+            <div style="margin-top: 10px;">
+              <input type="checkbox" id="feedbackAnonymous" name="anonymous" value="yes">
+              <label for="feedbackAnonymous">Chci zůstat anonymní</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="cleaningDate">Kdy byl úklid proveden?</label>
+            <input type="date" id="cleaningDate" name="cleaning_date" autocomplete="off">
+            <small>Vyberte datum v kalendáři.</small>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="feedbackSubmitButton">Odeslat hodnocení</button>
+            <div id="feedback-form-status" class="form-status form-status-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+          </div>
+
+          <p class="section-intro" style="margin-top: 10px;">
+            Odesláním souhlasíte se zpracováním údajů za účelem vyřízení zpětné vazby a zlepšování našich služeb.
+          </p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="main-footer">
+    <div class="container">
+      <p>&copy; <span data-current-year>2026</span> Lesktop. Všechna práva vyhrazena.</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/lesktop.cz" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.instagram.com/lesktop.cz" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie informace">
+    <div class="cookie-banner__text">
+      <p>Používáme Google Analytics a Google Ads měření (se souhlasem), abychom mohli web Lesktop i kampaně neustále zlepšovat. Respektujeme vaše soukromí, proto si můžete zvolit, zda s tím souhlasíte.</p>
+      <a href="privacy.html" class="cookie-banner__link">Více informací</a>
+    </div>
+    <div class="cookie-banner__actions">
+      <button id="cookie-accept" class="btn btn-primary" type="button" aria-label="Souhlasím s cookies">Souhlasím</button>
+      <button id="cookie-necessary" class="btn btn-outline" type="button" aria-label="Pouze nezbytné cookies">Jen nezbytné</button>
+    </div>
+  </div>
+
+</body>
+</html>
