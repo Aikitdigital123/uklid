@@ -375,6 +375,15 @@ const purgeSafelist = {
     'is-valid',
     'is-invalid',
     'is-open',
+    // Feedback accordion/completion indicator classes are injected/rendered via build-time generation and JS.
+    'feedback-areas',
+    'area-item',
+    'area-summary',
+    'area-name',
+    'area-summary-icon',
+    'area-summary-right',
+    'area-summary-check',
+    'area-panel',
     /^fa-/, // Font Awesome: fa, fas, far, fab, fa-chevron-down, atd.
     /^is-/, // is-visible, is-open, atd.
     /^has-/, // případné has-* stavy

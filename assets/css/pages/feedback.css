@@ -615,6 +615,11 @@ body[data-page="feedback"] .area-item[data-area-completed="1"] .area-summary-che
   display: inline-flex;
 }
 
+/* Fallback for PurgeCSS-safe completed state class toggled by JS */
+body[data-page="feedback"] .area-item.is-completed .area-summary-check {
+  display: inline-flex;
+}
+
 /* Rotace ikony při rozbalení */
 body[data-page="feedback"] .area-item[open] .area-summary-icon {
   transform: rotate(180deg);

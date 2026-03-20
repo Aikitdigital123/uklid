@@ -246,8 +246,13 @@ function ensureAreaCompletionCheckInjected(areaItem) {
 
 function updateAreaCompletionState(areaItem) {
   const completed = hasAreaInteraction(areaItem);
-  if (completed) areaItem.dataset.areaCompleted = '1';
-  else delete areaItem.dataset.areaCompleted;
+  if (completed) {
+    areaItem.dataset.areaCompleted = '1';
+    areaItem.classList.add('is-completed');
+  } else {
+    delete areaItem.dataset.areaCompleted;
+    areaItem.classList.remove('is-completed');
+  }
 }
 
 function updateAllAreaCompletionStates(form) {
@@ -433,7 +438,8 @@ function buildSummaryText({ submittedAt, anonymous, signature, cleaningDate, has
   ].filter(Boolean);
 
   if (hasPhoto && photoUrl) {
-    lines.push(`Odkaz na fotografii: ${photoUrl}`);
+    const obfuscatedPhotoUrl = String(photoUrl).replace(/^https:\/\//i, 'https[:]//');
+    lines.push(`Odkaz na fotografii: ${obfuscatedPhotoUrl}`);
   }
 
   areas.forEach((area) => {
