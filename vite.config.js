@@ -7,6 +7,7 @@ import { createHash } from 'node:crypto';
 import { dirname, resolve, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { seoMetadata } from './vite-plugin-seo-metadata.js';
+import { feedbackAreas } from './vite-plugin-feedback-areas.js';
 
 const htmlPages = [
   'index.html',
@@ -16,6 +17,7 @@ const htmlPages = [
   'privacy.html',
   'terms.html',
   'impresum.html',
+  'spokojenost.html',
   '404.html',
   'en/index.html',
   'en/services.html',
@@ -24,6 +26,7 @@ const htmlPages = [
   'en/terms.html',
   'en/privacy.html',
   'en/impresum.html',
+  'en/feedback.html',
 ];
 
 /** Base URL pro sitemap (bez koncového lomítka). */
@@ -409,6 +412,7 @@ export default defineConfig(() => {
         safelist: purgeSafelist,
       }),
       seoMetadata(), // Centralizované SEO metadata – před injectCspMeta, aby CSP viděl finální HTML
+      feedbackAreas(), // Build-time generování opakujících se feedback oblastí (bez runtime JS renderu)
       injectCspMeta(),
       copyStaticFiles(),
       generateSitemap(),

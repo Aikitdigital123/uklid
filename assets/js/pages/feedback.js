@@ -1,35 +1,42 @@
+import { trackFormConversion } from '../components/form.js';
+
 const MESSAGES = {
   cs: {
-    sending: 'Odesilam hodnoceni...',
-    success: 'Dekujeme, vase hodnoceni bylo uspesne odeslano.',
+    sending: 'Odesíláme vaše hodnocení, děkujeme za chvíli strpení.',
+    success: 'Děkujeme, vaše hodnocení jsme úspěšně přijali.',
+    successFollowup: 'Pokud chcete, můžete hned odeslat další hodnocení.',
+    fillAgain: 'Vyplnit další hodnocení',
     missingRating: 'Vyberte prosim hodnoceni alespon u jedne oblasti.',
     invalidCleaningDate: 'Vyberte datum úklidu v kalendáři.',
     missingConfig: 'Formular neni spravne nastaven. Zkuste to prosim pozdeji.',
     fastSubmit: 'Odeslani probehlo prilis rychle. Chvili pockejte a zkuste to znovu.',
-    photoUploadError: 'Fotku se nepodarilo nahrat. Zkuste to prosim znovu.',
-    submitError: 'Odeslani se nepodarilo. Zkuste to prosim znovu pozdeji.',
+    photoUploadError: 'Fotku se nepodařilo nahrát. Ostatní údaje zůstaly ve formuláři, zkuste to prosím znovu.',
+    submitError: 'Odeslání se tentokrát nepodařilo. Zkuste to prosím za chvíli znovu.',
     anonymousYes: 'Ano',
     anonymousNo: 'Ne',
-    anonymousLabel: 'Anonymne',
+    anonymousLabel: 'Anonymně',
     signatureLabel: 'Podpis',
     cleaningDateLabel: 'Datum úklidu',
     photoLabel: 'Fotka',
     pageLabel: 'Stranka',
-    submittedAtLabel: 'Odeslano',
+    submittedAtLabel: 'Odesláno',
     languageLabel: 'Jazyk',
-    ratedAreasLabel: 'Hodnocene oblasti',
+    ratedAreasLabel: 'Hodnocené oblasti',
     areaKeysLabel: 'Klice oblasti',
-    ratingLabel: 'Hodnoceni',
+    areasCountLabel: 'Počet oblastí',
+    ratingLabel: 'Hodnocení',
     bestLabel: 'Co bylo dobré',
     improveLabel: 'Co je potřeba zlepšit',
-    noteLabel: 'Doplneni',
+    noteLabel: 'Doplnění',
     noValue: '-',
-    summaryTitle: 'Nova zpetna vazba k uklidu',
+    summaryTitle: 'Nové hodnocení úklidu',
     languageValue: 'CS'
   },
   en: {
     sending: 'Sending feedback...',
-    success: 'Thank you, your feedback has been sent successfully.',
+    success: 'Thank you, your feedback has been received successfully.',
+    successFollowup: 'If you want, you can submit another feedback right away.',
+    fillAgain: 'Submit another feedback',
     missingRating: 'Please select a rating for at least one area.',
     invalidCleaningDate: 'Please select the cleaning date using the calendar picker.',
     missingConfig: 'The form is not configured correctly. Please try again later.',
@@ -53,6 +60,7 @@ const MESSAGES = {
     noteLabel: 'Additional note',
     noValue: '-',
     summaryTitle: 'New cleaning feedback',
+    areasCountLabel: 'Number of areas',
     languageValue: 'EN'
   }
 };
@@ -60,10 +68,10 @@ const MESSAGES = {
 const RATING_LABELS = {
   cs: {
     1: 'Nespokojen/a',
-    2: 'Spise nespokojen/a',
-    3: 'Dobre',
+    2: 'Spíše nespokojen/a',
+    3: 'Dobře',
     4: 'Spokojen/a',
-    5: 'Vyborne'
+    5: 'Výborně'
   },
   en: {
     1: 'Dissatisfied',
@@ -104,94 +112,7 @@ function isFeedbackSubmitTooFast(form) {
   return Date.now() - startedAt < MIN_FEEDBACK_FILL_MS;
 }
 
-// Autoritativní sety chipů pro sekce "Co bylo dobré?" / "Co je potřeba zlepšit?"
-// (napříč všemi oblastmi + obě jazykové mutace) – aby UI i odesílané hodnoty byly konzistentní.
-const FEEDBACK_CHIP_SETS = {
-  cs: {
-    best: [
-      { label: 'Čistota', value: 'cleanliness' },
-      { label: 'Lesk', value: 'shine' },
-      { label: 'Vůně', value: 'fragrance' },
-      { label: 'Pořádek', value: 'tidiness' },
-      { label: 'Rychlost', value: 'speed' },
-      { label: 'Kompletnost', value: 'completeness' },
-    ],
-    improve: [
-      { label: 'Prach', value: 'dust' },
-      { label: 'Šmouhy', value: 'streaks' },
-      { label: 'Zápach', value: 'odor' },
-      { label: 'Detaily', value: 'details' },
-      { label: 'Rychlost', value: 'speed' },
-      { label: 'Vynecháno', value: 'missed' },
-      { label: 'Vše v pořádku', value: 'none_ok' },
-    ],
-  },
-  en: {
-    best: [
-      { label: 'Cleanliness', value: 'cleanliness' },
-      { label: 'Shine', value: 'shine' },
-      { label: 'Fragrance', value: 'fragrance' },
-      { label: 'Tidiness', value: 'tidiness' },
-      { label: 'Speed', value: 'speed' },
-      { label: 'Completeness', value: 'completeness' },
-    ],
-    improve: [
-      { label: 'Dust', value: 'dust' },
-      { label: 'Streaks', value: 'streaks' },
-      { label: 'Odor', value: 'odor' },
-      { label: 'Details', value: 'details' },
-      { label: 'Speed', value: 'speed' },
-      { label: 'Missed', value: 'missed' },
-      { label: 'Everything was fine', value: 'none_ok' },
-    ],
-  },
-};
-
-function getChipSets(lang) {
-  return FEEDBACK_CHIP_SETS[lang] || FEEDBACK_CHIP_SETS.cs;
-}
-
-function replaceChipGroup(groupEl, items, checkboxName) {
-  if (!groupEl) return;
-
-  const checkedValues = Array.from(groupEl.querySelectorAll('input[type="checkbox"]:checked')).map((i) => i.value);
-
-  // Zachováme wrapper (kvůli CSS) a přestavíme pouze obsah.
-  while (groupEl.firstChild) groupEl.removeChild(groupEl.firstChild);
-
-  items.forEach((chip) => {
-    const labelEl = document.createElement('label');
-    labelEl.className = 'chip';
-
-    const inputEl = document.createElement('input');
-    inputEl.type = 'checkbox';
-    inputEl.name = checkboxName;
-    inputEl.value = chip.value;
-    if (checkedValues.includes(chip.value)) inputEl.checked = true;
-
-    labelEl.appendChild(inputEl);
-    labelEl.appendChild(document.createTextNode(chip.label));
-
-    groupEl.appendChild(labelEl);
-  });
-}
-
-function applyFeedbackChipSets(form) {
-  const lang = getFormLanguage(form);
-  const chipSets = getChipSets(lang);
-
-  const areas = Array.from(form.querySelectorAll('details.area-item[data-area-key]'));
-  areas.forEach((areaItem) => {
-    const areaKey = safeTrim(areaItem?.dataset?.areaKey);
-    if (!areaKey) return;
-
-    const bestGroup = areaItem.querySelector('.chip-group.best-chip-group');
-    const improveGroup = areaItem.querySelector('.chip-group.improve-chip-group');
-
-    replaceChipGroup(bestGroup, chipSets.best, `area[${areaKey}][best][]`);
-    replaceChipGroup(improveGroup, chipSets.improve, `area[${areaKey}][improve][]`);
-  });
-}
+// Chips (checkboxy) jsou renderované staticky v HTML – JS je pouze čte při sběru dat.
 
 function bindRatingToggle(form) {
   const ratingRadios = Array.from(form.querySelectorAll('input[type="radio"][name$="[rating]"]'));
@@ -341,6 +262,8 @@ function collectAreaData(areaItem, lang) {
   const key = safeTrim(areaItem.dataset.areaKey);
   const label = safeTrim(areaItem.querySelector('.area-name')?.textContent || key);
 
+  // Tyto selektory záměrně vycházejí ze statického HTML naming patternu:
+  // area[<key>][best][] / area[<key>][improve][] / area[<key>][note]
   const ratingInput = areaItem.querySelector(`input[type="radio"][name="area[${key}][rating]"]:checked`);
   const bestInputs = getCheckedInputs(areaItem, `input[type="checkbox"][name="area[${key}][best][]"]`);
   const improveInputs = getCheckedInputs(areaItem, `input[type="checkbox"][name="area[${key}][improve][]"]`);
@@ -389,6 +312,28 @@ function getHumanDateTime(isoValue, lang) {
     }).format(new Date(isoValue));
   } catch (error) {
     return isoValue;
+  }
+}
+
+function formatDateOnly(isoValue, lang) {
+  const trimmed = safeTrim(isoValue);
+  if (!trimmed) return '';
+
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(trimmed);
+  if (!match) return trimmed;
+
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(Date.UTC(year, month - 1, day));
+
+  try {
+    return new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : 'cs-CZ', {
+      dateStyle: 'medium',
+      timeZone: 'UTC'
+    }).format(date);
+  } catch (error) {
+    return trimmed;
   }
 }
 
@@ -475,41 +420,40 @@ function bindSingleOpenAccordion(form) {
   });
 }
 
-function buildSummaryText({ lang, submittedAt, pageUrl, anonymous, signature, cleaningDate, photoUrl, areas }) {
-  const msg = getMessages(lang);
-  const areaKeys = areas.map((area) => area.key).join(',');
+function buildSummaryText({ submittedAt, anonymous, signature, cleaningDate, hasPhoto, photoUrl, areas }) {
+  const cleaningDateHuman = formatDateOnly(cleaningDate, 'cs') || '-';
   const lines = [
-    msg.summaryTitle,
-    '',
-    `${msg.languageLabel}: ${msg.languageValue}`,
-    `${msg.submittedAtLabel}: ${getHumanDateTime(submittedAt, lang)}`,
-    `${msg.pageLabel}: ${pageUrl}`,
-    `${msg.anonymousLabel}: ${anonymous ? msg.anonymousYes : msg.anonymousNo}`,
-    `${msg.signatureLabel}: ${anonymous ? msg.noValue : (signature || msg.noValue)}`,
-    `${msg.cleaningDateLabel}: ${cleaningDate || msg.noValue}`,
-    `${msg.photoLabel}: ${photoUrl || msg.noValue}`,
-    '',
-    `${msg.ratedAreasLabel}: ${areas.length}`,
-    `${msg.areaKeysLabel}: ${areaKeys || msg.noValue}`
-  ];
+    'Nové hodnocení úklidu',
+    `Odesláno: ${getHumanDateTime(submittedAt, 'cs')}`,
+    `Anonymně: ${anonymous ? 'Ano' : 'Ne'}`,
+    `Podpis: ${anonymous ? 'neuveden' : (signature || 'neuveden')}`,
+    `Datum úklidu: ${cleaningDateHuman}`,
+    `Fotka: ${hasPhoto ? 'Ano' : 'Ne'}`,
+    `Počet oblastí: ${areas.length}`
+  ].filter(Boolean);
+
+  if (hasPhoto && photoUrl) {
+    lines.push(`Odkaz na fotografii: ${photoUrl}`);
+  }
 
   areas.forEach((area) => {
+    const ratingLabel = (RATING_LABELS.cs && RATING_LABELS.cs[area.rating]) || area.rating_label || '-';
     lines.push('');
-    lines.push(`[${area.label}]`);
-    lines.push(`${msg.ratingLabel}: ${area.rating} - ${area.rating_label || msg.noValue}`);
-    lines.push(`${msg.bestLabel}: ${area.best_labels.length ? area.best_labels.join(', ') : msg.noValue}`);
-    lines.push(`${msg.improveLabel}: ${area.improve_labels.length ? area.improve_labels.join(', ') : msg.noValue}`);
-    lines.push(`${msg.noteLabel}: ${area.note || msg.noValue}`);
+    lines.push(area.label);
+    lines.push(`Hodnocení: ${ratingLabel}`);
+    lines.push(`Co bylo dobré: ${area.best_labels.length ? area.best_labels.join(', ') : '-'}`);
+    lines.push(`Co je potřeba zlepšit: ${area.improve_labels.length ? area.improve_labels.join(', ') : '-'}`);
+    lines.push(`Doplnění: ${area.note || '-'}`);
   });
 
   return lines.join('\n');
 }
 
-function buildPayload(form, config, areas, photoUrl) {
+function buildPayload(form, config, areas, photoUrl, photoPublicId) {
   const anonymous = Boolean(form.querySelector('#feedbackAnonymous')?.checked);
   const signatureValue = safeTrim(form.querySelector('#feedbackSignature')?.value);
   const cleaningDate = safeTrim(form.querySelector('#cleaningDate')?.value);
-  const subject = safeTrim(form.querySelector('input[name="subject"]')?.value || 'Lesktop feedback - cleaning_satisfaction');
+  const baseSubject = safeTrim(form.querySelector('input[name="subject"]')?.value || 'Lesktop | Hodnocení úklidu');
   const gotcha = safeTrim(form.querySelector('input[name="_gotcha"]')?.value);
   const submittedAt = new Date().toISOString();
   const pageUrl = window.location.href;
@@ -527,13 +471,28 @@ function buildPayload(form, config, areas, photoUrl) {
     improve_labels: area.improve_labels,
     note: area.note
   }));
-  const summaryText = buildSummaryText({
-    lang,
+  const areasCount = areaPayload.length;
+  const cleaningDateHuman = formatDateOnly(cleaningDate, 'cs');
+  const getAreasNoun = (count) => {
+    if (count === 1) return 'oblast';
+    if (count >= 2 && count <= 4) return 'oblasti';
+    return 'oblastí';
+  };
+
+  const anonSubjectPart = anonymous ? 'anonymně' : 's podpisem';
+
+  const subjectParts = [baseSubject, `${areasCount} ${getAreasNoun(areasCount)}`];
+  if (cleaningDateHuman) subjectParts.push(cleaningDateHuman);
+  if (!cleaningDateHuman || anonymous) subjectParts.push(anonSubjectPart);
+
+  const subject = subjectParts.join(' | ');
+
+  const messageText = buildSummaryText({
     submittedAt,
-    pageUrl,
     anonymous,
     signature: safeSignature,
     cleaningDate,
+    hasPhoto: Boolean(photoUrl),
     photoUrl,
     areas: areaPayload
   });
@@ -548,14 +507,12 @@ function buildPayload(form, config, areas, photoUrl) {
     anonymous,
     signature: safeSignature,
     cleaning_date: cleaningDate || '',
+    has_photo: Boolean(photoUrl),
     photo_url: photoUrl || '',
-    photo: photoUrl || '',
-    photo_link: photoUrl || '',
+    photo_public_id: photoPublicId || '',
     areas_count: areaPayload.length,
     areas_keys_csv: areaPayload.map((area) => area.key).join(','),
-    areas_json: JSON.stringify(areaPayload),
-    summary_text: summaryText,
-    message: summaryText
+    message: messageText
   };
 }
 
@@ -581,11 +538,14 @@ async function uploadPhotoToCloudinary(file, config) {
     throw new Error('cloudinary_upload_invalid_json');
   }
 
-  if (!result || !result.secure_url) {
+  if (!result || !result.secure_url || !result.public_id) {
     throw new Error('cloudinary_upload_invalid_response');
   }
 
-  return result.secure_url;
+  return {
+    secureUrl: result.secure_url,
+    publicId: result.public_id
+  };
 }
 
 async function submitToFormspree(payload, config) {
@@ -620,32 +580,90 @@ function scrollStatusIntoView(statusNode) {
   }
 }
 
-function showStatus(statusNode, message, tone) {
+function clearStatus(statusNode) {
   if (!statusNode) return;
-  statusNode.textContent = message;
+  statusNode.textContent = '';
+  statusNode.classList.add('form-status-hidden');
+  statusNode.classList.remove('success', 'error', 'is-loading');
+  statusNode.setAttribute('aria-live', 'polite');
+  statusNode.setAttribute('role', 'status');
+}
+
+function showStatus(statusNode, message, tone, options = {}) {
+  if (!statusNode) return;
+  const { secondaryMessage = '', actionText = '', onAction = null } = options;
+
+  statusNode.textContent = '';
+  const messageNode = document.createElement('div');
+  messageNode.className = 'feedback-status-message';
+  messageNode.textContent = message;
+  statusNode.appendChild(messageNode);
+
+  if (secondaryMessage) {
+    const secondaryNode = document.createElement('div');
+    secondaryNode.className = 'feedback-status-secondary';
+    secondaryNode.textContent = secondaryMessage;
+    statusNode.appendChild(secondaryNode);
+  }
+
+  if (actionText && typeof onAction === 'function') {
+    const actionButton = document.createElement('button');
+    actionButton.type = 'button';
+    actionButton.className = 'btn btn-outline feedback-status-action';
+    actionButton.textContent = actionText;
+    actionButton.addEventListener('click', onAction, { once: true });
+    statusNode.appendChild(actionButton);
+  }
+
   statusNode.classList.remove('form-status-hidden', 'success', 'error', 'is-loading');
 
   if (tone === 'success') {
     statusNode.classList.add('success');
     statusNode.setAttribute('aria-live', 'polite');
+    statusNode.setAttribute('role', 'status');
   } else if (tone === 'error') {
     statusNode.classList.add('error');
     statusNode.setAttribute('aria-live', 'assertive');
+    statusNode.setAttribute('role', 'alert');
   } else if (tone === 'loading') {
     statusNode.classList.add('is-loading');
     statusNode.setAttribute('aria-live', 'polite');
+    statusNode.setAttribute('role', 'status');
   } else {
     statusNode.classList.remove('form-status-hidden');
   }
 
+  statusNode.setAttribute('aria-atomic', 'true');
+
   scrollStatusIntoView(statusNode);
 }
 
-function setSubmittingState(form, submitButton, isSubmitting, message) {
-  if (submitButton) {
-    submitButton.disabled = isSubmitting;
-    submitButton.setAttribute('aria-disabled', isSubmitting ? 'true' : 'false');
+function setSubmitButtonLoading(submitButton, isSubmitting, loadingMessage) {
+  if (!submitButton) return;
+
+  if (!submitButton.dataset.defaultText) {
+    submitButton.dataset.defaultText = submitButton.textContent || '';
   }
+
+  submitButton.disabled = isSubmitting;
+  submitButton.setAttribute('aria-disabled', isSubmitting ? 'true' : 'false');
+  submitButton.classList.toggle('is-loading', isSubmitting);
+
+  if (isSubmitting) {
+    submitButton.textContent = '';
+    const spinner = document.createElement('span');
+    spinner.className = 'btn-spinner';
+    spinner.setAttribute('aria-hidden', 'true');
+    submitButton.appendChild(spinner);
+    submitButton.appendChild(document.createTextNode(` ${loadingMessage}`));
+    return;
+  }
+
+  submitButton.textContent = submitButton.dataset.defaultText || 'Odeslat hodnocení';
+}
+
+function setSubmittingState(form, submitButton, isSubmitting, message) {
+  setSubmitButtonLoading(submitButton, isSubmitting, 'Odesílám...');
 
   if (form) {
     form.setAttribute('aria-busy', isSubmitting ? 'true' : 'false');
@@ -711,6 +729,7 @@ async function handleSubmit(event) {
   event.preventDefault();
 
   const form = event.currentTarget;
+  if (form.dataset.submitting === '1') return;
   const config = readConfig(form);
   const msg = getMessages(config.lang);
   const statusNode = form.querySelector('#feedback-form-status');
@@ -750,25 +769,45 @@ async function handleSubmit(event) {
     return;
   }
 
+  form.dataset.submitting = '1';
   setSubmittingState(form, submitButton, true, msg.sending);
 
   try {
     let photoUrl = '';
+    let photoPublicId = '';
 
     if (photoFile) {
       try {
-        photoUrl = await uploadPhotoToCloudinary(photoFile, config);
+        const uploadResult = await uploadPhotoToCloudinary(photoFile, config);
+        photoUrl = uploadResult.secureUrl;
+        photoPublicId = uploadResult.publicId;
       } catch (error) {
         throw new Error('photo_upload_failed');
       }
     }
 
-    const payload = buildPayload(form, config, ratedAreas, photoUrl);
+    const payload = buildPayload(form, config, ratedAreas, photoUrl, photoPublicId);
     await submitToFormspree(payload, config);
+    trackFormConversion('feedback', 'Feedback formular', {
+      rated_areas_count: ratedAreas.length,
+      has_photo: Boolean(photoUrl)
+    });
 
     resetFeedbackForm(form);
     markFeedbackFormStart(form);
-    showStatus(statusNode, msg.success, 'success');
+    showStatus(statusNode, msg.success, 'success', {
+      secondaryMessage: msg.successFollowup,
+      actionText: msg.fillAgain,
+      onAction: () => {
+        clearStatus(statusNode);
+        const firstSummary = form.querySelector('details.area-item[data-area-key] .area-summary');
+        if (firstSummary) {
+          firstSummary.focus();
+        } else {
+          form.querySelector('#cleaningDate')?.focus();
+        }
+      }
+    });
   } catch (error) {
     if (error && error.message === 'photo_upload_failed') {
       showStatus(statusNode, msg.photoUploadError, 'error');
@@ -777,6 +816,7 @@ async function handleSubmit(event) {
     }
   } finally {
     setSubmittingState(form, submitButton, false);
+    delete form.dataset.submitting;
   }
 }
 
@@ -786,8 +826,6 @@ export function initFeedbackForm() {
 
   form.dataset.feedbackInitialized = 'true';
   markFeedbackFormStart(form);
-  // Nahrazuje existující chipy v každé oblasti přesně definovaným setem (CZ/EN).
-  applyFeedbackChipSets(form);
   updateAllAreaCompletionStates(form);
   bindAnonymousToggle(form);
   bindRatingToggle(form);

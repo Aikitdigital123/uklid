@@ -413,7 +413,7 @@ function getConversionValue(formType) {
   return conversionValueByForm[formType] || 1;
 }
 
-function trackFormConversion(formType, formName, extraData = {}) {
+export function trackFormConversion(formType, formName, extraData = {}) {
   if (typeof window.lesktopTrackEvent !== 'function') return;
 
   const conversionId = createConversionId(formType);
@@ -434,10 +434,21 @@ function trackFormConversion(formType, formName, extraData = {}) {
   window.lesktopTrackEvent('event', 'form_submission', eventPayload);
 
   // GA4 Generic Lead Event
-  const leadSource = formType === 'contact' ? 'contact_form' : 'calculation_form';
+  const leadSourceByForm = {
+    contact: 'contact_form',
+    calculation: 'calculation_form',
+    feedback: 'feedback_form'
+  };
+  const leadLabelByForm = {
+    contact: 'kontakt_form',
+    calculation: 'kalkulacka_form',
+    feedback: 'feedback_form'
+  };
+  const leadSource = leadSourceByForm[formType] || 'unknown_form';
+  const leadLabel = leadLabelByForm[formType] || String(formType || 'unknown_form');
   window.lesktopTrackEvent('event', 'generate_lead', {
     event_category: 'form',
-    event_label: 'kalkulacka_nebo_kontakt',
+    event_label: leadLabel,
     lead_source: leadSource
   });
 

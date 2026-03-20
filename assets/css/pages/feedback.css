@@ -344,6 +344,19 @@ body[data-page="feedback"] .form-actions .btn {
   font-size: 1.1em;
 }
 
+/* Status doplňky pro feedback submit UX */
+body[data-page="feedback"] #feedback-form-status .feedback-status-secondary {
+  margin-top: var(--space-xs);
+  font-weight: 600;
+}
+
+body[data-page="feedback"] #feedback-form-status .feedback-status-action {
+  margin-top: var(--space-md);
+  min-width: 0;
+  font-size: 0.95em;
+  padding: var(--space-sm) var(--space-lg);
+}
+
 /* GDPR text */
 body[data-page="feedback"] #feedbackForm .section-intro {
   text-align: center;
