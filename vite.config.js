@@ -380,6 +380,9 @@ const purgeSafelist = {
     // EN homepage service cards: keep panel/grid classes even if PurgeCSS content scan misses a route variant.
     'services-grid',
     'service-item',
+    // EN pricing cards share panel styles; keep them for production parity with dev.
+    'pricing-grid',
+    'price-card',
     // Feedback accordion/completion indicator classes are injected/rendered via build-time generation and JS.
     'feedback-areas',
     'area-item',
