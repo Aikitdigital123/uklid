@@ -703,20 +703,32 @@ async function uploadPhotoToCloudinary(file, config) {
 }
 
 async function submitToFormspree(payload, config) {
+  const body = new URLSearchParams();
+  Object.entries(payload).forEach(([key, value]) => {
+    if (typeof value === 'undefined' || value === null) return;
+    body.append(key, String(value));
+  });
+
   const response = await fetch(config.formspreeEndpoint, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
       Accept: 'application/json'
     },
-    body: JSON.stringify(payload)
+    body
   });
 
+  const result = await response.json().catch(() => ({}));
   if (!response.ok) {
-    throw new Error('formspree_submit_failed');
+    const errorMessage = Array.isArray(result?.errors)
+      ? result.errors
+        .map((error) => safeTrim(error?.message || error?.code))
+        .filter(Boolean)
+        .join('; ')
+      : '';
+
+    throw new Error(errorMessage || 'formspree_submit_failed');
   }
 
-  const result = await response.json().catch(() => ({}));
   if (result && result.errors && result.errors.length) {
     throw new Error('formspree_submit_invalid_response');
   }
