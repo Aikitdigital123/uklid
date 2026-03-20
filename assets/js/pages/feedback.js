@@ -514,7 +514,6 @@ function buildPayload(form, config, areas, photoUrl, photoPublicId) {
     signature: safeSignature,
     cleaning_date: cleaningDate || '',
     has_photo: Boolean(photoUrl),
-    photo_url: photoUrl || '',
     photo_public_id: photoPublicId || '',
     areas_count: areaPayload.length,
     areas_keys_csv: areaPayload.map((area) => area.key).join(','),
