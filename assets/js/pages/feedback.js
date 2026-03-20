@@ -15,6 +15,7 @@ const MESSAGES = {
     missingConfig: 'Formular neni spravne nastaven. Zkuste to prosim pozdeji.',
     fastSubmit: 'Odeslani probehlo prilis rychle. Chvili pockejte a zkuste to znovu.',
     photoUploadError: 'Fotku se nepodařilo nahrát. Ostatní údaje zůstaly ve formuláři, zkuste to prosím znovu.',
+    recaptchaError: 'Ověření reCAPTCHA se nepodařilo. Pokud testujete v anonymním režimu nebo s přísným blokováním sledování, zkuste běžné okno prohlížeče.',
     submitError: 'Odeslání se tentokrát nepodařilo. Zkuste to prosím za chvíli znovu.',
     anonymousYes: 'Ano',
     anonymousNo: 'Ne',
@@ -44,6 +45,7 @@ const MESSAGES = {
     missingConfig: 'The form is not configured correctly. Please try again later.',
     fastSubmit: 'Submission was too fast. Please wait a moment and try again.',
     photoUploadError: 'The photo could not be uploaded. Please try again.',
+    recaptchaError: 'reCAPTCHA verification failed. If you are testing in private mode or with strict tracking prevention, try a regular browser window.',
     submitError: 'The submission failed. Please try again later.',
     anonymousYes: 'Yes',
     anonymousNo: 'No',
@@ -85,7 +87,7 @@ const RATING_LABELS = {
 };
 
 const MIN_FEEDBACK_FILL_MS = 1500;
-const RECAPTCHA_ACTION = 'feedback_submit';
+const RECAPTCHA_ACTION = 'submit';
 const RECAPTCHA_READY_TIMEOUT_MS = 10000;
 
 let recaptchaReadyPromise = null;
@@ -891,6 +893,16 @@ function bindAnonymousToggle(form) {
   syncAnonymousState(form);
 }
 
+function isRecaptchaError(error) {
+  const message = safeTrim(error?.message).toLowerCase();
+  if (!message) return false;
+
+  return (
+    message.includes('recaptcha') ||
+    message.includes('captcha')
+  );
+}
+
 async function handleSubmit(event) {
   event.preventDefault();
 
@@ -964,8 +976,12 @@ async function handleSubmit(event) {
     markFeedbackFormStart(form);
     showStatus(statusNode, msg.success, 'success');
   } catch (error) {
+    console.error('Feedback submit failed:', error);
+
     if (error && error.message === 'photo_upload_failed') {
       showStatus(statusNode, msg.photoUploadError, 'error');
+    } else if (isRecaptchaError(error)) {
+      showStatus(statusNode, msg.recaptchaError, 'error');
     } else {
       showStatus(statusNode, msg.submitError, 'error');
     }
