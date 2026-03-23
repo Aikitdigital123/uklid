@@ -453,12 +453,18 @@ export function trackFormConversion(formType, formName, extraData = {}) {
   });
 
   if (sendTo) {
-    window.lesktopTrackEvent('event', 'conversion', {
-      send_to: sendTo,
-      value: value,
-      currency: conversionCurrency,
-      transaction_id: conversionId
-    });
+    const conversionData = {
+      'send_to': sendTo,
+      'value': value,
+      'currency': conversionCurrency,
+      'transaction_id': conversionId
+    };
+    // Přímé volání gtag dle doporučení Google Ads
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'conversion', conversionData);
+    } else {
+      window.lesktopTrackEvent('event', 'conversion', conversionData);
+    }
   }
 }
 

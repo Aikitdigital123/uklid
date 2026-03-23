@@ -23,6 +23,42 @@ jobs:
       - name: Install dependencies
         run: npm ci || npm install
 
+      - name: Resolve Pages build settings
+        shell: bash
+        run: |
+          site_url="${{ vars.PAGES_SITE_URL }}"
+          base_path="${{ vars.VITE_BASE_PATH }}"
+
+          if [ -z "$site_url" ]; then
+            if [ -f CNAME ] && [ "${{ vars.SKIP_CNAME }}" != "1" ]; then
+              site_url="https://$(tr -d '\r\n' < CNAME)"
+            else
+              site_url="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}"
+            fi
+          fi
+
+          if [ -z "$base_path" ]; then
+            if [ -f CNAME ] && [ "${{ vars.SKIP_CNAME }}" != "1" ]; then
+              base_path="/"
+            else
+              base_path="/${GITHUB_REPOSITORY#*/}/"
+            fi
+          fi
+
+          site_url="${site_url%/}"
+          if [ "$base_path" != "/" ]; then
+            base_path="/${base_path#/}"
+            base_path="${base_path%/}/"
+          fi
+
+          echo "SITE_URL=$site_url" >> "$GITHUB_ENV"
+          echo "SITEMAP_BASE=$site_url" >> "$GITHUB_ENV"
+          echo "VITE_BASE_PATH=$base_path" >> "$GITHUB_ENV"
+
+          if [ "${{ vars.SKIP_CNAME }}" = "1" ]; then
+            echo "SKIP_CNAME=1" >> "$GITHUB_ENV"
+          fi
+
       - name: Build assets
         run: npm run build
 
@@ -33,4 +69,3 @@ jobs:
           publish_branch: gh-pages
           publish_dir: ./dist
           force_orphan: true
-

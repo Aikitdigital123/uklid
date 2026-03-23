@@ -27,7 +27,8 @@ export function initBackButton() {
   }
 
   function getFallbackUrl(btn) {
-    return btn?.dataset?.backFallback || '/';
+    if (btn?.dataset?.backFallback) return btn.dataset.backFallback;
+    return 'index.html';
   }
 
   buttons.forEach((btn) => {

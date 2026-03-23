@@ -5,15 +5,23 @@
  * zatímco page-specific tagy (title, description, canonical, og:title, og:description, og:url) zůstávají v HTML.
  */
 
-const DEFAULT_METADATA = {
-  'og:site_name': 'Lesktop',
-  'og:locale': 'cs_CZ',
-  'og:image': 'https://lesktop.cz/images/hero.jpg',
-  'og:image:width': '1200',
-  'og:image:height': '630',
-  'twitter:card': 'summary_large_image',
-  'twitter:image': 'https://lesktop.cz/images/hero.jpg',
-};
+const DEFAULT_SITE_URL = 'https://lesktop.cz';
+
+function normalizeSiteUrl(value) {
+  return String(value || DEFAULT_SITE_URL).replace(/\/+$/, '');
+}
+
+function createDefaultMetadata(siteUrl) {
+  return {
+    'og:site_name': 'Lesktop',
+    'og:locale': 'cs_CZ',
+    'og:image': `${siteUrl}/images/hero.jpg`,
+    'og:image:width': '1200',
+    'og:image:height': '630',
+    'twitter:card': 'summary_large_image',
+    'twitter:image': `${siteUrl}/images/hero.jpg`,
+  };
+}
 
 /**
  * Vytvoří meta tag HTML string.
@@ -47,6 +55,14 @@ function hasMetaTag(html, property, isProperty = true) {
  */
 function escapeRegex(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getHtmlSource(chunk) {
+  if (typeof chunk.source === 'string') return chunk.source;
+  if (chunk.source instanceof Uint8Array) {
+    return Buffer.from(chunk.source).toString('utf8');
+  }
+  return null;
 }
 
 /**
@@ -102,12 +118,12 @@ function findInsertPosition(html) {
 /**
  * Normalizuje a doplní společné meta tagy do HTML.
  */
-function injectCommonMetadata(html) {
+function injectCommonMetadata(html, defaultMetadata) {
   let result = html;
   const tagsToAdd = [];
   
   // Zkontrolujeme, které tagy chybí
-  for (const [property, content] of Object.entries(DEFAULT_METADATA)) {
+  for (const [property, content] of Object.entries(defaultMetadata)) {
     const isProperty = property.startsWith('og:');
     if (!hasMetaTag(result, property, isProperty)) {
       tagsToAdd.push(createMetaTag(property, content, isProperty));
@@ -127,20 +143,29 @@ function injectCommonMetadata(html) {
   return result;
 }
 
+function rewriteSiteUrl(html, siteUrl) {
+  if (siteUrl === DEFAULT_SITE_URL) return html;
+  return html.split(DEFAULT_SITE_URL).join(siteUrl);
+}
+
 /**
  * Vite plugin pro SEO metadata.
  */
-export function seoMetadata() {
+export function seoMetadata(options = {}) {
+  const siteUrl = normalizeSiteUrl(options.siteUrl || DEFAULT_SITE_URL);
+  const defaultMetadata = createDefaultMetadata(siteUrl);
+
   return {
     name: 'seo-metadata',
     apply: 'build',
     generateBundle(_, bundle) {
       for (const chunk of Object.values(bundle)) {
         if (chunk.type !== 'asset' || !chunk.fileName.endsWith('.html')) continue;
-        if (typeof chunk.source !== 'string') continue;
+        const html = getHtmlSource(chunk);
+        if (html === null) continue;
         
         // Normalizujeme a doplníme společné metadata
-        chunk.source = injectCommonMetadata(chunk.source);
+        chunk.source = injectCommonMetadata(rewriteSiteUrl(html, siteUrl), defaultMetadata);
       }
     },
   };

@@ -3,6 +3,31 @@
 <head>
     <!-- HEAD: charset → viewport → title → description → canonical → robots → OG/Twitter → favicon & theme-color → CSS → preload → structured data -->
     <meta charset="UTF-8">
+    <!-- Google Analytics & Google Ads - Advanced Consent Mode v2 -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied'
+        });
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17893281939" skip-sri></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-17893281939', {
+            allow_google_signals: true,
+            allow_ad_personalization_signals: true
+        });
+        gtag('config', 'G-FLL5D5LE75', {
+            allow_google_signals: true,
+            allow_ad_personalization_signals: true
+        });
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Lesktop | Professional Cleaning Services for Homes and Businesses</title>
     <meta name="description" content="Lesktop offers reliable and thorough cleaning services with proven products. We specialize in cleaning homes, offices, and common areas in Prague and Central Bohemia.">
@@ -44,7 +69,7 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://api.web3forms.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" media="print" data-async-stylesheet>
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap"></noscript>
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" skip-sri></noscript>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-async-stylesheet skip-sri>
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" skip-sri></noscript>
     <link rel="stylesheet" href="/assets/css/style.css">
@@ -161,7 +186,7 @@
                 <img src="../images/Domecek.png" alt="Lesktop – cleaning services" class="brand-logo" width="120" height="120" loading="eager" decoding="async">
                 <span class="brand-text">Lesktop</span>
             </a>
-            <a href="/" class="lang-switcher" hreflang="cs" aria-label="Switch to Czech" title="Česky">CS</a>
+            <a href="../index.html" class="lang-switcher" hreflang="cs" aria-label="Switch to Czech" title="Česky">CS</a>
             <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-navigation" type="button">Menu</button>
             <nav id="site-navigation" class="site-nav" aria-label="Main navigation">
                 <ul>
@@ -475,7 +500,7 @@
                 <h2 class="section-title">Contact Us</h2>
                 <p class="section-intro">Have a question or special request? Call us, write on WhatsApp, or fill out the form.</p>
                 <div class="contact-info">
-                    <p><i class="fas fa-phone-alt"></i> Phone: <strong><a href="tel:+420775344145" data-track="phone" data-location="contact_section">+420 775 344 145</a></strong></p>
+                    <p><i class="fas fa-phone-alt"></i> Phone: <strong><a href="tel:+420775344145" onclick="window.gtag && window.gtag('event', 'contact', {'event_category': 'engagement', 'event_label': 'phone_click'});" data-track="phone" data-location="contact_section">+420 775 344 145</a></strong></p>
                     <p><a href="https://wa.me/420775344145" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Contact us on WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp</a></p>
                     <p><i class="fas fa-envelope"></i> Email: <a href="mailto:team@lesktop.cz"><strong>team@lesktop.cz</strong></a></p>
                     <p><i class="fas fa-map-marker-alt"></i> <strong>We operate in Prague and Central Bohemia</strong></p>

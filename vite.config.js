@@ -64,7 +64,7 @@ const staticFiles = [
   { path: 'robots.txt', required: true },
   // sitemap.xml se generuje pluginem generateSitemap z htmlPages
   { path: 'humans.txt', required: true },
-  { path: 'CNAME', required: true },
+  { path: 'CNAME', required: false },
   { path: 'BingSiteAuth.xml', required: true },
   { path: '.nojekyll', required: true },
 ];
@@ -82,6 +82,14 @@ function escapeHtmlAttribute(value) {
   return value
     .replace(/&/g, '&amp;')
     .replace(/"/g, '&quot;');
+}
+
+function getHtmlAssetSource(chunk) {
+  if (typeof chunk.source === 'string') return chunk.source;
+  if (chunk.source instanceof Uint8Array) {
+    return Buffer.from(chunk.source).toString('utf8');
+  }
+  return null;
 }
 
 function collectJsonLdHashes(html) {
@@ -145,20 +153,21 @@ function injectCspMeta() {
     generateBundle(_, bundle) {
       for (const chunk of Object.values(bundle)) {
         if (chunk.type !== 'asset' || !chunk.fileName.endsWith('.html')) continue;
-        if (typeof chunk.source !== 'string') continue;
+        const html = getHtmlAssetSource(chunk);
+        if (html === null) continue;
 
-        const cspPolicy = buildCspPolicy(chunk.source);
+        const cspPolicy = buildCspPolicy(html);
         const cspMetaTag = `<meta http-equiv="Content-Security-Policy" content="${escapeHtmlAttribute(cspPolicy)}">`;
 
-        if (chunk.source.includes('http-equiv="Content-Security-Policy"')) {
-          chunk.source = chunk.source.replace(
+        if (html.includes('http-equiv="Content-Security-Policy"')) {
+          chunk.source = html.replace(
             /<meta\b[^>]*http-equiv=(["'])Content-Security-Policy\1[^>]*>/i,
             cspMetaTag
           );
           continue;
         }
 
-        chunk.source = chunk.source.replace(/<head>/i, `<head>\n  ${cspMetaTag}`);
+        chunk.source = html.replace(/<head>/i, `<head>\n  ${cspMetaTag}`);
       }
     },
   };
@@ -212,12 +221,14 @@ function copyStaticFiles() {
     async writeBundle() {
       const distDir = resolve(projectRoot, 'dist');
       const rootDir = projectRoot;
+      const skipCname = process.env.SKIP_CNAME === '1';
 
       for (const dir of staticDirs) {
         await copyStaticDir(rootDir, distDir, dir);
       }
 
       for (const file of staticFiles) {
+        if (skipCname && file.path === 'CNAME') continue;
         await copyStaticFile(rootDir, distDir, file);
       }
     },
@@ -453,7 +464,7 @@ export default defineConfig(() => {
         content: purgeContent,
         safelist: purgeSafelist,
       }),
-      seoMetadata(), // Centralizované SEO metadata – před injectCspMeta, aby CSP viděl finální HTML
+      seoMetadata({ siteUrl: process.env.SITE_URL || SITEMAP_BASE }), // Centralizované SEO metadata – před injectCspMeta, aby CSP viděl finální HTML
       feedbackAreas(), // Build-time generování opakujících se feedback oblastí (bez runtime JS renderu)
       injectCspMeta(),
       copyStaticFiles(),
